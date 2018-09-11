@@ -1,0 +1,266 @@
+import matplotlib.pyplot as plt
+from apace import helpers
+import csv
+import SimPy.EconEvalClasses as Econ
+
+
+class Scenario:
+    def __init__(self, name):
+        """
+        :param name: scenario's name
+        """
+
+        self.name = name
+        self.variables = {}     # dictionary of variable values with their name as keys
+        self.outcomes = {}      # dictionary of list of outcomes with their names as keys
+
+    def add_variable(self, variable_name, value):
+        """
+        :param variable_name: (string) variable name
+        :param value: value of variable
+        """
+        self.variables[variable_name] = value
+
+    def add_all_outcomes(self, outcome_name, outcomes):
+        """
+        :param outcome_name: (string) name of outcome
+        :param outcomes: (list) of outcomes
+        """
+        self.outcomes[outcome_name] = outcomes
+
+
+class ScenarioDataFrame:
+    def __init__(self, csv_file_name):
+        """
+        :param csv_file_name: csv file where scenarios and realizations of ourcomes are located
+        """
+
+        self.scenarios = {}  # dictionary of all scenarios with scenario names as keys
+
+        # read csv file
+        csv_file = open(csv_file_name, "r")
+        col_headers = next(csv.reader(csv_file, delimiter=','))
+        n_cols = len(col_headers)
+        cols = helpers.read_csv_cols(csv_file_name, n_cols=n_cols, if_convert_float=True)
+
+        # parse columns
+        col_idx = 0
+        names_and_bounds = []
+        while col_idx < n_cols:
+
+            if col_headers[col_idx] == "Scenario":
+
+                # find the row boundaries of each scenario
+                names_and_bounds = []
+                for row_idx, scenario_name in enumerate(cols[col_idx]):
+                    if scenario_name not in self.scenarios:
+                        self.scenarios[scenario_name] = Scenario(scenario_name)
+                        names_and_bounds.append((scenario_name, row_idx))
+
+                names_and_bounds.append(("dummy", row_idx + 1))
+                col_idx += 1
+
+                # store variables
+                while col_headers[col_idx] != "Objective Function":
+                    for scenario_name, bound in names_and_bounds[:-1]:
+                        self.scenarios[scenario_name].add_variable(col_headers[col_idx], cols[col_idx][bound])
+                    col_idx += 1
+
+            else:
+
+                # store outcomes
+                for i in range(len(names_and_bounds) - 1):
+                    scenario_name = names_and_bounds[i][0]
+                    outcomes = cols[col_idx][names_and_bounds[i][1]:names_and_bounds[i+1][1]]
+                    self.scenarios[scenario_name].add_all_outcomes(col_headers[col_idx], outcomes)
+                col_idx += 1
+
+
+class VariableCondition:
+    def __init__(self, var_name, minimum, maximum, if_included_in_label=False, label_format='', label_rules=None):
+        """
+        :param var_name: variable name as appears in the scenario csv file
+        :param minimum: minimum acceptable value for this variable
+        :param maximum: maximum acceptable value for this variable
+        :param if_included_in_label: if the value of this variable should be included in labels to display on CE plane
+        :param label_format: (string) format of this variable values to display on CE plane
+        :param label_rules: (list of tuples): to convert variable's value to labels
+        for example: [(0, 'A'), (1, 'B')] replaces variable value 0 with A and 1 with B when creating labels
+        """
+        self.varName = var_name
+        self.min = minimum
+        self.max = maximum
+        self.ifIncludedInLabel = if_included_in_label
+        self.labelFormat = label_format
+        self.labelRules = label_rules
+
+    def get_label(self, value):
+        """ :returns the label associated to this value of the parameter """
+        for rule in self.labelRules:
+            if rule[0] == value:
+                return rule[1]
+
+
+class Series:
+    """ a series consists of a number of scenarios that meet certain conditions """
+
+    def __init__(self,
+                 name,
+                 color,  # color of this series on the CE plane
+                 variable_conditions,  # list of variable conditions
+                 if_find_frontier=True,  # select True if CE frontier should be calculated
+                 labels_shift_x=0,
+                 labels_shift_y=0
+                 ):
+
+        self.name = name
+        self.color = color
+        self.ifFindFrontier = if_find_frontier
+        self.varConditions = variable_conditions
+        self.labelsShiftX = labels_shift_x
+        self.labelsShiftY = labels_shift_y
+
+        self.xValues = []
+        self.yValue = []
+        self.yLabels = []
+        self.frontierXValues = []
+        self.frontierYValues = []
+        self.frontierLabels = []
+        self.strategies = []    # list of strategies on this series
+        self.CEA = None
+        self.legend = []
+
+    def if_acceptable(self, scenario):
+        """ :returns True if this scenario meets the conditions to be on this series """
+
+        for condition in self.varConditions:
+            if scenario.variables[condition.varName] < condition.min \
+                    or scenario.variables[condition.varName] > condition.max:
+                return False
+
+        return True
+
+    def do_CEA(self, save_cea_results=False, x_axis_multiplier=1, y_axis_multiplier=1):
+
+        # cost-effectiveness analysis
+        self.CEA = Econ.CEA(self.strategies,
+                            if_paired=True,
+                            if_find_frontier=self.ifFindFrontier,
+                            health_measure=Econ.HealthMeasure.DISUTILITY)
+
+        # if to save the results of the CEA
+        if save_cea_results:
+            self.CEA.build_CE_table(interval=Econ.Interval.PREDICTION,
+                                    file_name='CEA Table, '+self.name)
+
+        # find the list of strategies excluding the base
+        strategies = self.CEA.get_shifted_strategies()
+        del strategies[0]  # remove the base strategy
+
+        # find the (x, y) values of strategies to display on CE plane
+        for idx, shiftedStr in enumerate(strategies):
+            self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
+            self.yValue.append(shiftedStr.aveCost*y_axis_multiplier)
+            self.yLabels.append(shiftedStr.name)
+
+        # find the (x, y)'s of strategies on the frontier
+        for idx, shiftedStr in enumerate(self.CEA.get_shifted_strategies_on_frontier()):
+            self.frontierXValues.append(shiftedStr.aveEffect*x_axis_multiplier)
+            self.frontierYValues.append(shiftedStr.aveCost*y_axis_multiplier)
+            self.frontierLabels.append(shiftedStr.name)
+
+
+def populate_series(series_list, csv_filename, save_cea_results=False, x_axis_multiplier=1, y_axis_multiplier=1):
+
+    # data frame for scenario analysis
+    df = ScenarioDataFrame(csv_filename)
+
+    # create the base strategy
+    scn = df.scenarios['Base']
+    base_strategy = Econ.Strategy(
+        name='Base',
+        cost_obs=scn.outcomes['Total Cost'],
+        effect_obs=scn.outcomes['DALY'])
+
+    # populate series to display on the cost-effectiveness plane
+    for i, ser in enumerate(series_list):
+        # add base
+        ser.strategies = [base_strategy]
+        # add other scenarios
+        for key, scenario in df.scenarios.items():
+            # add only non-Base strategies that can be on this series
+            if scenario.name != 'Base' and ser.if_acceptable(scenario):
+
+                # find labels of each strategy
+                label_list = []
+                for varCon in ser.varConditions:
+                    if varCon.ifIncludedInLabel:
+
+                        # value of this variable
+                        value = scenario.variables[varCon.varName]
+                        # if there is not label rules
+                        if varCon.labelRules is None:
+                            if varCon.labelFormat == '':
+                                label_list.append(str(value)+',')
+                            else:
+                                label_list.append(varCon.labelFormat.format(value) + ',')
+                        else:
+                            label_list.append(varCon.get_label(value) + ', ')
+
+                label = ''.join(str(x) for x in label_list)[:-1]
+
+                # legens
+                ser.legend.append(label)
+
+                ser.strategies.append(
+                    Econ.Strategy(
+                        name=label,
+                        cost_obs=scenario.outcomes['Total Cost'],
+                        effect_obs=scenario.outcomes['DALY'])
+                )
+
+        # do CEA on this series
+        ser.do_CEA(save_cea_results, x_axis_multiplier, y_axis_multiplier)
+
+
+def plot_series(series, x_label, y_label, file_name, x_range=None, y_range=None):
+
+    legend = []
+    for i, ser in enumerate(series):
+        # scatter plot
+        plt.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
+        plt.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
+        # # y-value labels
+        # for j, txt in enumerate(ser.yLabels):
+        #     plt.annotate(
+        #         txt,
+        #         (ser.xValues[j] + ser.labelsShiftX, ser.yValue[j] + ser.labelsShiftY),
+        #         color=ser.color)
+
+        # y-value labels
+        for j, txt in enumerate(ser.frontierLabels):
+            if txt is not 'Base':
+                plt.annotate(
+                    txt,
+                    (ser.frontierXValues[j] + ser.labelsShiftX, ser.frontierYValues[j] + ser.labelsShiftY),
+                    color=ser.color
+                )
+
+        legend.append(ser.name)
+
+        # slope, intercept, r_value, p_value, std_err = stats.linregress(ser.xValues, ser.yValue)
+        # line = slope * np.array(ser.xValues) + intercept
+        # plt.plot(ser.xValues, line, color=ser.color, alpha=0.4)
+
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.legend(legend, loc=2)
+
+    if x_range is not None:
+        plt.xlim(x_range)
+    if y_range is not None:
+        plt.ylim(y_range)
+
+    plt.axvline(x=0, linestyle='--', color='black', linewidth=1)
+    plt.axhline(y=0, linestyle='--', color='black', linewidth=1)
+    plt.savefig('figures/' + file_name)
