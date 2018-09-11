@@ -2,10 +2,11 @@ from apace import TrajectoriesClasses as Vis
 from gonorrhea import GonoData as D
 from gonorrhea import Settings as Set
 
+SIM_LENGTH = 25+1+25  # simulation length in years
 
 Vis.OUTPUT_TYPE = Vis.OutType.JPG    # figure output
 Vis.X_LABEL = 'Year'
-Vis.X_RANGE = [-1, 26]
+Vis.X_RANGE = [-1, SIM_LENGTH]
 Vis.X_TICKS = [0, 5]
 Vis.DEFAULT_FONT_SIZE = 7
 Vis.Y_LABEL_COORD_X = -0.24
@@ -13,7 +14,6 @@ Vis.SUBPLOT_W_SPACE = 1
 Vis.SUBPLOT_H_SPACE = 0.7
 
 RESIST_PROFILE = ['A', 'B', 'AB']       # resistant profiles
-SIM_LENGTH = 26  # simulation length in years
 
 # create a trajectory data frame
 df = Vis.TrajsDataFrame(Set.SELECTED_CALIB_FILE_NAME)

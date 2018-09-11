@@ -18,23 +18,23 @@ series = [
     Cls.Series('Base', 'blue',
                variable_conditions=varBaseConditions,
                if_find_frontier=True,
-               labels_shift_x=-0.04,
+               labels_shift_x=-8,
                labels_shift_y=0.01),
     Cls.Series('Policy A-Quarterly', 'red',
                variable_conditions=varPolicyAQuarterlyConditions,
                if_find_frontier=True,
-               labels_shift_x=0.015,
+               labels_shift_x=3,
                labels_shift_y=-0.04)
 ]
 
 # populate series
-Cls.populate_series(series, csv_filename=Set.SELECTED_SA_FILE_NAME, x_axis_multiplier=1 / 1e6, y_axis_multiplier=1 / 1e6)
+Cls.populate_series(series, csv_filename=Set.SELECTED_SA_FILE_NAME, x_axis_multiplier=1 / 1e3, y_axis_multiplier=1 / 1e6)
 
 # plot
 Cls.plot_series(series=series,
-                x_label='Expected Gonorrhea Infections Averted (Millions)',
+                x_label='Expected Gonorrhea Infections Averted (Thousands)',
                 y_label='Expected Additional Drug M Used (Millions)',
                 file_name='-Base vs Quarterly A.png',
-                x_range=(-0.1, 0.1),
-                y_range=(-1, 2)
+                x_range=(-50, 50),
+                y_range=(-0.5, 1)
                 )
