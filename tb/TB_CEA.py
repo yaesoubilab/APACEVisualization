@@ -41,7 +41,7 @@ series = [
 ]
 
 # populate series
-Cls.populate_series(series, 'csvfiles\TBScenariosNoDrop.csv',
+Cls.populate_series(series, 'csvfiles\TBScenarios.csv',
                     save_cea_results=True,
                     x_axis_multiplier=1,
                     y_axis_multiplier=1/1e3)
@@ -53,9 +53,14 @@ for i, ser in enumerate(series):
         ax.plot(x_value, ser.yValues[j], markers[j], color=colors[j], markersize=8, mew=1)
 
         # error bars
+        x_err_l = x_value-ser.xIntervals[j][0]
+        x_err_u = ser.xIntervals[j][1] - x_value
+        y_err_l = ser.yValues[j]-ser.yIntervals[j][0]
+        y_err_u = ser.yIntervals[j][1] - ser.yValues[j]
+
         ax.errorbar(x_value, ser.yValues[j],
-                    xerr=[[x_value-ser.xIntervals[j][0]], [ser.xIntervals[j][1] - x_value]],
-                    yerr=[[ser.yValues[j]-ser.yIntervals[j][0]], [ser.yIntervals[j][1] - ser.yValues[j]]],
+                    xerr=[[x_err_l], [x_err_u]],
+                    yerr=[[y_err_l], [y_err_u]],
                     fmt='none', color='k', linewidth=1, alpha=0.2)
 
     ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=1)
