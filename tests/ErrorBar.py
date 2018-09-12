@@ -15,6 +15,7 @@ y_err = [y_err_l, y_err_u]
 fig, axs = plt.subplots(1, 1)
 axs.plot(x, y, 'o')
 
-axs.errorbar(x, y, xerr=x_err, yerr=y_err, fmt='none', color='k', linewidth=1)
+#axs.errorbar(x, y, xerr=x_err, yerr=y_err, fmt='none', color='k', linewidth=1)
+axs.errorbar(1, 2, xerr=[[1],[2]], yerr=[[2], [4]], fmt='none', color='k', linewidth=1)
 
 plt.show()

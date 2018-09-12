@@ -2,6 +2,16 @@ import matplotlib.pyplot as plt
 from apace import helpers
 import csv
 import SimPy.EconEvalClasses as Econ
+from enum import Enum
+
+
+ALPHA = 0.05    # confidence level
+
+
+class Interval(Enum):
+    NONE = 0,
+    CONFIDENCE = 1,
+    PREDICTION = 2,
 
 
 class Scenario:
@@ -110,7 +120,7 @@ class Series:
                  variable_conditions,  # list of variable conditions
                  if_find_frontier=True,  # select True if CE frontier should be calculated
                  labels_shift_x=0,
-                 labels_shift_y=0
+                 labels_shift_y=0,
                  ):
 
         self.name = name
@@ -120,12 +130,19 @@ class Series:
         self.labelsShiftX = labels_shift_x
         self.labelsShiftY = labels_shift_y
 
+        # (x., y) values
         self.xValues = []
-        self.yValue = []
+        self.yValues = []
+        # confidence or prediction intervals
+        self.xIntervals = []
+        self.yIntervals = []
+        # y labels
         self.yLabels = []
+
         self.frontierXValues = []
         self.frontierYValues = []
         self.frontierLabels = []
+
         self.strategies = []    # list of strategies on this series
         self.CEA = None
         self.legend = []
@@ -160,7 +177,13 @@ class Series:
         # find the (x, y) values of strategies to display on CE plane
         for idx, shiftedStr in enumerate(strategies):
             self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
-            self.yValue.append(shiftedStr.aveCost*y_axis_multiplier)
+            self.yValues.append(shiftedStr.aveCost * y_axis_multiplier)
+
+            x_interval = shiftedStr.get_effect_interval(Econ.Interval.CONFIDENCE, ALPHA)
+            y_interval = shiftedStr.get_cost_interval(Econ.Interval.CONFIDENCE, ALPHA)
+
+            self.xIntervals.append([x*x_axis_multiplier for x in x_interval])
+            self.yIntervals.append([y*y_axis_multiplier for y in y_interval])
             self.yLabels.append(shiftedStr.name)
 
         # find the (x, y)'s of strategies on the frontier
@@ -168,6 +191,14 @@ class Series:
             self.frontierXValues.append(shiftedStr.aveEffect*x_axis_multiplier)
             self.frontierYValues.append(shiftedStr.aveCost*y_axis_multiplier)
             self.frontierLabels.append(shiftedStr.name)
+
+    def get_x_err(self):
+        return [[self.xValues[i]-self.xIntervals[i][0], self.xIntervals[i][1]-self.xValues[i]]
+                for i in range(len(self.xValues))]
+
+    def get_y_err(self):
+        return [[self.yValues[i]-self.yIntervals[i][0], self.yIntervals[i][1]-self.yValues[i]]
+                for i in range(len(self.yValues))]
 
 
 def populate_series(series_list, csv_filename, save_cea_results=False, x_axis_multiplier=1, y_axis_multiplier=1):

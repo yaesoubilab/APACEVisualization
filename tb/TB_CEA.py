@@ -50,7 +50,13 @@ Cls.populate_series(series, 'csvfiles\TBScenariosNoDrop.csv',
 fig, ax = plt.subplots(figsize=(6, 5))
 for i, ser in enumerate(series):
     for j, x_value in enumerate(ser.xValues):
-        ax.plot(x_value, ser.yValue[j], markers[j], color=colors[j], markersize=8, mew=1)
+        ax.plot(x_value, ser.yValues[j], markers[j], color=colors[j], markersize=8, mew=1)
+
+        # error bars
+        ax.errorbar(x_value, ser.yValues[j],
+                    xerr=[[x_value-ser.xIntervals[j][0]], [ser.xIntervals[j][1] - x_value]],
+                    yerr=[[ser.yValues[j]-ser.yIntervals[j][0]], [ser.yIntervals[j][1] - ser.yValues[j]]],
+                    fmt='none', color='k', linewidth=1, alpha=0.2)
 
     ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=1)
 
