@@ -35,6 +35,6 @@ Cls.plot_series(series=series,
                 x_label='Expected Gonorrhea Infections Averted (Thousands)',
                 y_label='Expected Additional Drug M Used (Millions)',
                 file_name='-Base vs A.png',
-                x_range=(-50, 50),
-                y_range=(-0.5, 1)
+                x_range=(-70, 70),
+                y_range=(-0.7, 1.7)
                 )

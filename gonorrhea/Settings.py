@@ -1,5 +1,5 @@
 
-INDX = 2
+INDX = 1
 
 # file names for scenario analysis
 SA_FILE_NAMES = ['csvfiles\SAAll_WithDR.csv', 'csvfiles\SAAll_NoDR.csv', 'csvfiles\SAAll_NoDR_v2.csv']

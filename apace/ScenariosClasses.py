@@ -157,7 +157,7 @@ class Series:
 
         return True
 
-    def do_CEA(self, save_cea_results=False, x_axis_multiplier=1, y_axis_multiplier=1):
+    def do_CEA(self, save_cea_results=False, x_axis_multiplier=1, y_axis_multiplier=1, if_store_CI=False):
 
         # cost-effectiveness analysis
         self.CEA = Econ.CEA(self.strategies,
@@ -178,13 +178,13 @@ class Series:
         for idx, shiftedStr in enumerate(strategies):
             self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
             self.yValues.append(shiftedStr.aveCost * y_axis_multiplier)
-
-            x_interval = shiftedStr.get_effect_interval(Econ.Interval.CONFIDENCE, ALPHA)
-            y_interval = shiftedStr.get_cost_interval(Econ.Interval.CONFIDENCE, ALPHA)
-
-            self.xIntervals.append([x*x_axis_multiplier for x in x_interval])
-            self.yIntervals.append([y*y_axis_multiplier for y in y_interval])
             self.yLabels.append(shiftedStr.name)
+
+            if if_store_CI:
+                x_interval = shiftedStr.get_effect_interval(Econ.Interval.CONFIDENCE, ALPHA)
+                y_interval = shiftedStr.get_cost_interval(Econ.Interval.CONFIDENCE, ALPHA)
+                self.xIntervals.append([x*x_axis_multiplier for x in x_interval])
+                self.yIntervals.append([y*y_axis_multiplier for y in y_interval])
 
         # find the (x, y)'s of strategies on the frontier
         for idx, shiftedStr in enumerate(self.CEA.get_shifted_strategies_on_frontier()):
