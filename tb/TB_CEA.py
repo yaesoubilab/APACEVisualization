@@ -43,6 +43,7 @@ series = [
 # populate series
 Cls.populate_series(series, 'csvfiles\TBScenarios.csv',
                     save_cea_results=True,
+                    store_cea_CIs=True,
                     x_axis_multiplier=1,
                     y_axis_multiplier=1/1e3)
 

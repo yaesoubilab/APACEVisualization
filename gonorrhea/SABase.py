@@ -13,12 +13,16 @@ series = [
     Cls.Series('Base', 'blue',
                variable_conditions=varConditions,
                if_find_frontier=True,
-               labels_shift_x=-8,
-               labels_shift_y=0.01)
+               labels_shift_x=-11,
+               labels_shift_y=0.03)
 ]
 
 # populate series
-Cls.populate_series(series, csv_filename=Set.SELECTED_SA_FILE_NAME, x_axis_multiplier=1 / 1e3, y_axis_multiplier=1 / 1e6)
+Cls.populate_series(series,
+                    csv_filename=Set.SELECTED_SA_FILE_NAME,
+                    store_cea_CIs=True,
+                    x_axis_multiplier=1 / 1e3,
+                    y_axis_multiplier=1 / 1e6)
 
 # plot
 Cls.plot_series(series=series,
@@ -26,5 +30,6 @@ Cls.plot_series(series=series,
                 y_label='Expected Additional Drug M Used (Millions)',
                 file_name='-Base.png',
                 x_range=(-70, 70),
-                y_range=(-0.7, 1.9)
+                y_range=(-0.7, 1.9),
+                show_error_bars=True
                 )

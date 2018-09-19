@@ -139,9 +139,13 @@ class Series:
         # y labels
         self.yLabels = []
 
+        # frontier values
         self.frontierXValues = []
         self.frontierYValues = []
         self.frontierLabels = []
+        # confidence or prediction intervals
+        self.frontierXIntervals = []
+        self.frontierYIntervals = []
 
         self.strategies = []    # list of strategies on this series
         self.CEA = None
@@ -157,7 +161,7 @@ class Series:
 
         return True
 
-    def do_CEA(self, save_cea_results=False, x_axis_multiplier=1, y_axis_multiplier=1, if_store_CI=False):
+    def do_CEA(self, save_cea_results=False, if_store_CI=False, x_axis_multiplier=1, y_axis_multiplier=1):
 
         # cost-effectiveness analysis
         self.CEA = Econ.CEA(self.strategies,
@@ -171,11 +175,11 @@ class Series:
                                     file_name='CEA Table, '+self.name)
 
         # find the list of strategies excluding the base
-        strategies = self.CEA.get_shifted_strategies()
-        del strategies[0]  # remove the base strategy
+        shifted_strategies = self.CEA.get_shifted_strategies()
+        del shifted_strategies[0]  # remove the base strategy
 
         # find the (x, y) values of strategies to display on CE plane
-        for idx, shiftedStr in enumerate(strategies):
+        for idx, shiftedStr in enumerate(shifted_strategies):
             self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
             self.yValues.append(shiftedStr.aveCost * y_axis_multiplier)
             self.yLabels.append(shiftedStr.name)
@@ -192,16 +196,32 @@ class Series:
             self.frontierYValues.append(shiftedStr.aveCost*y_axis_multiplier)
             self.frontierLabels.append(shiftedStr.name)
 
-    def get_x_err(self):
-        return [[self.xValues[i]-self.xIntervals[i][0], self.xIntervals[i][1]-self.xValues[i]]
-                for i in range(len(self.xValues))]
+            if if_store_CI:
+                x_interval = shiftedStr.get_effect_interval(Econ.Interval.CONFIDENCE, ALPHA)
+                y_interval = shiftedStr.get_cost_interval(Econ.Interval.CONFIDENCE, ALPHA)
+                self.frontierXIntervals.append([x*x_axis_multiplier for x in x_interval])
+                self.frontierYIntervals.append([y*y_axis_multiplier for y in y_interval])
 
-    def get_y_err(self):
-        return [[self.yValues[i]-self.yIntervals[i][0], self.yIntervals[i][1]-self.yValues[i]]
-                for i in range(len(self.yValues))]
+    def get_frontier_x_err(self):
 
+        lower_err = [self.frontierXValues[i]-self.frontierXIntervals[i][0] for i in range(len(self.frontierXValues))]
+        upper_err = [self.frontierXIntervals[i][1]-self.frontierXValues[i] for i in range(len(self.frontierXValues))]
 
-def populate_series(series_list, csv_filename, save_cea_results=False, x_axis_multiplier=1, y_axis_multiplier=1):
+        return [lower_err, upper_err]
+
+    def get_frontier_y_err(self):
+
+        lower_err = [self.frontierYValues[i] - self.frontierYIntervals[i][0] for i in range(len(self.frontierYValues))]
+        upper_err = [self.frontierYIntervals[i][1] - self.frontierYValues[i] for i in range(len(self.frontierYValues))]
+
+        return [lower_err, upper_err]
+
+def populate_series(series_list,
+                    csv_filename,
+                    save_cea_results=False,
+                    store_cea_CIs = False,
+                    x_axis_multiplier=1,
+                    y_axis_multiplier=1):
 
     # data frame for scenario analysis
     df = ScenarioDataFrame(csv_filename)
@@ -251,16 +271,26 @@ def populate_series(series_list, csv_filename, save_cea_results=False, x_axis_mu
                 )
 
         # do CEA on this series
-        ser.do_CEA(save_cea_results, x_axis_multiplier, y_axis_multiplier)
+        ser.do_CEA(save_cea_results, store_cea_CIs, x_axis_multiplier, y_axis_multiplier)
 
 
-def plot_series(series, x_label, y_label, file_name, x_range=None, y_range=None):
+def plot_series(series, x_label, y_label, file_name, x_range=None, y_range=None, show_error_bars=False):
 
+    fig, ax = plt.subplots(figsize=(6, 5))
     legend = []
+
     for i, ser in enumerate(series):
         # scatter plot
-        plt.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
-        plt.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
+        ax.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
+        ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
+
+        # error bars
+        if show_error_bars:
+            ax.errorbar(ser.frontierXValues, ser.frontierYValues,
+                        xerr=ser.get_frontier_x_err(),
+                        yerr=ser.get_frontier_y_err(),
+                        fmt='none', color='k', linewidth=1, alpha=0.4)
+
         # # y-value labels
         # for j, txt in enumerate(ser.yLabels):
         #     plt.annotate(
