@@ -1,6 +1,6 @@
 from apace import TrajectoriesClasses as Vis
 from gonorrhea import GonoData as D
-from gonorrhea import Settings as Set
+from gonorrhea import GonoSettings as Set
 
 SIM_LENGTH = 25+1+25  # simulation length in years
 

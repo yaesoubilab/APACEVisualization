@@ -1,5 +1,5 @@
 import apace.ScenariosClasses as Cls
-import gonorrhea.Settings as Set
+import gonorrhea.GonoSettings as Set
 
 # conditions of variables to define scenarios to display on each series of cost-effectiveness plane
 varBaseConditions = [
@@ -36,5 +36,5 @@ Cls.plot_series(series=series,
                 y_label='Expected Additional Drug M Used (Millions)',
                 file_name='-Base vs Quarterly Base.png',
                 x_range=(-70, 70),
-                y_range=(-0.7, 1.7)
+                y_range=(-0.7, 1.9)
                 )

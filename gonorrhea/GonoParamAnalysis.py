@@ -1,5 +1,5 @@
 import apace.ParametersClasses as Param
-import gonorrhea.Settings as Set
+import gonorrhea.GonoSettings as Set
 
 # parameters ID
 ids = [7, 8, 10, 14, 15, 16, 19]
