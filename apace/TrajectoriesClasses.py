@@ -3,7 +3,6 @@ from enum import Enum
 from apace import helpers
 import csv
 import matplotlib.ticker as ticker
-import numpy as np
 import SimPy.InOutFunctions as IO
 import string
 
