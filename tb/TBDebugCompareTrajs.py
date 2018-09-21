@@ -1,4 +1,4 @@
-import apace.TrajectoriesClasses as Cls
+import apace.TrajectoriesClasses1 as Cls
 
 Cls.OUTPUT_TYPE = Cls.OutType.JPG
 

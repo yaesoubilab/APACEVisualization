@@ -1,5 +1,5 @@
 from tb import TBSettings as Set
-from apace import TrajectoriesClasses as Vis
+from apace import TrajectoriesClasses1 as Vis
 
 
 # create a trajectory data frame

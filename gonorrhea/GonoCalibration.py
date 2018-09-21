@@ -1,4 +1,4 @@
-from apace import TrajectoriesClasses as Vis
+from apace import TrajectoriesClasses1 as Vis
 from gonorrhea import GonoData as D
 from gonorrhea import GonoSettings as Set
 

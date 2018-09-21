@@ -1,4 +1,4 @@
-from apace import TrajectoriesClasses as Vis
+from apace import TrajectoriesClasses1 as Vis
 
 # specify the output (show, save as .jpg, or save as .pdf)
 Vis.OUTPUT_TYPE = Vis.OutType.SHOW

@@ -1,4 +1,4 @@
-from apace import TrajectoriesClasses as Vis
+from apace import TrajectoriesClasses1 as Vis
 from tb import TBData as D
 
 WARMUP = 10
