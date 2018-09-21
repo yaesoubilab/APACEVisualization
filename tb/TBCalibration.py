@@ -1,27 +1,24 @@
-from apace import TrajectoriesClasses1 as Vis
+from apace import TrajectoriesClasses as Vis
 from tb import TBData as D
-
-WARMUP = 10
-TIME_0 = 1991
-TIME_END = TIME_0 + 34
+from tb import TBSettings as Set
 
 
 # specify the output (show, save as .jpg, or save as .pdf)
 Vis.OUTPUT_TYPE = Vis.OutType.JPG
 Vis.X_LABEL = 'Year'
-Vis.X_RANGE = [TIME_0+WARMUP-1, TIME_END+2]
-Vis.X_TICKS = [TIME_0+WARMUP-1, 10]
+Vis.X_RANGE = [Set.TIME_0+Set.WARMUP-1, Set.TIME_END+2]
+Vis.X_TICKS = [Set.TIME_0+Set.WARMUP-1, 10]
 Vis.DEFAULT_FONT_SIZE = 5.5
 Vis.SUBPLOT_H_SPACE = 0.75
 
 # create a trajectory data frame
 df = Vis.TrajsDataFrame('csvfiles/TBTrajs0Base.csv',
-                        time0=TIME_0,
+                        time0=Set.TIME_0,
                         period_length=1,
-                        warmup_sim_period=WARMUP,
-                        warmup_sim_time=WARMUP+1,
-                        warmp_obs_period=WARMUP,
-                        warmup_epi_time=WARMUP+1
+                        warmup_sim_period=Set.WARMUP,
+                        warmup_sim_time=Set.WARMUP+1,
+                        warmp_obs_period=Set.WARMUP,
+                        warmup_epi_time=Set.WARMUP+1
                         )
 
 list_plot_info = []
@@ -47,7 +44,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=None,
             fill_between=False
         )
@@ -72,7 +69,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=None,
             fill_between=False
         )
@@ -97,7 +94,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=None,
             fill_between=False
         )
@@ -124,7 +121,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obs,
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=[9000, 13000]
         )
     )
@@ -149,7 +146,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obs,
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=[24000, 30000]
         )
     )
@@ -174,7 +171,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obs,
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=[2.6, 10.5]
         )
     )
@@ -200,7 +197,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0 + WARMUP + 1, TIME_0 + WARMUP + 7],
+            x_range=[Set.TIME_0 + Set.WARMUP + 1, Set.TIME_0 + Set.WARMUP + 7],
             y_range=[5, 15]
         )
     )
@@ -225,7 +222,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0 + WARMUP + 1, TIME_0 + WARMUP + 7],
+            x_range=[Set.TIME_0 + Set.WARMUP + 1, Set.TIME_0 + Set.WARMUP + 7],
             y_range=[0, 1.5]
         )
     )
@@ -250,7 +247,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0 + WARMUP + 1, TIME_0 + WARMUP + 7],
+            x_range=[Set.TIME_0 + Set.WARMUP + 1, Set.TIME_0 + Set.WARMUP + 7],
             y_range=[0, 6]
         )
     )
@@ -275,7 +272,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=None,
             fill_between=False
         )
@@ -300,7 +297,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=None,
             fill_between=False
         )
@@ -326,7 +323,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[TIME_0+WARMUP+1, TIME_0+WARMUP+7],
+            x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
             y_range=None,
             fill_between=False
         )
