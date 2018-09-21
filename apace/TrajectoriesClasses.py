@@ -4,7 +4,9 @@ from apace import helpers
 import csv
 import matplotlib.ticker as ticker
 import SimPy.InOutFunctions as IO
+import SimPy.StatisticalClasses as Stat
 import string
+import numpy as np
 
 
 class OutType(Enum):
@@ -65,16 +67,35 @@ class TrajOneOutcomeMultipleReps:
         """
         self.trajs.append(traj)
 
+    def get_obss(self, time_index):
+        """
+        :return: (list) observations at the specified time index
+        """
+        obss = []
+        for traj in self.trajs:
+            obss.append(traj.obss[time_index])
+
+        return np.array(obss)
+
+    def get_mean_PI(self, time_index, alpha, multiplier=1):
+        """
+        :return: the mean and percentile interval of observations at the specified time index
+        """
+        stat = Stat.SummaryStat('', self.get_obss(time_index)*multiplier)
+
+        return stat.get_mean(), stat.get_PI(alpha)
+
     def get_trajs_mean(self):
         """
         :return: (list) [times, means] the average outcome across all trajectories at each time point
         """
         means = []
         for i in range(len(self.trajs[0].times)):
-            obss = []
-            for traj in self.trajs:
-                obss.append(traj.obss[i])
+            # get the observations at this time index
+            obss = self.get_obss(i)
+            # calculate the mean
             means.append(sum(obss)/len(obss))
+
         return [self.trajs[0].times, np.array(means)]
 
     def get_trajs_percentile_interval(self, alpha):
@@ -95,9 +116,9 @@ class TrajOneOutcomeMultipleReps:
 class TrajsDataFrame:
     # parses the entire csv files containing the simulated trajectories
 
-    def __init__(self, 
-                 csv_file_name, 
-                 time0=0, 
+    def __init__(self,
+                 csv_file_name,
+                 time0=0,
                  period_length=1,
                  warmup_sim_period=0,
                  warmup_sim_time=0,
@@ -146,7 +167,7 @@ class TrajsDataFrame:
                 x_i = col_idx
                 col_idx += 1
 
-                # ignore x = 0 for period x-axes 
+                # ignore x = 0 for period x-axes
                 offset = 0
                 if traj_names[x_i].split()[1] == "Period":
                     offset = 1
@@ -375,7 +396,7 @@ class PlotTrajInfo:
 class FeasibleRangeInfo:
     def __init__(self, x_range, y_range, fill_between=True):
         self.xRange = x_range           # range of feasible x-axis values
-        self.yRange = y_range           # range of feasible y-axis values 
+        self.yRange = y_range           # range of feasible y-axis values
         self.fillBetween = fill_between # set to True to shade feasible region
 
 
@@ -388,7 +409,7 @@ class ObservedOutcome:
 
 
 class PlotCalibrationInfo:
-    def __init__(self, 
+    def __init__(self,
                  list_of_observed_outcomes, # list of ObservedOutcome objects
                  if_connect_obss=False,     # set to True if observation points should be connected
                  if_show_caps=True,         # set to False if error bars should not have caps
@@ -522,7 +543,7 @@ class TrajImpact:
                         borderaxespad=0.)
 
         # OPTION #2: to the right of subplots
-        # plt.legend(self.scenarioNames, bbox_to_anchor=(1, 1)) 
+        # plt.legend(self.scenarioNames, bbox_to_anchor=(1, 1))
 
         # OPTION $3: below subplots
         # axarr[n_cols // 2].legend(self.scenarioNames,
