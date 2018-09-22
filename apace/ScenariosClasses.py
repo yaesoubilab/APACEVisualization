@@ -216,6 +216,7 @@ class Series:
 
         return [lower_err, upper_err]
 
+
 def populate_series(series_list,
                     csv_filename,
                     save_cea_results=False,

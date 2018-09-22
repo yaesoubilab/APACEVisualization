@@ -40,6 +40,16 @@ class Parameters:
         # create a dictionary of parameter samples
         self.dictOfParams = IO.read_csv_cols_to_dictionary(csv_file_name, ',', True)
 
+    def get_mean_interval(self, parameter_name, deci=0, form=None):
+
+        # print the ratio estimate and credible interval
+        sum_stat = Stat.SummaryStat('', self.dictOfParams[parameter_name])
+
+        if form is None:
+            return sum_stat.get_mean(), sum_stat.get_percentile(0.05)
+        else:
+            return sum_stat.format_estimate_PI(0.05, deci, form)
+
     def plot_histogram(self, parameter_name, title, x_lable=None, y_lable=None, x_range=None):
         """ creates a histogram of one parameter """
 
@@ -158,8 +168,11 @@ class Parameters:
         # write parameter estimates and credible intervals
         IO.write_csv('ParameterEstimates.csv', results)
 
-    def calculate_ratio(self, numerator_par_name, denominator_par_names,
-                        title, x_label=None, x_range=None, posterior_fig_loc='figures'):
+    def calculate_ratio_obss(self, numerator_par_name, denominator_par_names):
+
+        # if only one parameter is in the denominator
+        if type(denominator_par_names) is not list:
+            denominator_par_names = [denominator_par_names]
 
         # calculate sum of parameters in the denominator
         sum_denom = copy.deepcopy(self.dictOfParams[denominator_par_names[0]])
@@ -167,16 +180,27 @@ class Parameters:
             sum_denom += self.dictOfParams[denominator_par_names[i]]
 
         # calculate realizations for ratio
-        ratio = self.dictOfParams[numerator_par_name]/sum_denom
+        return self.dictOfParams[numerator_par_name]/sum_denom
+
+    def get_ratio_mean_interval(self, numerator_par_name, denominator_par_names, deci=0, form=None):
+
+        # print the ratio estimate and credible interval
+        sum_stat = Stat.SummaryStat('', self.calculate_ratio_obss(numerator_par_name, denominator_par_names))
+
+        if form is None:
+            return sum_stat.get_mean(), sum_stat.get_percentile(0.05)
+        else:
+            return sum_stat.format_estimate_PI(0.05, deci, form)
+
+    def plot_ratio_hist(self, numerator_par_name, denominator_par_names,
+                        title, x_label=None, x_range=None, posterior_fig_loc= 'figures'):
+
+        ratio_obss = self.calculate_ratio_obss(numerator_par_name, denominator_par_names)
 
         file_name = posterior_fig_loc + '\Ratio-' + title
 
         # create the histogram of ratio
         Fig.graph_histogram2(
-            ratio, title, x_range=x_range, figure_size=HISTOGRAM_FIG_SIZE,
-            output_type=Fig.OutType.JPG,
+            ratio_obss, title,
+            x_label=x_label, x_range=x_range, figure_size=HISTOGRAM_FIG_SIZE, output_type=Fig.OutType.JPG,
             file_name=file_name)
-
-        # print the ratio estimate and credible interval
-        sum_stat = Stat.SummaryStat('', ratio)
-        print(title, sum_stat.format_estimate_PI(0.05, 1, F.FormatNumber.PERCENTAGE))

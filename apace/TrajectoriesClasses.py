@@ -5,6 +5,7 @@ import csv
 import matplotlib.ticker as ticker
 import SimPy.InOutFunctions as IO
 import SimPy.StatisticalClasses as Stat
+import SimPy.FormatFunctions as F
 import string
 import numpy as np
 
@@ -84,6 +85,19 @@ class TrajOneOutcomeMultipleReps:
         stat = Stat.SummaryStat('', self.get_obss(time_index)*multiplier)
 
         return stat.get_mean(), stat.get_PI(alpha)
+
+    def get_fromatted_mean_PI(self, time_index, alpha, multiplier=1, deci=0, format=None):
+        """
+        :param deci: number of decimal places
+        :param format: additional formatting instruction.
+            Use ',' to format as number, '%' to format as percentage, and '$' to format as currency
+        :return: the mean and percentile interval of observations at the specified time index formatted as instructed
+        """
+
+        # find the estimate and percentile interval
+        estimate, pi = self.get_mean_PI(time_index,alpha,multiplier)
+
+        return F.format_estimate_interval(estimate=estimate, interval=pi, deci=deci, format=format)
 
     def get_trajs_mean(self):
         """
