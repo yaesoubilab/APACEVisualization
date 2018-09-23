@@ -94,13 +94,18 @@ class TrajOneOutcomeMultipleReps:
         else:
             return F.format_estimate_interval(estimate=estimate, interval=pi, deci=deci, format=format)
 
-    def get_relative_diff_mean_PI(self, time_index0, time_index1, alpha, deci=0, format=None):
+    def get_relative_diff_mean_PI(self, time_index0, time_index1, order=0, deci=0, format=None):
         """
         :return: the mean relative difference of trajectories at two time indeces
         """
-        stat = Stat.RelativeDifferencePaired('', x=self.get_obss(time_index1), y_ref=self.get_obss(time_index0))
+        stat = Stat.RelativeDifferencePaired(
+            '',
+            x=self.get_obss(time_index1),
+            y_ref=self.get_obss(time_index0),
+            order=order)
+
         if format is None:
-            return stat.get_mean(), stat.get_percentile(alpha)
+            return stat.get_mean(), stat.get_percentile(0.05)
         else:
             return stat.format_estimate_PI(0.05, deci=deci, form=format)
 

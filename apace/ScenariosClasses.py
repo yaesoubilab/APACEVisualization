@@ -87,13 +87,35 @@ class ScenarioDataFrame:
                 col_idx += 1
 
     def get_mean_interval(self, scenario_name, outcome_name, deci=0, form=None):
+        """
+        :return: mean and percentile interval of the selected outcome for the selected scenario
+        """
 
         stat = Stat.SummaryStat('', self.scenarios[scenario_name].outcomes[outcome_name])
-        if form is None:
-            return stat.get_mean(), stat.get_percentile(0.05)
-        else:
-            return stat.format_estimate_PI(0.05, deci, form)
+        return helpers.get_mean_PI(stat, deci, form)
 
+    def get_relative_diff_mean_interval(self, scenario_name_base, scenario_names, outcome_name, deci=0, form=None):
+        """
+        :return: mean and percentile interval of the relative difference of the selected outcome
+        """
+
+        if type(scenario_names) is not list:
+            scenario_names = [scenario_names]
+
+        list_mean_PI={}
+        for name in scenario_names:
+            ratio_state = Stat.RelativeDifferencePaired(
+                name='',
+                x=self.scenarios[name].outcomes[outcome_name],
+                y_ref=self.scenarios[scenario_name_base].outcomes[outcome_name],
+                order=1)
+
+            list_mean_PI[name] = helpers.get_mean_PI(ratio_state, deci, form)
+
+        if len(scenario_names) == 1:
+            return list_mean_PI[scenario_names[0]]
+        else:
+            return list_mean_PI
 
 class VariableCondition:
     def __init__(self, var_name, minimum, maximum, if_included_in_label=False, label_format='', label_rules=None):

@@ -48,3 +48,14 @@ def proper_file_name(text):
     """
     return text.replace('|', ',').replace(':', ',').replace('<', 'l').replace('>', 'g')
 
+
+def get_mean_PI(stat, deci, form):
+    """
+    :return: mean and percentile interval formatted as specified
+    (if format is not specified, it returns (mean, PI)
+    """
+
+    if form is None:
+        return stat.get_mean(), stat.get_percentile(0.05)
+    else:
+        return stat.format_estimate_PI(0.05, deci, form)

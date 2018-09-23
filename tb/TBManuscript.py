@@ -27,10 +27,9 @@ print('TB incidence among experienced in 2018 (per 100,000 population):',
       traj_df.allTrajs['Active TB Incidence | Experienced Adults | Per Pop.'].get_mean_PI(
         time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
 
-print('Relative change in tuberculosis incidence between 2018 and 2027 :',
+print('Decline in tuberculosis incidence between 2018 and 2027:',
       traj_df.allTrajs['Active TB Incidence | Per Pop.'].get_relative_diff_mean_PI(
-        time_index0=Set.INDEX_PROJ-1, time_index1=Set.INDEX_PROJ+10-2, alpha=Set.ALPHA, deci=1, format='%'))
-
+        time_index0=Set.INDEX_PROJ-1, time_index1=Set.INDEX_PROJ+10-2, order=1, deci=1, format='%'))
 
 # create a dictionary of parameters
 param_df = Param.Parameters('csvfiles\SampledParams.csv')
@@ -56,3 +55,22 @@ print('% incident TB cases due to reactivation occurring among those who had com
           outcome_name='Average ratio: % reactivation |Incident To: I| Tc<1 or >1 |HIV-',
           deci=1, form='%'))
 
+print('% incident TB averted:',
+      scenario_df.get_relative_diff_mean_interval(
+          scenario_names=['75% PTFU | No >1 FU | No IPT',
+                          '75% PTFU | With >1 FU | No IPT',
+                          '75% PTFU | No >1 FU | With IPT',
+                          '75% PTFU | With >1 FU | With IPT'],
+          scenario_name_base='Base',
+          outcome_name='Total: Active TB Incidence',
+          deci=1, form='%'))
+
+print('% TB deaths averted:',
+      scenario_df.get_relative_diff_mean_interval(
+          scenario_names=['75% PTFU | No >1 FU | No IPT',
+                          '75% PTFU | With >1 FU | No IPT',
+                          '75% PTFU | No >1 FU | With IPT',
+                          '75% PTFU | With >1 FU | With IPT'],
+          scenario_name_base='Base',
+          outcome_name='Total: TB Deaths',
+          deci=1, form='%'))
