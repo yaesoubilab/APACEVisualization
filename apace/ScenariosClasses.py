@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from apace import helpers
 import csv
 import SimPy.EconEvalClasses as Econ
+import SimPy.StatisticalClasses as Stat
 from enum import Enum
 
 
@@ -84,6 +85,14 @@ class ScenarioDataFrame:
                     outcomes = cols[col_idx][names_and_bounds[i][1]:names_and_bounds[i+1][1]]
                     self.scenarios[scenario_name].add_all_outcomes(col_headers[col_idx], outcomes)
                 col_idx += 1
+
+    def get_mean_interval(self, scenario_name, outcome_name, deci=0, form=None):
+
+        stat = Stat.SummaryStat('', self.scenarios[scenario_name].outcomes[outcome_name])
+        if form is None:
+            return stat.get_mean(), stat.get_percentile(0.05)
+        else:
+            return stat.format_estimate_PI(0.05, deci, form)
 
 
 class VariableCondition:
