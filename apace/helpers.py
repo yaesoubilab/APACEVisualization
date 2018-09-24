@@ -56,6 +56,6 @@ def get_mean_PI(stat, deci, form):
     """
 
     if form is None:
-        return stat.get_mean(), stat.get_percentile(0.05)
+        return stat.get_mean(), stat.get_PI(0.05)
     else:
         return stat.format_estimate_PI(0.05, deci, form)

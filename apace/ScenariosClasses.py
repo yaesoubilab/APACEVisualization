@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 from apace import helpers
 import csv
 import SimPy.EconEvalClasses as Econ
@@ -96,7 +97,7 @@ class ScenarioDataFrame:
 
     def get_relative_diff_mean_interval(self, scenario_name_base, scenario_names, outcome_name, deci=0, form=None):
         """
-        :return: mean and percentile interval of the relative difference of the selected outcome
+        :return: dictionary of mean and percentile interval of the relative difference of the selected outcome
         """
 
         if type(scenario_names) is not list:
@@ -116,6 +117,73 @@ class ScenarioDataFrame:
             return list_mean_PI[scenario_names[0]]
         else:
             return list_mean_PI
+
+    def plot_relative_diff_by_scenario(self,
+                                       scenario_name_base,
+                                       scenario_names,
+                                       outcome_names,
+                                       title, x_label,
+                                       y_labels=None,
+                                       markers=('o' ,'D'),
+                                       colors=('red' ,'blue'),
+                                       legend=('morbidity', 'mortality'),
+                                       distance_from_axis=0.5,
+                                       filename=None,
+                                       ):
+
+        bar_position = []
+        if len(outcome_names) > 2:
+            raise ValueError('Only up to 2 outcomes could be displayed.')
+        elif len(outcome_names) == 2:
+            bar_position = [-0.15, 0.15]
+        else:
+            bar_position = [0]
+
+        fig, ax = plt.subplots(figsize=(6, 3.4))
+
+        # find y-values
+        y_values = np.arange(len(scenario_names))
+
+        # build series to display
+        for k, outcome_name in enumerate(outcome_names):
+            list_mean_pi = self.get_relative_diff_mean_interval(scenario_name_base, scenario_names, outcome_name)
+
+            # find x-values
+            x_values = []
+            x_err_l = []
+            x_err_u = []
+            for scenario_name in scenario_names:
+                x_value = list_mean_pi[scenario_name][0]
+                x_pi = list_mean_pi[scenario_name][1]
+                x_values.append(100*x_value)
+                x_err_l.append(100*(x_value-x_pi[0]))
+                x_err_u.append(100*(x_pi[1]-x_value))
+
+            ax.errorbar(x_values, y_values + bar_position[k], xerr=[x_err_l, x_err_u],
+                        fmt=markers[k], ecolor=colors[k],
+                        elinewidth=1.5, capsize=0, markersize=6, markerfacecolor='white',
+                        markeredgecolor=colors[k], markeredgewidth=1.5)
+
+
+        ax.set_yticks(y_values)
+        if y_labels is None:
+            ax.set_yticklabels(scenario_names)
+        else:
+            ax.set_yticklabels(y_labels)
+
+        ax.set_ylim(-distance_from_axis, len(scenario_names)-1+distance_from_axis)
+
+        ax.invert_yaxis()  # labels read top-to-bottom
+        ax.set_xlabel(x_label)
+        ax.set_title(title)
+        ax.legend(legend)
+        plt.axvline(x=0, linestyle='--', color='black', linewidth=1)
+        plt.tight_layout()
+        if filename is None:
+            filename = 'RelativeDifference.png'
+
+        plt.savefig(filename+'.png', dpi=300)
+
 
 class VariableCondition:
     def __init__(self, var_name, minimum, maximum, if_included_in_label=False, label_format='', label_rules=None):

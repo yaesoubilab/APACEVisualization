@@ -74,3 +74,22 @@ print('% TB deaths averted:',
           scenario_name_base='Base',
           outcome_name='Total: TB Deaths',
           deci=1, form='%'))
+
+scenario_df.plot_relative_diff_by_scenario(
+    scenario_name_base='Base',
+    scenario_names=['75% PTFU | No >1 FU | No IPT',
+                     '75% PTFU | With >1 FU | No IPT',
+                     '75% PTFU | No >1 FU | With IPT',
+                     '75% PTFU | With >1 FU | With IPT'],
+    outcome_names=['Total: Active TB Incidence', 'Total: TB Deaths'],
+    title='Percentage TB incidence and mortality averted',
+    x_label='Percentage (%)',
+    y_labels=[
+        'Follow-up at yr 1, No IPT',
+        'Annual follow-up, No IPT',
+        'Follow-up at yr 1, With IPT',
+        'Annual follow-up, With IPT'],
+    legend=('TB Incidence', 'TB Death'),
+    distance_from_axis=0.6,
+    filename='figures/cea/ComparativeEffect'
+)
