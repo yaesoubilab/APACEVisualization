@@ -3,38 +3,68 @@ from apace import TrajectoriesClasses as Vis
 from apace import ParametersClasses as Param
 from apace import ScenariosClasses as Sce
 
+scenario_names=['Baseline',
+                'Follow-up at yr 1, No IPT',
+                'Annual follow-up, No IPT',
+                'Follow-up at yr 1, With IPT',
+                'Annual follow-up, With IPT']
 
-# create a trajectory data frame
-traj_df = Vis.TrajsDataFrame('csvfiles/TBTrajs0Base.csv',
-                             time0=Set.TIME_0,
-                             period_length=1,
-                             warmup_sim_period=Set.WARMUP,
-                             warmup_sim_time=Set.WARMUP+1,
-                             warmp_obs_period=Set.WARMUP,
-                             warmup_epi_time=Set.WARMUP+1
-                             )
-print('')
+trajs_csvfiles= ['csvfiles/TBTrajs0Base.csv',
+                 # 'csvfiles/TBTrajs1Yr1NoIPT.csv',
+                 # 'csvfiles/TBTrajs2AnnualNoIPT.csv',
+                 # 'csvfiles/TBTrajs3Yr1WithIPT.csv',
+                 # 'csvfiles/TBTrajs4AnnualWithIPT.csv'
+                 ]
 
-print('TB incidence in 2018 (per 100,000 population):',
-      traj_df.allTrajs['Active TB Incidence | Per Pop.'].get_mean_PI(
-        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
-
-print('TB incidence among naive in 2018 (per 100,000 population):',
-      traj_df.allTrajs['Active TB Incidence | Naive Adults | Per Pop.'].get_mean_PI(
-        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
-
-print('TB incidence among experienced in 2018 (per 100,000 population):',
-      traj_df.allTrajs['Active TB Incidence | Experienced Adults | Per Pop.'].get_mean_PI(
-        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
-
-print('Decline in tuberculosis incidence between 2018 and 2027:',
-      traj_df.allTrajs['Active TB Incidence | Per Pop.'].get_relative_diff_mean_PI(
-        time_index0=Set.INDEX_PROJ-1, time_index1=Set.INDEX_PROJ+10-2, order=1, deci=1, format='%'))
+# create trajectory data frames
+traj_data_frames=[]
+for file_name in trajs_csvfiles:
+    traj_data_frames.append(
+        Vis.TrajsDataFrame(csv_file_name=file_name,
+                           time0=Set.TIME_0,
+                           period_length=1,
+                           warmup_sim_period=Set.WARMUP,
+                           warmup_sim_time=Set.WARMUP + 1,
+                           warmp_obs_period=Set.WARMUP,
+                           warmup_epi_time=Set.WARMUP + 1
+                           )
+    )
 
 # create a dictionary of parameters
 param_df = Param.Parameters('csvfiles\SampledParams.csv')
+
+# data frame for scenario analysis
+scenario_df = Sce.ScenarioDataFrame('csvfiles\TBScenarios.csv')
+
 print('')
 
+# ---------------------------------------------
+# Epidemiological characteristics at base line
+# ---------------------------------------------
+print('TB incidence in 2018 (per 100,000 population):',
+      traj_data_frames[0].allTrajs['Active TB Incidence | Per Pop.'].get_mean_PI(
+        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+
+print('TB incidence among naive in 2018 (per 100,000 population):',
+      traj_data_frames[0].allTrajs['Active TB Incidence | Naive Adults | Per Pop.'].get_mean_PI(
+        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+
+print('TB incidence among experienced in 2018 (per 100,000 population):',
+      traj_data_frames[0].allTrajs['Active TB Incidence | Experienced Adults | Per Pop.'].get_mean_PI(
+        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+
+# ---------------------------------------------
+# Decline in TB incidence between 2018 and 2027
+# ---------------------------------------------
+for i, traj_df in enumerate(traj_data_frames):
+    print('Decline in tuberculosis incidence between 2018 and 2027 ({0}):'.format(scenario_names[i]),
+          traj_df.allTrajs['Active TB Incidence | Per Pop.'].get_relative_diff_mean_PI(
+              time_index0=Set.INDEX_PROJ - 1, time_index1=Set.INDEX_PROJ + 10 - 2, order=1, deci=1, format='%'))
+
+# ---------------------------------------------
+# Parameter posterior at base line
+# ---------------------------------------------
+print('')
 print('Prob of progression following reinfection after complete TB treatment to latently infected and treatment-naive:',
       param_df.get_ratio_mean_interval(
           numerator_par_name='Prob: If progress | L | Tc <1| HIV -',
@@ -45,16 +75,16 @@ print('Rate of reactivation (relapse) after treatment completion in the first ye
 
 print('Rate of reactivation (relapse) after treatment completion after the first year post-treatment :',
       param_df.get_mean_interval('Rate: TB Reactivation | L | Tc >1| HIV -', 4, form=','))
-
-# data frame for scenario analysis
-scenario_df = Sce.ScenarioDataFrame('csvfiles\TBScenarios.csv')
-print('')
 print('% incident TB cases due to reactivation occurring among those who had completed TB treatment:',
       scenario_df.get_mean_interval(
           scenario_name='Base',
           outcome_name='Average ratio: % reactivation |Incident To: I| Tc<1 or >1 |HIV-',
           deci=1, form='%'))
 
+# ---------------------------------------------
+# TB incidence and death averted under each scenario
+# ---------------------------------------------
+print('')
 print('% incident TB averted:',
       scenario_df.get_relative_diff_mean_interval(
           scenario_names=['75% PTFU | No >1 FU | No IPT',
