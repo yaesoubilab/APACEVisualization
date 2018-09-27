@@ -1,4 +1,4 @@
-from apace import TrajectoriesClasses1 as Vis
+from apace import TrajectoriesClasses as Vis
 from gonorrhea import GonoData as D
 from gonorrhea import GonoSettings as Set
 
@@ -7,7 +7,7 @@ SIM_LENGTH = 25+1+25  # simulation length in years
 Vis.OUTPUT_TYPE = Vis.OutType.JPG    # figure output
 Vis.X_LABEL = 'Year'
 Vis.X_RANGE = [-1, SIM_LENGTH]
-Vis.X_TICKS = [0, 5]
+Vis.X_TICKS = [0, 10]
 Vis.DEFAULT_FONT_SIZE = 7
 Vis.Y_LABEL_COORD_X = -0.24
 Vis.SUBPLOT_W_SPACE = 1
