@@ -20,6 +20,7 @@ series = [
 # populate series
 Cls.populate_series(series,
                     csv_filename=Set.SELECTED_SA_FILE_NAME,
+                    save_cea_results=True,
                     store_cea_CIs=True,
                     x_axis_multiplier=1 / 1e3,
                     y_axis_multiplier=1 / 1e6)
