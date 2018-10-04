@@ -10,17 +10,17 @@ varConditions = [
 
 # series to display on the cost-effectiveness plane
 series = [
-    Cls.Series('Base', 'blue',
+    Cls.Series('Base', '#1874CD',
                variable_conditions=varConditions,
                if_find_frontier=True,
-               labels_shift_x=-11,
+               labels_shift_x=-20,
                labels_shift_y=0.03)
 ]
 
 # populate series
 Cls.populate_series(series,
                     csv_filename=Set.SELECTED_SA_FILE_NAME,
-                    save_cea_results=True,
+                    save_cea_results=False,
                     store_cea_CIs=True,
                     x_axis_multiplier=1 / 1e3,
                     y_axis_multiplier=1 / 1e6)
@@ -30,6 +30,7 @@ Cls.plot_series(series=series,
                 x_label='Expected Gonorrhea Infections Averted (Thousands)',
                 y_label='Expected Additional Drug M Used (Millions)',
                 file_name='-Base.png',
+                show_only_on_frontier=False,
                 x_range=Set.X_RANGE,
                 y_range=Set.Y_RANGE,
                 show_error_bars=True

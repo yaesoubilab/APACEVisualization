@@ -1,5 +1,7 @@
-import matplotlib.pyplot as plt
 import numpy as np
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+from statsmodels.sandbox.regression.predstd import wls_prediction_std
 from apace import helpers
 import csv
 import SimPy.EconEvalClasses as Econ
@@ -308,10 +310,24 @@ class Series:
 
         return [lower_err, upper_err]
 
+    def get_x_err(self):
+
+        lower_err = [self.xValues[i]-self.xIntervals[i][0] for i in range(len(self.xValues))]
+        upper_err = [self.xIntervals[i][1]-self.xValues[i] for i in range(len(self.xValues))]
+
+        return [lower_err, upper_err]
+
     def get_frontier_y_err(self):
 
         lower_err = [self.frontierYValues[i] - self.frontierYIntervals[i][0] for i in range(len(self.frontierYValues))]
         upper_err = [self.frontierYIntervals[i][1] - self.frontierYValues[i] for i in range(len(self.frontierYValues))]
+
+        return [lower_err, upper_err]
+
+    def get_y_err(self):
+
+        lower_err = [self.yValues[i] - self.yIntervals[i][0] for i in range(len(self.yValues))]
+        upper_err = [self.yIntervals[i][1] - self.yValues[i] for i in range(len(self.yValues))]
 
         return [lower_err, upper_err]
 
@@ -374,44 +390,82 @@ def populate_series(series_list,
         ser.do_CEA(save_cea_results, store_cea_CIs, x_axis_multiplier, y_axis_multiplier)
 
 
-def plot_series(series, x_label, y_label, file_name, x_range=None, y_range=None, show_error_bars=False):
+def plot_series(series, x_label, y_label, file_name,
+                show_only_on_frontier=False,
+                x_range=None,
+                y_range=None,
+                show_error_bars=False):
 
     fig, ax = plt.subplots(figsize=(6, 5))
     legend = []
 
     for i, ser in enumerate(series):
-        # scatter plot
-        ax.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
-        ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
 
-        # error bars
-        if show_error_bars:
-            ax.errorbar(ser.frontierXValues, ser.frontierYValues,
-                        xerr=ser.get_frontier_x_err(),
-                        yerr=ser.get_frontier_y_err(),
-                        fmt='none', color='k', linewidth=1, alpha=0.4)
+        # if only points on frontier should be displayed
+        if show_only_on_frontier:
+            # scatter plot
+            ax.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
+            ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
 
-        # # y-value labels
-        # for j, txt in enumerate(ser.yLabels):
-        #     plt.annotate(
-        #         txt,
-        #         (ser.xValues[j] + ser.labelsShiftX, ser.yValue[j] + ser.labelsShiftY),
-        #         color=ser.color)
+            # error bars
+            if show_error_bars:
+                ax.errorbar(ser.frontierXValues, ser.frontierYValues,
+                            xerr=ser.get_frontier_x_err(),
+                            yerr=ser.get_frontier_y_err(),
+                            fmt='none', color='k', linewidth=1, alpha=0.4)
 
-        # y-value labels
-        for j, txt in enumerate(ser.frontierLabels):
-            if txt is not 'Base':
-                plt.annotate(
-                    txt,
-                    (ser.frontierXValues[j] + ser.labelsShiftX, ser.frontierYValues[j] + ser.labelsShiftY),
-                    color=ser.color
-                )
+            # y-value labels
+            for j, txt in enumerate(ser.frontierLabels):
+                if txt is not 'Base':
+                    plt.annotate(
+                        txt,
+                        (ser.frontierXValues[j] + ser.labelsShiftX, ser.frontierYValues[j] + ser.labelsShiftY),
+                        color=ser.color
+                    )
+
+        else:  # show all points
+
+            # scatter plot
+            ax.scatter(ser.xValues, ser.yValues, color=ser.color, alpha=1, zorder=10)
+
+            # error bars
+            if show_error_bars:
+                ax.errorbar(ser.xValues, ser.yValues,
+                            xerr=ser.get_x_err(),
+                            yerr=ser.get_y_err(),
+                            fmt='none', color='k', linewidth=1, alpha=0.5, zorder=5)
+
+            # y-value labels
+            for j, txt in enumerate(ser.yLabels):
+                if txt is not 'Base':
+                    plt.annotate(
+                        txt,
+                        (ser.xValues[j] + ser.labelsShiftX, ser.yValues[j] + ser.labelsShiftY),
+                        color=ser.color
+                    )
+
+            # fit a quadratic function to the curve.
+            y = np.array(ser.yValues)
+            x = np.array(ser.xValues)
+
+            # create the matrix X (of least square)
+            X = np.column_stack((x, x ** 2))
+            X = sm.add_constant(X)  # add constant to X
+
+            # create the regression model
+            model = sm.OLS(y, X)
+
+            # fit the model
+            results = model.fit()
+
+            # read predicted values along with prediction interval
+            prstd, iv_l, iv_u = wls_prediction_std(results)
+            ax.plot(x, results.fittedvalues, 'k-', linewidth=1, label="OLS")
+            ax.plot(x, iv_u, '-', color='#E0EEEE', linewidth=0.5)
+            ax.plot(x, iv_l, '-', color='#E0EEEE', linewidth=0.5)
+            ax.fill_between(x, iv_l, iv_u, linewidth=1, color='#E0EEEE', alpha=0.75)
 
         legend.append(ser.name)
-
-        # slope, intercept, r_value, p_value, std_err = stats.linregress(ser.xValues, ser.yValue)
-        # line = slope * np.array(ser.xValues) + intercept
-        # plt.plot(ser.xValues, line, color=ser.color, alpha=0.4)
 
     plt.xlabel(x_label)
     plt.ylabel(y_label)
@@ -422,6 +476,6 @@ def plot_series(series, x_label, y_label, file_name, x_range=None, y_range=None,
     if y_range is not None:
         plt.ylim(y_range)
 
-    plt.axvline(x=0, linestyle='--', color='black', linewidth=1)
-    plt.axhline(y=0, linestyle='--', color='black', linewidth=1)
+    plt.axvline(x=0, linestyle='--', color='black', linewidth=0.5)
+    plt.axhline(y=0, linestyle='--', color='black', linewidth=0.5)
     plt.savefig('figures/' + file_name)

@@ -1,11 +1,11 @@
 
-INDX = 0
-X_RANGE = (-70, 70)
-Y_RANGE = (-0.7, 1.9)
+INDX = 1
+X_RANGE = (-100, 100)
+Y_RANGE = (-1.5, 2.5)
 
 # file names for scenario analysis
 SA_FILE_NAMES = ['csvfiles\SAAll.csv',
-                 'csvfiles\SAAll_NoDR.csv',
+                 'csvfiles\SABase.csv',
                  'csvfiles\SAAll_NoDR_Noise100.csv',
                  'csvfiles\SAAll_NoDR_Noise1000.csv']
 SELECTED_SA_FILE_NAME = SA_FILE_NAMES[INDX]
