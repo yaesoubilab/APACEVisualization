@@ -9,22 +9,22 @@ varBaseConditions = [
 ]
 varPolicyAConditions = [
     Cls.VariableCondition('Decision Period', 364, 364, False),
-    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.1, True, label_format='{:.1%}'),
+    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.2, True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 0, 0.1, True, label_format='{:.1%}')
 ]
 
 # series to display on the cost-effectiveness plane
 series = [
-    Cls.Series('Base', 'blue',
+    Cls.Series('Base', 'blue', #'#1874CD'
                variable_conditions=varBaseConditions,
                if_find_frontier=True,
-               labels_shift_x=-11,
-               labels_shift_y=0.03),
+               labels_shift_x=-25,
+               labels_shift_y=0.05),
     Cls.Series('Policy A', 'red',
                variable_conditions=varPolicyAConditions,
                if_find_frontier=True,
-               labels_shift_x=2,
-               labels_shift_y=-0.1)
+               labels_shift_x=10,
+               labels_shift_y=-0.2)
 ]
 
 # populate series
@@ -39,6 +39,7 @@ Cls.plot_series(series=series,
                 x_label='Expected Gonorrhea Infections Averted (Thousands)',
                 y_label='Expected Additional Drug M Used (Millions)',
                 file_name='-Base vs A.png',
+                show_only_on_frontier=False,
                 x_range=Set.X_RANGE,
                 y_range=Set.Y_RANGE,
                 show_error_bars=True

@@ -397,14 +397,14 @@ def plot_series(series, x_label, y_label, file_name,
                 show_error_bars=False):
 
     fig, ax = plt.subplots(figsize=(6, 5))
-    legend = []
 
     for i, ser in enumerate(series):
 
         # if only points on frontier should be displayed
         if show_only_on_frontier:
-            # scatter plot
+            # scatter plot for points on the frontier
             ax.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
+            # line plot for frontier line
             ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
 
             # error bars
@@ -425,8 +425,8 @@ def plot_series(series, x_label, y_label, file_name,
 
         else:  # show all points
 
-            # scatter plot
-            ax.scatter(ser.xValues, ser.yValues, color=ser.color, alpha=1, zorder=10)
+            # scatter plot for all points
+            ax.scatter(ser.xValues, ser.yValues, color=ser.color, alpha=1, zorder=10, s=15, label=ser.name)
 
             # error bars
             if show_error_bars:
@@ -458,24 +458,31 @@ def plot_series(series, x_label, y_label, file_name,
             # fit the model
             results = model.fit()
 
+            xs = np.linspace(min(x), max(x), 50)
+            exog = np.column_stack((xs, xs ** 2))
+            exog = sm.add_constant(exog)
+            predicted = results.model.predict(results.params, exog)
+
             # read predicted values along with prediction interval
-            prstd, iv_l, iv_u = wls_prediction_std(results)
-            ax.plot(x, results.fittedvalues, 'k-', linewidth=1, label="OLS")
-            ax.plot(x, iv_u, '-', color='#E0EEEE', linewidth=0.5)
-            ax.plot(x, iv_l, '-', color='#E0EEEE', linewidth=0.5)
-            ax.fill_between(x, iv_l, iv_u, linewidth=1, color='#E0EEEE', alpha=0.75)
+            prstd, iv_l, iv_u = wls_prediction_std(results, exog)
+            ax.plot(xs, predicted, 'k--', linewidth=0.5) # results.fittedvalues
+            ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1) #'#E0EEEE'
+            ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
+            ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.1)
 
-        legend.append(ser.name)
-
+    # labels and legend
     plt.xlabel(x_label)
     plt.ylabel(y_label)
-    plt.legend(legend, loc=2)
+    plt.legend(loc=2)
 
+    # x and y ranges
     if x_range is not None:
         plt.xlim(x_range)
     if y_range is not None:
         plt.ylim(y_range)
 
+    # origin
     plt.axvline(x=0, linestyle='--', color='black', linewidth=0.5)
     plt.axhline(y=0, linestyle='--', color='black', linewidth=0.5)
+
     plt.savefig('figures/' + file_name)
