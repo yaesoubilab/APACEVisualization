@@ -7,6 +7,7 @@ import csv
 import SimPy.EconEvalClasses as Econ
 import SimPy.StatisticalClasses as Stat
 from enum import Enum
+import apace.RegressionClasses as Reg
 
 
 ALPHA = 0.05    # confidence level
@@ -285,10 +286,10 @@ class Series:
 
         # find the (x, y) values of strategies to display on CE plane
         for idx, shiftedStr in enumerate(shifted_strategies):
-            self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs)
-            self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs)
+            self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs*x_axis_multiplier)
+            self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs*y_axis_multiplier)
             self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
-            self.yValues.append(shiftedStr.aveCost * y_axis_multiplier)
+            self.yValues.append(shiftedStr.aveCost*y_axis_multiplier)
             self.yLabels.append(shiftedStr.name)
 
             if if_store_CI:
@@ -451,28 +452,16 @@ def plot_series(series, x_label, y_label, file_name,
                     )
 
             # fit a quadratic function to the curve.
-            y = np.array(ser.allDeltaCosts)
-            x = np.array(ser.allDeltaEffects)
-
-            # create the matrix X (of least square)
-            X = np.column_stack((x, x ** 2))
-            X = sm.add_constant(X)  # add constant to X
-
-            # create the regression model
-            model = sm.OLS(y, X)
-
-            # fit the model
-            results = model.fit()
+            y = np.array(ser.allDeltaCosts) #allDeltaCosts)
+            x = np.array(ser.allDeltaEffects) #allDeltaEffects)
+            quad_reg = Reg.SingleVarRegression(x, y)
 
             xs = np.linspace(min(x), max(x), 50)
-            exog = np.column_stack((xs, xs ** 2))
-            exog = sm.add_constant(exog)
-            predicted = results.model.predict(results.params, exog)
+            predicted = quad_reg.get_predicted_y(xs)
+            iv_l, iv_u = quad_reg.get_predicted_y_CI(xs)
 
-            # read predicted values along with prediction interval
-            prstd, iv_l, iv_u = wls_prediction_std(results, exog)
-            ax.plot(xs, predicted, 'k--', linewidth=0.5) # results.fittedvalues
-            ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1) #'#E0EEEE'
+            ax.plot(xs, predicted, 'k--', linewidth=0.5)  # results.fittedvalues
+            ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1)  # '#E0EEEE'
             ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
             ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.1)
 
