@@ -17,5 +17,5 @@ SELECTED_POSTERIOR_FILE_NAME = POSTERIOR_FILE_NAMES[INDX]
 
 # file names for calibration
 CALIB_FILE_NAMES \
-    = ['csvfiles\Trajs.csv', '', '']
+    = ['csvfiles\Trajs.csv', 'csvfiles\Trajs.csv', '']
 SELECTED_CALIB_FILE_NAME = CALIB_FILE_NAMES[INDX]
