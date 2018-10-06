@@ -231,7 +231,11 @@ class Series:
         self.labelsShiftX = labels_shift_x
         self.labelsShiftY = labels_shift_y
 
-        # (x., y) values
+        # delta costs and delta effects
+        self.allDeltaCosts = np.array([])
+        self.allDeltaEffects = np.array([])
+
+        # (x, y) values
         self.xValues = []
         self.yValues = []
         # confidence or prediction intervals
@@ -281,6 +285,8 @@ class Series:
 
         # find the (x, y) values of strategies to display on CE plane
         for idx, shiftedStr in enumerate(shifted_strategies):
+            self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs)
+            self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs)
             self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
             self.yValues.append(shiftedStr.aveCost * y_axis_multiplier)
             self.yLabels.append(shiftedStr.name)
@@ -445,8 +451,8 @@ def plot_series(series, x_label, y_label, file_name,
                     )
 
             # fit a quadratic function to the curve.
-            y = np.array(ser.yValues)
-            x = np.array(ser.xValues)
+            y = np.array(ser.allDeltaCosts)
+            x = np.array(ser.allDeltaEffects)
 
             # create the matrix X (of least square)
             X = np.column_stack((x, x ** 2))
