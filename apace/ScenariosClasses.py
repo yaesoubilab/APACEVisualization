@@ -410,7 +410,7 @@ def plot_series(series, x_label, y_label, file_name,
         # if only points on frontier should be displayed
         if show_only_on_frontier:
             # scatter plot for points on the frontier
-            ax.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
+            ax.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5, label=ser.name)
             # line plot for frontier line
             ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
 
@@ -478,7 +478,7 @@ def plot_series(series, x_label, y_label, file_name,
         plt.ylim(y_range)
 
     # origin
-    plt.axvline(x=0, linestyle='--', color='black', linewidth=0.5)
-    plt.axhline(y=0, linestyle='--', color='black', linewidth=0.5)
+    plt.axvline(x=0, linestyle='-', color='black', linewidth=0.3)
+    plt.axhline(y=0, linestyle='-', color='black', linewidth=0.3)
 
-    plt.savefig('figures/' + file_name)
+    plt.savefig('figures/' + file_name, dpm=300)

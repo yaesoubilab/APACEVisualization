@@ -1,7 +1,7 @@
 
 INDX = 1
-X_RANGE = (-200, 100)
-Y_RANGE = (-2.5, 2.5)
+X_RANGE = (-75, 75)
+Y_RANGE = (-1, 2)
 
 # file names for scenario analysis
 SA_FILE_NAMES = ['csvfiles\SAAll.csv',
