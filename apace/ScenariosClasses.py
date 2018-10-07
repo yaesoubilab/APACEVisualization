@@ -434,6 +434,7 @@ def plot_series(series, x_label, y_label, file_name,
 
             # scatter plot for all points
             ax.scatter(ser.xValues, ser.yValues, color=ser.color, alpha=1, zorder=10, s=15, label=ser.name)
+            #ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5, zorder=10, s=5, label=ser.name)
 
             # error bars
             if show_error_bars:
@@ -452,8 +453,8 @@ def plot_series(series, x_label, y_label, file_name,
                     )
 
             # fit a quadratic function to the curve.
-            y = np.array(ser.allDeltaCosts) #allDeltaCosts)
-            x = np.array(ser.allDeltaEffects) #allDeltaEffects)
+            y = np.array(ser.yValues) #allDeltaCosts)
+            x = np.array(ser.xValues) #allDeltaEffects)
             quad_reg = Reg.SingleVarRegression(x, y)
 
             xs = np.linspace(min(x), max(x), 50)
