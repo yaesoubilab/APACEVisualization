@@ -9,7 +9,7 @@ Vis.X_LABEL = 'Year'
 Vis.X_RANGE = [-1, SIM_LENGTH]
 Vis.X_TICKS = [0, 10]
 Vis.DEFAULT_FONT_SIZE = 7
-Vis.Y_LABEL_COORD_X = -0.24
+Vis.Y_LABEL_COORD_X = -0.3
 Vis.SUBPLOT_W_SPACE = 1
 Vis.SUBPLOT_H_SPACE = 0.7
 
@@ -39,7 +39,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[1, 5],
+            x_range=[1, 10],
             y_range=[1, 4])
     )
 )
@@ -49,7 +49,7 @@ obss = Vis.convert_data_to_list_of_observed_outcomes(D.GonorrheaRate)
 list_plot_info.append(
     Vis.PlotTrajInfo(
         traj_name='Annual rate of gonorrhea cases',
-        y_range=[0, 10000],
+        y_range=[0, 8000],
         is_x_integer=True,
         y_multiplier=100000,
         figure_size=(4, 3.2),
@@ -62,7 +62,7 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[1, 5],
+            x_range=[1, 10],
             y_range=[0.02*100000, 0.05*100000]
         )
     )
@@ -77,8 +77,8 @@ list_plot_info.append(
         is_x_integer=True,
         y_multiplier=100,
         figure_size=(4, 3.2),
-        title="Gonorrhea cases",
-        y_label='Symptomatic (%)'
+        title="Proportion of gonorrhea\ncases that are symptomatic",
+        y_label='Percentage (%)'
     )
 )
 list_plot_calib_info.append(
@@ -86,8 +86,8 @@ list_plot_calib_info.append(
         list_of_observed_outcomes=obss,
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[1, 5],
-            y_range=[0.02*100000, 0.05*100000]
+            x_range=[1, 10],
+            y_range=[50, 100]
         )
     )
 )
@@ -96,15 +96,15 @@ list_plot_calib_info.append(
 obss = Vis.convert_data_to_list_of_observed_outcomes(D.PercentCiprofloxacinResistant)
 for r in RESIST_PROFILE:
     obsInfo = None
-    if r == 'A':
-        obsInfo = Vis.PlotCalibrationInfo(
-            list_of_observed_outcomes=obss,
-            if_connect_obss=False,
-            feasible_range_info=Vis.FeasibleRangeInfo(
-                x_range=[1, 5],
-                y_range=[0, 0]
-            )
-        )
+    # if r == 'A':
+    #     obsInfo = Vis.PlotCalibrationInfo(
+    #         list_of_observed_outcomes=obss,
+    #         if_connect_obss=False,
+    #         feasible_range_info=Vis.FeasibleRangeInfo(
+    #             x_range=[1, 5],
+    #             y_range=[0, 0]
+    #         )
+    #     )
     list_plot_calib_info.append(obsInfo)
 
     list_plot_info.append(
@@ -113,8 +113,8 @@ for r in RESIST_PROFILE:
             y_range=[0, 40],
             is_x_integer=True,
             y_multiplier=100,
-            title='Gonorrhea cases',
-            y_label='Resistant to {0} (%)'.format(r),
+            title='Proportion of gonorrhea\ncases resistant to {0}'.format(r),
+            y_label='Percentage (%)',
             file_name='Traj-Resistant to ' + r)
     )
 
