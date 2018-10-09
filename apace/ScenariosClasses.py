@@ -278,7 +278,7 @@ class Series:
         # if to save the results of the CEA
         if save_cea_results:
             self.CEA.build_CE_table(interval=Econ.Interval.PREDICTION,
-                                    file_name='CEA Table, '+self.name)
+                                    file_name='CEA Table-'+self.name)
 
         # find the list of strategies excluding the base
         shifted_strategies = self.CEA.get_shifted_strategies()
@@ -345,6 +345,15 @@ def populate_series(series_list,
                     store_cea_CIs = False,
                     x_axis_multiplier=1,
                     y_axis_multiplier=1):
+    """
+    :param series_list:
+    :param csv_filename:
+    :param save_cea_results: set it to True if the CE table should be generated
+    :param store_cea_CIs: set it to True if CIs will be displayed on the CE plane
+    :param x_axis_multiplier:
+    :param y_axis_multiplier:
+    :return:
+    """
 
     # data frame for scenario analysis
     df = ScenarioDataFrame(csv_filename)
