@@ -2,7 +2,7 @@ import apace.ScenariosClasses as Cls
 import gonorrhea.GonoSettings as Set
 
 # conditions of variables to define scenarios to display on each series of cost-effectiveness plane
-varConditions = [
+varBaseConditions = [
     Cls.VariableCondition('Decision Period', 364, 364, False),
     Cls.VariableCondition('% Resistant Threshold', 0.01, 0.1, True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1, False)
@@ -10,11 +10,11 @@ varConditions = [
 
 # series to display on the cost-effectiveness plane
 series = [
-    Cls.Series('Base', '#1874CD',
-               variable_conditions=varConditions,
+    Cls.Series('Base', 'blue', # '#1874CD',
+               variable_conditions=varBaseConditions,
                if_find_frontier=True,
-               labels_shift_x=-20,
-               labels_shift_y=0.03)
+               labels_shift_x=-10,
+               labels_shift_y=0.04)
 ]
 
 # populate series

@@ -19,9 +19,16 @@ class QuadPolyRegFunction (PolyRegressionFunction):
         return sm.add_constant(X)
 
 
+class CubicPolyRegFunction (PolyRegressionFunction):
+
+    def get_X(self, x):
+        X = np.column_stack((x, x ** 2, x**3))
+        return sm.add_constant(X)
+
+
 class SingleVarRegression:
 
-    def __init__(self, x, y, poly_regression_function=QuadPolyRegFunction()):
+    def __init__(self, x, y, poly_regression_function=CubicPolyRegFunction()):
 
         self.f = poly_regression_function
         self.x = x

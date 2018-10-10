@@ -277,7 +277,7 @@ class Series:
 
         # if to save the results of the CEA
         if save_cea_results:
-            self.CEA.build_CE_table(interval=Econ.Interval.PREDICTION,
+            self.CEA.build_CE_table(interval=Econ.Interval.CONFIDENCE,
                                     file_name='CEA Table-'+self.name)
 
         # find the list of strategies excluding the base
@@ -442,7 +442,7 @@ def plot_series(series, x_label, y_label, file_name,
         else:  # show all points
 
             # scatter plot for all points
-            ax.scatter(ser.xValues, ser.yValues, color=ser.color, alpha=1, zorder=10, s=15, label=ser.name)
+            ax.scatter(ser.xValues, ser.yValues, color=ser.color, alpha=0.5, zorder=10, s=15, label=ser.name)
             #ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5, zorder=10, s=5, label=ser.name)
 
             # error bars
@@ -450,7 +450,7 @@ def plot_series(series, x_label, y_label, file_name,
                 ax.errorbar(ser.xValues, ser.yValues,
                             xerr=ser.get_x_err(),
                             yerr=ser.get_y_err(),
-                            fmt='none', color='k', linewidth=1, alpha=0.5, zorder=5)
+                            fmt='none', color='k', linewidth=1, alpha=0.25, zorder=5)
 
             # y-value labels
             for j, txt in enumerate(ser.yLabels):
@@ -458,7 +458,8 @@ def plot_series(series, x_label, y_label, file_name,
                     plt.annotate(
                         txt,
                         (ser.xValues[j] + ser.labelsShiftX, ser.yValues[j] + ser.labelsShiftY),
-                        color=ser.color
+                        fontsize=6.5,
+                        color=ser.color,
                     )
 
             # fit a quadratic function to the curve.
@@ -470,10 +471,10 @@ def plot_series(series, x_label, y_label, file_name,
             predicted = quad_reg.get_predicted_y(xs)
             iv_l, iv_u = quad_reg.get_predicted_y_CI(xs)
 
-            ax.plot(xs, predicted, 'k--', linewidth=0.5)  # results.fittedvalues
+            ax.plot(xs, predicted, '--', linewidth=1, color=ser.color)  # results.fittedvalues
             ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1)  # '#E0EEEE'
             ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
-            ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.1)
+            ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
 
     # labels and legend
     plt.xlabel(x_label)
@@ -487,7 +488,7 @@ def plot_series(series, x_label, y_label, file_name,
         plt.ylim(y_range)
 
     # origin
-    plt.axvline(x=0, linestyle='-', color='black', linewidth=0.3)
-    plt.axhline(y=0, linestyle='-', color='black', linewidth=0.3)
+    plt.axvline(x=0, linestyle='-', color='black', linewidth=0.4)
+    plt.axhline(y=0, linestyle='-', color='black', linewidth=0.4)
 
     plt.savefig('figures/' + file_name, dpm=300)
