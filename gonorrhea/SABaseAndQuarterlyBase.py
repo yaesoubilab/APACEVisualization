@@ -31,6 +31,7 @@ series = [
 Cls.populate_series(series,
                     csv_filename=Set.SELECTED_SA_FILE_NAME,
                     store_cea_CIs=True,
+                    save_cea_results=True,      # set it to True if the CE table should be generated
                     x_axis_multiplier=1 / 1e3,
                     y_axis_multiplier=1 / 1e6)
 
@@ -39,6 +40,7 @@ Cls.plot_series(series=series,
                 x_label='Expected Gonorrhea Infections Averted (Thousands)',
                 y_label='Expected Additional Drug M Used (Millions)',
                 file_name='-Base vs Quarterly Base.png',
+                show_only_on_frontier=False,
                 x_range=Set.X_RANGE,
                 y_range=Set.Y_RANGE,
                 show_error_bars=True
