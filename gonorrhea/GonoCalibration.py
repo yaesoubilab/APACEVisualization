@@ -77,7 +77,7 @@ list_plot_info.append(
         is_x_integer=True,
         y_multiplier=100,
         figure_size=(4, 3.2),
-        title="Proportion of gonorrhea\ncases that are symptomatic",
+        title="Proportion of detected\ncases that are symptomatic",
         y_label='Percentage (%)'
     )
 )
