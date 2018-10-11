@@ -465,7 +465,7 @@ def plot_series(series, x_label, y_label, file_name,
             # fit a quadratic function to the curve.
             y = np.array(ser.yValues) #allDeltaCosts)
             x = np.array(ser.xValues) #allDeltaEffects)
-            quad_reg = Reg.SingleVarRegression(x, y)
+            quad_reg = Reg.SingleVarRegression(x, y, degree=2)
 
             xs = np.linspace(min(x), max(x), 50)
             predicted = quad_reg.get_predicted_y(xs)

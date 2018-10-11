@@ -12,6 +12,13 @@ class PolyRegressionFunction:
         pass
 
 
+class LinearPolyRegFunction (PolyRegressionFunction):
+
+    def get_X(self, x):
+        X = np.column_stack((x))
+        return sm.add_constant(X)
+
+
 class QuadPolyRegFunction (PolyRegressionFunction):
 
     def get_X(self, x):
@@ -28,9 +35,18 @@ class CubicPolyRegFunction (PolyRegressionFunction):
 
 class SingleVarRegression:
 
-    def __init__(self, x, y, poly_regression_function=CubicPolyRegFunction()):
+    def __init__(self, x, y, degree=2, poly_regression_function=None):
 
-        self.f = poly_regression_function
+        if poly_regression_function is None:
+            if degree == 1:
+                self.f = LinearPolyRegFunction()
+            elif degree == 2:
+                self.f = QuadPolyRegFunction()
+            elif degree == 3:
+                self.f = CubicPolyRegFunction()
+            else:
+                raise ValueError('Degree in single variable regression can take value from {1, 2, 3}.')
+
         self.x = x
         self.X = self.f.get_X(x)
         self.y = y

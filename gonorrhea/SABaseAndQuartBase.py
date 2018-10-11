@@ -9,7 +9,7 @@ varBaseConditions = [
 ]
 varBaseQuarterlyConditions = [
     Cls.VariableCondition('Decision Period', 91, 91, False),
-    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.1, True, label_format='{:.1%}'),
+    Cls.VariableCondition('% Resistant Threshold', 0.03, 0.1, True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1, False)
 ]
 

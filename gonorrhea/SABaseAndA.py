@@ -18,13 +18,13 @@ series = [
     Cls.Series('Base', 'blue', #'#1874CD'
                variable_conditions=varBaseConditions,
                if_find_frontier=True,
-               labels_shift_x=-25,
-               labels_shift_y=0.05),
+               labels_shift_x=-10,
+               labels_shift_y=0.04),
     Cls.Series('Policy A', 'red',
                variable_conditions=varPolicyAConditions,
                if_find_frontier=True,
-               labels_shift_x=10,
-               labels_shift_y=-0.2)
+               labels_shift_x=2.5,
+               labels_shift_y=-0.11)
 ]
 
 # populate series
