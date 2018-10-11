@@ -5,8 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-x = np.random.randn(10)
-y = x*x + np.random.randn(10)
+x = np.random.randn(100)
+y = x*x + np.random.randn(100)
 
 fig, ax = plt.subplots(figsize=(8, 4))
 ax.scatter(x, y, alpha=0.5, color='orchid')
