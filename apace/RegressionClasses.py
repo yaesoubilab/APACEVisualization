@@ -4,6 +4,24 @@ import statsmodels.api as sm
 from statsmodels.sandbox.regression.predstd import wls_prediction_std
 
 
+class TestPolyRegFunction:
+    def __init__(self, degree=1):
+        self.degree = degree
+
+    def get_X(self, x):
+
+        if self.degree == 1:
+            return sm.add_constant(x)
+        else:
+            # build the vector of x, x^2, x^3, ...
+            tempX = []
+            tempX.append(x)
+            for i in range(2, self.degree+1):
+                tempX.append(np.power(x, i))
+            X = np.column_stack(tempX)
+            return sm.add_constant(X)
+
+
 class PolyRegressionFunction:
     def __init__(self):
         pass
@@ -15,8 +33,7 @@ class PolyRegressionFunction:
 class LinearPolyRegFunction (PolyRegressionFunction):
 
     def get_X(self, x):
-        X = np.column_stack((x))
-        return sm.add_constant(X)
+        return sm.add_constant(x)
 
 
 class QuadPolyRegFunction (PolyRegressionFunction):
@@ -47,13 +64,13 @@ class SingleVarRegression:
             else:
                 raise ValueError('Degree in single variable regression can take value from {1, 2, 3}.')
 
+        self.f = TestPolyRegFunction(degree)
+
         self.x = x
         self.X = self.f.get_X(x)
         self.y = y
         model = sm.OLS(y, self.X)
         self.fitted = model.fit()
-
-        #print(self.fitted.summary())
 
     def get_predicted_y(self, x_pred):
 
@@ -65,7 +82,7 @@ class SingleVarRegression:
         # http://www2.stat.duke.edu/~tjl13/s101/slides/unit6lec3H.pdf
         y_hat = self.fitted.predict(self.X)     # predicted y at X
         y_err = self.y - y_hat                  # residuals
-        mean_x = self.x.mean()             # mean of x
+        mean_x = self.x.mean()                  # mean of x
         n = len(self.X)                         # number of observations
         dof = n - self.fitted.df_model - 1      # degrees of freedom
         t = stats.t.ppf(1 - 0.025, df=dof)      # t-statistics
@@ -79,7 +96,7 @@ class SingleVarRegression:
 
         return lower, upper
 
-    def get_predicted_y_PI(self, x):
-        X_pred = self.f.get_X(x)
+    def get_predicted_y_PI(self, x_pred):
+        X_pred = self.f.get_X(x_pred)
         sdev, lower, upper = wls_prediction_std(self.fitted, exog=X_pred, alpha=0.05)
         return lower, upper

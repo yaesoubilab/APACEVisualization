@@ -54,11 +54,11 @@ class Parameters:
     def plot_histogram(self, parameter_name, title, x_lable=None, y_lable=None, x_range=None):
         """ creates a histogram of one parameter """
 
-        Fig.graph_histogram2(
+        Fig.graph_histogram(
             self.dictOfParams[parameter_name],
             title, x_lable, y_lable,
             x_range=x_range, figure_size=HISTOGRAM_FIG_SIZE,
-            output_type=Fig.OutType.JPG, file_name='figures\Par-'+title
+            output_type='jpg', file_name='figures\Par-'+title
         )
 
     def plot_histograms(self, ids=None, csv_file_name_prior=None, posterior_fig_loc='figures'):

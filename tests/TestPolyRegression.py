@@ -5,8 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-x = np.random.randn(1000)
-y = x*x + np.random.randn(1000)
+x = np.random.randn(10)
+y = x*x + np.random.randn(10)
 
 fig, ax = plt.subplots(figsize=(8, 4))
 ax.scatter(x, y, alpha=0.5, color='orchid')
@@ -15,7 +15,7 @@ fig.tight_layout(pad=2)
 ax.grid(True)
 
 # regression
-single_var_poly_reg = Reg.SingleVarRegression(x, y)
+single_var_poly_reg = Reg.SingleVarRegression(x, y, degree=2)
 
 x_pred = np.linspace(x.min(), x.max(), 50)
 y_pred = single_var_poly_reg.get_predicted_y(x_pred)
