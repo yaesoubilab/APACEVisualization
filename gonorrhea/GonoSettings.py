@@ -13,7 +13,7 @@ SELECTED_SA_FILE_NAME = SA_FILE_NAMES[INDX]
 # file names for parameter analysis
 POSTERIOR_FILE_NAMES \
     = ['csvfiles\ParamSamples10YrCalib.csv',
-       'csvfiles\ParamSamples50YrCalib.csv', '','']
+       'csvfiles\ParamSamples10YrCalib.csv', '','']
 SELECTED_POSTERIOR_FILE_NAME = POSTERIOR_FILE_NAMES[INDX]
 
 # file names for calibration

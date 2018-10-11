@@ -11,6 +11,7 @@ HISTOGRAM_FIG_SIZE = (4.2, 3.2)
 
 
 class Column(Enum):
+    # columns of the csv file containing parameter prior distributions
     ID = 0
     NAME = 1
     LB = 2
@@ -115,21 +116,21 @@ class Parameters:
                 else:
                     title = priors[par_id][Column.TITLE.value]
 
-                # find multipler
+                # find multiplier
                 if priors[par_id][Column.MULTIPLIER.value] == '':
                     multiplier = 1
                 else:
                     multiplier = float(priors[par_id][Column.MULTIPLIER.value])
-                    x_range = [x*multiplier for x in x_range]
-                    par_values = [v*multiplier for v in par_values]
+                x_range = [x*multiplier for x in x_range]
+                par_values = [v*multiplier for v in par_values]
 
                 # plot histogram
-                Fig.graph_histogram2(
+                Fig.graph_histogram(
                     data=par_values,
                     title=title.replace('!', '\n'),
                     x_range=x_range,
                     figure_size=HISTOGRAM_FIG_SIZE,
-                    output_type=Fig.OutType.JPG,
+                    output_type='png',
                     file_name=file_name
                 )
 
@@ -168,7 +169,7 @@ class Parameters:
         # write parameter estimates and credible intervals
         IO.write_csv('ParameterEstimates.csv', results)
 
-    def calculate_ratio_obss(self, numerator_par_name, denominator_par_names):
+    def __calculate_ratio_obss(self, numerator_par_name, denominator_par_names):
 
         # if only one parameter is in the denominator
         if type(denominator_par_names) is not list:
@@ -185,7 +186,7 @@ class Parameters:
     def get_ratio_mean_interval(self, numerator_par_name, denominator_par_names, deci=0, form=None):
 
         # print the ratio estimate and credible interval
-        sum_stat = Stat.SummaryStat('', self.calculate_ratio_obss(numerator_par_name, denominator_par_names))
+        sum_stat = Stat.SummaryStat('', self.__calculate_ratio_obss(numerator_par_name, denominator_par_names))
 
         if form is None:
             return sum_stat.get_mean(), sum_stat.get_percentile(0.05)
@@ -193,14 +194,18 @@ class Parameters:
             return sum_stat.format_estimate_PI(0.05, deci, form)
 
     def plot_ratio_hist(self, numerator_par_name, denominator_par_names,
-                        title, x_label=None, x_range=None, posterior_fig_loc= 'figures'):
+                        title, x_label=None, x_range=None, output_fig_loc='figures'):
 
-        ratio_obss = self.calculate_ratio_obss(numerator_par_name, denominator_par_names)
+        ratio_obss = self.__calculate_ratio_obss(numerator_par_name, denominator_par_names)
 
-        file_name = posterior_fig_loc + '\Ratio-' + title
+        file_name = output_fig_loc + '\Ratio-' + title
 
         # create the histogram of ratio
-        Fig.graph_histogram2(
-            ratio_obss, title,
-            x_label=x_label, x_range=x_range, figure_size=HISTOGRAM_FIG_SIZE, output_type=Fig.OutType.JPG,
+        Fig.graph_histogram(
+            data=ratio_obss,
+            title=title,
+            x_label=x_label,
+            x_range=x_range,
+            figure_size=HISTOGRAM_FIG_SIZE,
+            output_type='png',
             file_name=file_name)

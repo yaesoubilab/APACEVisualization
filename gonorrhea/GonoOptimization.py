@@ -8,5 +8,6 @@ Vis.plot_all_opt_itrs(
     csv_directory='../gonorrhea/csvfiles/optimcsvfiles/',
     save_plots_directory='../gonorrhea/figures/optimization_figs/',
     f_range=[0, 5*10e7],
-    x_ranges=[[0, 0.3], [0, 0.2]]
+    x_ranges=[[0, 0.3], [0, 0.2]],
+    y_axis_labels=[r'$f(\tau, \theta)$', r'$\tau$', r'$\theta$']
 )
