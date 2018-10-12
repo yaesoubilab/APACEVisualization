@@ -1,5 +1,5 @@
 
-INDX = 0
+INDX = 1
 X_RANGE = (-75, 75)
 Y_RANGE = (-1, 2)
 
