@@ -1,7 +1,7 @@
 
-INDX = 1
-X_RANGE = (-75, 75)
-Y_RANGE = (-1, 2)
+INDX = 0
+X_RANGE = (-100, 100) # (-75, 75)
+Y_RANGE = (-1.5, 2.5) #(-1, 2)
 
 # file names for scenario analysis
 SA_FILE_NAMES = ['csvfiles\SA10YrCalib.csv',
