@@ -465,6 +465,11 @@ def plot_series(series, x_label, y_label, file_name,
             x = np.array(ser.xValues) #allDeltaEffects)
             quad_reg = Reg.SingleVarRegression(x, y, degree=2)
 
+            # print derivatives at
+            print('WTP at min dCost', 1000 * quad_reg.get_derivative(x=ser.xValues[len(ser.xValues)-1]))
+            print('WTP at dCost = 0:', 1000 * quad_reg.get_derivative(x=0))
+            print('WTP at max dCost:', 1000 * quad_reg.get_derivative(x=ser.xValues[0]))
+
             xs = np.linspace(min(x), max(x), 50)
             predicted = quad_reg.get_predicted_y(xs)
             iv_l, iv_u = quad_reg.get_predicted_y_CI(xs)
