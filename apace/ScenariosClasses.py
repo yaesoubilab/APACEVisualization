@@ -475,9 +475,9 @@ def plot_series(series, x_label, y_label, file_name,
             iv_l, iv_u = quad_reg.get_predicted_y_CI(xs)
 
             ax.plot(xs, predicted, '--', linewidth=1, color=ser.color)  # results.fittedvalues
-            ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1)  # '#E0EEEE'
-            ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
-            ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
+            #ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1)  # '#E0EEEE'
+            #ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
+            #ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
 
     # labels and legend
     plt.xlabel(x_label)
