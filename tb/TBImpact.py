@@ -1,14 +1,11 @@
-import apace.TrajectoriesClasses1 as Vis
-
-WARMUP = 23
-TIME_0 = 1991
-TIME_END = TIME_0 + 34
+import apace.TrajectoriesClasses as Vis
+from tb import TBSettings as Set
 
 # specify the output (show, save as .jpg, or save as .pdf)
 Vis.OUTPUT_TYPE = Vis.OutType.JPG
 Vis.X_LABEL = 'Year'
-Vis.X_RANGE = [2014, 2026]
-Vis.X_TICKS = [2015, 5]
+Vis.X_RANGE = [Set.TIME_0+Set.INDEX_PROJ-4, Set.TIME_END+2]
+Vis.X_TICKS = [Set.TIME_0+Set.INDEX_PROJ-3, 5]
 
 list_plot_info = []     # list of plot infos
 
@@ -61,8 +58,8 @@ eff = Vis.TrajImpact(
         'Annual follow-up, with IPT'
     ],
     fig_infos=list_plot_info,
-    time_0=TIME_0,
-    warm_up=WARMUP,
+    time_0=Set.TIME_0,
+    warm_up=Set.WARMUP,
     period_length=1
 )
 

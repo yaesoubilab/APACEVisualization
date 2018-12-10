@@ -580,7 +580,7 @@ class TrajImpact:
 
         # save this figure
         output_figure(plt, 'impact_time_series/Impact')
-        plt.show(block=True)
+        #plt.show(block=True)
 
 
 def compare_trajectories(csv_file_1, csv_file_2, legends, figure_location):

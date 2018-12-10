@@ -4,7 +4,7 @@ import apace.ScenariosClasses as Cls
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
-PROB = 0.75
+PROB = 0.5
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
 varConditions = [
@@ -33,7 +33,7 @@ varConditions = [
 # series to display on the cost-effectiveness plane
 series = [
     Cls.Series(name='{:.{prec}f}%'.format(PROB*100, prec=0),
-               color='#808A87',
+               color='#4D4D4D',# '#808A87',
                variable_conditions=varConditions,
                if_find_frontier=True,
                labels_shift_x=-0.04,
@@ -62,7 +62,7 @@ for i, ser in enumerate(series):
         ax.errorbar(x_value, ser.yValues[j],
                     xerr=[[x_err_l], [x_err_u]],
                     yerr=[[y_err_l], [y_err_u]],
-                    fmt='none', color='k', linewidth=1, alpha=0.2)
+                    fmt='none', color='k', linewidth=1, alpha=0.4)
 
     ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=1)
 
@@ -72,8 +72,8 @@ for i, ser in enumerate(series):
 
 plt.xlabel('DALY Averted')
 plt.ylabel('Additional Cost (Thousand Dollars)')
-plt.xlim(-500, 8500)
-plt.ylim(-50, 650)
-plt.axvline(x=0, linestyle='--', color='black', linewidth=1)
-plt.axhline(y=0, linestyle='--', color='black', linewidth=1)
+plt.xlim(-500, 6500)
+plt.ylim(-150, 650)
+plt.axvline(x=0, linestyle='--', color='black', linewidth=.5)
+plt.axhline(y=0, linestyle='--', color='black', linewidth=.5)
 plt.savefig('figures/cea/' + 'CEA {:.{prec}f}%'.format(PROB*100, prec=0) + '.png')
