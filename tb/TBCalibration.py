@@ -3,8 +3,9 @@ from tb import TBData as D
 from tb import TBSettings as Set
 
 
-# specify the output (show, save as .jpg, or save as .pdf)
+# specify the default settings of the visualization module
 Vis.OUTPUT_TYPE = Vis.OutType.JPG
+Vis.TRAJ_TRANSPARENCY = 0.2
 Vis.X_LABEL = 'Year'
 Vis.X_RANGE = [Set.TIME_0+Set.WARMUP-1, Set.TIME_END+2]
 Vis.X_TICKS = [Set.TIME_0+Set.WARMUP-1, 10]

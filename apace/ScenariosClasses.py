@@ -265,7 +265,11 @@ class Series:
 
         return True
 
-    def do_CEA(self, save_cea_results=False, if_store_CI=False, x_axis_multiplier=1, y_axis_multiplier=1):
+    def do_CEA(self,
+               save_cea_results=False,
+               if_store_CI=False,
+               x_axis_multiplier=1,
+               y_axis_multiplier=1):
 
         # cost-effectiveness analysis
         self.CEA = Econ.CEA(self.strategies,
@@ -276,7 +280,10 @@ class Series:
         # if to save the results of the CEA
         if save_cea_results:
             self.CEA.build_CE_table(interval=Econ.Interval.CONFIDENCE,
-                                    file_name='CEA Table-'+self.name)
+                                    file_name='CEA Table-'+self.name,
+                                    cost_multiplier=y_axis_multiplier,
+                                    effect_multiplier=x_axis_multiplier,
+                                    effect_digits=0)
 
         # find the list of strategies excluding the base
         shifted_strategies = self.CEA.get_shifted_strategies()

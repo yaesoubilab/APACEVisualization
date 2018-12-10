@@ -4,8 +4,8 @@ from tb import TBSettings as Set
 # specify the output (show, save as .jpg, or save as .pdf)
 Vis.OUTPUT_TYPE = Vis.OutType.JPG
 Vis.X_LABEL = 'Year'
-Vis.X_RANGE = [Set.TIME_0+Set.INDEX_PROJ-4, Set.TIME_END+2]
-Vis.X_TICKS = [Set.TIME_0+Set.INDEX_PROJ-3, 5]
+Vis.X_RANGE = [Set.PROJ-2, Set.TIME_END+1]
+Vis.X_TICKS = [Set.PROJ-1, 5]
 
 list_plot_info = []     # list of plot infos
 
@@ -59,7 +59,7 @@ eff = Vis.TrajImpact(
     ],
     fig_infos=list_plot_info,
     time_0=Set.TIME_0,
-    warm_up=Set.WARMUP,
+    warm_up=Set.PROJ-Set.TIME_0-2,
     period_length=1
 )
 

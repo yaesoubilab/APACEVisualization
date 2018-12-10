@@ -43,32 +43,33 @@ print('')
 # ---------------------------------------------
 print('TB incidence in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Per Pop.'].get_mean_PI(
-        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
 
 print('TB incidence among naive in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Naive Adults | Per Pop.'].get_mean_PI(
-        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
 
 print('TB incidence among experienced in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Experienced Adults | Per Pop.'].get_mean_PI(
-        time_index=Set.INDEX_PROJ, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
 
 # ---------------------------------------------
 # Decline in TB incidence between 2018 and 2027
 # ---------------------------------------------
 for i, traj_df in enumerate(traj_data_frames):
-    print('Decline in tuberculosis incidence between 2018 and 2027 ({0}):'.format(scenario_names[i]),
+    print('Decline in tuberculosis incidence between 2018 and 2028 ({0}):'.format(scenario_names[i]),
           traj_df.allTrajs['Active TB Incidence | Per Pop.'].get_relative_diff_mean_PI(
-              time_index0=Set.INDEX_PROJ - 1, time_index1=Set.INDEX_PROJ + 10 - 2, order=1, deci=1, format='%'))
+              time_index0=2018-Set.TIME_0-Set.WARMUP,
+              time_index1=Set.TIME_END-Set.TIME_0-Set.WARMUP-1, order=1, deci=1, format='%'))
 
 # ---------------------------------------------
 # Parameter posterior at base line
 # ---------------------------------------------
 print('')
-print('Prob of progression following reinfection after complete TB treatment to latently infected and treatment-naive:',
-      param_df.get_ratio_mean_interval(
-          numerator_par_name='Prob: If progress | L | Tc <1| HIV -',
-          denominator_par_names='Prob: If progress | L | Tn| HIV -', deci=1, form=','))
+# print('Prob of progression following reinfection after complete TB treatment to latently infected and treatment-naive:',
+#       param_df.get_ratio_mean_interval(
+#           numerator_par_name='Prob: If progress | L | Tc <1| HIV -',
+#           denominator_par_names='Prob: If progress | L | Tn| HIV -', deci=1, form=','))
 
 print('Rate of reactivation (relapse) after treatment completion in the first year post-treatment :',
       param_df.get_mean_interval('Rate: TB Reactivation | L | Tc <1| HIV -', 4, form=','))

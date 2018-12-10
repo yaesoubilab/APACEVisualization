@@ -4,7 +4,7 @@ import apace.ScenariosClasses as Cls
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
-PROB = 0.5
+PROB = 0.75
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
 varConditions = [
