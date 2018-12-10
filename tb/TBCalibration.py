@@ -123,7 +123,7 @@ list_plot_calib_info.append(
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
-            y_range=[9000, 13000]
+            y_range=[9500, 12500]
         )
     )
 )
@@ -173,7 +173,7 @@ list_plot_calib_info.append(
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
-            y_range=[2.6, 10.5]
+            y_range=[2.7, 7.7]
         )
     )
 )
@@ -199,7 +199,7 @@ list_plot_calib_info.append(
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[Set.TIME_0 + Set.WARMUP + 1, Set.TIME_0 + Set.WARMUP + 7],
-            y_range=[5, 15]
+            y_range=[5.7, 13.7]
         )
     )
 )
@@ -224,7 +224,7 @@ list_plot_calib_info.append(
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[Set.TIME_0 + Set.WARMUP + 1, Set.TIME_0 + Set.WARMUP + 7],
-            y_range=[0, 1.5]
+            y_range=[0, 1.25]
         )
     )
 )
@@ -274,8 +274,7 @@ list_plot_calib_info.append(
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
-            y_range=None,
-            fill_between=False
+            y_range=[15, 50]
         )
     )
 )
@@ -299,8 +298,7 @@ list_plot_calib_info.append(
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
-            y_range=None,
-            fill_between=False
+            y_range=[50, 100]
         )
     )
 )
@@ -325,8 +323,7 @@ list_plot_calib_info.append(
         if_connect_obss=True,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[Set.TIME_0+Set.WARMUP+1, Set.TIME_0+Set.WARMUP+7],
-            y_range=None,
-            fill_between=False
+            y_range=[10, 60]
         )
     )
 )
