@@ -4,7 +4,7 @@ import apace.ScenariosClasses as Cls
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
-PROB = 0.75
+PROB = .5
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
 varConditions = [
@@ -73,7 +73,7 @@ for i, ser in enumerate(series):
 plt.xlabel('DALY Averted')
 plt.ylabel('Additional Cost (Thousand Dollars)')
 plt.xlim(-500, 6500)
-plt.ylim(-150, 650)
+plt.ylim(-250, 650)
 plt.axvline(x=0, linestyle='--', color='black', linewidth=.5)
 plt.axhline(y=0, linestyle='--', color='black', linewidth=.5)
 plt.savefig('figures/cea/' + 'CEA {:.{prec}f}%'.format(PROB*100, prec=0) + '.png')
