@@ -267,7 +267,7 @@ class Series:
 
     def do_CEA(self,
                save_cea_results=False,
-               if_store_CI=False,
+               interval=Econ.Interval.NO_INTERVAL,
                x_axis_multiplier=1,
                y_axis_multiplier=1):
 
@@ -279,7 +279,7 @@ class Series:
 
         # if to save the results of the CEA
         if save_cea_results:
-            self.CEA.build_CE_table(interval=Econ.Interval.CONFIDENCE,
+            self.CEA.build_CE_table(interval=interval,
                                     file_name='CEA Table-'+self.name,
                                     cost_multiplier=y_axis_multiplier,
                                     effect_multiplier=x_axis_multiplier,
@@ -297,9 +297,9 @@ class Series:
             self.yValues.append(shiftedStr.aveCost*y_axis_multiplier)
             self.yLabels.append(shiftedStr.name)
 
-            if if_store_CI:
-                x_interval = shiftedStr.get_effect_interval(Econ.Interval.CONFIDENCE, ALPHA)
-                y_interval = shiftedStr.get_cost_interval(Econ.Interval.CONFIDENCE, ALPHA)
+            if interval is not Econ.Interval.NO_INTERVAL:
+                x_interval = shiftedStr.get_effect_interval(interval, ALPHA)
+                y_interval = shiftedStr.get_cost_interval(interval, ALPHA)
                 self.xIntervals.append([x*x_axis_multiplier for x in x_interval])
                 self.yIntervals.append([y*y_axis_multiplier for y in y_interval])
 
@@ -309,9 +309,9 @@ class Series:
             self.frontierYValues.append(shiftedStr.aveCost*y_axis_multiplier)
             self.frontierLabels.append(shiftedStr.name)
 
-            if if_store_CI:
-                x_interval = shiftedStr.get_effect_interval(Econ.Interval.CONFIDENCE, ALPHA)
-                y_interval = shiftedStr.get_cost_interval(Econ.Interval.CONFIDENCE, ALPHA)
+            if interval is not Econ.Interval.NO_INTERVAL:
+                x_interval = shiftedStr.get_effect_interval(interval, ALPHA)
+                y_interval = shiftedStr.get_cost_interval(interval, ALPHA)
                 self.frontierXIntervals.append([x*x_axis_multiplier for x in x_interval])
                 self.frontierYIntervals.append([y*y_axis_multiplier for y in y_interval])
 
@@ -347,14 +347,14 @@ class Series:
 def populate_series(series_list,
                     csv_filename,
                     save_cea_results=False,
-                    store_cea_CIs = False,
+                    interval=Econ.Interval.NO_INTERVAL,
                     x_axis_multiplier=1,
                     y_axis_multiplier=1):
     """
     :param series_list:
     :param csv_filename:
     :param save_cea_results: set it to True if the CE table should be generated
-    :param store_cea_CIs: set it to True if CIs will be displayed on the CE plane
+    :param interval: select from Econ.Interval (no interval, CI, or PI)
     :param x_axis_multiplier:
     :param y_axis_multiplier:
     :return:
@@ -397,7 +397,7 @@ def populate_series(series_list,
 
                 label = ''.join(str(x) for x in label_list)[:-1]
 
-                # legens
+                # legends
                 ser.legend.append(label)
 
                 ser.strategies.append(
@@ -408,7 +408,7 @@ def populate_series(series_list,
                 )
 
         # do CEA on this series
-        ser.do_CEA(save_cea_results, store_cea_CIs, x_axis_multiplier, y_axis_multiplier)
+        ser.do_CEA(save_cea_results, interval, x_axis_multiplier, y_axis_multiplier)
 
 
 def plot_series(series, x_label, y_label, file_name,

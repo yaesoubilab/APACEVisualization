@@ -1,531 +1,534 @@
-ID,Name,Lower Bound,Upper Bound
-0,Dummy 0,0,0
-1,Dummy 1,1,1
-2,"Ratio of TB infectivity, experienced to naive ",1,1.5
-3,"Ratio of TB infectivity, children to naive ",0.034,0.305
-4,"Infectivity of TB, Naive Adults",1.575,2.625
-5,"Infectivity of TB, Experienced Adults",,
-6,"Infectivity of TB, Children",,
-7,"Ratio of HIV infectivity, HIV+IC to HIV+ nIC",2.2,2.2
-8,"Ratio of HIV infectivity, ART to HIV+ nIC",0.1,0.1
-9,Infectivity of HIV+ nIC,0.0825,0.1375
-10,Infectivity of HIV+ IC,,
-11,Infectivity of HIV+ ART,,
-12,Prob: If Tc+ after Tc | HIV -,0.75,0.75
-13,Prob: If Tc+ after Tc | HIV+nIC,,
-14,Prob: If Tc+ after Tc | HIV+IC,,
-15,Prob: If Tc+ after Tc | HIV+ART,,
-16,Rate of follow-up | Tc+ >1 | HIV-,1,1
-17,Rate of follow-up | Tc+ >1 | HIV+nIC,,
-18,Rate of follow-up | Tc+ >1 | HIV+IC,,
-19,Rate of follow-up | Tc+ >1 | HIV+ART,,
-20,Prob: If MDR-TB after Diagnostic Test | I | Tc+ <1| HIV -,0,0.02
-21,Prob: If MDR-TB after Diagnostic Test | I | Tc+ <1| HIV+nIC,,
-22,Prob: If MDR-TB after Diagnostic Test | I | Tc+ <1| HIV+IC,,
-23,Prob: If MDR-TB after Diagnostic Test | I | Tc+ <1| HIV+ART,,
-24,Cost of clinic visit for initial diagnosis (excluding tests),?,?
-25,Cost of follow-up clinic visit (excluding tests),?,?
-26,Cost of Xpert,?,?
-27,Cost of culture,?,?
-28,Cost of DST,?,?
-29,Cost of smear microscopy,?,?
-30,Cost of X-ray,15.64,32.28
-31,Cost of DS-TB treatment (full course),452,889
-32,Cost of MDR-TB treatment (full course),396,7265
-33,Cost of IPT (per year),2.82,8.52
-34,Cost of monitoring visit (per year),?,?
-35,Cost of ART (per year),1404,2112
-36,"Cost of + | No IPT, No ART (per year)",,
-37,"Cost of + |IPT, No ART (per year)",,
-38,"Cost of +|No IPT, ART (per year)",,
-39,"Cost of +|IPT, ART (per year)",,
-40,Cost of diagnosing | Tn,?,?
-41,Cost of diagnosting | Ti ,?,?
-42,Cost of diagnosing | Tc,?,?
-43,Cost of diagnosing | Tc+,?,?
-44,Disutility | HIV+nIC,0.006,0.023
-45,Disutility | HIV+IC,0.274,0.582
-46,Disutility | HIV+ART,0.052,0.111
-47,Disutility | I | HIV-,0.224,0.454
-48,Disutility | T | HIV-,0.0888,0.1332
-49,Disutility | I | HIV+nIC,,
-50,Disutility | T | HIV+nIC,,
-51,Disutility | I | HIV+IC,,
-52,Disutility | T | HIV+IC,,
-53,Disutility | I | HIV+ART,,
-54,Disutility | T | HIV+ART,,
-55,Life-years lost | TB cause of death,24.12,29.48
-56,Life-years lost | HIV cause of death,30.42,37.18
-57,Sensitivity of diagnosis for | I | Tn | HIV-,0.76,0.92
-58,Sensitivity of diagnosis for | I | Ti | HIV-,0.95,0.95
-59,Sensitivity of diagnosis for | I | Tc | HIV-,0.95,0.95
-60,Sensitivity of diagnosis for | I | Tc+ | HIV-,0.95,0.95
-61,Sensitivity of diagnosis for | I | Tn | HIV+,0.7,0.86
-62,Sensitivity of diagnosis for | I | Ti | HIV+,0.95,0.95
-63,Sensitivity of diagnosis for | I | Tc | HIV+,0.95,0.95
-64,Sensitivity of diagnosis for | I | Tc+ | HIV+,0.95,0.95
-65,Rate: Dropout | L | Tc+ >1| HIV -,0.162518929,0.162518929
-66,Rate: Dropout | I | Tc+ >1| HIV -,,
-67,IPT effectiveness | reduction in prob fast progression | L | comp,0.45,0.85
-68,IPT effectiveness | reduction in activation rate | L | comp,0.45,0.85
-69,Multiplier | IPT effectiveness | reduction in prob fast progression | L | comp,,
-70,Multiplier | IPT effectiveness | reduction in activation rate | L | comp,,
-71,ART Effectiveness Factor,0.47,0.81
-72,Birth rate,0.02185,0.02415
-73,Aging rate | S | children,0.063333333,0.07
-74,Aging rate | L | children,0.063333333,0.07
-75,Aging rate | I | children,0.063333333,0.07
-76,Aging rate | R| children,0.063333333,0.07
-77,Rate: Progression to HIV-IC from HIV-nIC,0.135,0.149
-78,Ratio of death rate:  adults |experienced to adults | naive ,1,6
-79,Natural death rate | children,0.001615,0.001785
-80,Natural death rate | adults | naive ,0.00855,0.00945
-81,Natural death rate | adults | experienced ,,
-82,Excess mortality | HIV if nIC,0.005,0.012
-83,Excess mortality | HIV if IC,0.125,0.213
-84,Excess mortality | HIV on ART,0.005,0.012
-85,1 - partial immunity from prior infection | HIV -,0.13,0.63
-86,1 - partial immunity from prior treatment | HIV -,0.13,1
-87,1 - partial immunity from prior infection | HIV+ nIC,0.32,0.77
-88,1 - partial immunity from prior treatment | HIV+ nIC,0.32,1
-89,1 - partial immunity from prior infection | HIV+ IC,0.61,0.86
-90,1 - partial immunity from prior treatment | HIV+ IC,0.61,1
-91,1 - partial immunity from prior infection | HIV+ ART,0.32,0.77
-92,1 - partial immunity from prior treatment | HIV+ ART,0.32,1
-93,Ratio: Susceptibility of S | children to S | Tn | HIV -,1,1.5
-94,Ratio: Susceptibility of L | children to S | Tn | HIV -,1,1.5
-95,Susceptibility of S | Tn | HIV -,1,1
-96,Susceptibility of L | Tn| HIV -,,
-97,Susceptibility of L | Ti <1| HIV -,,
-98,Susceptibility of L | Tc <1| HIV -,,
-99,Susceptibility of L | Tc+ <1| HIV -,,
-100,Susceptibility of L | Ti >1| HIV -,,
-101,Susceptibility of L | Tc >1| HIV -,,
-102,Susceptibility of L | Tc+ >1| HIV -,,
-103,Susceptibility of S | Tn | HIV+nIC,1,1
-104,Susceptibility of L | Tn| HIV+nIC,,
-105,Susceptibility of L | Ti <1| HIV+nIC,,
-106,Susceptibility of L | Tc <1| HIV+nIC,,
-107,Susceptibility of L | Tc+ <1| HIV+nIC,,
-108,Susceptibility of L | Ti >1| HIV+nIC,,
-109,Susceptibility of L | Tc >1| HIV+nIC,,
-110,Susceptibility of L | Tc+ >1| HIV+nIC,,
-111,Susceptibility of S | Tn | HIV+IC,1,1
-112,Susceptibility of L | Tn| HIV+IC,,
-113,Susceptibility of L | Ti <1| HIV+IC,,
-114,Susceptibility of L | Tc <1| HIV+IC,,
-115,Susceptibility of L | Tc+ <1| HIV+IC,,
-116,Susceptibility of L | Ti >1| HIV+IC,,
-117,Susceptibility of L | Tc >1| HIV+IC,,
-118,Susceptibility of L | Tc+ >1| HIV+IC,,
-119,Susceptibility of S | Tn | HIV+ART,1,1
-120,Susceptibility of I | Ti <1| HIV+IC,,
-121,Susceptibility of I | Tc <1| HIV+IC,,
-122,Susceptibility of I | Tc+ <1| HIV+IC,,
-123,Susceptibility of I | Ti >1| HIV+IC,,
-124,Susceptibility of I | Tc >1| HIV+IC,,
-125,Susceptibility of I | Tc+ >1| HIV+IC,,
-126,Susceptibility of S | children,,
-127,Susceptibility of L | children,,
-128,Prob: If progress | S | Tn | HIV -,0.09,0.14
-129,Prob: If progress | L | Tn| HIV -,,
-130,Prob: If progress | L | Ti <1| HIV -,,
-131,Prob: If progress | L | Tc <1| HIV -,,
-132,Prob: If progress | L | Tc+ <1| HIV -,,
-133,Prob: If progress | L | Ti >1| HIV -,,
-134,Prob: If progress | L | Tc >1| HIV -,,
-135,Prob: If progress | L | Tc+ >1| HIV -,,
-136,Prob: If progress | S | Tn | HIV+nIC,0.18,0.51
-137,Prob: If progress | L | Tn| HIV+nIC,,
-138,Prob: If progress | L | Ti <1| HIV+nIC,,
-139,Prob: If progress | L | Tc <1| HIV+nIC,,
-140,Prob: If progress | L | Tc+ <1| HIV+nIC,,
-141,Prob: If progress | L | Ti >1| HIV+nIC,,
-142,Prob: If progress | L | Tc >1| HIV+nIC,,
-143,Prob: If progress | L | Tc+ >1| HIV+nIC,,
-144,Prob: If progress | S | Tn | HIV+IC,0.75,0.91
-145,Prob: If progress | L | Tn| HIV+IC,,
-146,Prob: If progress | L | Ti <1| HIV+IC,,
-147,Prob: If progress | L | Tc <1| HIV+IC,,
-148,Prob: If progress | L | Tc+ <1| HIV+IC,,
-149,Prob: If progress | L | Ti >1| HIV+IC,,
-150,Prob: If progress | L | Tc >1| HIV+IC,,
-151,Prob: If progress | L | Tc+ >1| HIV+IC,,
-152,Prob: If progress | S | Tn | HIV+ART,,
-153,Prob: If progress | L | Tn| HIV+ART,,
-154,Prob: If progress | L | Ti <1| HIV+ART,,
-155,Prob: If progress | L | Tc <1| HIV+ART,,
-156,Prob: If progress | L | Tc+ <1| HIV+ART,,
-157,Prob: If progress | L | Ti >1| HIV+ART,,
-158,Prob: If progress | L | Tc >1| HIV+ART,,
-159,Prob: If progress | L | Tc+ >1| HIV+ART,,
-160,Prob: If progress | S | children,0.09,0.14
-161,Prob: If progress | L | children,,
-162,Rate: TB Reactivation | L | Tn| HIV -,0.0003,0.0024
-163,Rate: TB Reactivation | L | Ti <1| HIV -,0.033556784,0.068278841
-164,Rate: TB Reactivation | L | Tc <1| HIV -,0.033556784,0.068278841
-165,Rate: TB Reactivation | L | Tc+ <1| HIV -,,
-166,Rate: TB Reactivation | L | Ti >1| HIV -,,
-167,Rate: TB Reactivation | L | Tc >1| HIV -,,
-168,Rate: TB Reactivation | L | Tc+ >1| HIV -,,
-169,Rate: TB Reactivation | L | Tn| HIV+nIC,0.001,0.006
-170,Rate: TB Reactivation | L | Ti <1| HIV+nIC,0.033556784,0.068278841
-171,Rate: TB Reactivation | L | Tc <1| HIV+nIC,0.033556784,0.068278841
-172,Rate: TB Reactivation | L | Tc+ <1| HIV+nIC,,
-173,Rate: TB Reactivation | L | Ti >1| HIV+nIC,,
-174,Rate: TB Reactivation | L | Tc >1| HIV+nIC,,
-175,Rate: TB Reactivation | L | Tc+ >1| HIV+nIC,,
-176,Rate: TB Reactivation | L | Tn| HIV+IC,0.08,0.2
-177,Rate: TB Reactivation | L | Ti <1| HIV+IC,0.033556784,0.136557682
-178,Rate: TB Reactivation | L | Tc <1| HIV+IC,0.033556784,0.136557682
-179,Rate: TB Reactivation | L | Tc+ <1| HIV+IC,,
-180,Rate: TB Reactivation | L | Ti >1| HIV+IC,,
-181,Rate: TB Reactivation | L | Tc >1| HIV+IC,,
-182,Rate: TB Reactivation | L | Tc+ >1| HIV+IC,,
-183,Rate: TB Reactivation | L | Tn| HIV+ART,,
-184,Rate: TB Reactivation | L | Ti <1| HIV+ART,,
-185,Rate: TB Reactivation | L | Tc <1| HIV+ART,,
-186,Rate: TB Reactivation | L | Tc+ <1| HIV+ART,,
-187,Rate: TB Reactivation | L | Ti >1| HIV+ART,,
-188,Rate: TB Reactivation | L | Tc >1| HIV+ART,,
-189,Rate: TB Reactivation | L | Tc+ >1| HIV+ART,,
-190,Rate: TB Reactivation | L | children,0.0003,0.0024
-191,Excess mortality | I | HIV -,0.2,0.37
-192,Excess mortality | I | HIV+ nIC,0.28,0.37
-193,Excess mortality | I | HIV+ IC,0.472,1.272
-194,Excess mortality | I | HIV+ ART,0.2,0.37
-195,Excess mortality | T | HIV -,0.047,0.07
-196,Excess mortality | T | HIV+ nIC,0.047,0.07
-197,Excess mortality | T | HIV+ IC,0.047,0.07
-198,Excess mortality | T | HIV+ ART,0.047,0.07
-199,Rate: Natural recovery | I | Tn| HIV -,0.15,0.25
-200,Rate: Natural recovery | I | Ti <1| HIV -,0.15,0.25
-201,Rate: Natural recovery | I | Tc <1| HIV -,0.15,0.25
-202,Rate: Natural recovery | I | Tc+ <1| HIV -,,
-203,Rate: Natural recovery | I | Ti >1| HIV -,0.15,0.25
-204,Rate: Natural recovery | I | Tc >1| HIV -,0.15,0.25
-205,Rate: Natural recovery | I | Tc+ >1| HIV -,,
-206,Rate: Natural recovery | I | Tn| HIV+nIC,0.06,0.16
-207,Rate: Natural recovery | I | Ti <1| HIV+nIC,0.06,0.16
-208,Rate: Natural recovery | I | Tc <1| HIV+nIC,0.06,0.16
-209,Rate: Natural recovery | I | Tc+ <1| HIV+nIC,0.06,0.16
-210,Rate: Natural recovery | I | Ti >1| HIV+nIC,0.06,0.16
-211,Rate: Natural recovery | I | Tc >1| HIV+nIC,0.06,0.16
-212,Rate: Natural recovery | I | Tc+ >1| HIV+nIC,0.06,0.16
-213,Rate: Natural recovery | I | Tn| HIV+IC,0,0
-214,Rate: Natural recovery | I | Ti <1| HIV+IC,0,0
-215,Rate: Natural recovery | I | Tc <1| HIV+IC,0,0
-216,Rate: Natural recovery | I | Tc+ <1| HIV+IC,0,0
-217,Rate: Natural recovery | I | Ti >1| HIV+IC,0,0
-218,Rate: Natural recovery | I | Tc >1| HIV+IC,0,0
-219,Rate: Natural recovery | I | Tc+ >1| HIV+IC,0,0
-220,Rate: Natural recovery | I | Tn| HIV+ART,,
-221,Rate: Natural recovery | I | Ti <1| HIV+ART,,
-222,Rate: Natural recovery | I | Tc <1| HIV+ART,,
-223,Rate: Natural recovery | I | Tc+ <1| HIV+ART,,
-224,Rate: Natural recovery | I | Ti >1| HIV+ART,,
-225,Rate: Natural recovery | I | Tc >1| HIV+ART,,
-226,Rate: Natural recovery | I | Tc+ >1| HIV+ART,,
-227,Rate: Natural recovery | I | children,0.15,0.25
-228,Time until passive detection: I | Tn| HIV -,0.083333333,2
-229,Time until passive detection: I | Ti <1| HIV -,0.083333333,1.5
-230,Time until passive detection: I | Tc <1| HIV -,0.083333333,1.5
-231,Time until passive detection: I | Tc+ <1| HIV -,0.083333333,1.5
-232,Time until passive detection: I | Ti >1| HIV -,0.083333333,1.5
-233,Time until passive detection: I | Tc >1| HIV -,0.083333333,1.5
-234,Time until passive detection: I | Tc+ >1| HIV -,0.083333333,1.5
-235,Time until passive detection: I | Tn| HIV+nIC,0.083333333,2
-236,Time until passive detection: I | Ti <1| HIV+nIC,0.083333333,1.5
-237,Time until passive detection: I | Tc <1| HIV+nIC,0.083333333,1.5
-238,Time until passive detection: I | Tc+ <1| HIV+nIC,0.083333333,1.5
-239,Time until passive detection: I | Ti >1| HIV+nIC,0.083333333,1.5
-240,Time until passive detection: I | Tc >1| HIV+nIC,0.083333333,1.5
-241,Time until passive detection: I | Tc+ >1| HIV+nIC,0.083333333,1.5
-242,Time until passive detection: I | Tn| HIV+IC,0.083333333,2
-243,Time until passive detection: I | Ti <1| HIV+IC,0.083333333,1.5
-244,Time until passive detection: I | Tc <1| HIV+IC,0.083333333,1.5
-245,Time until passive detection: I | Tc+ <1| HIV+IC,0.083333333,1.5
-246,Time until passive detection: I | Ti >1| HIV+IC,0.083333333,1.5
-247,Time until passive detection: I | Tc >1| HIV+IC,0.083333333,1.5
-248,Time until passive detection: I | Tc+ >1| HIV+IC,0.083333333,1.5
-249,Time until passive detection: I | Tn| HIV+ART,0.083333333,2
-250,Time until passive detection: I | Ti <1| HIV+ART,0.083333333,1.5
-251,Time until passive detection: I | Tc <1| HIV+ART,0.083333333,1.5
-252,Time until passive detection: I | Tc+ <1| HIV+ART,0.083333333,1.5
-253,Time until passive detection: I | Ti >1| HIV+ART,0.083333333,1.5
-254,Time until passive detection: I | Tc >1| HIV+ART,0.083333333,1.5
-255,Time until passive detection: I | Tc+ >1| HIV+ART,0.083333333,1.5
-256,Time until detection: I | children,0.083333333,3
-257,Rate: Passive detection | I | Tn| HIV -,,
-258,Rate: Passive detection | I | Ti <1| HIV -,,
-259,Rate: Passive detection | I | Tc <1| HIV -,,
-260,Rate: Passive detection | I | Tc+ <1| HIV -,,
-261,Rate: Passive detection | I | Ti >1| HIV -,,
-262,Rate: Passive detection | I | Tc >1| HIV -,,
-263,Rate: Passive detection | I | Tc+ >1| HIV -,,
-264,Rate: Passive detection | I | Tn| HIV+nIC,,
-265,Rate: Passive detection | I | Ti <1| HIV+nIC,,
-266,Rate: Passive detection | I | Tc <1| HIV+nIC,,
-267,Rate: Passive detection | I | Tc+ <1| HIV+nIC,,
-268,Rate: Passive detection | I | Ti >1| HIV+nIC,,
-269,Rate: Passive detection | I | Tc >1| HIV+nIC,,
-270,Rate: Passive detection | I | Tc+ >1| HIV+nIC,,
-271,Rate: Passive detection | I | Tn| HIV+IC,,
-272,Rate: Passive detection | I | Ti <1| HIV+IC,,
-273,Rate: Passive detection | I | Tc <1| HIV+IC,,
-274,Rate: Passive detection | I | Tc+ <1| HIV+IC,,
-275,Rate: Passive detection | I | Ti >1| HIV+IC,,
-276,Rate: Passive detection | I | Tc >1| HIV+IC,,
-277,Rate: Passive detection | I | Tc+ >1| HIV+IC,,
-278,Rate: Passive detection | I | Tn| HIV+ART,,
-279,Rate: Passive detection | I | Ti <1| HIV+ART,,
-280,Rate: Passive detection | I | Tc <1| HIV+ART,,
-281,Rate: Passive detection | I | Tc+ <1| HIV+ART,,
-282,Rate: Passive detection | I | Ti >1| HIV+ART,,
-283,Rate: Passive detection | I | Tc >1| HIV+ART,,
-284,Rate: Passive detection | I | Tc+ >1| HIV+ART,,
-285,Rate: Detection and Treatment | I | children,,
-286,Rate: Leave treatment |Ti | HIV -,1.935483871,3.243243243
-287,Rate: Leave treatment |Ti | HIV+nIC,1.935483871,3.243243243
-288,Rate: Leave treatment |Ti | HIV+IC,1.935483871,3.243243243
-289,Rate: Leave treatment |Ti | HIV+ART,1.935483871,3.243243243
-290,Rate: Complete Treatment |Tc | HIV -,1.764705882,2.142857143
-291,Rate: Complete Treatment |Tc | HIV+nIC,1.764705882,2.142857143
-292,Rate: Complete Treatment |Tc | HIV+IC,1.764705882,2.142857143
-293,Rate: Complete Treatment |Tc | HIV+ART,1.764705882,2.142857143
-294,Rate: Complete Treatment |Tmdr | HIV -,0.666666667,0.666666667
-295,Rate: Complete Treatment |Tmdr | HIV+nIC,0.666666667,0.666666667
-296,Rate: Complete Treatment |Tmdr | HIV+IC,0.666666667,0.666666667
-297,Rate: Complete Treatment |Tmdr | HIV+ART,0.666666667,0.666666667
-298,Prob: If Tc+ after Tc | HIV -,,
-299,Prob: If Tc+ after Tc | HIV+nIC,,
-300,Prob: If Tc+ after Tc | HIV+IC,,
-301,Prob: If Tc+ after Tc | HIV+ART,,
-302,Rate of follow-up | Tc+ >1 | HIV-,,
-303,Rate of follow-up | Tc+ >1 | HIV+nIC,,
-304,Rate of follow-up | Tc+ >1 | HIV+IC,,
-305,Rate of follow-up | Tc+ >1 | HIV+ART,,
-306,Prob: If still infectious after Ti | HIV -,0,0.2
-307,Prob: If still infectious after Ti | HIV+nIC,0,0.2
-308,Prob: If still infectious after Ti | HIV+IC,0,0.2
-309,Prob: If still infectious after Ti | HIV+ART,0,0.2
-310,Prob: If will complete Tx | I | Tn | <1996 | Data,0.7,0.8
-311,Prob: If will complete Tx | I | Tn | 1996 | Data,0.7776069,0.8701664
-312,Prob: If will complete Tx | I | Tn | 1997 | Data,0.8124313,0.9156528
-313,Prob: If will complete Tx | I | Tn | 1998 | Data,0.8469512,0.9333059
-314,Prob: If will complete Tx | I | Tn | 1999 | Data,0.8491095,0.9405734
-315,Prob: If will complete Tx | I | Tn | 2000 | Data,0.8555024,0.9372031
-316,Prob: If will complete Tx | I | Tn | 2001 | Data,0.8647908,0.9440547
-317,Prob: If will complete Tx | I | Tn | 2002 | Data,0.8694814,0.9435274
-318,Prob: If will complete Tx | I | Tn | 2003 | Data,0.9493168,0.9895754
-319,Prob: If will complete Tx | I | Tn | 2004 | Data,0.9364846,0.9837486
-320,Prob: If will complete Tx | I | Tn | 2005 | Data,0.9039831,0.9628688
-321,Prob: If will complete Tx | I | Tn | 2006 | Data,0.938675,0.984322
-322,Prob: If will complete Tx | I | Tn | 2007 | Data,0.9632641,0.994752
-323,Prob: If will complete Tx | I | Tn | 2008 | Data,0.9558029,0.9936668
-324,Prob: If will complete Tx | I | Tn | >2008 | Data,0.8287938,0.986014
-325,Prob: If will complete Tx | I | Tn | <1996 | In model,,
-326,Prob: If will complete Tx | I | Tn | 1996 | In model,,
-327,Prob: If will complete Tx | I | Tn | 1997 | In model,,
-328,Prob: If will complete Tx | I | Tn | 1998 | In model,,
-329,Prob: If will complete Tx | I | Tn | 1999 | In model,,
-330,Prob: If will complete Tx | I | Tn | 2000 | In model,,
-331,Prob: If will complete Tx | I | Tn | 2001 | In model,,
-332,Prob: If will complete Tx | I | Tn | 2002 | In model,,
-333,Prob: If will complete Tx | I | Tn | 2003 | In model,,
-334,Prob: If will complete Tx | I | Tn | 2004 | In model,,
-335,Prob: If will complete Tx | I | Tn | 2005 | In model,,
-336,Prob: If will complete Tx | I | Tn | 2006 | In model,,
-337,Prob: If will complete Tx | I | Tn | 2007 | In model,,
-338,Prob: If will complete Tx | I | Tn | 2008 | In model,,
-339,Prob: If will complete Tx | I | Tn | >2008 | In model,,
-340,Prob: If will complete Tx| I | Ti |<1996 | Data,0.2,0.6
-341,Prob: If will complete Tx| I | Ti |1996 | Data,0.262121,0.6951383
-342,Prob: If will complete Tx| I | Ti |1997 | Data,0.2778326,0.7221674
-343,Prob: If will complete Tx| I | Ti |1998 | Data,0.3234315,0.7657261
-344,Prob: If will complete Tx| I | Ti |1999 | Data,0.3544651,0.7040236
-345,Prob: If will complete Tx| I | Ti |2000 | Data,0.2490027,0.6004462
-346,Prob: If will complete Tx| I | Ti |2001 | Data,0.3957406,0.817759
-347,Prob: If will complete Tx| I | Ti |2002 | Data,0.3736167,0.7904537
-348,Prob: If will complete Tx| I | Ti |2003 | Data,0.5989402,0.9501168
-349,Prob: If will complete Tx| I | Ti |2004 | Data,0.5619344,0.9443741
-350,Prob: If will complete Tx| I | Ti |2005 | Data,0.3955438,0.8370362
-351,Prob: If will complete Tx| I | Ti |2006 | Data,0.5812365,0.947401
-352,Prob: If will complete Tx| I | Ti |2007 | Data,0.3301634,0.751903
-353,Prob: If will complete Tx| I | Ti |2008 | Data,0.46374,0.9277909
-354,Prob: If will complete Tx| I | Ti |>2008 | Data,0.4137931,0.8421053
-355,Prob: If will complete Tx| I | Ti |<1996 | In model,,
-356,Prob: If will complete Tx| I | Ti |1996 | In model,,
-357,Prob: If will complete Tx| I | Ti |1997 | In model,,
-358,Prob: If will complete Tx| I | Ti |1998 | In model,,
-359,Prob: If will complete Tx| I | Ti |1999 | In model,,
-360,Prob: If will complete Tx| I | Ti |2000 | In model,,
-361,Prob: If will complete Tx| I | Ti |2001 | In model,,
-362,Prob: If will complete Tx| I | Ti |2002 | In model,,
-363,Prob: If will complete Tx| I | Ti |2003 | In model,,
-364,Prob: If will complete Tx| I | Ti |2004 | In model,,
-365,Prob: If will complete Tx| I | Ti |2005 | In model,,
-366,Prob: If will complete Tx| I | Ti |2006 | In model,,
-367,Prob: If will complete Tx| I | Ti |2007 | In model,,
-368,Prob: If will complete Tx| I | Ti |2008 | In model,,
-369,Prob: If will complete Tx| I | Ti |>2008 | In model,,
-370,Prob: If will complete Tx| I | Tc |<1996 | Data,0.6,0.8
-371,Prob: If will complete Tx| I | Tc |1996 | Data,0.6295649,0.8921758
-372,Prob: If will complete Tx| I | Tc |1997 | Data,0.7224334,0.929482
-373,Prob: If will complete Tx| I | Tc |1998 | Data,0.7197204,0.921754
-374,Prob: If will complete Tx| I | Tc |1999 | Data,0.6834236,0.8853681
-375,Prob: If will complete Tx| I | Tc |2000 | Data,0.775851,0.9340215
-376,Prob: If will complete Tx| I | Tc |2001 | Data,0.8012883,0.9626878
-377,Prob: If will complete Tx| I | Tc |2002 | Data,0.8218494,0.9668526
-378,Prob: If will complete Tx| I | Tc |2003 | Data,0.8345857,0.9599714
-379,Prob: If will complete Tx| I | Tc |2004 | Data,0.8475219,0.9596663
-380,Prob: If will complete Tx| I | Tc |2005 | Data,0.857645,0.9739219
-381,Prob: If will complete Tx| I | Tc |2006 | Data,0.7941767,0.9358072
-382,Prob: If will complete Tx| I | Tc |2007 | Data,0.8713374,0.9765676
-383,Prob: If will complete Tx| I | Tc |2008 | Data,0.8049451,0.9394252
-384,Prob: If will complete Tx| I | Tc |>2008 | Data,0.7894737,0.9438202
-385,Prob: If will complete Tx| I | Tc |<1996 | In model,,
-386,Prob: If will complete Tx| I | Tc |1996 | In model,,
-387,Prob: If will complete Tx| I | Tc |1997 | In model,,
-388,Prob: If will complete Tx| I | Tc |1998 | In model,,
-389,Prob: If will complete Tx| I | Tc |1999 | In model,,
-390,Prob: If will complete Tx| I | Tc |2000 | In model,,
-391,Prob: If will complete Tx| I | Tc |2001 | In model,,
-392,Prob: If will complete Tx| I | Tc |2002 | In model,,
-393,Prob: If will complete Tx| I | Tc |2003 | In model,,
-394,Prob: If will complete Tx| I | Tc |2004 | In model,,
-395,Prob: If will complete Tx| I | Tc |2005 | In model,,
-396,Prob: If will complete Tx| I | Tc |2006 | In model,,
-397,Prob: If will complete Tx| I | Tc |2007 | In model,,
-398,Prob: If will complete Tx| I | Tc |2008 | In model,,
-399,Prob: If will complete Tx| I | Tc |>2008 | In model,,
-400,Prob: If will complete Tx| I | Tn,,
-401,Prob: If will complete Tx| I | Ti,,
-402,Prob: If will complete Tx| I | Tc,,
-403,Prob: If will complete Tx| I | Tn | HIV+nIC,,
-404,Prob: If will complete Tx| I | Ti | HIV+nIC,,
-405,Prob: If will complete Tx| I | Tc | HIV+nIC,,
-406,Prob: If will complete Tx| I | Tn | HIV+IC,,
-407,Prob: If will complete Tx| I | Ti | HIV+IC,,
-408,Prob: If will complete Tx| I | Tc | HIV+IC,,
-409,Prob: If will complete Tx| I | Tn | HIV+ART,,
-410,Prob: If will complete Tx| I | Ti | HIV+ART,,
-411,Prob: If will complete Tx| I | Tc | HIV+ART,,
-412,Prob: If will complete treatment | R| children,1,1
-413,Rate ART Initiation | HIV+ nIC | Before 2016 | Data - Intercept,0.01978022,0.01978022
-414,Rate ART Initiation | HIV+ nIC | Before 2016 | Data - Slope,1.8315E-05,1.8315E-05
-415,Rate ART Initiation | HIV+ nIC | After 2016 | Data - Intercept,0.1,0.1
-416,Rate ART Initiation | HIV+ nIC | Before 2016 | Data,,
-417,Rate ART Initiation | HIV+ nIC | After 2016 | Data,,
-418,Rate ART Initiation | HIV+ IC | Before 2016 | Data - Intercept,0.099450549,0.099450549
-419,Rate ART Initiation | HIV+ IC | Before 2016 | Data - Slope,4.57875E-05,4.57875E-05
-420,Rate ART Initiation | HIV+ IC | After 2016 | Data - Intercept,0.3,0.3
-421,Rate ART Initiation | HIV+ IC | Before 2016 | Data,,
-422,Rate ART Initiation | HIV+ IC | After 2016 | Data,,
-423,Prob ART Initiation | TB diagnosis | Before 2016 | Data - Intercept,0.098901099,0.098901099
-424,Prob ART Initiation | TB diagnosis | Before 2016 | Data - Slope,6.86813E-05,6.86813E-05
-425,Prob ART Initiation | TB diagnosis | After 2016 | Data - Intercept,0.3,0.3
-426,Prob ART Initiation | TB diagnosis | Before 2016 | Data,,
-427,Prob ART Initiation | TB diagnosis | After 2016 | Data,,
-428,Rate ART Initiation | HIV+ nIC | Model,,
-429,Rate ART Initiation | HIV+ IC | Model,,
-430,Prob: ART initiation upon TB diagnosis | HIV- | Model,0,0
-431,Prob: ART initiation upon TB diagnosis | HIV nIC | Model,,
-432,Prob: ART initiation upon TB diagnosis | HIV IC | Model,,
-433,Children,9439.427077,9439.427077
-434,Adults,23449.64799,23449.64799
-435,% Children | Latent,0.3,0.7
-436,% Children | Infected,0.001,0.01
-437,% Children | Recovered,0.02,0.1
-438,% Children | Susceptible,,
-439,% HIV+IC,0.01875,0.03125
-440,% HIV+nIC,0.01875,0.03125
-441,% HIV-,,
-442,% Ti | HIV+IC,0.0075,0.0525
-443,% Tc | HIV+IC,0.0075,0.0525
-444,% Tn | HIV+IC,,
-445,% Ti | HIV+nIC,0.00625,0.04375
-446,% Tc | HIV+nIC,0.00625,0.04375
-447,% Tn | HIV+nIC,,
-448,% Ti | HIV-,0,0.05
-449,% Tc | HIV-,0,0.05
-450,% Tn | HIV-,,
-451,% L | HIV+IC and Ti,0.912,1
-452,% I | HIV+IC and Ti,,
-453,% L | HIV+IC and Tc,0.912,1
-454,% I | HIV+IC and Tc,,
-455,% L | HIV+IC and Tn,0.57,0.63
-456,% I | HIV+IC and Tn,0,0.04
-457,% S | HIV+IC and Tn,,
-458,% L | HIV+nIC and Ti,0.912,1
-459,% I | HIV+nIC and Ti,,
-460,% L | HIV+nIC and Tc,0.912,1
-461,% I | HIV+nIC and Tc,,
-462,% L | HIV+nIC and Tn,0.57,0.63
-463,% I | HIV+nIC and Tn,0,0.04
-464,% S | HIV+nIC and Tn,,
-465,% L | HIV- and Ti,0.931,1
-466,% I | HIV- and Ti,,
-467,% L | HIV- and Tc,0.931,1
-468,% I | HIV- and Tc,,
-469,% L | HIV- and Tn,0.6,0.9
-470,% I | HIV- and Tn,0.002375,0.002625
-471,% S | HIV- and Tn,,
-472,Initial size of S | Tn | HIV -,,
-473,Initial size of L | Tn| HIV -,,
-474,Initial size of L | Ti <1| HIV -,,
-475,Initial size of L | Tc <1| HIV -,,
-476,Initial size of L | Tc+ <1| HIV -,,
-477,Initial size of L | Ti >1| HIV -,,
-478,Initial size of L | Tc >1| HIV -,,
-479,Initial size of L | Tc+ >1| HIV -,,
-480,Initial size of I | Tn| HIV -,,
-481,Initial size of I | Ti <1| HIV -,,
-482,Initial size of I | Tc <1| HIV -,,
-483,Initial size of I | Tc+ <1| HIV -,,
-484,Initial size of I | Ti >1| HIV -,,
-485,Initial size of I | Tc >1| HIV -,,
-486,Initial size of I | Tc+ >1| HIV -,,
-487,Initial size of Ti | HIV -,,
-488,Initial size of Tc | HIV -,,
-489,Initial size of Tmdr | HIV -,,
-490,Initial size of S | Tn | HIV+nIC,,
-491,Initial size of L | Tn| HIV+nIC,,
-492,Initial size of L | Ti <1| HIV+nIC,,
-493,Initial size of L | Tc <1| HIV+nIC,,
-494,Initial size of L | Tc+ <1| HIV+nIC,,
-495,Initial size of L | Ti >1| HIV+nIC,,
-496,Initial size of L | Tc >1| HIV+nIC,,
-497,Initial size of L | Tc+ >1| HIV+nIC,,
-498,Initial size of I | Tn| HIV+nIC,,
-499,Initial size of I | Ti <1| HIV+nIC,,
-500,Initial size of I | Tc <1| HIV+nIC,,
-501,Initial size of I | Tc+ <1| HIV+nIC,,
-502,Initial size of I | Ti >1| HIV+nIC,,
-503,Initial size of I | Tc >1| HIV+nIC,,
-504,Initial size of I | Tc+ >1| HIV+nIC,,
-505,Initial size of Ti | HIV+nIC,,
-506,Initial size of Tc | HIV+nIC,,
-507,Initial size of Tmdr | HIV+nIC,,
-508,Initial size of S | Tn | HIV+IC,,
-509,Initial size of L | Tn| HIV+IC,,
-510,Initial size of L | Ti <1| HIV+IC,,
-511,Initial size of L | Tc <1| HIV+IC,,
-512,Initial size of L | Tc+ <1| HIV+IC,,
-513,Initial size of L | Ti >1| HIV+IC,,
-514,Initial size of L | Tc >1| HIV+IC,,
-515,Initial size of L | Tc+ >1| HIV+IC,,
-516,Initial size of I | Tn| HIV+IC,,
-517,Initial size of I | Ti <1| HIV+IC,,
-518,Initial size of I | Tc <1| HIV+IC,,
-519,Initial size of I | Tc+ <1| HIV+IC,,
-520,Initial size of I | Ti >1| HIV+IC,,
-521,Initial size of I | Tc >1| HIV+IC,,
-522,Initial size of I | Tc+ >1| HIV+IC,,
-523,Initial size of Ti | HIV+IC,,
-524,Initial size of Tc | HIV+IC,,
-525,Initial size of Tmdr | HIV+IC,,
-526,Initial size of S | children,,
-527,Initial size of L | children,,
-528,Initial size of I | children,,
-529,Initial size of R| children,,
+ID,Name,Lower Bound,Upper Bound,Title,Multiplier
+0,Dummy 0,0,0,,
+1,Dummy 1,1,1,,
+2,"Ratio of TB infectivity, experienced to naive ",1,1.5,,
+3,"Ratio of TB infectivity, children to naive ",0.034,0.305,,
+4,"Infectivity of TB, Naive Adults",1.575,2.625,,
+5,"Infectivity of TB, Experienced Adults",,,,
+6,"Infectivity of TB, Children",,,,
+7,"Ratio of HIV infectivity, HIV+IC to HIV+ nIC",2.2,2.2,,
+8,"Ratio of HIV infectivity, ART to HIV+ nIC",0.1,0.1,,
+9,Infectivity of HIV+ nIC,0.0825,0.1375,,
+10,Infectivity of HIV+ IC,,,,
+11,Infectivity of HIV+ ART,,,,
+12,Prob: If Tc+ after Tc | HIV -,0.75,0.75,,
+13,Prob: If Tc+ after Tc | HIV+nIC,,,,
+14,Prob: If Tc+ after Tc | HIV+IC,,,,
+15,Prob: If Tc+ after Tc | HIV+ART,,,,
+16,Rate of follow-up | Tc+ >1 | HIV-,1,1,,
+17,Rate of follow-up | Tc+ >1 | HIV+nIC,,,,
+18,Rate of follow-up | Tc+ >1 | HIV+IC,,,,
+19,Rate of follow-up | Tc+ >1 | HIV+ART,,,,
+20,Prob: If MDR-TB after Diagnostic Test | I | Tc+ <1| HIV -,0,0.02,,
+21,Prob: If MDR-TB after Diagnostic Test | I | Tc+ <1| HIV+nIC,,,,
+22,Prob: If MDR-TB after Diagnostic Test | I | Tc+ <1| HIV+IC,,,,
+23,Prob: If MDR-TB after Diagnostic Test | I | Tc+ <1| HIV+ART,,,,
+24,Cost of clinic visit for initial diagnosis (excluding tests),?,?,,
+25,Cost of follow-up clinic visit (excluding tests),?,?,,
+26,Cost of Xpert,?,?,,
+27,Cost of culture,?,?,,
+28,Cost of DST,?,?,,
+29,Cost of smear microscopy,?,?,,
+30,Cost of X-ray,15.64,32.28,,
+31,Cost of DS-TB treatment (full course),452,889,,
+32,Cost of MDR-TB treatment (full course),396,7265,,
+33,Cost of IPT (per year),2.82,8.52,,
+34,Cost of monitoring visit (per year),?,?,,
+35,Cost of ART (per year),1404,2112,,
+36,"Cost of + | No IPT, No ART (per year)",,,,
+37,"Cost of + |IPT, No ART (per year)",,,,
+38,"Cost of +|No IPT, ART (per year)",,,,
+39,"Cost of +|IPT, ART (per year)",,,,
+40,Cost of diagnosing | Tn,?,?,,
+41,Cost of diagnosting | Ti ,?,?,,
+42,Cost of diagnosing | Tc,?,?,,
+43,Cost of diagnosing | Tc+,?,?,,
+44,Disutility | HIV+nIC,0.006,0.023,,
+45,Disutility | HIV+IC,0.274,0.582,,
+46,Disutility | HIV+ART,0.052,0.111,,
+47,Disutility | I | HIV-,0.224,0.454,,
+48,Disutility | T | HIV-,0.0888,0.1332,,
+49,Disutility | I | HIV+nIC,,,,
+50,Disutility | T | HIV+nIC,,,,
+51,Disutility | I | HIV+IC,,,,
+52,Disutility | T | HIV+IC,,,,
+53,Disutility | I | HIV+ART,,,,
+54,Disutility | T | HIV+ART,,,,
+55,Life-years lost | TB cause of death,24.12,29.48,,
+56,Life-years lost | HIV cause of death,30.42,37.18,,
+57,Sensitivity of diagnosis for | I | Tn | HIV-,0.76,0.92,,
+58,Sensitivity of diagnosis for | I | Ti | HIV-,0.95,0.95,,
+59,Sensitivity of diagnosis for | I | Tc | HIV-,0.95,0.95,,
+60,Sensitivity of diagnosis for | I | Tc+ | HIV-,0.95,0.95,,
+61,Sensitivity of diagnosis for | I | Tn | HIV+,0.7,0.86,,
+62,Sensitivity of diagnosis for | I | Ti | HIV+,0.95,0.95,,
+63,Sensitivity of diagnosis for | I | Tc | HIV+,0.95,0.95,,
+64,Sensitivity of diagnosis for | I | Tc+ | HIV+,0.95,0.95,,
+65,Rate: Dropout | L | Tc+ >1| HIV -,0.162518929,0.162518929,,
+66,Rate: Dropout | I | Tc+ >1| HIV -,,,,
+67,IPT effectiveness | reduction in prob fast progression | L | comp,0.45,0.85,,
+68,IPT effectiveness | reduction in activation rate | L | comp,0.45,0.85,,
+69,Multiplier | IPT effectiveness | reduction in prob fast progression | L | comp,,,,
+70,Multiplier | IPT effectiveness | reduction in activation rate | L | comp,,,,
+71,ART Effectiveness Factor,0.47,0.81,,
+72,Birth rate,0.02185,0.02415,,
+73,Aging rate | S | children,0.063333333,0.07,,
+74,Aging rate | L | children,0.063333333,0.07,,
+75,Aging rate | I | children,0.063333333,0.07,,
+76,Aging rate | R| children,0.063333333,0.07,,
+77,Rate: Progression to HIV-IC from HIV-nIC,0.135,0.149,,
+78,Ratio of death rate:  adults |experienced to adults | naive ,3.7,4.2,,
+79,Natural death rate | children,0.001615,0.001785,,
+80,Natural death rate | adults | naive ,0.00855,0.00945,,
+81,Natural death rate | adults | experienced ,,,,
+82,Excess mortality | HIV if nIC,0.005,0.012,,
+83,Excess mortality | HIV if IC,0.125,0.213,,
+84,Excess mortality | HIV on ART,0.005,0.012,,
+85,1 - partial immunity from prior infection | HIV -,0.13,0.63,,
+86,1 - partial immunity from prior treatment | HIV -,0.13,2,,
+87,1 - partial immunity from prior infection | HIV+ nIC,0.32,0.77,,
+88,1 - partial immunity from prior treatment | HIV+ nIC,0.32,2,,
+89,1 - partial immunity from prior infection | HIV+ IC,0.61,0.86,,
+90,1 - partial immunity from prior treatment | HIV+ IC,0.61,2,,
+91,1 - partial immunity from prior infection | HIV+ ART,0.32,0.77,,
+92,1 - partial immunity from prior treatment | HIV+ ART,0.32,2,,
+93,Ratio: Susceptibility of S | children to S | Tn | HIV -,1,1.5,,
+94,Ratio: Susceptibility of L | children to S | Tn | HIV -,1,1.5,,
+95,Ratio: Reactivation >1 to <1,0.00,0.50,,
+96,Susceptibility of S | Tn | HIV -,1,1,,
+97,Susceptibility of L | Tn| HIV -,,,,
+98,Susceptibility of L | Ti <1| HIV -,,,,
+99,Susceptibility of L | Tc <1| HIV -,,,,
+100,Susceptibility of L | Tc+ <1| HIV -,,,,
+101,Susceptibility of L | Ti >1| HIV -,,,,
+102,Susceptibility of L | Tc >1| HIV -,,,,
+103,Susceptibility of L | Tc+ >1| HIV -,,,,
+104,Susceptibility of S | Tn | HIV+nIC,1,1,,
+105,Susceptibility of L | Tn| HIV+nIC,,,,
+106,Susceptibility of L | Ti <1| HIV+nIC,,,,
+107,Susceptibility of L | Tc <1| HIV+nIC,,,,
+108,Susceptibility of L | Tc+ <1| HIV+nIC,,,,
+109,Susceptibility of L | Ti >1| HIV+nIC,,,,
+110,Susceptibility of L | Tc >1| HIV+nIC,,,,
+111,Susceptibility of L | Tc+ >1| HIV+nIC,,,,
+112,Susceptibility of S | Tn | HIV+IC,1,1,,
+113,Susceptibility of L | Tn| HIV+IC,,,,
+114,Susceptibility of L | Ti <1| HIV+IC,,,,
+115,Susceptibility of L | Tc <1| HIV+IC,,,,
+116,Susceptibility of L | Tc+ <1| HIV+IC,,,,
+117,Susceptibility of L | Ti >1| HIV+IC,,,,
+118,Susceptibility of L | Tc >1| HIV+IC,,,,
+119,Susceptibility of L | Tc+ >1| HIV+IC,,,,
+120,Susceptibility of S | Tn | HIV+ART,1,1,,
+121,Susceptibility of I | Ti <1| HIV+IC,,,,
+122,Susceptibility of I | Tc <1| HIV+IC,,,,
+123,Susceptibility of I | Tc+ <1| HIV+IC,,,,
+124,Susceptibility of I | Ti >1| HIV+IC,,,,
+125,Susceptibility of I | Tc >1| HIV+IC,,,,
+126,Susceptibility of I | Tc+ >1| HIV+IC,,,,
+127,Susceptibility of S | children,,,,
+128,Susceptibility of L | children,,,,
+129,Prob: If progress | S | Tn | HIV -,0.09,0.14,,
+130,Prob: If progress | L | Tn| HIV -,,,,
+131,Prob: If progress | L | Ti <1| HIV -,,,,
+132,Prob: If progress | L | Tc <1| HIV -,,,,
+133,Prob: If progress | L | Tc+ <1| HIV -,,,,
+134,Prob: If progress | L | Ti >1| HIV -,,,,
+135,Prob: If progress | L | Tc >1| HIV -,,,,
+136,Prob: If progress | L | Tc+ >1| HIV -,,,,
+137,Prob: If progress | S | Tn | HIV+nIC,0.18,0.51,,
+138,Prob: If progress | L | Tn| HIV+nIC,,,,
+139,Prob: If progress | L | Ti <1| HIV+nIC,,,,
+140,Prob: If progress | L | Tc <1| HIV+nIC,,,,
+141,Prob: If progress | L | Tc+ <1| HIV+nIC,,,,
+142,Prob: If progress | L | Ti >1| HIV+nIC,,,,
+143,Prob: If progress | L | Tc >1| HIV+nIC,,,,
+144,Prob: If progress | L | Tc+ >1| HIV+nIC,,,,
+145,Prob: If progress | S | Tn | HIV+IC,0.75,0.91,,
+146,Prob: If progress | L | Tn| HIV+IC,,,,
+147,Prob: If progress | L | Ti <1| HIV+IC,,,,
+148,Prob: If progress | L | Tc <1| HIV+IC,,,,
+149,Prob: If progress | L | Tc+ <1| HIV+IC,,,,
+150,Prob: If progress | L | Ti >1| HIV+IC,,,,
+151,Prob: If progress | L | Tc >1| HIV+IC,,,,
+152,Prob: If progress | L | Tc+ >1| HIV+IC,,,,
+153,Prob: If progress | S | Tn | HIV+ART,,,,
+154,Prob: If progress | L | Tn| HIV+ART,,,,
+155,Prob: If progress | L | Ti <1| HIV+ART,,,,
+156,Prob: If progress | L | Tc <1| HIV+ART,,,,
+157,Prob: If progress | L | Tc+ <1| HIV+ART,,,,
+158,Prob: If progress | L | Ti >1| HIV+ART,,,,
+159,Prob: If progress | L | Tc >1| HIV+ART,,,,
+160,Prob: If progress | L | Tc+ >1| HIV+ART,,,,
+161,Prob: If progress | S | children,0.09,0.14,,
+162,Prob: If progress | L | children,,,,
+163,Rate: TB Reactivation | L | Tn| HIV -,0.0003,0.0024,,
+164,Rate: TB Reactivation | L | Ti <1| HIV -,0.021,0.183,,
+165,Rate: TB Reactivation | L | Tc <1| HIV -,0.021,0.183,,
+166,Rate: TB Reactivation | L | Tc+ <1| HIV -,,,,
+167,Rate: TB Reactivation | L | Ti >1| HIV -,,,,
+168,Rate: TB Reactivation | L | Tc >1| HIV -,,,,
+169,Rate: TB Reactivation | L | Tc+ >1| HIV -,,,,
+170,Rate: TB Reactivation | L | Tn| HIV+nIC,0.001,0.006,,
+171,Rate: TB Reactivation | L | Ti <1| HIV+nIC,0.021,0.122,,
+172,Rate: TB Reactivation | L | Tc <1| HIV+nIC,0.021,0.122,,
+173,Rate: TB Reactivation | L | Tc+ <1| HIV+nIC,,,,
+174,Rate: TB Reactivation | L | Ti >1| HIV+nIC,,,,
+175,Rate: TB Reactivation | L | Tc >1| HIV+nIC,,,,
+176,Rate: TB Reactivation | L | Tc+ >1| HIV+nIC,,,,
+177,Rate: TB Reactivation | L | Tn| HIV+IC,0.08,0.2,,
+178,Rate: TB Reactivation | L | Ti <1| HIV+IC,0.021,0.244,,
+179,Rate: TB Reactivation | L | Tc <1| HIV+IC,0.021,0.244,,
+180,Rate: TB Reactivation | L | Tc+ <1| HIV+IC,,,,
+181,Rate: TB Reactivation | L | Ti >1| HIV+IC,,,,
+182,Rate: TB Reactivation | L | Tc >1| HIV+IC,,,,
+183,Rate: TB Reactivation | L | Tc+ >1| HIV+IC,,,,
+184,Rate: TB Reactivation | L | Tn| HIV+ART,,,,
+185,Rate: TB Reactivation | L | Ti <1| HIV+ART,,,,
+186,Rate: TB Reactivation | L | Tc <1| HIV+ART,,,,
+187,Rate: TB Reactivation | L | Tc+ <1| HIV+ART,,,,
+188,Rate: TB Reactivation | L | Ti >1| HIV+ART,,,,
+189,Rate: TB Reactivation | L | Tc >1| HIV+ART,,,,
+190,Rate: TB Reactivation | L | Tc+ >1| HIV+ART,,,,
+191,Rate: TB Reactivation | L | children,0.0003,0.0024,,
+192,Excess mortality | I | HIV -,0.2,0.37,,
+193,Excess mortality | I | HIV+ nIC,0.28,0.37,,
+194,Excess mortality | I | HIV+ IC,0.472,1.272,,
+195,Excess mortality | I | HIV+ ART,0.2,0.37,,
+196,Excess mortality | T | HIV -,0.047,0.07,,
+197,Excess mortality | T | HIV+ nIC,0.047,0.07,,
+198,Excess mortality | T | HIV+ IC,0.047,0.07,,
+199,Excess mortality | T | HIV+ ART,0.047,0.07,,
+200,Rate: Natural recovery | I | Tn| HIV -,0.15,0.25,,
+201,Rate: Natural recovery | I | Ti <1| HIV -,0.15,0.25,,
+202,Rate: Natural recovery | I | Tc <1| HIV -,0.15,0.25,,
+203,Rate: Natural recovery | I | Tc+ <1| HIV -,,,,
+204,Rate: Natural recovery | I | Ti >1| HIV -,0.15,0.25,,
+205,Rate: Natural recovery | I | Tc >1| HIV -,0.15,0.25,,
+206,Rate: Natural recovery | I | Tc+ >1| HIV -,,,,
+207,Rate: Natural recovery | I | Tn| HIV+nIC,0.06,0.16,,
+208,Rate: Natural recovery | I | Ti <1| HIV+nIC,0.06,0.16,,
+209,Rate: Natural recovery | I | Tc <1| HIV+nIC,0.06,0.16,,
+210,Rate: Natural recovery | I | Tc+ <1| HIV+nIC,0.06,0.16,,
+211,Rate: Natural recovery | I | Ti >1| HIV+nIC,0.06,0.16,,
+212,Rate: Natural recovery | I | Tc >1| HIV+nIC,0.06,0.16,,
+213,Rate: Natural recovery | I | Tc+ >1| HIV+nIC,0.06,0.16,,
+214,Rate: Natural recovery | I | Tn| HIV+IC,0,0,,
+215,Rate: Natural recovery | I | Ti <1| HIV+IC,0,0,,
+216,Rate: Natural recovery | I | Tc <1| HIV+IC,0,0,,
+217,Rate: Natural recovery | I | Tc+ <1| HIV+IC,0,0,,
+218,Rate: Natural recovery | I | Ti >1| HIV+IC,0,0,,
+219,Rate: Natural recovery | I | Tc >1| HIV+IC,0,0,,
+220,Rate: Natural recovery | I | Tc+ >1| HIV+IC,0,0,,
+221,Rate: Natural recovery | I | Tn| HIV+ART,,,,
+222,Rate: Natural recovery | I | Ti <1| HIV+ART,,,,
+223,Rate: Natural recovery | I | Tc <1| HIV+ART,,,,
+224,Rate: Natural recovery | I | Tc+ <1| HIV+ART,,,,
+225,Rate: Natural recovery | I | Ti >1| HIV+ART,,,,
+226,Rate: Natural recovery | I | Tc >1| HIV+ART,,,,
+227,Rate: Natural recovery | I | Tc+ >1| HIV+ART,,,,
+228,Rate: Natural recovery | I | children,0.15,0.25,,
+229,Time until passive detection: I | Tn| HIV -,0.083333333,2,,
+230,Time until passive detection: I | Ti <1| HIV -,0.083333333,1.5,,
+231,Time until passive detection: I | Tc <1| HIV -,0.083333333,1.5,,
+232,Time until passive detection: I | Tc+ <1| HIV -,0.083333333,1.5,,
+233,Time until passive detection: I | Ti >1| HIV -,0.083333333,1.5,,
+234,Time until passive detection: I | Tc >1| HIV -,0.083333333,1.5,,
+235,Time until passive detection: I | Tc+ >1| HIV -,0.083333333,1.5,,
+236,Time until passive detection: I | Tn| HIV+nIC,0.083333333,2,,
+237,Time until passive detection: I | Ti <1| HIV+nIC,0.083333333,1.5,,
+238,Time until passive detection: I | Tc <1| HIV+nIC,0.083333333,1.5,,
+239,Time until passive detection: I | Tc+ <1| HIV+nIC,0.083333333,1.5,,
+240,Time until passive detection: I | Ti >1| HIV+nIC,0.083333333,1.5,,
+241,Time until passive detection: I | Tc >1| HIV+nIC,0.083333333,1.5,,
+242,Time until passive detection: I | Tc+ >1| HIV+nIC,0.083333333,1.5,,
+243,Time until passive detection: I | Tn| HIV+IC,0.083333333,2,,
+244,Time until passive detection: I | Ti <1| HIV+IC,0.083333333,1.5,,
+245,Time until passive detection: I | Tc <1| HIV+IC,0.083333333,1.5,,
+246,Time until passive detection: I | Tc+ <1| HIV+IC,0.083333333,1.5,,
+247,Time until passive detection: I | Ti >1| HIV+IC,0.083333333,1.5,,
+248,Time until passive detection: I | Tc >1| HIV+IC,0.083333333,1.5,,
+249,Time until passive detection: I | Tc+ >1| HIV+IC,0.083333333,1.5,,
+250,Time until passive detection: I | Tn| HIV+ART,0.083333333,2,,
+251,Time until passive detection: I | Ti <1| HIV+ART,0.083333333,1.5,,
+252,Time until passive detection: I | Tc <1| HIV+ART,0.083333333,1.5,,
+253,Time until passive detection: I | Tc+ <1| HIV+ART,0.083333333,1.5,,
+254,Time until passive detection: I | Ti >1| HIV+ART,0.083333333,1.5,,
+255,Time until passive detection: I | Tc >1| HIV+ART,0.083333333,1.5,,
+256,Time until passive detection: I | Tc+ >1| HIV+ART,0.083333333,1.5,,
+257,Time until detection: I | children,0.083333333,3,,
+258,Rate: Passive detection | I | Tn| HIV -,,,,
+259,Rate: Passive detection | I | Ti <1| HIV -,,,,
+260,Rate: Passive detection | I | Tc <1| HIV -,,,,
+261,Rate: Passive detection | I | Tc+ <1| HIV -,,,,
+262,Rate: Passive detection | I | Ti >1| HIV -,,,,
+263,Rate: Passive detection | I | Tc >1| HIV -,,,,
+264,Rate: Passive detection | I | Tc+ >1| HIV -,,,,
+265,Rate: Passive detection | I | Tn| HIV+nIC,,,,
+266,Rate: Passive detection | I | Ti <1| HIV+nIC,,,,
+267,Rate: Passive detection | I | Tc <1| HIV+nIC,,,,
+268,Rate: Passive detection | I | Tc+ <1| HIV+nIC,,,,
+269,Rate: Passive detection | I | Ti >1| HIV+nIC,,,,
+270,Rate: Passive detection | I | Tc >1| HIV+nIC,,,,
+271,Rate: Passive detection | I | Tc+ >1| HIV+nIC,,,,
+272,Rate: Passive detection | I | Tn| HIV+IC,,,,
+273,Rate: Passive detection | I | Ti <1| HIV+IC,,,,
+274,Rate: Passive detection | I | Tc <1| HIV+IC,,,,
+275,Rate: Passive detection | I | Tc+ <1| HIV+IC,,,,
+276,Rate: Passive detection | I | Ti >1| HIV+IC,,,,
+277,Rate: Passive detection | I | Tc >1| HIV+IC,,,,
+278,Rate: Passive detection | I | Tc+ >1| HIV+IC,,,,
+279,Rate: Passive detection | I | Tn| HIV+ART,,,,
+280,Rate: Passive detection | I | Ti <1| HIV+ART,,,,
+281,Rate: Passive detection | I | Tc <1| HIV+ART,,,,
+282,Rate: Passive detection | I | Tc+ <1| HIV+ART,,,,
+283,Rate: Passive detection | I | Ti >1| HIV+ART,,,,
+284,Rate: Passive detection | I | Tc >1| HIV+ART,,,,
+285,Rate: Passive detection | I | Tc+ >1| HIV+ART,,,,
+286,Rate: Detection and Treatment | I | children,,,,
+287,Duration of complete treatment,0.47,0.57,,
+288,Duration of incomplete treatment,0.31,0.52,,
+289,Rate: Leave treatment |Ti | HIV -,,,,
+290,Rate: Leave treatment |Ti | HIV+nIC,,,,
+291,Rate: Leave treatment |Ti | HIV+IC,,,,
+292,Rate: Leave treatment |Ti | HIV+ART,,,,
+293,Rate: Complete Treatment |Tc | HIV -,,,,
+294,Rate: Complete Treatment |Tc | HIV+nIC,,,,
+295,Rate: Complete Treatment |Tc | HIV+IC,,,,
+296,Rate: Complete Treatment |Tc | HIV+ART,,,,
+297,Rate: Complete Treatment |Tmdr | HIV -,0.666666667,0.666666667,,
+298,Rate: Complete Treatment |Tmdr | HIV+nIC,0.666666667,0.666666667,,
+299,Rate: Complete Treatment |Tmdr | HIV+IC,0.666666667,0.666666667,,
+300,Rate: Complete Treatment |Tmdr | HIV+ART,0.666666667,0.666666667,,
+301,Prob: If Tc+ after Tc | HIV -,,,,
+302,Prob: If Tc+ after Tc | HIV+nIC,,,,
+303,Prob: If Tc+ after Tc | HIV+IC,,,,
+304,Prob: If Tc+ after Tc | HIV+ART,,,,
+305,Rate of follow-up | Tc+ >1 | HIV-,,,,
+306,Rate of follow-up | Tc+ >1 | HIV+nIC,,,,
+307,Rate of follow-up | Tc+ >1 | HIV+IC,,,,
+308,Rate of follow-up | Tc+ >1 | HIV+ART,,,,
+309,Prob: If still infectious after Ti | HIV -,0,0.2,,
+310,Prob: If still infectious after Ti | HIV+nIC,0,0.2,,
+311,Prob: If still infectious after Ti | HIV+IC,0,0.2,,
+312,Prob: If still infectious after Ti | HIV+ART,0,0.2,,
+313,Prob: If will complete Tx | I | Tn | <1996 | Data,0.7,0.8,,
+314,Prob: If will complete Tx | I | Tn | 1996 | Data,0.7776069,0.8701664,,
+315,Prob: If will complete Tx | I | Tn | 1997 | Data,0.8124313,0.9156528,,
+316,Prob: If will complete Tx | I | Tn | 1998 | Data,0.8469512,0.9333059,,
+317,Prob: If will complete Tx | I | Tn | 1999 | Data,0.8491095,0.9405734,,
+318,Prob: If will complete Tx | I | Tn | 2000 | Data,0.8555024,0.9372031,,
+319,Prob: If will complete Tx | I | Tn | 2001 | Data,0.8647908,0.9440547,,
+320,Prob: If will complete Tx | I | Tn | 2002 | Data,0.8694814,0.9435274,,
+321,Prob: If will complete Tx | I | Tn | 2003 | Data,0.9493168,0.9895754,,
+322,Prob: If will complete Tx | I | Tn | 2004 | Data,0.9364846,0.9837486,,
+323,Prob: If will complete Tx | I | Tn | 2005 | Data,0.9039831,0.9628688,,
+324,Prob: If will complete Tx | I | Tn | 2006 | Data,0.938675,0.984322,,
+325,Prob: If will complete Tx | I | Tn | 2007 | Data,0.9632641,0.994752,,
+326,Prob: If will complete Tx | I | Tn | 2008 | Data,0.9558029,0.9936668,,
+327,Prob: If will complete Tx | I | Tn | >2008 | Data,0.8287938,0.986014,,
+328,Prob: If will complete Tx | I | Tn | <1996 | In model,,,,
+329,Prob: If will complete Tx | I | Tn | 1996 | In model,,,,
+330,Prob: If will complete Tx | I | Tn | 1997 | In model,,,,
+331,Prob: If will complete Tx | I | Tn | 1998 | In model,,,,
+332,Prob: If will complete Tx | I | Tn | 1999 | In model,,,,
+333,Prob: If will complete Tx | I | Tn | 2000 | In model,,,,
+334,Prob: If will complete Tx | I | Tn | 2001 | In model,,,,
+335,Prob: If will complete Tx | I | Tn | 2002 | In model,,,,
+336,Prob: If will complete Tx | I | Tn | 2003 | In model,,,,
+337,Prob: If will complete Tx | I | Tn | 2004 | In model,,,,
+338,Prob: If will complete Tx | I | Tn | 2005 | In model,,,,
+339,Prob: If will complete Tx | I | Tn | 2006 | In model,,,,
+340,Prob: If will complete Tx | I | Tn | 2007 | In model,,,,
+341,Prob: If will complete Tx | I | Tn | 2008 | In model,,,,
+342,Prob: If will complete Tx | I | Tn | >2008 | In model,,,,
+343,Prob: If will complete Tx| I | Ti |<1996 | Data,0.2,0.6,,
+344,Prob: If will complete Tx| I | Ti |1996 | Data,0.262121,0.6951383,,
+345,Prob: If will complete Tx| I | Ti |1997 | Data,0.2778326,0.7221674,,
+346,Prob: If will complete Tx| I | Ti |1998 | Data,0.3234315,0.7657261,,
+347,Prob: If will complete Tx| I | Ti |1999 | Data,0.3544651,0.7040236,,
+348,Prob: If will complete Tx| I | Ti |2000 | Data,0.2490027,0.6004462,,
+349,Prob: If will complete Tx| I | Ti |2001 | Data,0.3957406,0.817759,,
+350,Prob: If will complete Tx| I | Ti |2002 | Data,0.3736167,0.7904537,,
+351,Prob: If will complete Tx| I | Ti |2003 | Data,0.5989402,0.9501168,,
+352,Prob: If will complete Tx| I | Ti |2004 | Data,0.5619344,0.9443741,,
+353,Prob: If will complete Tx| I | Ti |2005 | Data,0.3955438,0.8370362,,
+354,Prob: If will complete Tx| I | Ti |2006 | Data,0.5812365,0.947401,,
+355,Prob: If will complete Tx| I | Ti |2007 | Data,0.3301634,0.751903,,
+356,Prob: If will complete Tx| I | Ti |2008 | Data,0.46374,0.9277909,,
+357,Prob: If will complete Tx| I | Ti |>2008 | Data,0.4137931,0.8421053,,
+358,Prob: If will complete Tx| I | Ti |<1996 | In model,,,,
+359,Prob: If will complete Tx| I | Ti |1996 | In model,,,,
+360,Prob: If will complete Tx| I | Ti |1997 | In model,,,,
+361,Prob: If will complete Tx| I | Ti |1998 | In model,,,,
+362,Prob: If will complete Tx| I | Ti |1999 | In model,,,,
+363,Prob: If will complete Tx| I | Ti |2000 | In model,,,,
+364,Prob: If will complete Tx| I | Ti |2001 | In model,,,,
+365,Prob: If will complete Tx| I | Ti |2002 | In model,,,,
+366,Prob: If will complete Tx| I | Ti |2003 | In model,,,,
+367,Prob: If will complete Tx| I | Ti |2004 | In model,,,,
+368,Prob: If will complete Tx| I | Ti |2005 | In model,,,,
+369,Prob: If will complete Tx| I | Ti |2006 | In model,,,,
+370,Prob: If will complete Tx| I | Ti |2007 | In model,,,,
+371,Prob: If will complete Tx| I | Ti |2008 | In model,,,,
+372,Prob: If will complete Tx| I | Ti |>2008 | In model,,,,
+373,Prob: If will complete Tx| I | Tc |<1996 | Data,0.6,0.8,,
+374,Prob: If will complete Tx| I | Tc |1996 | Data,0.6295649,0.8921758,,
+375,Prob: If will complete Tx| I | Tc |1997 | Data,0.7224334,0.929482,,
+376,Prob: If will complete Tx| I | Tc |1998 | Data,0.7197204,0.921754,,
+377,Prob: If will complete Tx| I | Tc |1999 | Data,0.6834236,0.8853681,,
+378,Prob: If will complete Tx| I | Tc |2000 | Data,0.775851,0.9340215,,
+379,Prob: If will complete Tx| I | Tc |2001 | Data,0.8012883,0.9626878,,
+380,Prob: If will complete Tx| I | Tc |2002 | Data,0.8218494,0.9668526,,
+381,Prob: If will complete Tx| I | Tc |2003 | Data,0.8345857,0.9599714,,
+382,Prob: If will complete Tx| I | Tc |2004 | Data,0.8475219,0.9596663,,
+383,Prob: If will complete Tx| I | Tc |2005 | Data,0.857645,0.9739219,,
+384,Prob: If will complete Tx| I | Tc |2006 | Data,0.7941767,0.9358072,,
+385,Prob: If will complete Tx| I | Tc |2007 | Data,0.8713374,0.9765676,,
+386,Prob: If will complete Tx| I | Tc |2008 | Data,0.8049451,0.9394252,,
+387,Prob: If will complete Tx| I | Tc |>2008 | Data,0.7894737,0.9438202,,
+388,Prob: If will complete Tx| I | Tc |<1996 | In model,,,,
+389,Prob: If will complete Tx| I | Tc |1996 | In model,,,,
+390,Prob: If will complete Tx| I | Tc |1997 | In model,,,,
+391,Prob: If will complete Tx| I | Tc |1998 | In model,,,,
+392,Prob: If will complete Tx| I | Tc |1999 | In model,,,,
+393,Prob: If will complete Tx| I | Tc |2000 | In model,,,,
+394,Prob: If will complete Tx| I | Tc |2001 | In model,,,,
+395,Prob: If will complete Tx| I | Tc |2002 | In model,,,,
+396,Prob: If will complete Tx| I | Tc |2003 | In model,,,,
+397,Prob: If will complete Tx| I | Tc |2004 | In model,,,,
+398,Prob: If will complete Tx| I | Tc |2005 | In model,,,,
+399,Prob: If will complete Tx| I | Tc |2006 | In model,,,,
+400,Prob: If will complete Tx| I | Tc |2007 | In model,,,,
+401,Prob: If will complete Tx| I | Tc |2008 | In model,,,,
+402,Prob: If will complete Tx| I | Tc |>2008 | In model,,,,
+403,Prob: If will complete Tx| I | Tn,,,,
+404,Prob: If will complete Tx| I | Ti,,,,
+405,Prob: If will complete Tx| I | Tc,,,,
+406,Prob: If will complete Tx| I | Tn | HIV+nIC,,,,
+407,Prob: If will complete Tx| I | Ti | HIV+nIC,,,,
+408,Prob: If will complete Tx| I | Tc | HIV+nIC,,,,
+409,Prob: If will complete Tx| I | Tn | HIV+IC,,,,
+410,Prob: If will complete Tx| I | Ti | HIV+IC,,,,
+411,Prob: If will complete Tx| I | Tc | HIV+IC,,,,
+412,Prob: If will complete Tx| I | Tn | HIV+ART,,,,
+413,Prob: If will complete Tx| I | Ti | HIV+ART,,,,
+414,Prob: If will complete Tx| I | Tc | HIV+ART,,,,
+415,Prob: If will complete treatment | R| children,1,1,,
+416,Rate ART Initiation | HIV+ nIC | Before 2016 | Data - Intercept,0.01978022,0.01978022,,
+417,Rate ART Initiation | HIV+ nIC | Before 2016 | Data - Slope,1.8315E-05,1.8315E-05,,
+418,Rate ART Initiation | HIV+ nIC | After 2016 | Data - Intercept,0.1,0.1,,
+419,Rate ART Initiation | HIV+ nIC | Before 2016 | Data,,,,
+420,Rate ART Initiation | HIV+ nIC | After 2016 | Data,,,,
+421,Rate ART Initiation | HIV+ IC | Before 2016 | Data - Intercept,0.099450549,0.099450549,,
+422,Rate ART Initiation | HIV+ IC | Before 2016 | Data - Slope,4.57875E-05,4.57875E-05,,
+423,Rate ART Initiation | HIV+ IC | After 2016 | Data - Intercept,0.3,0.3,,
+424,Rate ART Initiation | HIV+ IC | Before 2016 | Data,,,,
+425,Rate ART Initiation | HIV+ IC | After 2016 | Data,,,,
+426,Prob ART Initiation | TB diagnosis | Before 2016 | Data - Intercept,0.098901099,0.098901099,,
+427,Prob ART Initiation | TB diagnosis | Before 2016 | Data - Slope,6.86813E-05,6.86813E-05,,
+428,Prob ART Initiation | TB diagnosis | After 2016 | Data - Intercept,0.3,0.3,,
+429,Prob ART Initiation | TB diagnosis | Before 2016 | Data,,,,
+430,Prob ART Initiation | TB diagnosis | After 2016 | Data,,,,
+431,Rate ART Initiation | HIV+ nIC | Model,,,,
+432,Rate ART Initiation | HIV+ IC | Model,,,,
+433,Prob: ART initiation upon TB diagnosis | HIV- | Model,0,0,,
+434,Prob: ART initiation upon TB diagnosis | HIV nIC | Model,,,,
+435,Prob: ART initiation upon TB diagnosis | HIV IC | Model,,,,
+436,Children,9439.427077,9439.427077,,
+437,Adults,23449.64799,23449.64799,,
+438,% Children | Latent,0.3,0.7,,
+439,% Children | Infected,0.001,0.01,,
+440,% Children | Recovered,0.02,0.1,,
+441,% Children | Susceptible,,,,
+442,% HIV+IC,0.01875,0.03125,,
+443,% HIV+nIC,0.01875,0.03125,,
+444,% HIV-,,,,
+445,% Ti | HIV+IC,0.0075,0.0525,,
+446,% Tc | HIV+IC,0.0075,0.0525,,
+447,% Tn | HIV+IC,,,,
+448,% Ti | HIV+nIC,0.00625,0.04375,,
+449,% Tc | HIV+nIC,0.00625,0.04375,,
+450,% Tn | HIV+nIC,,,,
+451,% Ti | HIV-,0,0.05,,
+452,% Tc | HIV-,0,0.05,,
+453,% Tn | HIV-,,,,
+454,% L | HIV+IC and Ti,0.912,1,,
+455,% I | HIV+IC and Ti,,,,
+456,% L | HIV+IC and Tc,0.912,1,,
+457,% I | HIV+IC and Tc,,,,
+458,% L | HIV+IC and Tn,0.57,0.63,,
+459,% I | HIV+IC and Tn,0,0.04,,
+460,% S | HIV+IC and Tn,,,,
+461,% L | HIV+nIC and Ti,0.912,1,,
+462,% I | HIV+nIC and Ti,,,,
+463,% L | HIV+nIC and Tc,0.912,1,,
+464,% I | HIV+nIC and Tc,,,,
+465,% L | HIV+nIC and Tn,0.57,0.63,,
+466,% I | HIV+nIC and Tn,0,0.04,,
+467,% S | HIV+nIC and Tn,,,,
+468,% L | HIV- and Ti,0.931,1,,
+469,% I | HIV- and Ti,,,,
+470,% L | HIV- and Tc,0.931,1,,
+471,% I | HIV- and Tc,,,,
+472,% L | HIV- and Tn,0.6,0.9,,
+473,% I | HIV- and Tn,0.002375,0.002625,,
+474,% S | HIV- and Tn,,,,
+475,Initial size of S | Tn | HIV -,,,,
+476,Initial size of L | Tn| HIV -,,,,
+477,Initial size of L | Ti <1| HIV -,,,,
+478,Initial size of L | Tc <1| HIV -,,,,
+479,Initial size of L | Tc+ <1| HIV -,,,,
+480,Initial size of L | Ti >1| HIV -,,,,
+481,Initial size of L | Tc >1| HIV -,,,,
+482,Initial size of L | Tc+ >1| HIV -,,,,
+483,Initial size of I | Tn| HIV -,,,,
+484,Initial size of I | Ti <1| HIV -,,,,
+485,Initial size of I | Tc <1| HIV -,,,,
+486,Initial size of I | Tc+ <1| HIV -,,,,
+487,Initial size of I | Ti >1| HIV -,,,,
+488,Initial size of I | Tc >1| HIV -,,,,
+489,Initial size of I | Tc+ >1| HIV -,,,,
+490,Initial size of Ti | HIV -,,,,
+491,Initial size of Tc | HIV -,,,,
+492,Initial size of Tmdr | HIV -,,,,
+493,Initial size of S | Tn | HIV+nIC,,,,
+494,Initial size of L | Tn| HIV+nIC,,,,
+495,Initial size of L | Ti <1| HIV+nIC,,,,
+496,Initial size of L | Tc <1| HIV+nIC,,,,
+497,Initial size of L | Tc+ <1| HIV+nIC,,,,
+498,Initial size of L | Ti >1| HIV+nIC,,,,
+499,Initial size of L | Tc >1| HIV+nIC,,,,
+500,Initial size of L | Tc+ >1| HIV+nIC,,,,
+501,Initial size of I | Tn| HIV+nIC,,,,
+502,Initial size of I | Ti <1| HIV+nIC,,,,
+503,Initial size of I | Tc <1| HIV+nIC,,,,
+504,Initial size of I | Tc+ <1| HIV+nIC,,,,
+505,Initial size of I | Ti >1| HIV+nIC,,,,
+506,Initial size of I | Tc >1| HIV+nIC,,,,
+507,Initial size of I | Tc+ >1| HIV+nIC,,,,
+508,Initial size of Ti | HIV+nIC,,,,
+509,Initial size of Tc | HIV+nIC,,,,
+510,Initial size of Tmdr | HIV+nIC,,,,
+511,Initial size of S | Tn | HIV+IC,,,,
+512,Initial size of L | Tn| HIV+IC,,,,
+513,Initial size of L | Ti <1| HIV+IC,,,,
+514,Initial size of L | Tc <1| HIV+IC,,,,
+515,Initial size of L | Tc+ <1| HIV+IC,,,,
+516,Initial size of L | Ti >1| HIV+IC,,,,
+517,Initial size of L | Tc >1| HIV+IC,,,,
+518,Initial size of L | Tc+ >1| HIV+IC,,,,
+519,Initial size of I | Tn| HIV+IC,,,,
+520,Initial size of I | Ti <1| HIV+IC,,,,
+521,Initial size of I | Tc <1| HIV+IC,,,,
+522,Initial size of I | Tc+ <1| HIV+IC,,,,
+523,Initial size of I | Ti >1| HIV+IC,,,,
+524,Initial size of I | Tc >1| HIV+IC,,,,
+525,Initial size of I | Tc+ >1| HIV+IC,,,,
+526,Initial size of Ti | HIV+IC,,,,
+527,Initial size of Tc | HIV+IC,,,,
+528,Initial size of Tmdr | HIV+IC,,,,
+529,Initial size of S | children,,,,
+530,Initial size of L | children,,,,
+531,Initial size of I | children,,,,
+532,Initial size of R| children,,,,

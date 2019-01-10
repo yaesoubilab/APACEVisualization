@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import apace.ScenariosClasses as Cls
+import SimPy.EconEvalClasses as Econ
 
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
@@ -7,6 +8,10 @@ colors = ['r', 'b', 'g', '#FF9912']
 PROB = .75
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
+# here we want scenarios with
+# 'Prob {Tc+ | Tc}' = PROB,
+# 'Follow-Up Rate (Tc+>1)' = any, and
+# 'IPT' = any
 varConditions = [
     Cls.VariableCondition('Prob {Tc+ | Tc}',
                           minimum=PROB,
@@ -41,9 +46,10 @@ series = [
 ]
 
 # populate series
-Cls.populate_series(series, 'csvfiles\TBScenarios.csv',
+Cls.populate_series(series,
+                    csv_filename='csvfiles\TBScenarios.csv',
                     save_cea_results=True,
-                    store_cea_CIs=True,
+                    interval=Econ.Interval.PREDICTION,
                     x_axis_multiplier=1,
                     y_axis_multiplier=1/1e3)
 
