@@ -49,7 +49,7 @@ series = [
 Cls.populate_series(series,
                     csv_filename='csvfiles\TBScenarios.csv',
                     save_cea_results=True,
-                    interval=Econ.Interval.CONFIDENCE,
+                    interval=Econ.Interval.PREDICTION,
                     x_axis_multiplier=1,
                     y_axis_multiplier=1/1e3)
 
