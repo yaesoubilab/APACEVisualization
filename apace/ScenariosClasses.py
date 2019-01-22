@@ -140,7 +140,7 @@ class ScenarioDataFrame:
         else:
             bar_position = [0]
 
-        fig, ax = plt.subplots(figsize=(6, 3.4))
+        fig, ax = plt.subplots(figsize=(5.4, 3.4))
 
         # find y-values
         y_values = np.arange(len(scenario_names))
@@ -165,7 +165,6 @@ class ScenarioDataFrame:
                         elinewidth=1.5, capsize=0, markersize=6, markerfacecolor='white',
                         markeredgecolor=colors[k], markeredgewidth=1.5)
 
-
         ax.set_yticks(y_values)
         if y_labels is None:
             ax.set_yticklabels(scenario_names)
@@ -177,7 +176,7 @@ class ScenarioDataFrame:
         ax.invert_yaxis()  # labels read top-to-bottom
         ax.set_xlabel(x_label)
         ax.set_title(title)
-        ax.legend(legend)
+        ax.legend(legend, fontsize='small')
         plt.axvline(x=0, linestyle='--', color='black', linewidth=1)
         plt.tight_layout()
         if filename is None:

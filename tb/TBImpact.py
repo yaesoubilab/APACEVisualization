@@ -4,7 +4,7 @@ from tb import TBSettings as Set
 # specify the output (show, save as .jpg, or save as .pdf)
 Vis.OUTPUT_TYPE = Vis.OutType.JPG
 Vis.X_LABEL = 'Year'
-Vis.X_RANGE = [Set.PROJ-2, Set.TIME_END+1]
+Vis.X_RANGE = [Set.PROJ-2, Set.TIME_END+2]
 Vis.X_TICKS = [Set.PROJ-1, 5]
 
 list_plot_info = []     # list of plot infos
@@ -26,7 +26,7 @@ list_plot_info.append(
         traj_name='Active TB (Ratio)',
         y_range=[0, 1000],
         y_multiplier=100000,
-        title="TB Prevalence\n(Per 100,000 pop)",
+        title="TB Prevalence\n(Per 100,000 Pop.)",
         figure_size=(4, 3.6),
         file_name='Impact-TBPrevalence')
 )
@@ -52,9 +52,9 @@ eff = Vis.TrajImpact(
     ],
     scenario_names=[
         'Base',
-        'Follow-up at 1yr 1, no IPT',
+        'Follow-up at 1yr, no IPT',
         'Annual follow-up, no IPT',
-        'Follow-up at 1yr 1, with IPT',
+        'Follow-up at 1yr, with IPT',
         'Annual follow-up, with IPT'
     ],
     fig_infos=list_plot_info,
@@ -63,5 +63,5 @@ eff = Vis.TrajImpact(
     period_length=1
 )
 
-#eff.plot_all()
+eff.plot_all()
 eff.plot_multi_panel()

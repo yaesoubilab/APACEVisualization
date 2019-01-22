@@ -3,22 +3,22 @@ from apace import TrajectoriesClasses as Vis
 from apace import ParametersClasses as Param
 from apace import ScenariosClasses as Sce
 
-scenario_names=['Baseline',
-                'Follow-up at yr 1, No IPT',
-                'Annual follow-up, No IPT',
-                'Follow-up at yr 1, With IPT',
-                'Annual follow-up, With IPT']
+scenario_names = ['Baseline',
+                  'Follow-up at yr 1, No IPT',
+                  'Annual follow-up, No IPT',
+                  'Follow-up at yr 1, With IPT',
+                  'Annual follow-up, With IPT']
 
-trajs_csvfiles= ['csvfiles/TBTrajs0Base.csv',
-                 # 'csvfiles/TBTrajs1Yr1NoIPT.csv',
-                 # 'csvfiles/TBTrajs2AnnualNoIPT.csv',
-                 # 'csvfiles/TBTrajs3Yr1WithIPT.csv',
-                 # 'csvfiles/TBTrajs4AnnualWithIPT.csv'
-                 ]
+csvfiles_trajs = ['csvfiles/TBTrajs0Base.csv',
+                  'csvfiles/TBTrajs1Yr1NoIPT.csv',
+                  'csvfiles/TBTrajs2AnnualNoIPT.csv',
+                  'csvfiles/TBTrajs3Yr1WithIPT.csv',
+                  'csvfiles/TBTrajs4AnnualWithIPT.csv'
+                  ]
 
 # create trajectory data frames
-traj_data_frames=[]
-for file_name in trajs_csvfiles:
+traj_data_frames = []
+for file_name in csvfiles_trajs:
     traj_data_frames.append(
         Vis.TrajsDataFrame(csv_file_name=file_name,
                            time0=Set.TIME_0,
@@ -36,26 +36,26 @@ param_df = Param.Parameters('csvfiles\SampledParams.csv')
 # data frame for scenario analysis
 scenario_df = Sce.ScenarioDataFrame('csvfiles\TBScenarios.csv')
 
-print('')
-
 # ---------------------------------------------
 # Epidemiological characteristics at base line
 # ---------------------------------------------
+print('')
 print('TB incidence in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Per Pop.'].get_mean_PI(
-        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=1, format='%'))
 
 print('TB incidence among naive in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Naive Adults | Per Pop.'].get_mean_PI(
-        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=1, format='%'))
 
 print('TB incidence among experienced in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Experienced Adults | Per Pop.'].get_mean_PI(
-        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=100000, deci=0, format=','))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=1, format='%'))
 
 # ---------------------------------------------
 # Decline in TB incidence between 2018 and 2027
 # ---------------------------------------------
+print('')
 for i, traj_df in enumerate(traj_data_frames):
     print('Decline in tuberculosis incidence between 2018 and 2028 ({0}):'.format(scenario_names[i]),
           traj_df.allTrajs['Active TB Incidence | Per Pop.'].get_relative_diff_mean_PI(
@@ -76,11 +76,12 @@ print('Rate of reactivation (relapse) after treatment completion in the first ye
 
 print('Rate of reactivation (relapse) after treatment completion after the first year post-treatment :',
       param_df.get_mean_interval('Rate: TB Reactivation | L | Tc >1| HIV -', 4, form=','))
+
 print('% incident TB cases due to reactivation occurring among those who had completed TB treatment:',
       scenario_df.get_mean_interval(
           scenario_name='Base',
           outcome_name='Average ratio: % reactivation |Incident To: I| Tc<1 or >1 |HIV-',
-          deci=1, form='%'))
+          deci=0, form='%'))
 
 # ---------------------------------------------
 # TB incidence and death averted under each scenario
@@ -113,7 +114,7 @@ scenario_df.plot_relative_diff_by_scenario(
                     '75% PTFU | No >1 FU | With IPT',
                     '75% PTFU | With >1 FU | With IPT'],
     outcome_names=['Total: Active TB Incidence', 'Total: TB Deaths'],
-    title='Percentage TB incidence and mortality averted',
+    title='Percentage of incidence TB cases\nand deaths averted',
     x_label='Percentage (%)',
     y_labels=[
         'Follow-up at yr 1, No IPT',
