@@ -5,17 +5,18 @@ import SimPy.EconEvalClasses as Econ
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
-PROB = 0.5
+PROB_UPTAKE = 0.75
+PROB_DROPOUT = 0.15
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
 # here we want scenarios with
 # 'Prob {Tc+ | Tc}' = PROB,
-# 'Follow-Up Rate (Tc+>1)' = any, and
+# 'Follow-Up (Tc+>1)' = any, and
 # 'IPT' = any
 varConditions = [
     Cls.VariableCondition('Prob {Tc+ | Tc}',
-                          minimum=PROB,
-                          maximum=PROB,
+                          minimum=PROB_UPTAKE,
+                          maximum=PROB_UPTAKE,
                           if_included_in_label=False),
     Cls.VariableCondition('Follow-Up Rate (Tc+>1)',
                           minimum=0,
@@ -37,8 +38,9 @@ varConditions = [
 
 # series to display on the cost-effectiveness plane
 series = [
-    Cls.Series(name='{:.{prec}f}%'.format(PROB*100, prec=0),
-               color='#4D4D4D',# '#808A87',
+    Cls.Series(name='U{:.{prec}f}%'.format(PROB_UPTAKE * 100, prec=0)
+                    +'-D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0),
+               color='#4D4D4D',  # '#808A87',
                variable_conditions=varConditions,
                if_find_frontier=True,
                labels_shift_x=-0.04,
@@ -82,4 +84,7 @@ plt.xlim(-500, 6500)
 plt.ylim(-150, 650)
 plt.axvline(x=0, linestyle='--', color='black', linewidth=.5)
 plt.axhline(y=0, linestyle='--', color='black', linewidth=.5)
-plt.savefig('figures/cea/' + 'CEA {:.{prec}f}%'.format(PROB*100, prec=0) + '.png')
+plt.savefig('figures/cea/'
+            + 'CEA U{:.{prec}f}% '.format(PROB_UPTAKE * 100, prec=0)
+            + 'D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
+            + '.png')
