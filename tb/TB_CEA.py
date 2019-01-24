@@ -6,7 +6,7 @@ markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
 PROB_UPTAKE = 0.75
-PROB_DROPOUT = 0.15
+PROB_DROPOUT = 0.25
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
 # here we want scenarios with
@@ -18,7 +18,7 @@ varConditions = [
                           minimum=PROB_UPTAKE,
                           maximum=PROB_UPTAKE,
                           if_included_in_label=False),
-    Cls.VariableCondition('Follow-Up Rate (Tc+>1)',
+    Cls.VariableCondition('Follow-Up (Tc+>1)',
                           minimum=0,
                           maximum=1,
                           if_included_in_label=True,
@@ -26,6 +26,9 @@ varConditions = [
                               (0, 'Follow-up at yr 1'),
                               (1, 'Annual follow-up')]
                           ),
+    Cls.VariableCondition('Prob {Drop-Out in Tc+>1}',
+                          values=(PROB_DROPOUT, 0),
+                          if_included_in_label=False),
     Cls.VariableCondition('IPT',
                           minimum=0,
                           maximum=1,

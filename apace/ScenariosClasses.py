@@ -186,11 +186,13 @@ class ScenarioDataFrame:
 
 
 class VariableCondition:
-    def __init__(self, var_name, minimum, maximum, if_included_in_label=False, label_format='', label_rules=None):
+    def __init__(self, var_name, minimum=0, maximum=1, values=None,
+                 if_included_in_label=False, label_format='', label_rules=None):
         """
         :param var_name: variable name as appears in the scenario csv file
         :param minimum: minimum acceptable value for this variable
         :param maximum: maximum acceptable value for this variable
+        :param values: (tuple) of acceptable values
         :param if_included_in_label: if the value of this variable should be included in labels to display on CE plane
         :param label_format: (string) format of this variable values to display on CE plane
         :param label_rules: (list of tuples): to convert variable's value to labels
@@ -199,6 +201,7 @@ class VariableCondition:
         self.varName = var_name
         self.min = minimum
         self.max = maximum
+        self.values = values
         self.ifIncludedInLabel = if_included_in_label
         self.labelFormat = label_format
         self.labelRules = label_rules
@@ -258,9 +261,13 @@ class Series:
         """ :returns True if this scenario meets the conditions to be on this series """
 
         for condition in self.varConditions:
-            if scenario.variables[condition.varName] < condition.min \
-                    or scenario.variables[condition.varName] > condition.max:
-                return False
+            if condition.values is None:
+                if scenario.variables[condition.varName] < condition.min \
+                        or scenario.variables[condition.varName] > condition.max:
+                    return False
+            else:
+                if not(scenario.variables[condition.varName] in condition.values):
+                    return False
 
         return True
 
