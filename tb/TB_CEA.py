@@ -5,7 +5,7 @@ import SimPy.EconEvalClasses as Econ
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
-PROB = .75
+PROB = 0.5
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
 # here we want scenarios with
@@ -65,10 +65,10 @@ for i, ser in enumerate(series):
         y_err_l = ser.yValues[j]-ser.yIntervals[j][0]
         y_err_u = ser.yIntervals[j][1] - ser.yValues[j]
 
-        ax.errorbar(x_value, ser.yValues[j],
-                    xerr=[[x_err_l], [x_err_u]],
-                    yerr=[[y_err_l], [y_err_u]],
-                    fmt='none', color='k', linewidth=1, alpha=0.4)
+        # ax.errorbar(x_value, ser.yValues[j],
+        #             xerr=[[x_err_l], [x_err_u]],
+        #             yerr=[[y_err_l], [y_err_u]],
+        #             fmt='none', color='k', linewidth=1, alpha=0.4)
 
     ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=1)
 
@@ -79,7 +79,7 @@ for i, ser in enumerate(series):
 plt.xlabel('DALY Averted')
 plt.ylabel('Additional Cost (Thousand Dollars)')
 plt.xlim(-500, 6500)
-plt.ylim(-250, 650)
+plt.ylim(-150, 650)
 plt.axvline(x=0, linestyle='--', color='black', linewidth=.5)
 plt.axhline(y=0, linestyle='--', color='black', linewidth=.5)
 plt.savefig('figures/cea/' + 'CEA {:.{prec}f}%'.format(PROB*100, prec=0) + '.png')

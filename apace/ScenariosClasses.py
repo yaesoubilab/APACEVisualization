@@ -273,7 +273,6 @@ class Series:
         # cost-effectiveness analysis
         self.CEA = Econ.CEA(self.strategies,
                             if_paired=True,
-                            if_find_frontier=self.ifFindFrontier,
                             health_measure=Econ.HealthMeasure.DISUTILITY)
 
         # if to save the results of the CEA
