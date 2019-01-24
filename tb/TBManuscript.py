@@ -9,6 +9,11 @@ scenario_names = ['Baseline',
                   'Follow-up at yr 1, With IPT',
                   'Annual follow-up, With IPT']
 
+scenario_keys = ['75% PTFU | No >1 FU | Drop % | No IPT',
+                 '75% PTFU | With >1 FU | Drop 15% | No IPT',
+                 '75% PTFU | No >1 FU | Drop % | With IPT',
+                 '75% PTFU | With >1 FU | Drop 15% | With IPT']
+
 csvfiles_trajs = ['csvfiles/TBTrajs0Base.csv',
                   'csvfiles/TBTrajs1Yr1NoIPT.csv',
                   'csvfiles/TBTrajs2AnnualNoIPT.csv',
@@ -89,30 +94,21 @@ print('% incident TB cases due to reactivation occurring among those who had com
 print('')
 print('% incident TB averted:',
       scenario_df.get_relative_diff_mean_interval(
-          scenario_names=['75% PTFU | No >1 FU | No IPT',
-                          '75% PTFU | With >1 FU | No IPT',
-                          '75% PTFU | No >1 FU | With IPT',
-                          '75% PTFU | With >1 FU | With IPT'],
+          scenario_names=scenario_keys,
           scenario_name_base='Base',
           outcome_name='Total: Active TB Incidence',
           deci=1, form='%'))
 
 print('% TB deaths averted:',
       scenario_df.get_relative_diff_mean_interval(
-          scenario_names=['75% PTFU | No >1 FU | No IPT',
-                          '75% PTFU | With >1 FU | No IPT',
-                          '75% PTFU | No >1 FU | With IPT',
-                          '75% PTFU | With >1 FU | With IPT'],
+          scenario_names=scenario_keys,
           scenario_name_base='Base',
           outcome_name='Total: TB Deaths',
           deci=1, form='%'))
 
 scenario_df.plot_relative_diff_by_scenario(
     scenario_name_base='Base',
-    scenario_names=['75% PTFU | No >1 FU | No IPT',
-                    '75% PTFU | With >1 FU | No IPT',
-                    '75% PTFU | No >1 FU | With IPT',
-                    '75% PTFU | With >1 FU | With IPT'],
+    scenario_names=scenario_keys,
     outcome_names=['Total: Active TB Incidence', 'Total: TB Deaths'],
     title='Percentage of incidence TB cases\nand deaths averted',
     x_label='Percentage (%)',
