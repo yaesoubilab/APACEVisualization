@@ -1,5 +1,6 @@
 import csv
 import numpy
+import SimPy.StatisticalClasses as Stat
 
 
 def read_csv_cols(file_name, n_cols, if_ignore_first_row=True, delimiter=',', if_convert_float=False):
@@ -49,13 +50,22 @@ def proper_file_name(text):
     return text.replace('|', ',').replace(':', ',').replace('<', 'l').replace('>', 'g')
 
 
-def get_mean_PI(stat, deci, form):
+def get_mean_interval(stat, interval_type='c', deci=0, form=None):
     """
-    :return: mean and percentile interval formatted as specified
-    (if format is not specified, it returns (mean, PI)
+    :param interval_type: 'c' for confidence interval, 'p' for percentile interval
+    :param deci: digits to round the numbers to
+    :param form: ',' to format as number, '%' to format as percentage, and '$' to format as currency
+    :return: mean and percentile interval formatted as specified (if format is not specified, it returns (mean, PI)
     """
 
     if form is None:
-        return stat.get_mean(), stat.get_PI(0.05)
+        if interval_type == 'c':
+            return stat.get_mean(), stat.get_PI(0.05)
+        elif interval_type == 'p':
+            return stat.get_mean(), stat.get_CI(0.05)
+        else:
+            raise ValueError('Invalid interval type.')
     else:
-        return stat.format_estimate_PI(0.05, deci, form)
+        return stat.get_formatted_estimate_interval(
+            interval_type=interval_type, alpha=0.05, deci=deci, form=form)
+

@@ -107,7 +107,7 @@ class TrajOneOutcomeMultipleReps:
         if format is None:
             return stat.get_mean(), stat.get_percentile(0.05)
         else:
-            return stat.format_estimate_PI(0.05, deci=deci, form=format)
+            return stat.get_formatted_estimate_interval(0.05, deci=deci, form=format)
 
     def get_trajs_mean(self):
         """

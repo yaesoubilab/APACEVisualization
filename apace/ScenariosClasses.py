@@ -88,13 +88,13 @@ class ScenarioDataFrame:
                     self.scenarios[scenario_name].add_all_outcomes(col_headers[col_idx], outcomes)
                 col_idx += 1
 
-    def get_mean_interval(self, scenario_name, outcome_name, deci=0, form=None):
+    def get_mean_interval(self, scenario_name, outcome_name, interval_type='c', deci=0, form=None):
         """
         :return: mean and percentile interval of the selected outcome for the selected scenario
         """
 
         stat = Stat.SummaryStat('', self.scenarios[scenario_name].outcomes[outcome_name])
-        return helpers.get_mean_PI(stat, deci, form)
+        return helpers.get_mean_interval(stat, interval_type, deci, form)
 
     def get_relative_diff_mean_interval(self, scenario_name_base, scenario_names, outcome_name, deci=0, form=None):
         """
@@ -112,7 +112,7 @@ class ScenarioDataFrame:
                 y_ref=self.scenarios[scenario_name_base].outcomes[outcome_name],
                 order=1)
 
-            list_mean_PI[name] = helpers.get_mean_PI(ratio_state, deci, form)
+            list_mean_PI[name] = helpers.get_mean_interval(ratio_state, deci, form)
 
         if len(scenario_names) == 1:
             return list_mean_PI[scenario_names[0]]

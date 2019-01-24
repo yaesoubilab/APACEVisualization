@@ -49,7 +49,7 @@ class Parameters:
         if form is None:
             return sum_stat.get_mean(), sum_stat.get_percentile(0.05)
         else:
-            return sum_stat.format_estimate_PI(0.05, deci, form)
+            return sum_stat.get_formatted_estimate_interval(0.05, deci, form)
 
     def plot_histogram(self, parameter_name, title, x_lable=None, y_lable=None, x_range=None):
         """ creates a histogram of one parameter """
@@ -191,7 +191,7 @@ class Parameters:
         if form is None:
             return sum_stat.get_mean(), sum_stat.get_percentile(0.05)
         else:
-            return sum_stat.format_estimate_PI(0.05, deci, form)
+            return sum_stat.get_formatted_estimate_interval(0.05, deci, form)
 
     def plot_ratio_hist(self, numerator_par_name, denominator_par_names,
                         title, x_label=None, x_range=None, output_fig_loc='figures'):
