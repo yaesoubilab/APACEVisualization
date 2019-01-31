@@ -1,5 +1,6 @@
 
 INDX = 0
+SHOW_FEASIBLE_RANGES = False
 X_RANGE = (-100, 100)  # (-75, 75)
 Y_RANGE = (-2, 4) #(-1, 2)
 
@@ -11,7 +12,7 @@ SELECTED_SA_FILE_NAME = SA_FILE_NAMES[INDX]
 
 # file names for parameter analysis
 POSTERIOR_FILE_NAMES \
-    = ['csvfiles\ParamSamples10YrCalib.csv',
+    = ['csvfiles\ParamSamples50YrCalib.csv',
        'csvfiles\ParamSamples10YrCalib.csv',
        '']
 SELECTED_POSTERIOR_FILE_NAME = POSTERIOR_FILE_NAMES[INDX]

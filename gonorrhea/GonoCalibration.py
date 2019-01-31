@@ -63,7 +63,7 @@ list_plot_calib_info.append(
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[1, 10],
-            y_range=[0.02*100000, 0.05*100000]
+            y_range=[0.01*100000, 0.06*100000]
         )
     )
 )

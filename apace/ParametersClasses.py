@@ -191,7 +191,8 @@ class Parameters:
         if form is None:
             return sum_stat.get_mean(), sum_stat.get_percentile(0.05)
         else:
-            return sum_stat.get_formatted_estimate_interval(0.05, deci, form)
+            return sum_stat.get_formatted_estimate_interval(
+                interval_type='p', alpha=0.05, deci=deci, form=form)
 
     def plot_ratio_hist(self, numerator_par_name, denominator_par_names,
                         title, x_label=None, x_range=None, output_fig_loc='figures'):
