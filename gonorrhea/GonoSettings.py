@@ -48,7 +48,7 @@ varBaseQuart = [
     Cls.VariableCondition('% Resistant Threshold', 0.03, 0.5,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1,
-                          if_included_in_label=True, label_format='{:.1%}'),
+                          if_included_in_label=False, label_format='{:.1%}'),
     Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS/4, DS_TESTS/4,
                           if_included_in_label=False)
 ]
@@ -62,6 +62,17 @@ varBaseEnhancedTesting = [
     Cls.VariableCondition('# of Cases Tested for Resistance', 2*DS_TESTS, 2*DS_TESTS,
                           if_included_in_label=False)
 ]
+varBaseQuartEnhancedTesting = [
+    Cls.VariableCondition('Decision Period', 91, 91,
+                          if_included_in_label=False),
+    Cls.VariableCondition('% Resistant Threshold', 0.03, 0.5,
+                          if_included_in_label=True, label_format='{:.1%}'),
+    Cls.VariableCondition('Change in % Resistant Threshold', 1, 1,
+                          if_included_in_label=False, label_format='{:.1%}'),
+    Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS/2, DS_TESTS/2,
+                          if_included_in_label=False)
+]
+
 
 # series to display on the cost-effectiveness plane
 base = Cls.Series('Base', 'blue',
@@ -69,13 +80,18 @@ base = Cls.Series('Base', 'blue',
                   if_find_frontier=False,
                   labels_shift_x=-10,
                   labels_shift_y=0.04)
-baseQuarterly = Cls.Series('Policy Base-Quarterly', 'red',
+baseQuarterly = Cls.Series('Base-Quarterly', 'red',
                            variable_conditions=varBaseQuart,
                            if_find_frontier=False,
                            labels_shift_x=2.5,
                            labels_shift_y=-0.11)
-baseEnhancedTesting = Cls.Series('Policy Base-Enhanced Testing', 'red',
+baseEnhancedTesting = Cls.Series('Base with Enhanced Testing', 'red',
                                  variable_conditions=varBaseEnhancedTesting,
                                  if_find_frontier=False,
                                  labels_shift_x=2.5,
                                  labels_shift_y=-0.11)
+baseQuarterlyEnhancedTesting = Cls.Series('Base-Quarterly with Enhanced Testing', 'red',
+                                          variable_conditions=varBaseQuartEnhancedTesting,
+                                          if_find_frontier=False,
+                                          labels_shift_x=2.5,
+                                          labels_shift_y=-0.11)

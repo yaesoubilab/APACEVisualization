@@ -29,7 +29,12 @@ def plot_series(list_series, file_name = 'fig.png'):
 
 
 # base vs. quarterly base
-plot_series(list_series=[Set.base, Set.baseQuarterly], file_name='Base vs. Quarterly Base.png')
+plot_series(list_series=[Set.base, Set.baseQuarterly],
+            file_name='Base vs. Quarterly Base.png')
 # base vs. base with enhanced testing
-plot_series(list_series=[Set.base, Set.baseEnhancedTesting], file_name='Base vs. Base with Enhanced Testing.png')
+plot_series(list_series=[Set.base, Set.baseEnhancedTesting],
+            file_name='Base vs. Base with Enhanced Testing.png')
+# base vs. quarterly base with enhanced testing
+plot_series(list_series=[Set.base, Set.baseQuarterlyEnhancedTesting],
+            file_name='Base vs. Quarterly Base with Enhanced Testing.png')
 
