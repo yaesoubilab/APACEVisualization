@@ -273,7 +273,7 @@ class Series:
 
     def do_CEA(self,
                save_cea_results=False,
-               interval=Econ.Interval.NO_INTERVAL,
+               interval_type='n',
                x_axis_multiplier=1,
                y_axis_multiplier=1):
 
@@ -284,41 +284,46 @@ class Series:
 
         # if to save the results of the CEA
         if save_cea_results:
-            self.CEA.build_CE_table(interval=interval,
+            self.CEA.build_CE_table(interval_type=interval_type,
                                     file_name='CEA Table-'+self.name,
                                     cost_multiplier=y_axis_multiplier,
                                     effect_multiplier=x_axis_multiplier,
                                     effect_digits=0)
 
-        # find the list of strategies excluding the base
+        # find the list of shifted strategies
         shifted_strategies = self.CEA.get_shifted_strategies()
-        del shifted_strategies[0]  # remove the base strategy
 
-        # find the (x, y) values of strategies to display on CE plane
-        for idx, shiftedStr in enumerate(shifted_strategies):
-            self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs*x_axis_multiplier)
-            self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs*y_axis_multiplier)
-            self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
-            self.yValues.append(shiftedStr.aveCost*y_axis_multiplier)
-            self.yLabels.append(shiftedStr.name)
+        # if the CE frontier should be calculated
+        if self.ifFindFrontier:
+            # find the (x, y)'s of strategies on the frontier
+            for idx, shiftedStr in enumerate(self.CEA.get_shifted_strategies_on_frontier()):
+                self.frontierXValues.append(shiftedStr.aveEffect * x_axis_multiplier)
+                self.frontierYValues.append(shiftedStr.aveCost * y_axis_multiplier)
+                self.frontierLabels.append(shiftedStr.name)
 
-            if interval is not Econ.Interval.NO_INTERVAL:
-                x_interval = shiftedStr.get_effect_interval(interval, ALPHA)
-                y_interval = shiftedStr.get_cost_interval(interval, ALPHA)
-                self.xIntervals.append([x*x_axis_multiplier for x in x_interval])
-                self.yIntervals.append([y*y_axis_multiplier for y in y_interval])
+                if interval_type != 'n':
+                    x_interval = shiftedStr.get_effect_interval(interval_type, ALPHA)
+                    y_interval = shiftedStr.get_cost_interval(interval_type, ALPHA)
+                    self.frontierXIntervals.append([x * x_axis_multiplier for x in x_interval])
+                    self.frontierYIntervals.append([y * y_axis_multiplier for y in y_interval])
 
-        # find the (x, y)'s of strategies on the frontier
-        for idx, shiftedStr in enumerate(self.CEA.get_shifted_strategies_on_frontier()):
-            self.frontierXValues.append(shiftedStr.aveEffect*x_axis_multiplier)
-            self.frontierYValues.append(shiftedStr.aveCost*y_axis_multiplier)
-            self.frontierLabels.append(shiftedStr.name)
+        else: # the CE frontier needs not to be calculated
 
-            if interval is not Econ.Interval.NO_INTERVAL:
-                x_interval = shiftedStr.get_effect_interval(interval, ALPHA)
-                y_interval = shiftedStr.get_cost_interval(interval, ALPHA)
-                self.frontierXIntervals.append([x*x_axis_multiplier for x in x_interval])
-                self.frontierYIntervals.append([y*y_axis_multiplier for y in y_interval])
+            del shifted_strategies[0]  # remove the base strategy
+
+            # find the (x, y) values of strategies to display on CE plane
+            for idx, shiftedStr in enumerate(shifted_strategies):
+                self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs*x_axis_multiplier)
+                self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs*y_axis_multiplier)
+                self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
+                self.yValues.append(shiftedStr.aveCost*y_axis_multiplier)
+                self.yLabels.append(shiftedStr.name)
+
+                if interval_type != 'n':
+                    x_interval = shiftedStr.get_effect_interval(interval_type, ALPHA)
+                    y_interval = shiftedStr.get_cost_interval(interval_type, ALPHA)
+                    self.xIntervals.append([x*x_axis_multiplier for x in x_interval])
+                    self.yIntervals.append([y*y_axis_multiplier for y in y_interval])
 
     def get_frontier_x_err(self):
 
@@ -352,14 +357,14 @@ class Series:
 def populate_series(series_list,
                     csv_filename,
                     save_cea_results=False,
-                    interval=Econ.Interval.NO_INTERVAL,
+                    interval_type='n',
                     x_axis_multiplier=1,
                     y_axis_multiplier=1):
     """
     :param series_list:
     :param csv_filename:
     :param save_cea_results: set it to True if the CE table should be generated
-    :param interval: select from Econ.Interval (no interval, CI, or PI)
+    :param interval_type: select from Econ.Interval (no interval, CI, or PI)
     :param x_axis_multiplier:
     :param y_axis_multiplier:
     :return:
@@ -413,7 +418,7 @@ def populate_series(series_list,
                 )
 
         # do CEA on this series
-        ser.do_CEA(save_cea_results, interval, x_axis_multiplier, y_axis_multiplier)
+        ser.do_CEA(save_cea_results, interval_type, x_axis_multiplier, y_axis_multiplier)
 
 
 def plot_series(series, x_label, y_label, file_name,
