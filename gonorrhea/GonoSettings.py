@@ -3,7 +3,7 @@ import apace.ScenariosClasses as Cls
 INDX = 0
 SHOW_FEASIBLE_RANGES = False
 X_RANGE = (-100, 100)  # (-75, 75)
-Y_RANGE = (-2, 4) #(-1, 2)
+Y_RANGE = (-0.5, 0.5) #(-1, 2)
 
 # file names for scenario analysis
 SA_FILE_NAMES = ['csvfiles\SA50YrCalib.csv',
