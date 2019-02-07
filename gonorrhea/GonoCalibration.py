@@ -109,7 +109,7 @@ for r in RESIST_PROFILE:
 
     list_plot_info.append(
         Vis.PlotTrajInfo(
-            traj_name='% Received 1st Tx & Rst to {0}'.format(r),
+            traj_name='Obs: % Received 1st Tx & Rst to {0}'.format(r),
             y_range=[0, 40],
             is_x_integer=True,
             y_multiplier=100,
