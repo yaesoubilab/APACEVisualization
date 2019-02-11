@@ -2,8 +2,8 @@ import apace.ScenariosClasses as Cls
 
 INDX = 0
 SHOW_FEASIBLE_RANGES = False
-X_RANGE = (-100, 100)  # (-75, 75)
-Y_RANGE = (-0.5, 0.5) #(-1, 2)
+X_RANGE = (-100, 100)
+Y_RANGE = (-0.5, 0.5)
 
 # file names for scenario analysis
 SA_FILE_NAMES = ['csvfiles\SA50YrCalib.csv',
@@ -78,8 +78,8 @@ varBaseQuartEnhancedTesting = [
 base = Cls.Series('Base', 'blue',
                   variable_conditions=varBase,
                   if_find_frontier=False,
-                  labels_shift_x=-10,
-                  labels_shift_y=0.04)
+                  labels_shift_x=-600,
+                  labels_shift_y=0.02)
 baseQuarterly = Cls.Series('Base-Quarterly', 'red',
                            variable_conditions=varBaseQuart,
                            if_find_frontier=False,

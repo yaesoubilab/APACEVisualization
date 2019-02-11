@@ -42,7 +42,7 @@ def plot_series(list_series,
 
 
 # change this to false to show M used
-SHOW_EFFECTIVE_LIFE = True
+SHOW_EFFECTIVE_LIFE = False
 SIM_LENGTH = 50     # years
 
 if SHOW_EFFECTIVE_LIFE:
@@ -75,20 +75,23 @@ plot_series(list_series=[Set.base, Set.baseQuarterly],
             wtp_multiplier=wtp_mult,
             labels=labels,
             file_name='Base vs. Quarterly Base.png')
-# base vs. base with enhanced testing
-plot_series(list_series=[Set.base, Set.baseEnhancedTesting],
-            effect_multiplier=effect_mult,
-            cost_multiplier=cost_mult,
-            switch_cost_effect_on_figure=switch_cost_effect_on_figure,
-            wtp_multiplier=wtp_mult,
-            labels=labels,
-            file_name='Base vs. Base with Enhanced Testing.png')
-# base vs. quarterly base with enhanced testing
-plot_series(list_series=[Set.base, Set.baseQuarterlyEnhancedTesting],
-            effect_multiplier=effect_mult,
-            cost_multiplier=cost_mult,
-            switch_cost_effect_on_figure=switch_cost_effect_on_figure,
-            wtp_multiplier=wtp_mult,
-            labels=labels,
-            file_name='Base vs. Quarterly Base with Enhanced Testing.png')
+
+included = False
+if included:
+    # base vs. base with enhanced testing
+    plot_series(list_series=[Set.base, Set.baseEnhancedTesting],
+                effect_multiplier=effect_mult,
+                cost_multiplier=cost_mult,
+                switch_cost_effect_on_figure=switch_cost_effect_on_figure,
+                wtp_multiplier=wtp_mult,
+                labels=labels,
+                file_name='Base vs. Base with Enhanced Testing.png')
+    # base vs. quarterly base with enhanced testing
+    plot_series(list_series=[Set.base, Set.baseQuarterlyEnhancedTesting],
+                effect_multiplier=effect_mult,
+                cost_multiplier=cost_mult,
+                switch_cost_effect_on_figure=switch_cost_effect_on_figure,
+                wtp_multiplier=wtp_mult,
+                labels=labels,
+                file_name='Base vs. Quarterly Base with Enhanced Testing.png')
 
