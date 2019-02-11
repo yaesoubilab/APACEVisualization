@@ -55,8 +55,8 @@ Cls.populate_series(series,
                     csv_filename='csvfiles\TBScenarios.csv',
                     save_cea_results=True,
                     interval_type=Econ.Interval.PREDICTION,
-                    x_axis_multiplier=1,
-                    y_axis_multiplier=1/1e3)
+                    effect_multiplier=1,
+                    cost_multiplier=1 / 1e3)
 
 # plot
 fig, ax = plt.subplots(figsize=(6, 5))

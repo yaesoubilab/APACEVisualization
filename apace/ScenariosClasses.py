@@ -273,11 +273,12 @@ class Series:
 
         return True
 
-    def do_CEA(self,
-               save_cea_results=False,
-               interval_type='n',
-               x_axis_multiplier=1,
-               y_axis_multiplier=1):
+    def build_CE_curve(self,
+                       save_cea_results=False,
+                       interval_type='n',
+                       effect_multiplier=1,
+                       cost_multiplier=1,
+                       switch_cost_effect_on_figure=False):
 
         # cost-effectiveness analysis
         self.CEA = Econ.CEA(self.strategies,
@@ -288,8 +289,8 @@ class Series:
         if save_cea_results:
             self.CEA.build_CE_table(interval_type=interval_type,
                                     file_name='CEA Table-'+self.name,
-                                    cost_multiplier=y_axis_multiplier,
-                                    effect_multiplier=x_axis_multiplier,
+                                    cost_multiplier=cost_multiplier,
+                                    effect_multiplier=effect_multiplier,
                                     effect_digits=0)
 
         # find the list of shifted strategies
@@ -299,33 +300,53 @@ class Series:
         if self.ifFindFrontier:
             # find the (x, y)'s of strategies on the frontier
             for idx, shiftedStr in enumerate(self.CEA.get_shifted_strategies_on_frontier()):
-                self.frontierXValues.append(shiftedStr.aveEffect * x_axis_multiplier)
-                self.frontierYValues.append(shiftedStr.aveCost * y_axis_multiplier)
+                if switch_cost_effect_on_figure:
+                    self.frontierXValues.append(shiftedStr.aveCost * cost_multiplier)
+                    self.frontierYValues.append(shiftedStr.aveEffect * effect_multiplier)
+                else:
+                    self.frontierXValues.append(shiftedStr.aveEffect * effect_multiplier)
+                    self.frontierYValues.append(shiftedStr.aveCost * cost_multiplier)
+
                 self.frontierLabels.append(shiftedStr.name)
 
                 if interval_type != 'n':
                     x_interval = shiftedStr.get_effect_interval(interval_type, ALPHA)
                     y_interval = shiftedStr.get_cost_interval(interval_type, ALPHA)
-                    self.frontierXIntervals.append([x * x_axis_multiplier for x in x_interval])
-                    self.frontierYIntervals.append([y * y_axis_multiplier for y in y_interval])
+                    if switch_cost_effect_on_figure:
+                        self.frontierXIntervals.append([x * effect_multiplier for x in x_interval])
+                        self.frontierYIntervals.append([y * cost_multiplier for y in y_interval])
+                    else:
+                        self.frontierXIntervals.append([y * cost_multiplier for y in y_interval])
+                        self.frontierYIntervals.append([x * effect_multiplier for x in x_interval])
 
-        else: # the CE frontier needs not to be calculated
+        else:  # the CE frontier needs not to be calculated
 
             del shifted_strategies[0]  # remove the base strategy
 
             # find the (x, y) values of strategies to display on CE plane
             for idx, shiftedStr in enumerate(shifted_strategies):
-                self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs*x_axis_multiplier)
-                self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs*y_axis_multiplier)
-                self.xValues.append(shiftedStr.aveEffect*x_axis_multiplier)
-                self.yValues.append(shiftedStr.aveCost*y_axis_multiplier)
+                if switch_cost_effect_on_figure:
+                    self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs * effect_multiplier)
+                    self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs * cost_multiplier)
+                    self.xValues.append(shiftedStr.aveCost * cost_multiplier)
+                    self.yValues.append(shiftedStr.aveEffect * effect_multiplier)
+                else:
+                    self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs * effect_multiplier)
+                    self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs * cost_multiplier)
+                    self.xValues.append(shiftedStr.aveEffect * effect_multiplier)
+                    self.yValues.append(shiftedStr.aveCost * cost_multiplier)
+
                 self.yLabels.append(shiftedStr.name)
 
                 if interval_type != 'n':
                     x_interval = shiftedStr.get_effect_interval(interval_type, ALPHA)
                     y_interval = shiftedStr.get_cost_interval(interval_type, ALPHA)
-                    self.xIntervals.append([x*x_axis_multiplier for x in x_interval])
-                    self.yIntervals.append([y*y_axis_multiplier for y in y_interval])
+                    if switch_cost_effect_on_figure:
+                        self.xIntervals.append([y * cost_multiplier for y in y_interval])
+                        self.yIntervals.append([x * effect_multiplier for x in x_interval])
+                    else:
+                        self.xIntervals.append([x * effect_multiplier for x in x_interval])
+                        self.yIntervals.append([y * cost_multiplier for y in y_interval])
 
     def get_frontier_x_err(self):
 
@@ -360,16 +381,17 @@ def populate_series(series_list,
                     csv_filename,
                     save_cea_results=False,
                     interval_type='n',
-                    x_axis_multiplier=1,
-                    y_axis_multiplier=1):
+                    effect_multiplier=1,
+                    cost_multiplier=1,
+                    switch_cost_effect_on_figure=False):
     """
     :param series_list:
     :param csv_filename:
     :param save_cea_results: set it to True if the CE table should be generated
     :param interval_type: select from Econ.Interval (no interval, CI, or PI)
-    :param x_axis_multiplier:
-    :param y_axis_multiplier:
-    :return:
+    :param effect_multiplier:
+    :param cost_multiplier:
+    :param switch_cost_effect_on_figure: displays cost on the x-axis and effect on the y-axis
     """
 
     # data frame for scenario analysis
@@ -420,14 +442,19 @@ def populate_series(series_list,
                 )
 
         # do CEA on this series
-        ser.do_CEA(save_cea_results, interval_type, x_axis_multiplier, y_axis_multiplier)
+        ser.build_CE_curve(save_cea_results,
+                           interval_type,
+                           effect_multiplier=effect_multiplier,
+                           cost_multiplier=cost_multiplier,
+                           switch_cost_effect_on_figure=switch_cost_effect_on_figure)
 
 
 def plot_series(series, x_label, y_label, file_name,
                 show_only_on_frontier=False,
                 x_range=None,
                 y_range=None,
-                show_error_bars=False):
+                show_error_bars=False,
+                wtp_multiplier=1):
 
     fig, ax = plt.subplots(figsize=(6, 5))
 
@@ -485,9 +512,10 @@ def plot_series(series, x_label, y_label, file_name,
             quad_reg = Reg.SingleVarRegression(x, y, degree=2)
 
             # print derivatives at
-            print('WTP at min dCost', 1000 * quad_reg.get_derivative(x=ser.xValues[len(ser.xValues)-1]))
-            print('WTP at dCost = 0:', 1000 * quad_reg.get_derivative(x=0))
-            print('WTP at max dCost:', 1000 * quad_reg.get_derivative(x=ser.xValues[0]))
+            print(file_name, ' | ', ser.name)
+            print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[len(ser.xValues)-1]))
+            print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=0))
+            print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
 
             xs = np.linspace(min(x), max(x), 50)
             predicted = quad_reg.get_predicted_y(xs)
