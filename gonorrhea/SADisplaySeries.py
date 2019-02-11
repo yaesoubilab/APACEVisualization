@@ -42,7 +42,7 @@ def plot_series(list_series,
 
 
 # change this to false to show M used
-SHOW_EFFECTIVE_LIFE = False
+SHOW_EFFECTIVE_LIFE = True
 SIM_LENGTH = 50     # years
 
 if SHOW_EFFECTIVE_LIFE:
@@ -60,7 +60,7 @@ else:
     cost_mult = 1 / 1e6
     switch_cost_effect_on_figure = False
     Set.X_RANGE = (-5000, 5000)
-    Set.Y_RANGE = (-0.5, 0.5)
+    Set.Y_RANGE = (-0.6, 0.6)
     labels = ('Additional Gonorrhea Cases Averted Annually',
               'Additional Drug M Used (Millions)')
 
