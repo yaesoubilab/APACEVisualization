@@ -42,7 +42,7 @@ def plot_series(list_series,
 
 
 # change this to false to show M used
-SHOW_EFFECTIVE_LIFE = True
+SHOW_EFFECTIVE_LIFE = False
 SIM_LENGTH = 50     # years
 POP_RATE = 0.1e6/5e6
 

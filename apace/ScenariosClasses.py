@@ -479,7 +479,7 @@ def plot_series(series, x_label, y_label, file_name,
             # y-value labels
             for j, txt in enumerate(ser.frontierLabels):
                 if txt is not 'Base':
-                    plt.annotate(
+                    ax.annotate(
                         txt,
                         (ser.frontierXValues[j] + ser.labelsShiftX, ser.frontierYValues[j] + ser.labelsShiftY),
                         color=ser.color
@@ -501,7 +501,7 @@ def plot_series(series, x_label, y_label, file_name,
             # y-value labels
             for j, txt in enumerate(ser.yLabels):
                 if txt is not 'Base':
-                    plt.annotate(
+                    ax.annotate(
                         txt,
                         (ser.xValues[j] + ser.labelsShiftX, ser.yValues[j] + ser.labelsShiftY),
                         fontsize=6.5,
@@ -543,10 +543,11 @@ def plot_series(series, x_label, y_label, file_name,
     if y_range is not None:
         ax.set_ylim(y_range)
 
-    plt.tight_layout()
+    # plt.tight_layout()
 
     # origin
     plt.axvline(x=0, linestyle='-', color='black', linewidth=0.4)
     plt.axhline(y=0, linestyle='-', color='black', linewidth=0.4)
 
-    plt.savefig('figures/' + file_name, dpm=300)
+    plt.savefig('figures/' + file_name, dpm=300) # read more about 'bbox_inches = "tight"'
+    #plt.show()

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-fig = plt.figure(figsize=(4,4))
+fig = plt.figure(figsize=(4,2))
 ax = fig.add_subplot(111)
 x = np.linspace(-20,20, 1000)
 line_cosh, = ax.plot(x, x**3)
