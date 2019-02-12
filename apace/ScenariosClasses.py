@@ -456,7 +456,7 @@ def plot_series(series, x_label, y_label, file_name,
                 show_error_bars=False,
                 wtp_multiplier=1):
 
-    fig, ax = plt.subplots(figsize=(6, 5))
+    fig, ax = plt.subplots(1, 1, figsize=(6, 5))
 
     for i, ser in enumerate(series):
 
