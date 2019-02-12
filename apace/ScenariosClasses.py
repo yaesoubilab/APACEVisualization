@@ -456,7 +456,9 @@ def plot_series(series, x_label, y_label, file_name,
                 show_error_bars=False,
                 wtp_multiplier=1):
 
-    fig, ax = plt.subplots(1, 1, figsize=(6, 5))
+    # fig, ax = plt.subplots(1, 1, figsize=(6, 5))
+    fig = plt.figure(figsize=(5, 4.6))
+    ax = fig.add_subplot(111)
 
     for i, ser in enumerate(series):
 
@@ -531,15 +533,17 @@ def plot_series(series, x_label, y_label, file_name,
                 ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
 
     # labels and legend
-    plt.xlabel(x_label)
-    plt.ylabel(y_label)
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
     plt.legend(loc=2)
 
     # x and y ranges
     if x_range is not None:
-        plt.xlim(x_range)
+        ax.set_xlim(x_range)
     if y_range is not None:
-        plt.ylim(y_range)
+        ax.set_ylim(y_range)
+
+    plt.tight_layout()
 
     # origin
     plt.axvline(x=0, linestyle='-', color='black', linewidth=0.4)
