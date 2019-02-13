@@ -1,12 +1,13 @@
 import apace.ScenariosClasses as Cls
 
-INDX = 0
+INDX = 1
 SHOW_FEASIBLE_RANGES = False
 X_RANGE = (-100, 100)
 Y_RANGE = (-0.5, 0.5)
 
 # file names for scenario analysis
 SA_FILE_NAMES = ['csvfiles\SA50YrCalib.csv',
+                 'csvfiles\SABaseA.csv',
                  'csvfiles\SA50YrCalibNoise.csv',
                  'csvfiles\SADebug.csv']
 SELECTED_SA_FILE_NAME = SA_FILE_NAMES[INDX]
@@ -72,7 +73,16 @@ varBaseQuartEnhancedTesting = [
     Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS/2, DS_TESTS/2,
                           if_included_in_label=False)
 ]
-
+varA = [
+    Cls.VariableCondition('Decision Period', 364, 364,
+                          if_included_in_label=False),
+    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.5,
+                          if_included_in_label=True, label_format='{:.1%}'),
+    Cls.VariableCondition('Change in % Resistant Threshold', 0, 0.1,
+                          if_included_in_label=True, label_format='{:.1%}'),
+    Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS, DS_TESTS,
+                          if_included_in_label=False)
+]
 
 # series to display on the cost-effectiveness plane
 base = Cls.Series('Base', 'blue',
@@ -95,3 +105,8 @@ baseQuarterlyEnhancedTesting = Cls.Series('Base-Quarterly with Enhanced Testing'
                                           if_find_frontier=False,
                                           labels_shift_x=2.5,
                                           labels_shift_y=-0.11)
+policyA = Cls.Series('A', 'red',
+                     variable_conditions=varA,
+                     if_find_frontier=False,
+                     labels_shift_x=-0.3,
+                     labels_shift_y=3)
