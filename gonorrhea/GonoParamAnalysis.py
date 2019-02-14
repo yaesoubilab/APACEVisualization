@@ -2,9 +2,9 @@ import apace.ParametersClasses as Param
 import gonorrhea.GonoSettings as Set
 
 # parameters ID
-ids = [7, 8, 9, 10, 14, 15, 16, 19]
-ids.extend(range(27, 30+1))           # initial conditions
-ids.extend(range(45, 48+1))           # time until events
+ids = [6, 7, 8, 9, 10, 15, 19, 20, 21, 24]
+ids.extend(range(32, 35+1))           # initial conditions
+ids.extend(range(50, 53+1))           # time until events
 
 # create a dictionary of parameters
 paramDict = Param.Parameters(Set.SELECTED_POSTERIOR_FILE_NAME)

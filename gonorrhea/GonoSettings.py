@@ -1,13 +1,13 @@
 import apace.ScenariosClasses as Cls
 
-INDX = 1
+INDX = 0
 SHOW_FEASIBLE_RANGES = False
 X_RANGE = (-100, 100)
 Y_RANGE = (-0.5, 0.5)
 
 # file names for scenario analysis
 SA_FILE_NAMES = ['csvfiles\SA50YrCalib.csv',
-                 'csvfiles\SABaseA.csv',
+                 'csvfiles\SAPolicyA.csv',
                  'csvfiles\SA50YrCalibNoise.csv',
                  'csvfiles\SADebug.csv']
 SELECTED_SA_FILE_NAME = SA_FILE_NAMES[INDX]
@@ -84,28 +84,44 @@ varA = [
                           if_included_in_label=False)
 ]
 
+# read scenarios data frames
+baseDF = Cls.ScenarioDataFrame(csv_file_name=SA_FILE_NAMES[0])
+policyADF = Cls.ScenarioDataFrame(csv_file_name=SA_FILE_NAMES[1])
+
+
 # series to display on the cost-effectiveness plane
-base = Cls.Series('Base', 'blue',
+base = Cls.Series(name='Base',
+                  scenario_df=baseDF,
+                  color='blue',
                   variable_conditions=varBase,
                   if_find_frontier=False,
                   labels_shift_x=-0.3,
                   labels_shift_y=3)
-baseQuarterly = Cls.Series('Base-Quarterly', 'red',
+
+baseQuarterly = Cls.Series(name='Base-Quarterly',
+                           scenario_df=baseDF,
+                           color='red',
                            variable_conditions=varBaseQuart,
                            if_find_frontier=False,
                            labels_shift_x=0.1,
                            labels_shift_y=-4)
-baseEnhancedTesting = Cls.Series('Base with Enhanced Testing', 'red',
+baseEnhancedTesting = Cls.Series(name='Base with Enhanced Testing',
+                                 scenario_df=baseDF,
+                                 color='red',
                                  variable_conditions=varBaseEnhancedTesting,
                                  if_find_frontier=False,
                                  labels_shift_x=2.5,
                                  labels_shift_y=-0.11)
-baseQuarterlyEnhancedTesting = Cls.Series('Base-Quarterly with Enhanced Testing', 'red',
+baseQuarterlyEnhancedTesting = Cls.Series(name='Base-Quarterly with Enhanced Testing',
+                                          scenario_df=baseDF,
+                                          color='red',
                                           variable_conditions=varBaseQuartEnhancedTesting,
                                           if_find_frontier=False,
                                           labels_shift_x=2.5,
                                           labels_shift_y=-0.11)
-policyA = Cls.Series('A', 'red',
+policyA = Cls.Series(name='A',
+                     scenario_df=baseDF,
+                     color='red',
                      variable_conditions=varA,
                      if_find_frontier=False,
                      labels_shift_x=-0.3,

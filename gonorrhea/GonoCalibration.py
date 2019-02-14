@@ -40,7 +40,8 @@ list_plot_calib_info.append(
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[1, 10],
-            y_range=[1, 4])
+            y_range=[2, 2],
+            fill_between=False)
     )
 )
 
@@ -49,7 +50,7 @@ obss = Vis.convert_data_to_list_of_observed_outcomes(D.GonorrheaRate)
 list_plot_info.append(
     Vis.PlotTrajInfo(
         traj_name='Annual rate of gonorrhea cases',
-        y_range=[0, 8000],
+        y_range=[0, 9000],
         is_x_integer=True,
         y_multiplier=100000,
         figure_size=(4, 3.2),
@@ -63,7 +64,8 @@ list_plot_calib_info.append(
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[1, 10],
-            y_range=[0.01*100000, 0.06*100000]
+            y_range=[0.01*100000, 0.06*100000],
+            fill_between=False
         )
     )
 )
@@ -87,7 +89,8 @@ list_plot_calib_info.append(
         if_connect_obss=False,
         feasible_range_info=Vis.FeasibleRangeInfo(
             x_range=[1, 10],
-            y_range=[50, 100]
+            y_range=[50, 100],
+            fill_between=False
         )
     )
 )

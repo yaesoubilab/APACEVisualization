@@ -220,6 +220,7 @@ class Series:
 
     def __init__(self,
                  name,
+                 scenario_df, # scenario data frame to pull the data from
                  color,  # color of this series on the CE plane
                  variable_conditions,  # list of variable conditions
                  if_find_frontier=True,  # select True if CE frontier should be calculated
@@ -228,6 +229,7 @@ class Series:
                  ):
 
         self.name = name
+        self.scenarioDF = scenario_df
         self.color = color
         self.ifFindFrontier = if_find_frontier
         self.varConditions = variable_conditions
@@ -378,7 +380,6 @@ class Series:
 
 
 def populate_series(series_list,
-                    csv_filename,
                     save_cea_results=False,
                     interval_type='n',
                     effect_multiplier=1,
@@ -386,7 +387,6 @@ def populate_series(series_list,
                     switch_cost_effect_on_figure=False):
     """
     :param series_list:
-    :param csv_filename:
     :param save_cea_results: set it to True if the CE table should be generated
     :param interval_type: select from Econ.Interval (no interval, CI, or PI)
     :param effect_multiplier:
@@ -394,22 +394,20 @@ def populate_series(series_list,
     :param switch_cost_effect_on_figure: displays cost on the x-axis and effect on the y-axis
     """
 
-    # data frame for scenario analysis
-    df = ScenarioDataFrame(csv_filename)
-
-    # create the base strategy
-    scn = df.scenarios['Base']
-    base_strategy = Econ.Strategy(
-        name='Base',
-        cost_obs=scn.outcomes[COST_MEASURE],
-        effect_obs=scn.outcomes[HEALTH_MEASURE])
-
     # populate series to display on the cost-effectiveness plane
     for i, ser in enumerate(series_list):
+
+        # create the base strategy
+        scn = ser.scenarioDF.scenarios['Base']
+        base_strategy = Econ.Strategy(
+            name='Base',
+            cost_obs=scn.outcomes[COST_MEASURE],
+            effect_obs=scn.outcomes[HEALTH_MEASURE])
+
         # add base
         ser.strategies = [base_strategy]
         # add other scenarios
-        for key, scenario in df.scenarios.items():
+        for key, scenario in ser.scenarioDF.scenarios.items():
             # add only non-Base strategies that can be on this series
             if scenario.name != 'Base' and ser.if_acceptable(scenario):
 
@@ -549,5 +547,5 @@ def plot_series(series, x_label, y_label, file_name,
     plt.axvline(x=0, linestyle='-', color='black', linewidth=0.4)
     plt.axhline(y=0, linestyle='-', color='black', linewidth=0.4)
 
-    plt.savefig('figures/' + file_name, dpm=300) # read more about 'bbox_inches = "tight"'
-    #plt.show()
+    #plt.savefig('figures/' + file_name, dpm=300) # read more about 'bbox_inches = "tight"'
+    plt.show()

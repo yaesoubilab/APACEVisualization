@@ -21,7 +21,6 @@ def plot_series(list_series,
 
     # populate series
     Cls.populate_series(list_series,
-                        csv_filename=Set.SELECTED_SA_FILE_NAME,
                         save_cea_results=False,
                         interval_type='c',
                         effect_multiplier=effect_multiplier,
@@ -42,7 +41,7 @@ def plot_series(list_series,
 
 
 # change this to false to show M used
-SHOW_EFFECTIVE_LIFE = False
+SHOW_EFFECTIVE_LIFE = True
 SIM_LENGTH = 50     # years
 POP_RATE = 0.1e6/5e6
 
@@ -51,7 +50,7 @@ if SHOW_EFFECTIVE_LIFE:
     Cls.COST_MEASURE = 'Average ratio: Effective life of AB'
     effect_mult = -1 / SIM_LENGTH * POP_RATE
     cost_mult = SIM_LENGTH
-    switch_cost_effect_on_figure = True
+    switch_cost_effect = True
     Set.X_RANGE = (-3, 3)
     Set.Y_RANGE = (-50, 75)
     labels = ('Increase in Effective Life of Drugs A and B (Years)',
@@ -61,7 +60,7 @@ else:
     Cls.COST_MEASURE = 'Total Cost'
     effect_mult = 1 / SIM_LENGTH * POP_RATE
     cost_mult = 1 / 1e6
-    switch_cost_effect_on_figure = False
+    switch_cost_effect = False
     Set.X_RANGE = (-100, 100)
     Set.Y_RANGE = (-0.6, 0.6)
     labels = ('Additional Gonorrhea Cases Averted Annually\nPer 100,000 MSM Population',
@@ -71,23 +70,23 @@ else:
 wtp_mult = effect_mult / cost_mult
 
 
-# base vs. A
-plot_series(list_series=[Set.base, Set.policyA],
-            effect_multiplier=effect_mult,
-            cost_multiplier=cost_mult,
-            switch_cost_effect_on_figure=switch_cost_effect_on_figure,
-            wtp_multiplier=wtp_mult,
-            labels=labels,
-            file_name='Base vs. A.png')
-
-# # base vs. quarterly base
-# plot_series(list_series=[Set.base, Set.baseQuarterly],
+# # base vs. A
+# plot_series(list_series=[Set.base, Set.policyA],
 #             effect_multiplier=effect_mult,
 #             cost_multiplier=cost_mult,
-#             switch_cost_effect_on_figure=switch_cost_effect_on_figure,
+#             switch_cost_effect_on_figure=switch_cost_effect,
 #             wtp_multiplier=wtp_mult,
 #             labels=labels,
-#             file_name='Base vs. Quarterly Base.png')
+#             file_name='Base vs. A.png')
+
+# base vs. quarterly base
+plot_series(list_series=[Set.base, Set.baseQuarterly],
+            effect_multiplier=effect_mult,
+            cost_multiplier=cost_mult,
+            switch_cost_effect_on_figure=switch_cost_effect,
+            wtp_multiplier=wtp_mult,
+            labels=labels,
+            file_name='Base vs. Quarterly Base.png')
 
 included = False
 if included:
@@ -95,7 +94,7 @@ if included:
     plot_series(list_series=[Set.base, Set.baseEnhancedTesting],
                 effect_multiplier=effect_mult,
                 cost_multiplier=cost_mult,
-                switch_cost_effect_on_figure=switch_cost_effect_on_figure,
+                switch_cost_effect_on_figure=switch_cost_effect,
                 wtp_multiplier=wtp_mult,
                 labels=labels,
                 file_name='Base vs. Base with Enhanced Testing.png')
@@ -103,7 +102,7 @@ if included:
     plot_series(list_series=[Set.base, Set.baseQuarterlyEnhancedTesting],
                 effect_multiplier=effect_mult,
                 cost_multiplier=cost_mult,
-                switch_cost_effect_on_figure=switch_cost_effect_on_figure,
+                switch_cost_effect_on_figure=switch_cost_effect,
                 wtp_multiplier=wtp_mult,
                 labels=labels,
                 file_name='Base vs. Quarterly Base with Enhanced Testing.png')
