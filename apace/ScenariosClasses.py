@@ -541,7 +541,8 @@ def plot_series(series, x_label, y_label, file_name,
     if y_range is not None:
         ax.set_ylim(y_range)
 
-    # plt.tight_layout()
+    #plt.tight_layout()
+    fig.subplots_adjust(bottom=0.15, left=0.15)
 
     # origin
     plt.axvline(x=0, linestyle='-', color='black', linewidth=0.4)

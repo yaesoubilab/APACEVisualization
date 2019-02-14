@@ -6,7 +6,7 @@ X_RANGE = (-100, 100)
 Y_RANGE = (-0.5, 0.5)
 
 # file names for scenario analysis
-SA_FILE_NAMES = ['csvfiles\SA50YrCalib.csv',
+SA_FILE_NAMES = ['csvfiles\SABasePolicies.csv',
                  'csvfiles\SAPolicyA.csv',
                  'csvfiles\SA50YrCalibNoise.csv',
                  'csvfiles\SADebug.csv']
@@ -46,7 +46,7 @@ varBase = [
 varBaseQuart = [
     Cls.VariableCondition('Decision Period', 91, 91,
                           if_included_in_label=False),
-    Cls.VariableCondition('% Resistant Threshold', 0.05, 0.1,
+    Cls.VariableCondition('% Resistant Threshold', 0.05, 0.12,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1,
                           if_included_in_label=False, label_format='{:.1%}'),
