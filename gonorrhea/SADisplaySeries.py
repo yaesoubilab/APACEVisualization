@@ -28,16 +28,16 @@ def plot_series(list_series,
                         switch_cost_effect_on_figure=switch_cost_effect_on_figure)
 
     # plot
-    Cls.plot_series(series=list_series,
-                    x_label=labels[0],
-                    y_label=labels[1],
-                    file_name=file_name,
-                    show_only_on_frontier=False,
-                    x_range=Set.X_RANGE,
-                    y_range=Set.Y_RANGE,
-                    show_error_bars=True,
-                    wtp_multiplier=wtp_multiplier
-                    )
+    Cls.single_plot_series(series=list_series,
+                           x_label=labels[0],
+                           y_label=labels[1],
+                           file_name=file_name,
+                           show_only_on_frontier=False,
+                           x_range=Set.X_RANGE,
+                           y_range=Set.Y_RANGE,
+                           show_error_bars=True,
+                           wtp_multiplier=wtp_multiplier
+                           )
 
 
 # change this to false to show M used
