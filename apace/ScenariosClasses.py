@@ -545,8 +545,9 @@ def plot_series(series, x_label, y_label, file_name,
     fig.subplots_adjust(bottom=0.15, left=0.15)
 
     # origin
-    plt.axvline(x=0, linestyle='-', color='black', linewidth=0.4)
-    plt.axhline(y=0, linestyle='-', color='black', linewidth=0.4)
+    ax.axvline(x=0, linestyle='-', color='black', linewidth=0.4)
+    ax.axhline(y=0, linestyle='-', color='black', linewidth=0.4)
 
-    #plt.savefig('figures/' + file_name, dpm=300) # read more about 'bbox_inches = "tight"'
-    plt.show()
+    #fig.savefig('figures/' + file_name, dpm=300) # read more about 'bbox_inches = "tight"'
+    fig.show()
+    plt.close(fig)

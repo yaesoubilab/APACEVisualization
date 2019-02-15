@@ -70,15 +70,6 @@ else:
 wtp_mult = effect_mult / cost_mult
 
 
-# # base vs. A
-# plot_series(list_series=[Set.base, Set.policyA],
-#             effect_multiplier=effect_mult,
-#             cost_multiplier=cost_mult,
-#             switch_cost_effect_on_figure=switch_cost_effect,
-#             wtp_multiplier=wtp_mult,
-#             labels=labels,
-#             file_name='Base vs. A.png')
-
 # base vs. quarterly base
 plot_series(list_series=[Set.base, Set.baseQuarterly],
             effect_multiplier=effect_mult,
@@ -87,6 +78,25 @@ plot_series(list_series=[Set.base, Set.baseQuarterly],
             wtp_multiplier=wtp_mult,
             labels=labels,
             file_name='Base vs. Quarterly Base.png')
+
+# base vs. A
+plot_series(list_series=[Set.base, Set.policyA],
+            effect_multiplier=effect_mult,
+            cost_multiplier=cost_mult,
+            switch_cost_effect_on_figure=switch_cost_effect,
+            wtp_multiplier=wtp_mult,
+            labels=labels,
+            file_name='Base vs. A.png')
+
+# base vs. quarterly A
+plot_series(list_series=[Set.base, Set.policyAQuart],
+            effect_multiplier=effect_mult,
+            cost_multiplier=cost_mult,
+            switch_cost_effect_on_figure=switch_cost_effect,
+            wtp_multiplier=wtp_mult,
+            labels=labels,
+            file_name='Base vs. Quarterly A.png')
+
 
 included = False
 if included:

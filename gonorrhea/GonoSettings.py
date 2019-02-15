@@ -10,20 +10,21 @@ SA_FILE_NAMES = ['csvfiles\SABasePolicies.csv',
                  'csvfiles\SAPolicyA.csv',
                  'csvfiles\SA50YrCalibNoise.csv',
                  'csvfiles\SADebug.csv']
-SELECTED_SA_FILE_NAME = SA_FILE_NAMES[INDX]
 
 # file names for parameter analysis
 POSTERIOR_FILE_NAMES \
     = ['csvfiles\ParamSamples50YrCalib.csv',
        'csvfiles\ParamSamples10YrCalib.csv',
        '']
-SELECTED_POSTERIOR_FILE_NAME = POSTERIOR_FILE_NAMES[INDX]
 
 # file names for calibration
 CALIB_FILE_NAMES \
     = ['csvfiles\Trajs50YrCalib.csv',
        '',
        'csvfiles\Trajs.csv']
+
+SELECTED_POSTERIOR_FILE_NAME = POSTERIOR_FILE_NAMES[INDX]
+SELECTED_SA_FILE_NAME = SA_FILE_NAMES[INDX]
 SELECTED_CALIB_FILE_NAME = CALIB_FILE_NAMES[INDX]
 
 # -------------------------------------------------------
@@ -83,15 +84,25 @@ varA = [
     Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS, DS_TESTS,
                           if_included_in_label=False)
 ]
+varAQuarterly = [
+    Cls.VariableCondition('Decision Period', 91, 91,
+                          if_included_in_label=False),
+    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.5,
+                          if_included_in_label=True, label_format='{:.1%}'),
+    Cls.VariableCondition('Change in % Resistant Threshold', 0, 0.2,
+                          if_included_in_label=True, label_format='{:.1%}'),
+    Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS/4, DS_TESTS/4,
+                          if_included_in_label=False)
+]
 
 # read scenarios data frames
-baseDF = Cls.ScenarioDataFrame(csv_file_name=SA_FILE_NAMES[0])
-policyADF = Cls.ScenarioDataFrame(csv_file_name=SA_FILE_NAMES[1])
-
+dfBase = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SABasePolicies.csv')
+dfPolicyA = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SAPolicyA.csv')
+dfPolicyAQuart = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SAPolicyAQuart.csv')
 
 # series to display on the cost-effectiveness plane
 base = Cls.Series(name='Base',
-                  scenario_df=baseDF,
+                  scenario_df=dfBase,
                   color='blue',
                   variable_conditions=varBase,
                   if_find_frontier=False,
@@ -99,30 +110,37 @@ base = Cls.Series(name='Base',
                   labels_shift_y=3)
 
 baseQuarterly = Cls.Series(name='Base-Quarterly',
-                           scenario_df=baseDF,
+                           scenario_df=dfBase,
                            color='red',
                            variable_conditions=varBaseQuart,
                            if_find_frontier=False,
                            labels_shift_x=0.1,
                            labels_shift_y=-4)
 baseEnhancedTesting = Cls.Series(name='Base with Enhanced Testing',
-                                 scenario_df=baseDF,
+                                 scenario_df=dfBase,
                                  color='red',
                                  variable_conditions=varBaseEnhancedTesting,
                                  if_find_frontier=False,
                                  labels_shift_x=2.5,
                                  labels_shift_y=-0.11)
 baseQuarterlyEnhancedTesting = Cls.Series(name='Base-Quarterly with Enhanced Testing',
-                                          scenario_df=baseDF,
+                                          scenario_df=dfBase,
                                           color='red',
                                           variable_conditions=varBaseQuartEnhancedTesting,
                                           if_find_frontier=False,
                                           labels_shift_x=2.5,
                                           labels_shift_y=-0.11)
 policyA = Cls.Series(name='A',
-                     scenario_df=baseDF,
+                     scenario_df=dfPolicyA,
                      color='red',
                      variable_conditions=varA,
                      if_find_frontier=False,
-                     labels_shift_x=-0.3,
-                     labels_shift_y=3)
+                     labels_shift_x=0.1,
+                     labels_shift_y=-4)
+policyAQuart = Cls.Series(name='A-Quarterly',
+                          scenario_df=dfPolicyAQuart,
+                          color='red',
+                          variable_conditions=varAQuarterly,
+                          if_find_frontier=False,
+                          labels_shift_x=0.1,
+                          labels_shift_y=-4)
