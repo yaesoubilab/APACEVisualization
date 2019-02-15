@@ -229,6 +229,7 @@ class Series:
                  ):
 
         self.name = name
+        self.ifPopulated = False
         self.scenarioDF = scenario_df
         self.color = color
         self.ifFindFrontier = if_find_frontier
@@ -397,6 +398,9 @@ def populate_series(series_list,
     # populate series to display on the cost-effectiveness plane
     for i, ser in enumerate(series_list):
 
+        if ser.ifPopulated:
+            continue
+
         # create the base strategy
         scn = ser.scenarioDF.scenarios['Base']
         base_strategy = Econ.Strategy(
@@ -446,6 +450,7 @@ def populate_series(series_list,
                            cost_multiplier=cost_multiplier,
                            switch_cost_effect_on_figure=switch_cost_effect_on_figure)
 
+        ser.ifPopulated = True
 
 def plot_series(series, x_label, y_label, file_name,
                 show_only_on_frontier=False,
@@ -550,4 +555,3 @@ def plot_series(series, x_label, y_label, file_name,
 
     #fig.savefig('figures/' + file_name, dpm=300) # read more about 'bbox_inches = "tight"'
     fig.show()
-    plt.close(fig)
