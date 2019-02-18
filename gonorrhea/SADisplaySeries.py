@@ -1,44 +1,6 @@
 import apace.ScenariosClasses as Cls
 import gonorrhea.GonoSettings as Set
-
-
-def plot_series(list_series,
-                effect_multiplier=1.0,
-                cost_multiplier=1.0,
-                switch_cost_effect_on_figure=False,
-                wtp_multiplier=1.0,
-                labels=('', ''),
-                file_name='fig.png'):
-    """    
-    :param list_series: (list) of series to display on the CE plane
-    :param effect_multiplier: the x-axis multiplier
-    :param cost_multiplier: the y-axis multiplier
-    :param switch_cost_effect_on_figure: displays cost on the x-axis and effect on the y-axis
-    :param wtp_multiplier: wtp multiplier
-    :param labels: (tuple) x_ and y-axis labels
-    :param file_name: (string) the file name to save the plot as
-    """
-
-    # populate series
-    Cls.populate_series(list_series,
-                        save_cea_results=False,
-                        interval_type='c',
-                        effect_multiplier=effect_multiplier,
-                        cost_multiplier=cost_multiplier,
-                        switch_cost_effect_on_figure=switch_cost_effect_on_figure)
-
-    # plot
-    Cls.single_plot_series(series=list_series,
-                           x_label=labels[0],
-                           y_label=labels[1],
-                           file_name=file_name,
-                           show_only_on_frontier=False,
-                           x_range=Set.X_RANGE,
-                           y_range=Set.Y_RANGE,
-                           show_error_bars=True,
-                           wtp_multiplier=wtp_multiplier
-                           )
-
+import apace.VisualizeScenarios as Vis
 
 # change this to false to show M used
 SHOW_EFFECTIVE_LIFE = True
@@ -70,50 +32,79 @@ else:
 wtp_mult = effect_mult / cost_mult
 
 
-# base vs. quarterly base
-plot_series(list_series=[Set.base, Set.baseQuarterly],
-            effect_multiplier=effect_mult,
-            cost_multiplier=cost_mult,
-            switch_cost_effect_on_figure=switch_cost_effect,
-            wtp_multiplier=wtp_mult,
-            labels=labels,
-            file_name='Base vs. Quarterly Base.png')
-
-# base vs. A
-plot_series(list_series=[Set.base, Set.policyA],
-            effect_multiplier=effect_mult,
-            cost_multiplier=cost_mult,
-            switch_cost_effect_on_figure=switch_cost_effect,
-            wtp_multiplier=wtp_mult,
-            labels=labels,
-            file_name='Base vs. A.png')
-
-# base vs. quarterly A
-plot_series(list_series=[Set.base, Set.policyAQuart],
-            effect_multiplier=effect_mult,
-            cost_multiplier=cost_mult,
-            switch_cost_effect_on_figure=switch_cost_effect,
-            wtp_multiplier=wtp_mult,
-            labels=labels,
-            file_name='Base vs. Quarterly A.png')
+Vis.multi_plot_series(
+    list_list_series=[
+        [Set.base, Set.baseQuarterly],
+        [Set.base, Set.policyA],
+        [Set.base, Set.policyAQuart]
+    ],
+    list_of_titles=[
+        'Base vs. Quarterly Base', 'Base vs. A', 'Base vs. Quarterly A'
+    ],
+    x_range=Set.X_RANGE,
+    y_range=Set.Y_RANGE,
+    effect_multiplier=effect_mult,
+    cost_multiplier=cost_mult,
+    switch_cost_effect_on_figure=switch_cost_effect,
+    wtp_multiplier=wtp_mult,
+    labels=labels,
+    file_name='Performance.png'
+)
 
 
 included = False
 if included:
+    # base vs. quarterly base
+    Vis.plot_series(list_series=[Set.base, Set.baseQuarterly],
+                    x_range=Set.X_RANGE,
+                    y_range=Set.Y_RANGE,
+                    effect_multiplier=effect_mult,
+                    cost_multiplier=cost_mult,
+                    switch_cost_effect_on_figure=switch_cost_effect,
+                    wtp_multiplier=wtp_mult,
+                    labels=labels,
+                    title='Base vs. Quarterly Base')
+
+    # base vs. A
+    Vis.plot_series(list_series=[Set.base, Set.policyA],
+                    x_range=Set.X_RANGE,
+                    y_range=Set.Y_RANGE,
+                    effect_multiplier=effect_mult,
+                    cost_multiplier=cost_mult,
+                    switch_cost_effect_on_figure=switch_cost_effect,
+                    wtp_multiplier=wtp_mult,
+                    labels=labels,
+                    title='Base vs. A')
+
+    # base vs. quarterly A
+    Vis.plot_series(list_series=[Set.base, Set.policyAQuart],
+                    x_range=Set.X_RANGE,
+                    y_range=Set.Y_RANGE,
+                    effect_multiplier=effect_mult,
+                    cost_multiplier=cost_mult,
+                    switch_cost_effect_on_figure=switch_cost_effect,
+                    wtp_multiplier=wtp_mult,
+                    labels=labels,
+                    title='Base vs. Quarterly A')
+
     # base vs. base with enhanced testing
-    plot_series(list_series=[Set.base, Set.baseEnhancedTesting],
-                effect_multiplier=effect_mult,
-                cost_multiplier=cost_mult,
-                switch_cost_effect_on_figure=switch_cost_effect,
-                wtp_multiplier=wtp_mult,
-                labels=labels,
-                file_name='Base vs. Base with Enhanced Testing.png')
+    Vis.plot_series(list_series=[Set.base, Set.baseEnhancedTesting],
+                    x_range=Set.X_RANGE,
+                    y_range=Set.Y_RANGE,
+                    effect_multiplier=effect_mult,
+                    cost_multiplier=cost_mult,
+                    switch_cost_effect_on_figure=switch_cost_effect,
+                    wtp_multiplier=wtp_mult,
+                    labels=labels,
+                    title='Base vs. Base with Enhanced Testing.png')
     # base vs. quarterly base with enhanced testing
-    plot_series(list_series=[Set.base, Set.baseQuarterlyEnhancedTesting],
-                effect_multiplier=effect_mult,
-                cost_multiplier=cost_mult,
-                switch_cost_effect_on_figure=switch_cost_effect,
-                wtp_multiplier=wtp_mult,
-                labels=labels,
-                file_name='Base vs. Quarterly Base with Enhanced Testing.png')
+    Vis.plot_series(list_series=[Set.base, Set.baseQuarterlyEnhancedTesting],
+                    x_range=Set.X_RANGE,
+                    y_range=Set.Y_RANGE,
+                    effect_multiplier=effect_mult,
+                    cost_multiplier=cost_mult,
+                    switch_cost_effect_on_figure=switch_cost_effect,
+                    wtp_multiplier=wtp_mult,
+                    labels=labels,
+                    title='Base vs. Quarterly Base with Enhanced Testing.png')
 

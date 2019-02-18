@@ -453,15 +453,15 @@ def populate_series(series_list,
         ser.ifPopulated = True
 
 
-def plot_sub_fig(ax, series,
-                 file_name,
+def plot_sub_fig(ax, list_of_series,
+                 title,
                  show_only_on_frontier=False,
                  x_range=None,
                  y_range=None,
                  show_error_bars=False,
                  wtp_multiplier=1):
 
-    for i, ser in enumerate(series):
+    for i, ser in enumerate(list_of_series):
 
         # if only points on frontier should be displayed
         if show_only_on_frontier:
@@ -490,7 +490,8 @@ def plot_sub_fig(ax, series,
 
             # scatter plot for all points
             ax.scatter(ser.xValues, ser.yValues, color=ser.color, alpha=0.5, zorder=10, s=15, label=ser.name)
-            # ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5, zorder=10, s=5, label=ser.name)
+            # ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5,
+            # zorder=10, s=5, label=ser.name)
 
             # error bars
             if show_error_bars:
@@ -515,7 +516,7 @@ def plot_sub_fig(ax, series,
             quad_reg = Reg.SingleVarRegression(x, y, degree=2)
 
             # print derivatives at
-            print(file_name, ' | ', ser.name)
+            print(title, ' | ', ser.name)
             print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[len(ser.xValues) - 1]))
             print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=0))
             print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
@@ -533,7 +534,7 @@ def plot_sub_fig(ax, series,
                 ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
                 ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
 
-
+    ax.set_title(title)
     ax.legend(loc=2)
 
     # x and y ranges
@@ -547,7 +548,7 @@ def plot_sub_fig(ax, series,
     ax.axhline(y=0, linestyle='-', color='black', linewidth=0.4)
 
 
-def single_plot_series(series, x_label, y_label, file_name,
+def single_plot_series(list_of_series, x_label, y_label, title,
                        show_only_on_frontier=False,
                        x_range=None,
                        y_range=None,
@@ -557,8 +558,8 @@ def single_plot_series(series, x_label, y_label, file_name,
     fig = plt.figure(figsize=(5, 4.6))
     ax = fig.add_subplot(111)
 
-    plot_sub_fig(ax=ax, series=series,
-                 file_name=file_name,
+    plot_sub_fig(ax=ax, list_of_series=list_of_series,
+                 title=title,
                  show_only_on_frontier=show_only_on_frontier,
                  x_range=x_range,
                  y_range=y_range,
@@ -572,9 +573,51 @@ def single_plot_series(series, x_label, y_label, file_name,
     #plt.tight_layout()
     fig.subplots_adjust(bottom=0.125, left=0.175)
 
-    fig.savefig('figures/' + file_name, dpm=300) # read more about 'bbox_inches = "tight"'
+    fig.savefig('figures/' + title +'.png', dpm=300) # read more about 'bbox_inches = "tight"'
     fig.show()
 
 
-def multi_plot_series():
-    pass
+def multi_plot_series(list_of_plots,
+                      list_of_titles,
+                      x_label, y_label,
+                      file_name,
+                      show_only_on_frontier=False,
+                      x_range=None,
+                      y_range=None,
+                      show_error_bars=False,
+                      wtp_multiplier=1):
+    # set default properties
+    plt.rc('font', size=8)  # fontsize of texts
+    plt.rc('axes', titlesize=8)  # fontsize of the figure title
+    labels = ['A)', 'B)', 'C)']
+
+    n_cols = len(list_of_plots)
+    f, axarr = plt.subplots(1, n_cols, sharey=True, figsize=(7.5, 3))
+
+    for i, fig in enumerate(list_of_plots):
+
+        axarr[i].set_title(labels[i], loc='left')
+
+        #title and labels
+        if i == 0:
+            axarr[i].set(
+                ylabel=y_label)
+        if i == 1:
+            axarr[i].set(
+                xlabel=x_label)
+
+        # plot
+        plot_sub_fig(ax=axarr[i],
+                     list_of_series=fig,
+                     title=list_of_titles[i],
+                     show_only_on_frontier=show_only_on_frontier,
+                     x_range=x_range,
+                     y_range=y_range,
+                     show_error_bars=show_error_bars,
+                     wtp_multiplier=wtp_multiplier)
+
+    #plt.tight_layout()
+    plt.subplots_adjust(left=0.1, bottom=0.15, right=0.95, top=0.9,
+                        wspace=0.1, hspace=0)
+    plt.savefig('figures/' + file_name + '.png', dpm=300)
+    #plt.show()
