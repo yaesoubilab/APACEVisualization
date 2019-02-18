@@ -617,7 +617,7 @@ def multi_plot_series(list_of_plots,
                      wtp_multiplier=wtp_multiplier)
 
     #plt.tight_layout()
-    plt.subplots_adjust(left=0.1, bottom=0.15, right=0.95, top=0.9,
+    plt.subplots_adjust(left=0.1, bottom=0.15, right=0.97, top=0.9,
                         wspace=0.1, hspace=0)
     plt.savefig('figures/' + file_name + '.png', dpm=300)
     #plt.show()
