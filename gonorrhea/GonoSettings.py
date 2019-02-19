@@ -37,7 +37,7 @@ DS_TESTS = 5000  # annual number of cases tested for drug-resistance
 varBase = [
     Cls.VariableCondition('Decision Period', 364, 364,
                           if_included_in_label=False),
-    Cls.VariableCondition('% Resistant Threshold', 0.035, 0.1,
+    Cls.VariableCondition('% Resistant Threshold', 0.035, 0.065,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1,
                           if_included_in_label=False),
@@ -47,7 +47,7 @@ varBase = [
 varBaseQuart = [
     Cls.VariableCondition('Decision Period', 91, 91,
                           if_included_in_label=False),
-    Cls.VariableCondition('% Resistant Threshold', 0.05, 0.12,
+    Cls.VariableCondition('% Resistant Threshold', 0.06, 0.105,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1,
                           if_included_in_label=False, label_format='{:.1%}'),
@@ -106,7 +106,7 @@ base = Cls.Series(name='Base',
                   color='blue',
                   variable_conditions=varBase,
                   if_find_frontier=False,
-                  labels_shift_x=-0.3,
+                  labels_shift_x=-0.7,
                   labels_shift_y=3)
 
 baseQuarterly = Cls.Series(name='Base-Quarterly',

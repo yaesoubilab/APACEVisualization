@@ -26,7 +26,7 @@ def plot_opt_itrs(path, csv_file, n_vars, save_path, f_range=None, x_ranges=None
                             if_convert_float=True)
 
     # objective function
-    f, axarr = plt.subplots(n_vars+1, 1, sharex=True)
+    f, axarr = plt.subplots(n_vars+1, 1, sharex=True, figsize=(6, 6))
     axarr[0].set(title=csv_file)
     axarr[0].plot(cols[0], cols[1])#, color=ser.color, alpha=0.5)
     if y_axis_labels is None:
@@ -49,5 +49,11 @@ def plot_opt_itrs(path, csv_file, n_vars, save_path, f_range=None, x_ranges=None
 
     # label the x-axis of the last figure
     axarr[n_vars].set(xlabel='Iteration')
+
+    # align y labels
+    f.align_ylabels()
+    #
+    plt.subplots_adjust(left=0.14, bottom=0.1, right=0.97, top=0.9,
+                        wspace=0, hspace=0.5)
 
     plt.savefig(save_path+csv_file+'.png')
