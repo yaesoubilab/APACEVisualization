@@ -517,7 +517,7 @@ def plot_sub_fig(ax, list_of_series,
 
             # print derivatives at
             print(title, ' | ', ser.name)
-            print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[len(ser.xValues) - 1]))
+            print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[-1]))
             print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=0))
             print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
 
