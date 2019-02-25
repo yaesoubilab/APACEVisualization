@@ -14,7 +14,7 @@ if SHOW_EFFECTIVE_LIFE:
     cost_mult = SIM_LENGTH
     switch_cost_effect = True
     Set.X_RANGE = (-3, 3)
-    Set.Y_RANGE = (-50, 75)
+    Set.Y_RANGE = (-100, 100)
     labels = ('Increase in Effective Life of Drugs A and B (Years)',
               'Increase in Annual Gonorrhea Cases\n(Per 100,000 MSM Population)')
 else:
