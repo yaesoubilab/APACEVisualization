@@ -110,10 +110,15 @@ for r in RESIST_PROFILE:
     #     )
     list_plot_calib_info.append(obsInfo)
 
+    if r == 'AB':
+        y_range = [0, 40]
+    else:
+        y_range = [0, 40]
+
     list_plot_info.append(
         Vis.PlotTrajInfo(
             traj_name='Obs: % Received 1st Tx & Rst to {0}'.format(r),
-            y_range=[0, 40],
+            y_range=y_range,
             is_x_integer=True,
             y_multiplier=100,
             title='Proportion of gonorrhea\ncases resistant to {0}'.format(r),
