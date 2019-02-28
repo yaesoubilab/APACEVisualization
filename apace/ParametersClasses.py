@@ -5,6 +5,7 @@ import SimPy.FormatFunctions as F
 import apace.helpers as helper
 import copy
 from enum import Enum
+import numpy as np
 
 
 HISTOGRAM_FIG_SIZE = (4.2, 3.2)
@@ -175,10 +176,16 @@ class Parameters:
             # record the calculated estimate and credible interval
             if if_record:
 
-                sum_stat = Stat.SummaryStat(name=key, data=value)
-
                 deci = priors[par_id][Column.DECI.value]
                 form = priors[par_id][Column.FORMAT.value]
+                multip = priors[par_id][Column.MULTIPLIER.value]
+                if multip == '':
+                    data = value
+                else:
+                    multip = float(multip)
+                    data = [multip*x for x in value]
+
+                sum_stat = Stat.SummaryStat(name=key, data=data)
 
                 mean_text = F.format_number(number=sum_stat.get_mean(), deci=deci, format=form)
                 PI_text = F.format_interval(interval=sum_stat.get_PI(significance_level), deci=deci, format=form)
