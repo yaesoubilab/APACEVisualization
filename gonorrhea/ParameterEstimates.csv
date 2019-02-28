@@ -1,19 +1,19 @@
-6	tStar | G-A	18.9266743034375	[2.06505583915, 38.245360311750005]
-7	tStar | G-B	22.83441219284375	[0.32347467850000006, 47.549432139500006]
-8	b | G-A	0.050283309640624996	[0.0045831057750000005, 0.09499379695000001]
-9	b | G-B	0.0493566073359375	[0.005677213575, 0.09726905692500001]
-10	min | G-A	0.59760186259375	[0.1112969706, 0.98626811745]
-11	min | G-B	0.610013600671875	[0.12885782845, 0.9746857443000001]
-16	Prob sympt| infection with G-0	0.47962166460937494	[0.2971580009, 0.659096986425]
-20	Prob resistance | Drug A	5.0915250234375006e-05	[3.243888000000001e-06, 9.449578000000001e-05]
-21	Prob resistance | Drug B	5.268252453125e-05	[5.7871895e-06, 9.82530325e-05]
-22	Prob retreatment after failure | Symptomatic	0.8927565598671875	[0.812704953025, 0.9836968672999999]
-25	Infectivity of | I | Sym|G-0	3.015038589320312	[1.766000605625, 4.7530577066749995]
-33	Initial gonorrhea prevalence	0.020579525171875	[0.013161804175000002, 0.02767076185]
-34	Initial gonorrhea symptomatic	0.05095911940625	[0.0029988729250000003, 0.09765052087500001]
-35	Initial gonorrhea resistant to A	0.018744077453125	[0.0010381416500000002, 0.039596651025]
-36	Initial gonorrhea resistant to B	0.0211637132578125	[0.0014649817500000004, 0.03885414885]
-51	Time until recovery (without treatment) (years)	1.384780474140625	[0.41344385825, 1.96937937205]
-52	Time until screened (years)	1.6308352389296874	[0.76390689775, 2.8172957578249997]
-53	Time until seeking treatment (symptomatic) (years)	0.020207390999999998	[0.004305710975000001, 0.037725384175]
-54	Time until retreatment (years)	0.02151781059375	[0.004432888175, 0.036674044425]
+6	tStar | G-A	19.0	(1.2, 39.3)
+7	tStar | G-B	22.0	(0.6, 48.7)
+8	b | G-A	0.05	(0.00, 0.10)
+9	b | G-B	0.05	(0.00, 0.10)
+10	min | G-A	0.59	(0.15, 0.96)
+11	min | G-B	0.54	(0.05, 0.98)
+16	Prob sympt| infection with G-0	51.0%	(38.0%, 60.1%)
+20	Prob resistance | Drug A	0.000050	(0.000003, 0.000096)
+21	Prob resistance | Drug B	0.000046	(0.000008, 0.000093)
+22	Prob retreatment after failure | Symptomatic	89.5%	(81.5%, 98.0%)
+25	Infectivity of | I | Sym|G-0	3.5	(2.5, 4.8)
+33	Initial gonorrhea prevalence	2.1%	(1.4%, 2.8%)
+34	Initial gonorrhea symptomatic	4.8%	(0.3%, 9.7%)
+35	Initial gonorrhea resistant to A	2.1%	(0.1%, 3.8%)
+36	Initial gonorrhea resistant to B	2.0%	(0.1%, 3.9%)
+51	Time until recovery (without treatment) (years)	1.3	(0.5, 2.0)
+52	Time until screened (years)	1.3	(0.7, 1.8)
+53	Time until seeking treatment (symptomatic) (years)	0.0	(0.0, 0.0)
+54	Time until retreatment (years)	0.0	(0.0, 0.0)

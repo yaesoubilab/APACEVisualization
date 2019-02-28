@@ -12,7 +12,9 @@ ids.extend(range(51, 54+1))           # time until events
 paramDict = Param.Parameters(Set.SELECTED_POSTERIOR_FILE_NAME)
 
 # calculate parameter estimates and uncertainty intervals
-paramDict.calculate_means_and_intervals(0.05, ids)
+paramDict.calculate_means_and_intervals(significance_level=0.05,
+                                        ids=ids,
+                                        csv_file_name_prior='csvfiles\ParamPriorDists.csv')
 
 # ratio (probability of getting screened)
 text = paramDict.get_ratio_mean_interval(

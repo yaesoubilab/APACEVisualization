@@ -18,6 +18,8 @@ class Column(Enum):
     UB = 3
     TITLE = 4
     MULTIPLIER = 5
+    FORMAT = 6
+    DECI = 7
 
 
 class ParamInfo:
@@ -137,8 +139,22 @@ class Parameters:
             # move to the next parameter
             par_id += 1
 
-    def calculate_means_and_intervals(self, significance_level, ids=None):
-        """ calculate the mean and credible intervals of parameters specified by ids """
+    def calculate_means_and_intervals(self, significance_level, ids=None, csv_file_name_prior=None):
+        """ calculate the mean and credible intervals of parameters specified by ids
+        :param significance_level:
+        :param ids:
+        :param csv_file_name_prior: (string) filename where parameter prior ranges are located
+        :return:
+        """
+
+        # read prior distributions
+        if csv_file_name_prior is not None:
+            priors = IO.read_csv_rows(
+                file_name=csv_file_name_prior,
+                if_del_first_row=True,
+                delimiter=',',
+                if_convert_float=True
+            )
 
         results = []  # list of parameter estimates and credible intervals
 
@@ -158,9 +174,17 @@ class Parameters:
 
             # record the calculated estimate and credible interval
             if if_record:
-                sum_stat = Stat.SummaryStat(key, value)
+
+                sum_stat = Stat.SummaryStat(name=key, data=value)
+
+                deci = priors[par_id][Column.DECI.value]
+                form = priors[par_id][Column.FORMAT.value]
+
+                mean_text = F.format_number(number=sum_stat.get_mean(), deci=deci, format=form)
+                PI_text = F.format_interval(interval=sum_stat.get_PI(significance_level), deci=deci, format=form)
+
                 results.append(
-                    [par_id, key, sum_stat.get_mean(), sum_stat.get_PI(significance_level)]
+                    [par_id, key, mean_text, PI_text]
                 )
 
             # next parameter
