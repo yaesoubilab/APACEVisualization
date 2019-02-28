@@ -47,7 +47,7 @@ varBase = [
 varBaseQuart = [
     Cls.VariableCondition('Decision Period', 91, 91,
                           if_included_in_label=False),
-    Cls.VariableCondition('% Resistant Threshold', 0.06, 0.105,
+    Cls.VariableCondition('% Resistant Threshold', 0.05, 0.105,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1,
                           if_included_in_label=False, label_format='{:.1%}'),
@@ -74,7 +74,7 @@ varBaseQuartEnhancedTesting = [
     Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS/2, DS_TESTS/2,
                           if_included_in_label=False)
 ]
-varA = [
+varDual = [
     Cls.VariableCondition('Decision Period', 364, 364,
                           if_included_in_label=False),
     Cls.VariableCondition('% Resistant Threshold', 0.01, 0.5,
@@ -84,7 +84,7 @@ varA = [
     Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS, DS_TESTS,
                           if_included_in_label=False)
 ]
-varAQuarterly = [
+varDualQuarterly = [
     Cls.VariableCondition('Decision Period', 91, 91,
                           if_included_in_label=False),
     Cls.VariableCondition('% Resistant Threshold', 0.01, 0.5,
@@ -130,17 +130,17 @@ baseQuarterlyEnhancedTesting = Cls.Series(name='Base-Quarterly with Enhanced Tes
                                           if_find_frontier=False,
                                           labels_shift_x=2.5,
                                           labels_shift_y=-0.11)
-policyA = Cls.Series(name='A',
+policyA = Cls.Series(name='Dual',
                      scenario_df=dfPolicyA,
                      color='red',
-                     variable_conditions=varA,
+                     variable_conditions=varDual,
                      if_find_frontier=False,
                      labels_shift_x=0.1,
                      labels_shift_y=-4)
-policyAQuart = Cls.Series(name='A-Quarterly',
+policyAQuart = Cls.Series(name='Dual-Quarterly',
                           scenario_df=dfPolicyAQuart,
                           color='red',
-                          variable_conditions=varAQuarterly,
+                          variable_conditions=varDualQuarterly,
                           if_find_frontier=False,
                           labels_shift_x=0.1,
                           labels_shift_y=-4)

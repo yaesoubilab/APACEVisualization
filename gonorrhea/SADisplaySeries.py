@@ -13,8 +13,8 @@ if SHOW_EFFECTIVE_LIFE:
     effect_mult = -1 / SIM_LENGTH * POP_RATE
     cost_mult = SIM_LENGTH
     switch_cost_effect = True
-    Set.X_RANGE = (-3, 3)
-    Set.Y_RANGE = (-100, 100)
+    Set.X_RANGE = (-4, 4)
+    Set.Y_RANGE = (-40, 40)
     labels = ('Increase in Effective Life of Drugs A and B (Years)',
               'Increase in Annual Gonorrhea Cases\n(Per 100,000 MSM Population)')
 else:
