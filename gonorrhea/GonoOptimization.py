@@ -11,5 +11,5 @@ Vis.plot_all_opt_itrs(
     f_range=[-7e6, 2e6],
     x_ranges=[[0, 0.4], [-0.5, 0], [0, 0.25], [-0.05, 0.05]],
     y_axis_labels=[r'$f(\tau, \rho)$', r'$\tau_0$', r'$\tau_1$', r'$\rho_0$', r'$\rho_1$'],
-    window=20
+    window=100
 )
