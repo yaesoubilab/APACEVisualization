@@ -515,10 +515,11 @@ def plot_sub_fig(ax, list_of_series,
             x = np.array(ser.xValues)  # allDeltaEffects)
             quad_reg = Reg.SingleVarRegression(x, y, degree=2)
 
-            # print derivatives at
+            # print roots derivatives at
             print(title, ' | ', ser.name)
+            print('\ndEffect for which dCost=0: ', quad_reg.get_zero()[1])
             print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[-1]))
-            print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=0))
+            print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=quad_reg.get_zero()[1]))
             print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
 
             xs = np.linspace(min(x), max(x), 50)
