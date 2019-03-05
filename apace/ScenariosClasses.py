@@ -482,7 +482,8 @@ def plot_sub_fig(ax, list_of_series,
                 if txt is not 'Base':
                     ax.annotate(
                         txt,
-                        (ser.frontierXValues[j] + ser.labelsShiftX, ser.frontierYValues[j] + ser.labelsShiftY),
+                        (ser.frontierXValues[j] + ser.labelsShiftX,
+                         ser.frontierYValues[j] + ser.labelsShiftY),
                         color=ser.color
                     )
 
@@ -505,7 +506,8 @@ def plot_sub_fig(ax, list_of_series,
                 if txt is not 'Base':
                     ax.annotate(
                         txt,
-                        (ser.xValues[j] + ser.labelsShiftX, ser.yValues[j] + ser.labelsShiftY),
+                        (ser.xValues[j] + ser.labelsShiftX*(x_range[1]-x_range[0]),
+                         ser.yValues[j] + ser.labelsShiftY*(y_range[1]-y_range[0])),
                         fontsize=6.5,
                         color=ser.color,
                     )
