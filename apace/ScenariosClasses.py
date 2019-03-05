@@ -461,6 +461,8 @@ def plot_sub_fig(ax, list_of_series,
                  show_error_bars=False,
                  wtp_multiplier=1):
 
+    incr_eff_life = []
+
     for i, ser in enumerate(list_of_series):
 
         # if only points on frontier should be displayed
@@ -515,14 +517,20 @@ def plot_sub_fig(ax, list_of_series,
             # fit a quadratic function to the curve.
             y = np.array(ser.yValues)  # allDeltaCosts)
             x = np.array(ser.xValues)  # allDeltaEffects)
-            quad_reg = Reg.SingleVarRegression(x, y, degree=2)
+            degree = 1
+            quad_reg = Reg.SingleVarRegression(x, y, degree=degree)
 
-            # print roots derivatives at
+            # print derivatives at
+            print()
             print(title, ' | ', ser.name)
-            print('\ndEffect for which dCost=0: ', quad_reg.get_zero()[1])
             print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[-1]))
-            print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=quad_reg.get_zero()[1]))
+            print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=quad_reg.get_zero()[degree-1]))
             print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
+
+            # store root
+            incr_eff_life.append(quad_reg.get_zero()[degree-1])
+            if i > 0:
+                print('Increase in effective life of A and B:', round(incr_eff_life[i]-incr_eff_life[0], 2))
 
             xs = np.linspace(min(x), max(x), 50)
             predicted = quad_reg.get_predicted_y(xs)
@@ -599,9 +607,9 @@ def multi_plot_series(list_of_plots,
 
     for i, fig in enumerate(list_of_plots):
 
-        axarr[i].set_title(labels[i], loc='left')
+        axarr[i].set_title(labels[i], loc='left', fontweight='bold')
 
-        #title and labels
+        # title and labels
         if i == 0:
             axarr[i].set(
                 ylabel=y_label)
@@ -619,8 +627,8 @@ def multi_plot_series(list_of_plots,
                      show_error_bars=show_error_bars,
                      wtp_multiplier=wtp_multiplier)
 
-    #plt.tight_layout()
+    # plt.tight_layout()
     plt.subplots_adjust(left=0.1, bottom=0.15, right=0.97, top=0.9,
                         wspace=0.1, hspace=0)
     plt.savefig('figures/' + file_name + '.png', dpm=300)
-    #plt.show()
+    # plt.show()
