@@ -3,7 +3,7 @@ import gonorrhea.GonoSettings as Set
 import apace.VisualizeScenarios as Vis
 
 # change this to false to show M used
-SHOW_EFFECTIVE_LIFE = False
+SHOW_EFFECTIVE_LIFE = True
 SIM_LENGTH = 50     # years
 POP_RATE = 0.1e6/5e6
 
