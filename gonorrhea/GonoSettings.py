@@ -97,8 +97,8 @@ varDualQuarterly = [
 
 # read scenarios data frames
 dfBase = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SABasePolicies.csv')
-dfPolicyA = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SAPolicyA.csv')
-dfPolicyAQuart = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SAPolicyAQuart.csv')
+dfPolicyA = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SADual.csv')
+dfPolicyAQuart = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SADualQuart.csv')
 
 # series to display on the cost-effectiveness plane
 base = Cls.Series(name='Base',

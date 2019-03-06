@@ -517,7 +517,7 @@ def plot_sub_fig(ax, list_of_series,
             # fit a quadratic function to the curve.
             y = np.array(ser.yValues)  # allDeltaCosts)
             x = np.array(ser.xValues)  # allDeltaEffects)
-            degree = 1
+            degree = 2
             quad_reg = Reg.SingleVarRegression(x, y, degree=degree)
 
             # print derivatives at
