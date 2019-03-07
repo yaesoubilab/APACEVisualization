@@ -6,7 +6,7 @@ markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
 PROB_UPTAKE = 0.75      # 0.5, 0.75, 1
-PROB_DROPOUT = 0.25     # 0.1, 0.15, 0.25,
+PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
 # here we want scenarios with
@@ -39,10 +39,14 @@ varConditions = [
                           )
 ]
 
+# data frame of scenarios
+dfScenarios = Cls.ScenarioDataFrame(csv_file_name='csvfiles\TBScenarios.csv')
+
 # series to display on the cost-effectiveness plane
 series = [
     Cls.Series(name='U{:.{prec}f}%'.format(PROB_UPTAKE * 100, prec=0)
                     +'-D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0),
+               scenario_df=dfScenarios,
                color='#4D4D4D',  # '#808A87',
                variable_conditions=varConditions,
                if_find_frontier=True,
@@ -52,11 +56,13 @@ series = [
 
 # populate series
 Cls.populate_series(series,
-                    csv_filename='csvfiles\TBScenarios.csv',
                     save_cea_results=True,
-                    interval_type=Econ.Interval.PREDICTION,
+                    interval_type='p',
                     effect_multiplier=1,
                     cost_multiplier=1 / 1e3)
+
+
+print(series[0].CEA.get_dCost_dEffect_cer())
 
 # plot
 fig, ax = plt.subplots(figsize=(6, 5))
