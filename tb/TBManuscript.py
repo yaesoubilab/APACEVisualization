@@ -93,11 +93,11 @@ print('% incident TB cases due to reactivation occurring among those who had com
 # ---------------------------------------------
 print('')
 print('% incident TB averted:',
-      scenario_df.get_relative_diff_mean_interval(
-          scenario_names=scenario_keys,
-          scenario_name_base='Base',
-          outcome_name='Total: Active TB Incidence',
-          deci=1, form='%'))
+  scenario_df.get_relative_diff_mean_interval(
+      scenario_names=scenario_keys,
+      scenario_name_base='Base',
+      outcome_name='Total: Active TB Incidence',
+      deci=1, form='%'))
 
 print('% TB deaths averted:',
       scenario_df.get_relative_diff_mean_interval(
@@ -110,14 +110,16 @@ scenario_df.plot_relative_diff_by_scenario(
     scenario_name_base='Base',
     scenario_names=scenario_keys,
     outcome_names=['Total: Active TB Incidence', 'Total: TB Deaths'],
-    title='Percentage of incidence TB cases\nand deaths averted',
-    x_label='Percentage (%)',
+    #title='Percentage of incidence TB cases\nand deaths averted',
+    x_label='Percentage Averted',
     y_labels=[
-        'Follow-up at yr 1, No IPT',
-        'Annual follow-up, No IPT',
-        'Follow-up at yr 1, With IPT',
-        'Annual follow-up, With IPT'],
-    legend=('TB Incidence', 'TB Death'),
+        'First-year follow-up,\nno secondary preventive therapy',
+        'Lifelong follow-up,\nno secondary preventive therapy',
+        'First-year follow-up\nwith secondary preventive therapy',
+        'Lifelong follow-up\nwith secondary preventive therapy'],
+    legend=('TB Cases Averted', 'TB Deaths Averted'),
     distance_from_axis=0.6,
     filename='figures/cea/ComparativeEffect'
 )
+
+

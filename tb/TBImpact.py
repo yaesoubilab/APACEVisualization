@@ -14,8 +14,9 @@ list_plot_info.append(
     Vis.PlotTrajInfo(
         traj_name='Active TB Incidence | Per Pop.',
         y_range=[0, 1750],
+        y_label='Incident TB cases per 100 000 population',
         y_multiplier=100000,
-        title="TB Incidence\n(Per 100,000 Pop.)",
+        #title="TB Incidence\n(Per 100,000 Pop.)",
         figure_size=(4, 3.6),
         file_name='Impact-TBIncidence')
 )
@@ -25,6 +26,7 @@ list_plot_info.append(
     Vis.PlotTrajInfo(
         traj_name='Active TB (Ratio)',
         y_range=[0, 1000],
+        y_label='TB Prevalence cases per 100 000 population',
         y_multiplier=100000,
         title="TB Prevalence\n(Per 100,000 Pop.)",
         figure_size=(4, 3.6),
@@ -36,6 +38,7 @@ list_plot_info.append(
     Vis.PlotTrajInfo(
         traj_name='TB Deaths | Per Pop.',
         y_range=[0, 350],
+        y_label='TB Deaths per 100 000 population',
         y_multiplier=100000,
         title="TB Mortality\n(Per 100,000 Pop.)",
         figure_size=(4, 3.6),
@@ -51,11 +54,11 @@ eff = Vis.TrajImpact(
         'csvfiles/TBTrajs4AnnualWithIPT.csv'
     ],
     scenario_names=[
-        'Base',
-        'Follow-up at 1yr, no IPT',
-        'Annual follow-up, no IPT',
-        'Follow-up at 1yr, with IPT',
-        'Annual follow-up, with IPT'
+        'Baseline (no targeted intervention)',
+        'First-year follow-up, no secondary preventive therapy',
+        'Lifelong follow-up, no secondary preventive therapy',
+        'First-year follow-up with secondary preventive therapy',
+        'Lifelong follow-up with secondary preventive therapy'
     ],
     fig_infos=list_plot_info,
     time_0=Set.TIME_0,

@@ -105,9 +105,9 @@ class TrajOneOutcomeMultipleReps:
             order=order)
 
         if format is None:
-            return stat.get_mean(), stat.get_percentile(0.05)
+            return stat.get_mean(), stat.get_PI(alpha=0.05)
         else:
-            return stat.get_formatted_estimate_interval(0.05, deci=deci, form=format)
+            return stat.get_formatted_estimate_interval(interval_type='p', alpha=0.05, deci=deci, form=format)
 
     def get_trajs_mean(self):
         """
@@ -484,6 +484,11 @@ class TrajImpact:
 
     def plot_all(self):
 
+        # set default properties
+        plt.rc('font', size=8)  # fontsize of texts
+        #plt.rc('axes', titlesize=DEFAULT_FONT_SIZE)  # fontsize of the figure title
+        #plt.rc('axes', titleweight='semibold')  # fontweight of the figure title
+
         panel_idx = 0
         for key, dict_mean_trajs in self.dictImpactMeasures.items():
 
@@ -505,7 +510,7 @@ class TrajImpact:
                     self.figInfos[panel_idx].xMultiplier * times,
                     self.figInfos[panel_idx].yMultiplier * means)
 
-            ax.legend(legends)
+            ax.legend(legends, fontsize=7)
 
             # add axes information
             add_axes_info(
@@ -513,8 +518,11 @@ class TrajImpact:
                 x_range=self.figInfos[panel_idx].xRange,
                 y_range=self.figInfos[panel_idx].yRange,
                 x_ticks=self.figInfos[panel_idx].xTicks,
-                is_x_integer=self.figInfos[panel_idx].isXInteger
+                is_x_integer=self.figInfos[panel_idx].isXInteger,
+                y_label=self.figInfos[panel_idx].yLabel
             )
+
+            plt.tight_layout()
 
             # save this figure
             output_figure(plt, 'impact_time_series/'+key)
@@ -656,7 +664,7 @@ def convert_data_to_list_of_observed_outcomes(data):
     return obss
 
 
-def add_axes_info(ax, x_range, y_range, x_ticks, is_x_integer):
+def add_axes_info(ax, x_range, y_range, x_ticks, is_x_integer, y_label=None):
 
     # x-axis range
     if x_range:  # auto-scale if no range specified
@@ -669,6 +677,9 @@ def add_axes_info(ax, x_range, y_range, x_ticks, is_x_integer):
         ax.set_ylim(y_range)  # y-axis range
     else:
         ax.set_ylim(ymin=0)  # y-axis has always minimum of 0
+
+    if y_label:
+        ax.set_ylabel(y_label)
 
     # x-ticks
     if x_ticks:

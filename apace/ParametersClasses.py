@@ -5,7 +5,6 @@ import SimPy.FormatFunctions as F
 import apace.helpers as helper
 import copy
 from enum import Enum
-import numpy as np
 
 
 HISTOGRAM_FIG_SIZE = (4.2, 3.2)
@@ -50,9 +49,10 @@ class Parameters:
         sum_stat = Stat.SummaryStat('', self.dictOfParams[parameter_name])
 
         if form is None:
-            return sum_stat.get_mean(), sum_stat.get_percentile(0.05)
+            return sum_stat.get_mean(), sum_stat.get_PI(alpha=0.05)
         else:
-            return sum_stat.get_formatted_estimate_interval(0.05, deci, form)
+            return sum_stat.get_formatted_estimate_interval(
+                interval_type='p', alpha=0.05, deci=deci, form=form)
 
     def plot_histogram(self, parameter_name, title, x_lable=None, y_lable=None, x_range=None):
         """ creates a histogram of one parameter """
@@ -220,7 +220,7 @@ class Parameters:
         sum_stat = Stat.SummaryStat('', self.__calculate_ratio_obss(numerator_par_name, denominator_par_names))
 
         if form is None:
-            return sum_stat.get_mean(), sum_stat.get_percentile(0.05)
+            return sum_stat.get_mean(), sum_stat.get_PI(alpha=0.05)
         else:
             return sum_stat.get_formatted_estimate_interval(
                 interval_type='p', alpha=0.05, deci=deci, form=form)

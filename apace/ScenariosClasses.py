@@ -106,7 +106,7 @@ class ScenarioDataFrame:
         if type(scenario_names) is not list:
             scenario_names = [scenario_names]
 
-        list_mean_PI={}
+        list_mean_PI = {}
         for name in scenario_names:
             ratio_state = Stat.RelativeDifferencePaired(
                 name='',
@@ -114,7 +114,8 @@ class ScenarioDataFrame:
                 y_ref=self.scenarios[scenario_name_base].outcomes[outcome_name],
                 order=1)
 
-            list_mean_PI[name] = helpers.get_mean_interval(ratio_state, deci, form)
+            list_mean_PI[name] = helpers.get_mean_interval(
+                stat=ratio_state, interval_type='p', deci=deci, form=form)
 
         if len(scenario_names) == 1:
             return list_mean_PI[scenario_names[0]]
@@ -125,10 +126,10 @@ class ScenarioDataFrame:
                                        scenario_name_base,
                                        scenario_names,
                                        outcome_names,
-                                       title, x_label,
+                                       title=None, x_label=None,
                                        y_labels=None,
-                                       markers=('o' ,'D'),
-                                       colors=('red' ,'blue'),
+                                       markers=('o','D'),
+                                       colors=('red','blue'),
                                        legend=('morbidity', 'mortality'),
                                        distance_from_axis=0.5,
                                        filename=None,
@@ -142,7 +143,9 @@ class ScenarioDataFrame:
         else:
             bar_position = [0]
 
+        plt.rc('font', size=8)  # fontsize of texts
         fig, ax = plt.subplots(figsize=(5.4, 3.4))
+
 
         # find y-values
         y_values = np.arange(len(scenario_names))
@@ -171,13 +174,17 @@ class ScenarioDataFrame:
         if y_labels is None:
             ax.set_yticklabels(scenario_names)
         else:
-            ax.set_yticklabels(y_labels)
+            ax.set_yticklabels(y_labels, horizontalalignment='left')
+
+        ax.yaxis.set_tick_params(pad=150)
 
         ax.set_ylim(-distance_from_axis, len(scenario_names)-1+distance_from_axis)
 
         ax.invert_yaxis()  # labels read top-to-bottom
-        ax.set_xlabel(x_label)
-        ax.set_title(title)
+        if x_label:
+            ax.set_xlabel(x_label)
+        if title:
+            ax.set_title(title)
         ax.legend(legend, fontsize='small')
         plt.axvline(x=0, linestyle='--', color='black', linewidth=1)
         plt.tight_layout()
