@@ -62,7 +62,10 @@ Cls.populate_series(series,
                     cost_multiplier=1 / 1e3)
 
 
-print(series[0].CEA.get_dCost_dEffect_cer())
+print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
+                                          alpha=0.05,
+                                          cost_digits=0, effect_digits=2, icer_digits=1,
+                                          cost_multiplier=1, effect_multiplier=1))
 
 # plot
 fig, ax = plt.subplots(figsize=(6, 5))
