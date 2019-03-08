@@ -329,34 +329,34 @@ class Series:
                         self.frontierXIntervals.append([y * cost_multiplier for y in y_interval])
                         self.frontierYIntervals.append([x * effect_multiplier for x in x_interval])
 
-        else:  # the CE frontier needs not to be calculated
+        #else:  # the CE frontier needs not to be calculated
 
-            del shifted_strategies[0]  # remove the base strategy
+        del shifted_strategies[0]  # remove the base strategy
 
-            # find the (x, y) values of strategies to display on CE plane
-            for idx, shiftedStr in enumerate(shifted_strategies):
+        # find the (x, y) values of strategies to display on CE plane
+        for idx, shiftedStr in enumerate(shifted_strategies):
+            if switch_cost_effect_on_figure:
+                self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs * effect_multiplier)
+                self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs * cost_multiplier)
+                self.xValues.append(shiftedStr.aveCost * cost_multiplier)
+                self.yValues.append(shiftedStr.aveEffect * effect_multiplier)
+            else:
+                self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs * effect_multiplier)
+                self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs * cost_multiplier)
+                self.xValues.append(shiftedStr.aveEffect * effect_multiplier)
+                self.yValues.append(shiftedStr.aveCost * cost_multiplier)
+
+            self.yLabels.append(shiftedStr.name)
+
+            if interval_type != 'n':
+                x_interval = shiftedStr.get_effect_interval(interval_type, ALPHA)
+                y_interval = shiftedStr.get_cost_interval(interval_type, ALPHA)
                 if switch_cost_effect_on_figure:
-                    self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs * effect_multiplier)
-                    self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs * cost_multiplier)
-                    self.xValues.append(shiftedStr.aveCost * cost_multiplier)
-                    self.yValues.append(shiftedStr.aveEffect * effect_multiplier)
+                    self.xIntervals.append([y * cost_multiplier for y in y_interval])
+                    self.yIntervals.append([x * effect_multiplier for x in x_interval])
                 else:
-                    self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs * effect_multiplier)
-                    self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs * cost_multiplier)
-                    self.xValues.append(shiftedStr.aveEffect * effect_multiplier)
-                    self.yValues.append(shiftedStr.aveCost * cost_multiplier)
-
-                self.yLabels.append(shiftedStr.name)
-
-                if interval_type != 'n':
-                    x_interval = shiftedStr.get_effect_interval(interval_type, ALPHA)
-                    y_interval = shiftedStr.get_cost_interval(interval_type, ALPHA)
-                    if switch_cost_effect_on_figure:
-                        self.xIntervals.append([y * cost_multiplier for y in y_interval])
-                        self.yIntervals.append([x * effect_multiplier for x in x_interval])
-                    else:
-                        self.xIntervals.append([x * effect_multiplier for x in x_interval])
-                        self.yIntervals.append([y * cost_multiplier for y in y_interval])
+                    self.xIntervals.append([x * effect_multiplier for x in x_interval])
+                    self.yIntervals.append([y * cost_multiplier for y in y_interval])
 
     def get_frontier_x_err(self):
 
