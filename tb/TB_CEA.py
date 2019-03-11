@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
 import apace.ScenariosClasses as Cls
-import SimPy.EconEvalClasses as Econ
 
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
-PROB_UPTAKE = 0.75      # 0.5, 0.75, 1
+PROB_UPTAKE = .75      # 0.5, 0.75, 1
 PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
@@ -23,8 +22,8 @@ varConditions = [
                           maximum=1,
                           if_included_in_label=True,
                           label_rules=[
-                              (0, 'Follow-up at yr 1'),
-                              (1, 'Annual follow-up')]
+                              (0, 'First-year follow-up'),
+                              (1, 'Lifelong follow-up')]
                           ),
     Cls.VariableCondition('Prob {Drop-Out in Tc+>1}',
                           values=(PROB_DROPOUT, 0),
@@ -34,8 +33,8 @@ varConditions = [
                           maximum=1,
                           if_included_in_label=True,
                           label_rules=[
-                              (0, 'No IPT'),
-                              (1, 'With IPT')]
+                              (0, 'no secondary preventive therapy'),
+                              (1, 'with secondary preventive therapy')]
                           )
 ]
 
@@ -61,8 +60,11 @@ Cls.populate_series(series,
                     effect_multiplier=1,
                     cost_multiplier=1 / 1e3)
 
-
-print(series[0].CEA.get_dCost_dEffect_cer())
+# print dCost, dEffect and cost-effectiveness ratio with respect to the base
+print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
+                                          alpha=0.05,
+                                          cost_digits=0, effect_digits=0, icer_digits=1,
+                                          cost_multiplier=1, effect_multiplier=1))
 
 # plot
 fig, ax = plt.subplots(figsize=(6, 5))
@@ -90,7 +92,7 @@ for i, ser in enumerate(series):
 plt.xlabel('DALY Averted')
 plt.ylabel('Additional Cost (Thousand Dollars)')
 plt.xlim(-500, 6500)
-plt.ylim(-150, 650)
+plt.ylim(-150, 850)
 plt.axvline(x=0, linestyle='--', color='black', linewidth=.5)
 plt.axhline(y=0, linestyle='--', color='black', linewidth=.5)
 plt.savefig('figures/cea/'
