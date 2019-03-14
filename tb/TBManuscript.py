@@ -113,10 +113,10 @@ scenario_df.plot_relative_diff_by_scenario(
     #title='Percentage of incidence TB cases\nand deaths averted',
     x_label='Percentage Averted',
     y_labels=[
-        'First-year follow-up,\nno secondary preventive therapy',
-        'Lifelong follow-up,\nno secondary preventive therapy',
-        'First-year follow-up\nwith secondary preventive therapy',
-        'Lifelong follow-up\nwith secondary preventive therapy'],
+        'First-year follow-up',
+        'Annual follow-up',
+        'First-year follow-up with limited IPT',
+        'Annual follow-up with continuous IPT'],
     legend=('TB Cases Averted', 'TB Deaths Averted'),
     distance_from_axis=0.6,
     filename='figures/cea/ComparativeEffect'

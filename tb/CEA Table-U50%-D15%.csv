@@ -1,6 +1,6 @@
 Name,E[Cost],E[Effect],E[dCost],E[dEffect],ICER
-"First-year follow-up, with secondary preventive therapy,","17,023 (9,609, 27,102)","35,080 (21,552, 53,590)",-,-,-
+"First-year follow-up, with continuous IPT,","17,023 (9,609, 27,102)","35,080 (21,552, 53,590)",-,-,-
 Base,"17,067 (9,833, 26,962)","36,603 (23,258, 56,710)",-,-,Dominated
-"First-year follow-up, no secondary preventive therapy,","17,122 (9,633, 27,383)","36,002 (22,229, 55,739)",-,-,Dominated
-"Lifelong follow-up, with secondary preventive therapy,","17,163 (9,729, 27,419)","34,110 (21,907, 52,167)","140 (-585, 920)","970 (-2,107, 4,626)","144.3 (-3,183.1, 1,945.3)"
-"Lifelong follow-up, no secondary preventive therapy,","17,314 (10,077, 27,587)","35,540 (22,035, 55,361)",-,-,Dominated
+"First-year follow-up, no IPT,","17,122 (9,633, 27,383)","36,002 (22,229, 55,739)",-,-,Dominated
+"Annual follow-up, with continuous IPT,","17,163 (9,729, 27,419)","34,110 (21,907, 52,167)","140 (-585, 920)","970 (-2,107, 4,626)","144.3 (-3,183.1, 1,945.3)"
+"Annual follow-up, no IPT,","17,314 (10,077, 27,587)","35,540 (22,035, 55,361)",-,-,Dominated

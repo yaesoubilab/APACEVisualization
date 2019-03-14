@@ -4,7 +4,7 @@ import apace.ScenariosClasses as Cls
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
 
-PROB_UPTAKE = .75      # 0.5, 0.75, 1
+PROB_UPTAKE = 0.75      # 0.5, 0.75, 1
 PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
 
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
@@ -23,7 +23,7 @@ varConditions = [
                           if_included_in_label=True,
                           label_rules=[
                               (0, 'First-year follow-up'),
-                              (1, 'Lifelong follow-up')]
+                              (1, 'Annual follow-up')]
                           ),
     Cls.VariableCondition('Prob {Drop-Out in Tc+>1}',
                           values=(PROB_DROPOUT, 0),
@@ -33,8 +33,8 @@ varConditions = [
                           maximum=1,
                           if_included_in_label=True,
                           label_rules=[
-                              (0, 'no secondary preventive therapy'),
-                              (1, 'with secondary preventive therapy')]
+                              (0, 'no IPT'),
+                              (1, 'with continuous IPT')]
                           )
 ]
 
@@ -86,8 +86,12 @@ for i, ser in enumerate(series):
     ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=1)
 
     # legend
+    leg = ['First-year follow-up',
+           'Annual follow-up',
+           'First-year follow-up with limited IPT',
+           'Annual follow-up with continuous IPT']
     ser.legend.append('Frontier')
-    ax.legend(ser.legend, loc=1)
+    ax.legend(leg, loc=1) #ser.legend
 
 plt.xlabel('DALY Averted')
 plt.ylabel('Additional Cost (Thousand Dollars)')

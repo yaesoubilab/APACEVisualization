@@ -55,10 +55,10 @@ eff = Vis.TrajImpact(
     ],
     scenario_names=[
         'Baseline (no targeted intervention)',
-        'First-year follow-up, no secondary preventive therapy',
-        'Lifelong follow-up, no secondary preventive therapy',
-        'First-year follow-up with secondary preventive therapy',
-        'Lifelong follow-up with secondary preventive therapy'
+        'First-year follow-up',
+        'Annual follow-up',
+        'First-year follow-up with limited IPT',
+        'Annual follow-up with continuous IPT'
     ],
     fig_infos=list_plot_info,
     time_0=Set.TIME_0,
