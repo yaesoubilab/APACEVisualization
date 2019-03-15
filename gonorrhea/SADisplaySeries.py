@@ -48,7 +48,7 @@ Vis.multi_plot_series(
     switch_cost_effect_on_figure=switch_cost_effect,
     wtp_multiplier=wtp_mult,
     labels=labels,
-    file_name='Performance.png'
+    file_name='Performance'
 )
 
 included = False
