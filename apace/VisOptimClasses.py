@@ -95,8 +95,6 @@ def plot_optimization_itrs(csv_directory,
     # save the plot
     df_plot.savefig(directory_save_plot + 'Df-' +csv_filename + '.png')
 
-
-
 def add_f(axarr, cols, f_range, moving_ave_window, f_label=None):
 
     # plot objective function
