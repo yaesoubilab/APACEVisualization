@@ -243,7 +243,8 @@ class TrajsDataFrame:
                         plot_info.yMultiplier * traj.obss,
                         plot_info.commonColorCode,
                         linewidth=1,
-                        alpha=plot_info.transparency)
+                        alpha=plot_info.transparency,
+                        zorder=1)
             else:
                 ax.plot(plot_info.xMultiplier * traj.times,
                         plot_info.yMultiplier * traj.obss,
@@ -281,10 +282,12 @@ class TrajsDataFrame:
             linestyle = '-' if calibration_info.ifConnectObss else 'none'
             capsize = 2 if calibration_info.ifShowCaps else 0
 
-            ax.plot(x_arr, y_arr, marker='o', markersize=3, ls=linestyle, lw=1, color=calibration_info.colorCode)
+            ax.plot(x_arr, y_arr,
+                    marker='o', markersize=3, ls=linestyle, lw=1, color=calibration_info.colorCode, zorder=2)
             if lower_error and upper_error:
                 error_arr = [lower_error, upper_error]
-                ax.errorbar(x_arr, y_arr, yerr=error_arr, fmt='none', capsize=capsize, color=calibration_info.colorCode)
+                ax.errorbar(x_arr, y_arr,
+                            yerr=error_arr, fmt='none', capsize=capsize, color=calibration_info.colorCode, zorder=2)
 
         # remove top and right border
         if REMOVE_TOP_RIGHT_BORDERS:

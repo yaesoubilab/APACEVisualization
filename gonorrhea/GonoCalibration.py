@@ -38,10 +38,10 @@ list_plot_calib_info.append(
     Vis.PlotCalibrationInfo(
         list_of_observed_outcomes=obss,
         if_connect_obss=False,
-        feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[1, 10],
-            y_range=[2, 2],
-            fill_between=False)
+        # feasible_range_info=Vis.FeasibleRangeInfo(
+        #     x_range=[1, 10],
+        #     y_range=[2, 2],
+        #     fill_between=False)
     )
 )
 
@@ -62,11 +62,11 @@ list_plot_calib_info.append(
     Vis.PlotCalibrationInfo(
         list_of_observed_outcomes=obss,
         if_connect_obss=False,
-        feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[1, 10],
-            y_range=[0.01*100000, 0.06*100000],
-            fill_between=False
-        )
+        # feasible_range_info=Vis.FeasibleRangeInfo(
+        #     x_range=[1, 10],
+        #     y_range=[0.01*100000, 0.06*100000],
+        #     fill_between=False
+        # )
     )
 )
 
@@ -87,11 +87,11 @@ list_plot_calib_info.append(
     Vis.PlotCalibrationInfo(
         list_of_observed_outcomes=obss,
         if_connect_obss=False,
-        feasible_range_info=Vis.FeasibleRangeInfo(
-            x_range=[1, 10],
-            y_range=[50, 100],
-            fill_between=False
-        )
+        # feasible_range_info=Vis.FeasibleRangeInfo(
+        #     x_range=[1, 10],
+        #     y_range=[50, 100],
+        #     fill_between=False
+        #)
     )
 )
 
