@@ -198,7 +198,7 @@ class Parameters:
             par_id += 1
 
         # write parameter estimates and credible intervals
-        IO.write_csv('ParameterEstimates.csv', results)
+        IO.write_csv(rows=results, file_name='ParameterEstimates.csv')
 
     def __calculate_ratio_obss(self, numerator_par_name, denominator_par_names):
 
