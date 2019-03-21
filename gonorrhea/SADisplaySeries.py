@@ -3,7 +3,7 @@ import gonorrhea.GonoSettings as Set
 import apace.VisualizeScenarios as Vis
 
 # change this to false to show M used
-SHOW_EFFECTIVE_LIFE = False
+SHOW_EFFECTIVE_LIFE = True
 SIM_LENGTH = 50     # years
 POP_RATE = 0.1e6/5e6
 
@@ -12,6 +12,7 @@ if SHOW_EFFECTIVE_LIFE:
     Cls.COST_MEASURE = 'Average ratio: Effective life of AB'
     effect_mult = -1 / SIM_LENGTH * POP_RATE
     cost_mult = SIM_LENGTH
+    wtp_mult = 1# -effect_mult / cost_mult
     switch_cost_effect = True
     Set.X_RANGE = (-4, 4)
     Set.Y_RANGE = (-100, 100)
@@ -22,14 +23,12 @@ else:
     Cls.COST_MEASURE = 'Total Cost'
     effect_mult = 1 / SIM_LENGTH * POP_RATE
     cost_mult = 1 / 1e6
+    wtp_mult = effect_mult / cost_mult
     switch_cost_effect = False
     Set.X_RANGE = (-100, 100)
     Set.Y_RANGE = (-0.6, 0.6)
     labels = ('Additional Gonorrhea Cases Averted Annually\nPer 100,000 MSM Population',
               'Additional Drug M Used (Millions)')
-
-# find the wtp multiplier
-wtp_mult = effect_mult / cost_mult
 
 
 Vis.multi_plot_series(
