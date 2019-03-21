@@ -23,7 +23,7 @@ text = paramDict.get_ratio_mean_interval(
     deci=2,
     form='%'
 )
-print(text)
+print('Probability of getting screened before natural recovery:', text)
 
 # histogram of probability of getting screened
 paramDict.plot_ratio_hist(

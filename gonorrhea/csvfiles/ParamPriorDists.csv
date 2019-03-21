@@ -24,7 +24,7 @@ ID,Name,Lower Bound,Upper Bound,Title,Multiplier,Format,Decimal
 22,Prob retreatment after failure | Symptomatic,0.81,0.99,,,%,1
 23,Prob retreatment after resistance | Symptomatic,,,,,,
 24,Prob retreatment | Asymptomatic,0,0,,,,
-25,Infectivity of | I | Sym|G-0,0,5,,,,2
+25,Infectivity of | I | Sym|G-0,0,10,,,,2
 26,Infectivity of | I | Sym|G-A,,,,,,
 27,Infectivity of | I | Sym|G-B,,,,,,
 28,Infectivity of | I | Sym|G-AB,,,,,,
@@ -33,7 +33,7 @@ ID,Name,Lower Bound,Upper Bound,Title,Multiplier,Format,Decimal
 31,Infectivity of | I | Asym|G-B,,,,,,
 32,Infectivity of | I | Asym|G-AB,,,,,,
 33,Initial gonorrhea prevalence,0.0184,0.0276,,,%,1
-34,Initial gonorrhea symptomatic,0,0.1,,,%,1
+34,Initial gonorrhea symptomatic,0,0.75,,,%,1
 35,Initial gonorrhea resistant to A,0,0.04,,,%,1
 36,Initial gonorrhea resistant to B,0,0.04,,,%,1
 37,1-Initial gonorrhea prevalence,,,,,,
@@ -50,7 +50,7 @@ ID,Name,Lower Bound,Upper Bound,Title,Multiplier,Format,Decimal
 48,Initial size of I | Asym|G-A,,,,,,
 49,Initial size of I | Asym|G-B,,,,,,
 50,Initial size of I | Asym|G-AB,,,,,,
-51,Time until recovery (without treatment) (years),0.083333333,4,Years until Recovery without Treatment,,,1
+51,Time until recovery (without treatment) (years),0.083333333,8,Years until Recovery without Treatment,,,1
 52,Time until screened (years),0.5,4,Years until Screened,,,1
 53,Time until seeking treatment (symptomatic) (years),0.002747253,0.0824,Days until Seeking Treatment (Symptomatic),364,,1
 54,Time until retreatment (years),0.002747253,0.0824,Days until retreatment,364,,1
