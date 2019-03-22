@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import SimPy.InOutFunctions as io
 
 
@@ -12,18 +13,29 @@ def get_rho(wtp, poliy_param):
 
 
 # ---- settings ----
-policyParams = [0.1926,-0.4074,0.2195,-0.0254]
-wtps = np.linspace(1.5, 2.5, 5) # [min, max, number of points]
+policyParams = [1.0569,-0.4508,0.0348,0.0293]
+wtps = np.linspace(4, 6, 5) # [min, max, number of points]
 # ------------------
 
 data = []
+taus = []
+thetas = []
 for wtp in wtps:
     tau = get_tau(wtp, policyParams)
     rho = get_rho(wtp, policyParams)
 
+    taus.append(tau)
+    thetas.append(tau*rho)
     data.append([tau, tau*rho])
 
 io.write_csv(rows=data,
              file_name='DualPolicy.csv',
              directory='csvfiles')
 
+
+plt.scatter(wtps, taus, label='Tau')
+plt.scatter(wtps, thetas, label='Theta')
+#plt.xlim(1.5,  2.5)
+plt.ylim(bottom=0)
+plt.legend()
+plt.show()

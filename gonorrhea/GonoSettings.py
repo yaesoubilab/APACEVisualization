@@ -47,7 +47,7 @@ varBase = [
 varBaseQuart = [
     Cls.VariableCondition('Decision Period', 91, 91,
                           if_included_in_label=False),
-    Cls.VariableCondition('% Resistant Threshold', 0.045, 0.105,
+    Cls.VariableCondition('% Resistant Threshold', 0.065, 0.105,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1,
                           if_included_in_label=False, label_format='{:.1%}'),

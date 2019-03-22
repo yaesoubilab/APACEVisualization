@@ -3,7 +3,7 @@ import gonorrhea.GonoSettings as Set
 import apace.VisualizeScenarios as Vis
 
 # change this to false to show M used
-SHOW_EFFECTIVE_LIFE = True
+SHOW_EFFECTIVE_LIFE = False
 SIM_LENGTH = 50     # years
 POP_RATE = 0.1e6/5e6
 
@@ -14,8 +14,8 @@ if SHOW_EFFECTIVE_LIFE:
     cost_mult = SIM_LENGTH
     wtp_mult = 1# -effect_mult / cost_mult
     switch_cost_effect = True
-    Set.X_RANGE = (-4, 4)
-    Set.Y_RANGE = (-100, 100)
+    Set.X_RANGE = (-3, 3)
+    Set.Y_RANGE = (-60, 60)
     labels = ('Change in Effective Life of Drugs A and B (Years)',
               'Change in Annual Gonorrhea Cases\n(Per 100,000 MSM Population)')
 else:
