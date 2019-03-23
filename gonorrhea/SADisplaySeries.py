@@ -3,7 +3,7 @@ import gonorrhea.GonoSettings as Set
 import apace.VisualizeScenarios as Vis
 
 # change this to false to show M used
-SHOW_EFFECTIVE_LIFE = False
+SHOW_EFFECTIVE_LIFE = True
 SIM_LENGTH = 50     # years
 POP_RATE = 0.1e6/5e6
 
@@ -49,6 +49,16 @@ Vis.multi_plot_series(
     labels=labels,
     file_name='Performance'
 )
+# base vs. quarterly base with enhanced testing
+Vis.plot_series(list_series=[Set.base, Set.policyAQuartEnhanced],
+                x_range=Set.X_RANGE,
+                y_range=Set.Y_RANGE,
+                effect_multiplier=effect_mult,
+                cost_multiplier=cost_mult,
+                switch_cost_effect_on_figure=switch_cost_effect,
+                wtp_multiplier=wtp_mult,
+                labels=labels,
+                title='Base vs. Quarterly Base with Enhanced Testing.png')
 
 included = False
 if included:
@@ -62,16 +72,7 @@ if included:
                     wtp_multiplier=wtp_mult,
                     labels=labels,
                     title='Base vs. Base with Enhanced Testing.png')
-    # base vs. quarterly base with enhanced testing
-    Vis.plot_series(list_series=[Set.base, Set.baseQuarterlyEnhancedTesting],
-                    x_range=Set.X_RANGE,
-                    y_range=Set.Y_RANGE,
-                    effect_multiplier=effect_mult,
-                    cost_multiplier=cost_mult,
-                    switch_cost_effect_on_figure=switch_cost_effect,
-                    wtp_multiplier=wtp_mult,
-                    labels=labels,
-                    title='Base vs. Quarterly Base with Enhanced Testing.png')
+
     # base vs. quarterly base
     Vis.plot_series(list_series=[Set.base, Set.baseQuarterly],
                     x_range=Set.X_RANGE,

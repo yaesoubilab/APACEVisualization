@@ -94,11 +94,22 @@ varDualQuarterly = [
     Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS/4, DS_TESTS/4,
                           if_included_in_label=False)
 ]
+varDualQuarterlyEnhanced = [
+    Cls.VariableCondition('Decision Period', 91, 91,
+                          if_included_in_label=False),
+    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.5,
+                          if_included_in_label=True, label_format='{:.1%}'),
+    Cls.VariableCondition('Change in % Resistant Threshold', 0, 0.2,
+                          if_included_in_label=True, label_format='{:.1%}'),
+    Cls.VariableCondition('# of Cases Tested for Resistance', DS_TESTS, DS_TESTS,
+                          if_included_in_label=False)
+]
 
 # read scenarios data frames
 dfBase = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SABasePolicies.csv')
 dfPolicyA = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SADual.csv')
 dfPolicyAQuart = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SADualQuart.csv')
+dfPolicyAQuartEnhanced = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SADualQuartEnhanced.csv')
 
 # series to display on the cost-effectiveness plane
 base = Cls.Series(name='Base',
@@ -144,3 +155,10 @@ policyAQuart = Cls.Series(name='Dual-Quarterly',
                           if_find_frontier=False,
                           labels_shift_x=0.1/8,
                           labels_shift_y=-4/80)
+policyAQuartEnhanced = Cls.Series(name='Dual-Quarterly-Enhanced',
+                                  scenario_df=dfPolicyAQuartEnhanced,
+                                  color='red',
+                                  variable_conditions=varDualQuarterlyEnhanced,
+                                  if_find_frontier=False,
+                                  labels_shift_x=0.1/8,
+                                  labels_shift_y=-4/80)
