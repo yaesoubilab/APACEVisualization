@@ -118,6 +118,7 @@ def add_var_or_dvar(what_to_add, axarr, cols, n_vars, y_axis_labels, moving_ave_
     elif what_to_add == 'dvar':
         ax_indx = 0
         col_indx = 2 + n_vars
+        y_range = (-1, 1)
     else:
         pass # error
 
@@ -135,8 +136,10 @@ def add_var_or_dvar(what_to_add, axarr, cols, n_vars, y_axis_labels, moving_ave_
         # y-axis label
         axarr[ax_indx+i].set(ylabel=y_axis_labels[i+1])
         # y-axis range
-        if var_ranges is not None:
-            axarr[ax_indx+i].set(ylim=var_ranges[i])
+        #if var_ranges is not None:
+        if what_to_add == 'var':
+            y_range = var_ranges[i]
+        axarr[ax_indx+i].set(ylim=y_range)
 
     # label the x-axis of the last figure
     axarr[n_vars+ax_indx-1].set(xlabel='Iteration')

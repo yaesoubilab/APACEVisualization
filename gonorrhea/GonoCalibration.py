@@ -26,7 +26,7 @@ obss = Vis.convert_data_to_list_of_observed_outcomes(D.Prevalence)
 list_plot_info.append(
     Vis.PlotTrajInfo(
         traj_name='Prevalence G',
-        y_range=[0, 5],
+        y_range=[0, 4.5],
         is_x_integer=True,
         y_multiplier=100,
         figure_size=(4, 3.2),
