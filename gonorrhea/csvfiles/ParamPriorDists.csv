@@ -50,8 +50,8 @@ ID,Name,Lower Bound,Upper Bound,Title,Multiplier,Format,Decimal
 48,Initial size of I | Asym|G-A,,,,,,
 49,Initial size of I | Asym|G-B,,,,,,
 50,Initial size of I | Asym|G-AB,,,,,,
-51,Time until recovery (without treatment) (years),0.083333333,8,Years until Recovery without Treatment,,,1
-52,Time until screened (years),0.5,4,Years until Screened,,,1
+51,Time until recovery (without treatment) (years),0.083333333,5,Years until Recovery without Treatment,12,,1
+52,Time until screened (years),0.5,5,Years until Screened,,,1
 53,Time until seeking treatment (symptomatic) (years),0.002747253,0.0824,Days until Seeking Treatment (Symptomatic),364,,1
 54,Time until retreatment (years),0.002747253,0.0824,Days until retreatment,364,,1
 55,Natural recovery,,,,,,
