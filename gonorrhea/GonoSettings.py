@@ -47,7 +47,7 @@ varBase = [
 varBaseQuart = [
     Cls.VariableCondition('Decision Period', 91, 91,
                           if_included_in_label=False),
-    Cls.VariableCondition('% Resistant Threshold', 0.065, 0.105,
+    Cls.VariableCondition('% Resistant Threshold', 0.07, 0.105,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 1, 1,
                           if_included_in_label=False, label_format='{:.1%}'),
@@ -77,7 +77,7 @@ varBaseQuartEnhancedTesting = [
 varDual = [
     Cls.VariableCondition('Decision Period', 364, 364,
                           if_included_in_label=False),
-    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.5,
+    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.13,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 0, 0.1,
                           if_included_in_label=True, label_format='{:.1%}'),
@@ -97,7 +97,7 @@ varDualQuarterly = [
 varDualQuarterlyEnhanced = [
     Cls.VariableCondition('Decision Period', 91, 91,
                           if_included_in_label=False),
-    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.5,
+    Cls.VariableCondition('% Resistant Threshold', 0.01, 0.13,
                           if_included_in_label=True, label_format='{:.1%}'),
     Cls.VariableCondition('Change in % Resistant Threshold', 0, 0.2,
                           if_included_in_label=True, label_format='{:.1%}'),
@@ -120,13 +120,13 @@ base = Cls.Series(name='Base',
                   labels_shift_x=-0.7/8,
                   labels_shift_y=3/80)
 
-baseQuarterly = Cls.Series(name='Base-Quarterly',
-                           scenario_df=dfBase,
-                           color='red',
-                           variable_conditions=varBaseQuart,
-                           if_find_frontier=False,
-                           labels_shift_x=0.1/8,
-                           labels_shift_y=-4/80)
+baseQuart = Cls.Series(name='Base-Quarterly',
+                       scenario_df=dfBase,
+                       color='red',
+                       variable_conditions=varBaseQuart,
+                       if_find_frontier=False,
+                       labels_shift_x=0.1/8,
+                       labels_shift_y=-4/80)
 baseEnhancedTesting = Cls.Series(name='Base with Enhanced Testing',
                                  scenario_df=dfBase,
                                  color='red',
@@ -134,13 +134,13 @@ baseEnhancedTesting = Cls.Series(name='Base with Enhanced Testing',
                                  if_find_frontier=False,
                                  labels_shift_x=2.5/8,
                                  labels_shift_y=-0.11/80)
-baseQuarterlyEnhancedTesting = Cls.Series(name='Base-Quarterly with Enhanced Testing',
-                                          scenario_df=dfBase,
-                                          color='red',
-                                          variable_conditions=varBaseQuartEnhancedTesting,
-                                          if_find_frontier=False,
-                                          labels_shift_x=2.5/8,
-                                          labels_shift_y=-0.11/80)
+baseQuartEnhancedTesting = Cls.Series(name='Base-Quarterly with Enhanced Testing',
+                                      scenario_df=dfBase,
+                                      color='red',
+                                      variable_conditions=varBaseQuartEnhancedTesting,
+                                      if_find_frontier=False,
+                                      labels_shift_x=2.5/8,
+                                      labels_shift_y=-0.11/80)
 policyA = Cls.Series(name='Dual',
                      scenario_df=dfPolicyA,
                      color='red',

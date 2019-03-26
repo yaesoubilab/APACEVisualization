@@ -33,12 +33,12 @@ else:
 
 Vis.multi_plot_series(
     list_list_series=[
-        [Set.base, Set.baseQuarterly],
+        [Set.base, Set.baseQuart],
         [Set.base, Set.policyA],
-        [Set.base, Set.policyAQuart]
+        [Set.base, Set.policyAQuartEnhanced]
     ],
     list_of_titles=[
-        'Base vs. Quarterly Base', 'Base vs. Dual', 'Base vs. Quarterly Dual'
+        'Base vs. Quarterly Base', 'Base vs. Dual', 'Base vs.\nEnhanced Quarterly Dual'
     ],
     x_range=Set.X_RANGE,
     y_range=Set.Y_RANGE,
@@ -49,19 +49,19 @@ Vis.multi_plot_series(
     labels=labels,
     file_name='Performance'
 )
-# base vs. quarterly base with enhanced testing
-Vis.plot_series(list_series=[Set.base, Set.policyAQuartEnhanced],
-                x_range=Set.X_RANGE,
-                y_range=Set.Y_RANGE,
-                effect_multiplier=effect_mult,
-                cost_multiplier=cost_mult,
-                switch_cost_effect_on_figure=switch_cost_effect,
-                wtp_multiplier=wtp_mult,
-                labels=labels,
-                title='Base vs. Quarterly Base with Enhanced Testing.png')
 
 included = False
 if included:
+    # base vs. quarterly base with enhanced testing
+    Vis.plot_series(list_series=[Set.base, Set.policyAQuartEnhanced],
+                    x_range=Set.X_RANGE,
+                    y_range=Set.Y_RANGE,
+                    effect_multiplier=effect_mult,
+                    cost_multiplier=cost_mult,
+                    switch_cost_effect_on_figure=switch_cost_effect,
+                    wtp_multiplier=wtp_mult,
+                    labels=labels,
+                    title='Base vs. Quarterly Base with Enhanced Testing.png')
     # base vs. base with enhanced testing
     Vis.plot_series(list_series=[Set.base, Set.baseEnhancedTesting],
                     x_range=Set.X_RANGE,
@@ -74,7 +74,7 @@ if included:
                     title='Base vs. Base with Enhanced Testing.png')
 
     # base vs. quarterly base
-    Vis.plot_series(list_series=[Set.base, Set.baseQuarterly],
+    Vis.plot_series(list_series=[Set.base, Set.baseQuart],
                     x_range=Set.X_RANGE,
                     y_range=Set.Y_RANGE,
                     effect_multiplier=effect_mult,
