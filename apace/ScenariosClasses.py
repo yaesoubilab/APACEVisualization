@@ -267,6 +267,7 @@ class Series:
 
         self.strategies = []    # list of strategies on this series
         self.CEA = None
+        self.CBA = None
         self.legend = []
 
     def if_acceptable(self, scenario):
@@ -292,6 +293,11 @@ class Series:
 
         # cost-effectiveness analysis
         self.CEA = Econ.CEA(self.strategies,
+                            if_paired=True,
+                            health_measure=Econ.HealthMeasure.DISUTILITY)
+
+        # CBA
+        self.CBA = Econ.CBA(self.strategies,
                             if_paired=True,
                             health_measure=Econ.HealthMeasure.DISUTILITY)
 
