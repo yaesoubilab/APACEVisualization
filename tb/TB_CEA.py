@@ -56,6 +56,7 @@ series = [
 # populate series
 Cls.populate_series(series,
                     save_cea_results=True,
+                    colors_of_strategies=colors,
                     interval_type='p',
                     effect_multiplier=1,
                     cost_multiplier=1 / 1e3)
@@ -64,12 +65,13 @@ Cls.populate_series(series,
 series[0].CBA.graph_incremental_NMBs(
     min_wtp=0,
     max_wtp=1000,
-    title='test',
-    y_label='NMB',
-    x_label='WTP',
+    title='',
+    y_label='Net Monetary Benefit ($)',
+    x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
     interval_type='p',
     transparency=0.1,
-    show_legend=True
+    show_legend=True,
+    figure_size=(6, 5)
 )
 
 # print dCost, dEffect and cost-effectiveness ratio with respect to the base
@@ -114,14 +116,16 @@ for i, ser in enumerate(series):
                             s=25,  # size of dots
                             label=s.name)  # name to show in the legend
 
+    # add frontier
     ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=1)
 
     # legend
     leg = ['First-year follow-up',
            'Annual follow-up',
            'First-year follow-up with limited IPT',
-           'Annual follow-up with continuous IPT']
-    ser.legend.append('Frontier')
+           'Annual follow-up with continuous IPT',
+           'Frontier']
+    #ser.legend.append('Frontier')
     ax.legend(leg, loc=1) #ser.legend
 
 plt.xlabel('DALY Averted')

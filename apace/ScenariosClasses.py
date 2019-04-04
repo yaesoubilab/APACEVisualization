@@ -395,6 +395,7 @@ class Series:
 
 def populate_series(series_list,
                     save_cea_results=False,
+                    colors_of_strategies=None,
                     interval_type='n',
                     effect_multiplier=1,
                     cost_multiplier=1,
@@ -402,6 +403,7 @@ def populate_series(series_list,
     """
     :param series_list:
     :param save_cea_results: set it to True if the CE table should be generated
+    :param colors_of_strategies: (dictionary) of colors for strategies on this series
     :param interval_type: select from Econ.Interval (no interval, CI, or PI)
     :param effect_multiplier:
     :param cost_multiplier:
@@ -419,11 +421,14 @@ def populate_series(series_list,
         base_strategy = Econ.Strategy(
             name='Base',
             cost_obs=scn.outcomes[COST_MEASURE],
-            effect_obs=scn.outcomes[HEALTH_MEASURE])
+            effect_obs=scn.outcomes[HEALTH_MEASURE],
+            color=None
+        )
 
         # add base
         ser.strategies = [base_strategy]
         # add other scenarios
+        i=0
         for key, scenario in ser.scenarioDF.scenarios.items():
             # add only non-Base strategies that can be on this series
             if scenario.name != 'Base' and ser.if_acceptable(scenario):
@@ -449,12 +454,19 @@ def populate_series(series_list,
                 # legends
                 ser.legend.append(label)
 
+                # color of this strategy
+                color = None
+                if colors_of_strategies is not None:
+                    color = colors_of_strategies[i]
+
                 ser.strategies.append(
                     Econ.Strategy(
                         name=label,
                         cost_obs=scenario.outcomes[COST_MEASURE],
-                        effect_obs=scenario.outcomes[HEALTH_MEASURE])
+                        effect_obs=scenario.outcomes[HEALTH_MEASURE],
+                        color=color)
                 )
+                i += 1
 
         # do CEA on this series
         ser.build_CE_curve(save_cea_results,
