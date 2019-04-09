@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import apace.ScenariosClasses as Cls
+import numpy as np
 
 markers = ['o', 's', '^', 'D']
 colors = ['r', 'b', 'g', '#FF9912']
@@ -33,7 +34,7 @@ varConditions = [
                           maximum=1,
                           if_included_in_label=True,
                           label_rules=[
-                              (0, 'no IPT'),
+                              (0, ''),
                               (1, 'with continuous IPT')]
                           )
 ]
@@ -62,6 +63,8 @@ Cls.populate_series(series,
                     cost_multiplier=1 / 1e3)
 
 # CBA
+del series[0].CBA._strategies[1:3]
+
 series[0].CBA.graph_incremental_NMBs(
     min_wtp=0,
     max_wtp=1000,
@@ -80,11 +83,15 @@ print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
                                           cost_digits=0, effect_digits=0, icer_digits=1,
                                           cost_multiplier=1, effect_multiplier=1))
 
+withCloud = True
+
 # plot
 fig, ax = plt.subplots(figsize=(6, 5))
 for i, ser in enumerate(series):
-    for j, x_value in enumerate(ser.xValues):
-        ax.plot(x_value, ser.yValues[j], markers[j], color=colors[j], markersize=8, mew=1)
+
+    if not withCloud:
+        for j, x_value in enumerate(ser.xValues):
+            ax.plot(x_value, ser.yValues[j], markers[j], color=colors[j], markersize=8, mew=1)
 
         # # error bars
         # x_err_l = x_value-ser.xIntervals[j][0]
@@ -98,42 +105,54 @@ for i, ser in enumerate(series):
         # #             fmt='none', color='k', linewidth=1, alpha=0.4)
 
     # add the clouds
-    if False:
-        for s in ser.CEA.get_shifted_strategies():
+    if withCloud:
+        for idx, s in enumerate(ser.CEA.get_shifted_strategies()):
             # add the center of the cloud
-            plt.plot(s.aveEffect, s.aveCost,
-                     c='k',  # color
-                     alpha=1,  # transparency
-                     linewidth=2,  # line width
-                     marker='x',  # markers
-                     markersize=12,  # marker size
-                     markeredgewidth=2)  # marker edge width
+            ax.plot(s.aveEffect, s.aveCost/1000,
+                    c='k',  # color
+                    alpha=1,  # transparency
+                    linewidth=2,  # line width
+                    marker='x',  # markers
+                    markersize=12,  # marker size
+                    markeredgewidth=2)  # marker edge width
             # add the cloud
-            if not s.ifDominated:
-                plt.scatter(s.effectObs, s.costObs,
-                            c=s.color,  # color of dots
-                            alpha=0.15,  # transparency of dots
-                            s=25,  # size of dots
-                            label=s.name)  # name to show in the legend
+            #if not s.ifDominated:
+            if idx >= 2:
+                ax.scatter(s.effectObs, np.divide(s.costObs, 1000),
+                           c=s.color,  # color of dots
+                           alpha=0.15,  # transparency of dots
+                           s=25,  # size of dots
+                           label=s.name)  # name to show in the legend
 
     # add frontier
     ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=1)
 
-    # legend
-    leg = ['First-year follow-up',
-           'Annual follow-up',
-           'First-year follow-up with limited IPT',
-           'Annual follow-up with continuous IPT',
-           'Frontier']
-    #ser.legend.append('Frontier')
-    ax.legend(leg, loc=1) #ser.legend
+    if withCloud:
+        ax.legend()
+    else:
+        # legend
+        leg = ['First-year follow-up',
+               'Annual follow-up',
+               'First-year follow-up with limited IPT',
+               'Annual follow-up with continuous IPT',
+               'Frontier']
+        #ser.legend.append('Frontier')
+        ax.legend(leg, loc=1) #ser.legend
 
-plt.xlabel('DALY Averted')
-plt.ylabel('Additional Cost (Thousand Dollars)')
-plt.xlim(-500, 6500)
-plt.ylim(-150, 850)
-plt.axvline(x=0, linestyle='--', color='black', linewidth=.5)
-plt.axhline(y=0, linestyle='--', color='black', linewidth=.5)
+ax.set_xlabel('DALY Averted')
+ax.set_ylabel('Additional Cost (Thousand Dollars)')
+
+if withCloud:
+    ax.set_xlim(-5000, 20000)
+    ax.set_ylim(-1000, 1500)
+else:
+    ax.set_xlim(-5000, 20000)  # (-500, 6500)
+    ax.set_ylim(-1000, 1500)  # (-150, 850)
+
+ax.axvline(x=0, linestyle='--', color='black', linewidth=.5)
+ax.axhline(y=0, linestyle='--', color='black', linewidth=.5)
+
+plt.tight_layout()
 plt.savefig('figures/cea/'
             + 'CEA U{:.{prec}f}% '.format(PROB_UPTAKE * 100, prec=0)
             + 'D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
