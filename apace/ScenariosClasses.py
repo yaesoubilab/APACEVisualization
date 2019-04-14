@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from apace import helpers
 import csv
 from enum import Enum
-import SimPy.EconEvalClasses as Econ
+import SimPy.EconEval as Econ
 import SimPy.StatisticalClasses as Stat
 import SimPy.RegressionClasses as Reg
 
@@ -222,25 +222,37 @@ class VariableCondition:
                 return rule[1]
 
 
-class Series:
-    """ a series consists of a number of scenarios that meet certain conditions """
+class SetOfScenarios:
+    """ a set of scenarios that meet certain conditions """
 
     def __init__(self,
                  name,
-                 scenario_df, # scenario data frame to pull the data from
-                 color,  # color of this series on the CE plane
-                 variable_conditions,  # list of variable conditions
-                 if_find_frontier=True,  # select True if CE frontier should be calculated
+                 scenario_df,
+                 color,
+                 scenario_names=None,
+                 conditions=None,
+                 if_find_frontier=True,
                  labels_shift_x=0,
                  labels_shift_y=0,
                  ):
+        """
+        :param name: name of this set of strategies
+        :param scenario_df: scenario data frame to pull the data from
+        :param color: color of this series on the CE plane
+        :param scenario_names: (list) names of scenarios to include in this set
+        :param conditions: list of variable conditions
+        :param if_find_frontier: # select True if CE frontier should be calculated
+        :param labels_shift_x:
+        :param labels_shift_y:
+        """
 
         self.name = name
         self.ifPopulated = False
         self.scenarioDF = scenario_df
         self.color = color
         self.ifFindFrontier = if_find_frontier
-        self.varConditions = variable_conditions
+        self.scenarioNames = scenario_names
+        self.varConditions = conditions
         self.labelsShiftX = labels_shift_x
         self.labelsShiftY = labels_shift_y
 
@@ -273,14 +285,20 @@ class Series:
     def if_acceptable(self, scenario):
         """ :returns True if this scenario meets the conditions to be on this series """
 
-        for condition in self.varConditions:
-            if condition.values is None:
-                if scenario.variables[condition.varName] < condition.min \
-                        or scenario.variables[condition.varName] > condition.max:
-                    return False
-            else:
-                if not(scenario.variables[condition.varName] in condition.values):
-                    return False
+        if self.scenarioNames is not None:
+            # if the name of this scenario is included
+            if scenario.name in self.scenarioNames:
+                return True
+        else:
+
+            for condition in self.varConditions:
+                if condition.values is None:
+                    if scenario.variables[condition.varName] < condition.min \
+                            or scenario.variables[condition.varName] > condition.max:
+                        return False
+                else:
+                    if not(scenario.variables[condition.varName] in condition.values):
+                        return False
 
         return True
 
@@ -294,75 +312,84 @@ class Series:
         # cost-effectiveness analysis
         self.CEA = Econ.CEA(self.strategies,
                             if_paired=True,
-                            health_measure=Econ.HealthMeasure.DISUTILITY)
+                            health_measure='d')
 
         # CBA
         self.CBA = Econ.CBA(self.strategies,
                             if_paired=True,
-                            health_measure=Econ.HealthMeasure.DISUTILITY)
+                            health_measure='d')
 
         # if to save the results of the CEA
         if save_cea_results:
             self.CEA.build_CE_table(interval_type=interval_type,
-                                    file_name='CEA Table-'+self.name,
+                                    file_name='CEA Table-'+self.name+'.csv',
                                     cost_multiplier=cost_multiplier,
                                     effect_multiplier=effect_multiplier,
                                     effect_digits=0)
 
-        # find the list of shifted strategies
-        shifted_strategies = self.CEA.get_shifted_strategies()
-
         # if the CE frontier should be calculated
         if self.ifFindFrontier:
             # find the (x, y)'s of strategies on the frontier
-            for idx, shiftedStr in enumerate(self.CEA.get_shifted_strategies_on_frontier()):
+            for idx, strategy in enumerate(self.CEA.strategies):
                 if switch_cost_effect_on_figure:
-                    self.frontierXValues.append(shiftedStr.aveCost * cost_multiplier)
-                    self.frontierYValues.append(shiftedStr.aveEffect * effect_multiplier)
+                    self.frontierXValues.append(strategy.dCost.get_mean() * cost_multiplier)
+                    self.frontierYValues.append(strategy.dEffect.get_mean() * effect_multiplier)
                 else:
-                    self.frontierXValues.append(shiftedStr.aveEffect * effect_multiplier)
-                    self.frontierYValues.append(shiftedStr.aveCost * cost_multiplier)
+                    self.frontierXValues.append(strategy.dEffect.get_mean() * effect_multiplier)
+                    self.frontierYValues.append(strategy.dCost.get_mean() * cost_multiplier)
 
-                self.frontierLabels.append(shiftedStr.name)
+                self.frontierLabels.append(strategy.name)
 
                 if interval_type != 'n':
-                    x_interval = shiftedStr.get_effect_interval(interval_type, ALPHA)
-                    y_interval = shiftedStr.get_cost_interval(interval_type, ALPHA)
+                    effect_interval = strategy.dEffect.get_interval(interval_type=interval_type,
+                                                                     alpha=ALPHA,
+                                                                     multiplier=effect_multiplier)
+                    cost_interval = strategy.dCost.get_interval(interval_type=interval_type,
+                                                                alpha=ALPHA,
+                                                                multiplier=effect_multiplier)
+
                     if switch_cost_effect_on_figure:
-                        self.frontierXIntervals.append([x * effect_multiplier for x in x_interval])
-                        self.frontierYIntervals.append([y * cost_multiplier for y in y_interval])
+                        self.frontierYIntervals.append(effect_interval)
+                        self.frontierXIntervals.append(cost_interval)
                     else:
-                        self.frontierXIntervals.append([y * cost_multiplier for y in y_interval])
-                        self.frontierYIntervals.append([x * effect_multiplier for x in x_interval])
+                        self.frontierXIntervals.append(effect_interval)
+                        self.frontierYIntervals.append(cost_interval)
 
         #else:  # the CE frontier needs not to be calculated
 
-        del shifted_strategies[0]  # remove the base strategy
-
         # find the (x, y) values of strategies to display on CE plane
-        for idx, shiftedStr in enumerate(shifted_strategies):
+        # remove the base strategy
+        for strategy in [s for s in self.CEA.strategies if s.idx > 0]:
             if switch_cost_effect_on_figure:
-                self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs * effect_multiplier)
-                self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs * cost_multiplier)
-                self.xValues.append(shiftedStr.aveCost * cost_multiplier)
-                self.yValues.append(shiftedStr.aveEffect * effect_multiplier)
+                self.allDeltaEffects = np.append(self.allDeltaEffects,
+                                                 strategy.effectObs * effect_multiplier)
+                self.allDeltaCosts = np.append(self.allDeltaCosts,
+                                               strategy.costObs * cost_multiplier)
+                self.xValues.append(strategy.dCost.get_mean() * cost_multiplier)
+                self.yValues.append(strategy.dEffect.get_mean() * effect_multiplier)
             else:
-                self.allDeltaEffects = np.append(self.allDeltaEffects, shiftedStr.effectObs * effect_multiplier)
-                self.allDeltaCosts = np.append(self.allDeltaCosts, shiftedStr.costObs * cost_multiplier)
-                self.xValues.append(shiftedStr.aveEffect * effect_multiplier)
-                self.yValues.append(shiftedStr.aveCost * cost_multiplier)
+                self.allDeltaEffects = np.append(self.allDeltaEffects,
+                                                 strategy.effectObs * effect_multiplier)
+                self.allDeltaCosts = np.append(self.allDeltaCosts,
+                                               strategy.costObs * cost_multiplier)
+                self.xValues.append(strategy.dEffect.get_mean() * effect_multiplier)
+                self.yValues.append(strategy.dCost.get_mean() * cost_multiplier)
 
-            self.yLabels.append(shiftedStr.name)
+            self.yLabels.append(strategy.name)
 
             if interval_type != 'n':
-                x_interval = shiftedStr.get_effect_interval(interval_type, ALPHA)
-                y_interval = shiftedStr.get_cost_interval(interval_type, ALPHA)
+                effect_interval = strategy.dEffect.get_interval(interval_type=interval_type,
+                                                                alpha=ALPHA,
+                                                                multiplier=effect_multiplier)
+                cost_interval = strategy.dCost.get_interval(interval_type=interval_type,
+                                                            alpha=ALPHA,
+                                                            multiplier=effect_multiplier)
                 if switch_cost_effect_on_figure:
-                    self.xIntervals.append([y * cost_multiplier for y in y_interval])
-                    self.yIntervals.append([x * effect_multiplier for x in x_interval])
+                    self.yIntervals.append(effect_interval)
+                    self.xIntervals.append(cost_interval)
                 else:
-                    self.xIntervals.append([x * effect_multiplier for x in x_interval])
-                    self.yIntervals.append([y * cost_multiplier for y in y_interval])
+                    self.xIntervals.append(effect_interval)
+                    self.yIntervals.append(cost_interval)
 
     def get_frontier_x_err(self):
 

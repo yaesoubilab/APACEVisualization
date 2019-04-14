@@ -44,14 +44,14 @@ dfScenarios = Cls.ScenarioDataFrame(csv_file_name='csvfiles\TBScenarios.csv')
 
 # series to display on the cost-effectiveness plane
 series = [
-    Cls.Series(name='U{:.{prec}f}%'.format(PROB_UPTAKE * 100, prec=0)
-                    +'-D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0),
-               scenario_df=dfScenarios,
-               color='#4D4D4D',  # '#808A87',
-               variable_conditions=varConditions,
-               if_find_frontier=True,
-               labels_shift_x=-0.04,
-               labels_shift_y=0.01)
+    Cls.SetOfScenarios(name='U{:.{prec}f}%'.format(PROB_UPTAKE * 100, prec=0)
+                            +'-D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0),
+                       scenario_df=dfScenarios,
+                       color='#4D4D4D',  # '#808A87',
+                       conditions=varConditions,
+                       if_find_frontier=True,
+                       labels_shift_x=-0.04,
+                       labels_shift_y=0.01)
 ]
 
 # populate series
@@ -63,7 +63,7 @@ Cls.populate_series(series,
                     cost_multiplier=1 / 1e3)
 
 # CBA
-del series[0].CBA._strategies[1:3]
+del series[0].CBA.strategies[1:3]
 
 series[0].CBA.graph_incremental_NMBs(
     min_wtp=0,

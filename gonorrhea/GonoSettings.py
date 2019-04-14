@@ -112,53 +112,53 @@ dfPolicyAQuart = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SADualQuart.csv')
 dfPolicyAQuartEnhanced = Cls.ScenarioDataFrame(csv_file_name='csvfiles\SADualQuartEnhanced.csv')
 
 # series to display on the cost-effectiveness plane
-base = Cls.Series(name='Threshold',
-                  scenario_df=dfBase,
-                  color='blue',
-                  variable_conditions=varBase,
-                  if_find_frontier=False,
-                  labels_shift_x=-0.7/8,
-                  labels_shift_y=3/80)
-
-baseQuart = Cls.Series(name='Threshold-Quarterly',
-                       scenario_df=dfBase,
-                       color='red',
-                       variable_conditions=varBaseQuart,
-                       if_find_frontier=False,
-                       labels_shift_x=0.1/8,
-                       labels_shift_y=-4/80)
-baseEnhancedTesting = Cls.Series(name='Threshold with Enhanced Testing',
-                                 scenario_df=dfBase,
-                                 color='red',
-                                 variable_conditions=varBaseEnhancedTesting,
-                                 if_find_frontier=False,
-                                 labels_shift_x=2.5/8,
-                                 labels_shift_y=-0.11/80)
-baseQuartEnhancedTesting = Cls.Series(name='Threshold-Quarterly with Enhanced Testing',
-                                      scenario_df=dfBase,
-                                      color='red',
-                                      variable_conditions=varBaseQuartEnhancedTesting,
-                                      if_find_frontier=False,
-                                      labels_shift_x=2.5/8,
-                                      labels_shift_y=-0.11/80)
-policyA = Cls.Series(name='Threshold+Trend',
-                     scenario_df=dfPolicyA,
-                     color='red',
-                     variable_conditions=varDual,
-                     if_find_frontier=False,
-                     labels_shift_x=0.1/8,
-                     labels_shift_y=-4/80)
-policyAQuart = Cls.Series(name='Quarterly Threshold+Trend',
-                          scenario_df=dfPolicyAQuart,
-                          color='red',
-                          variable_conditions=varDualQuarterly,
+base = Cls.SetOfScenarios(name='Threshold',
+                          scenario_df=dfBase,
+                          color='blue',
+                          conditions=varBase,
                           if_find_frontier=False,
-                          labels_shift_x=0.1/8,
-                          labels_shift_y=-4/80)
-policyAQuartEnhanced = Cls.Series(name='Enhanced Threshold+Trend',
-                                  scenario_df=dfPolicyAQuartEnhanced,
+                          labels_shift_x=-0.7/8,
+                          labels_shift_y=3/80)
+
+baseQuart = Cls.SetOfScenarios(name='Threshold-Quarterly',
+                               scenario_df=dfBase,
+                               color='red',
+                               conditions=varBaseQuart,
+                               if_find_frontier=False,
+                               labels_shift_x=0.1/8,
+                               labels_shift_y=-4/80)
+baseEnhancedTesting = Cls.SetOfScenarios(name='Threshold with Enhanced Testing',
+                                         scenario_df=dfBase,
+                                         color='red',
+                                         conditions=varBaseEnhancedTesting,
+                                         if_find_frontier=False,
+                                         labels_shift_x=2.5/8,
+                                         labels_shift_y=-0.11/80)
+baseQuartEnhancedTesting = Cls.SetOfScenarios(name='Threshold-Quarterly with Enhanced Testing',
+                                              scenario_df=dfBase,
+                                              color='red',
+                                              conditions=varBaseQuartEnhancedTesting,
+                                              if_find_frontier=False,
+                                              labels_shift_x=2.5/8,
+                                              labels_shift_y=-0.11/80)
+policyA = Cls.SetOfScenarios(name='Threshold+Trend',
+                             scenario_df=dfPolicyA,
+                             color='red',
+                             conditions=varDual,
+                             if_find_frontier=False,
+                             labels_shift_x=0.1/8,
+                             labels_shift_y=-4/80)
+policyAQuart = Cls.SetOfScenarios(name='Quarterly Threshold+Trend',
+                                  scenario_df=dfPolicyAQuart,
                                   color='red',
-                                  variable_conditions=varDualQuarterlyEnhanced,
+                                  conditions=varDualQuarterly,
                                   if_find_frontier=False,
                                   labels_shift_x=0.1/8,
                                   labels_shift_y=-4/80)
+policyAQuartEnhanced = Cls.SetOfScenarios(name='Enhanced Threshold+Trend',
+                                          scenario_df=dfPolicyAQuartEnhanced,
+                                          color='red',
+                                          conditions=varDualQuarterlyEnhanced,
+                                          if_find_frontier=False,
+                                          labels_shift_x=0.1/8,
+                                          labels_shift_y=-4/80)
