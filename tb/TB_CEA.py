@@ -63,7 +63,7 @@ Cls.populate_series(series,
                     cost_multiplier=1 / 1e3)
 
 # CBA
-del series[0].CBA.strategies[1:3]
+#del series[0].CBA.strategies[1:3]
 
 series[0].CBA.graph_incremental_NMBs(
     min_wtp=0,
@@ -91,7 +91,8 @@ for i, ser in enumerate(series):
 
     if not withCloud:
         for j, x_value in enumerate(ser.xValues):
-            ax.plot(x_value, ser.yValues[j], markers[j], color=colors[j], markersize=8, mew=1)
+            ax.plot(x_value, ser.yValues[j], markers[j], color=colors[j],
+                    markersize=8, mew=1)
 
         # # error bars
         # x_err_l = x_value-ser.xIntervals[j][0]
@@ -106,23 +107,29 @@ for i, ser in enumerate(series):
 
     # add the clouds
     if withCloud:
-        for idx, s in enumerate(ser.CEA.get_shifted_strategies()):
+        for s in [s for s in ser.CEA.strategies if s.idx > 0]:
+
             # add the center of the cloud
-            ax.plot(s.aveEffect, s.aveCost/1000,
-                    c='k',  # color
-                    alpha=1,  # transparency
-                    linewidth=2,  # line width
-                    marker='x',  # markers
-                    markersize=12,  # marker size
-                    markeredgewidth=2)  # marker edge width
+            ax.scatter(s.dEffect.get_mean(), s.dCost.get_mean()/1000,
+                       c=s.color,  # color
+                       alpha=1,  # transparency
+                       linewidth=2,  # line width
+                       s=50,
+                       marker='o',  # markers
+                       label=s.name, # name to show in the legend
+                       zorder=2
+                       #markersize=12,  # marker size
+                       #markeredgewidth=2
+                       )  # marker edge width
             # add the cloud
             #if not s.ifDominated:
-            if idx >= 2:
-                ax.scatter(s.effectObs, np.divide(s.costObs, 1000),
+            if True: # idx >= 2:
+                ax.scatter(s.dEffectObs, np.divide(s.dCostObs, 1000),
                            c=s.color,  # color of dots
-                           alpha=0.15,  # transparency of dots
+                           alpha=0.1,  # transparency of dots
                            s=25,  # size of dots
-                           label=s.name)  # name to show in the legend
+                           zorder=1
+                           )
 
     # add frontier
     ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=1)

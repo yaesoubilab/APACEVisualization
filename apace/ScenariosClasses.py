@@ -330,7 +330,7 @@ class SetOfScenarios:
         # if the CE frontier should be calculated
         if self.ifFindFrontier:
             # find the (x, y)'s of strategies on the frontier
-            for idx, strategy in enumerate(self.CEA.strategies):
+            for idx, strategy in enumerate(self.CEA.get_strategies_on_frontier()):
                 if switch_cost_effect_on_figure:
                     self.frontierXValues.append(strategy.dCost.get_mean() * cost_multiplier)
                     self.frontierYValues.append(strategy.dEffect.get_mean() * effect_multiplier)
@@ -455,7 +455,7 @@ def populate_series(series_list,
         # add base
         ser.strategies = [base_strategy]
         # add other scenarios
-        i=0
+        i = 0
         for key, scenario in ser.scenarioDF.scenarios.items():
             # add only non-Base strategies that can be on this series
             if scenario.name != 'Base' and ser.if_acceptable(scenario):
