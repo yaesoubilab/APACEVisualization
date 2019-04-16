@@ -449,7 +449,7 @@ def populate_series(series_list,
             name='Base',
             cost_obs=scn.outcomes[COST_MEASURE],
             effect_obs=scn.outcomes[HEALTH_MEASURE],
-            color=None
+            color=colors_of_strategies[0]
         )
 
         # add base
@@ -474,9 +474,18 @@ def populate_series(series_list,
                             else:
                                 label_list.append(varCon.labelFormat.format(value) + ',')
                         else:
-                            label_list.append(varCon.get_label(value) + ', ')
+                            label = varCon.get_label(value)
+                            if label == '':
+                                pass
+                            else:
+                                label_list.append(label + ', ')
 
-                label = ''.join(str(x) for x in label_list)[:-1]
+                label = ''.join(str(x) for x in label_list)
+
+                if label[-1] == ' ' or label[-1] == ',':
+                    label = label[:-1]
+                if label[-1] == ' ' or label[-1] == ',':
+                    label = label[:-1]
 
                 # legends
                 ser.legend.append(label)
@@ -484,7 +493,7 @@ def populate_series(series_list,
                 # color of this strategy
                 color = None
                 if colors_of_strategies is not None:
-                    color = colors_of_strategies[i]
+                    color = colors_of_strategies[i+1]
 
                 ser.strategies.append(
                     Econ.Strategy(

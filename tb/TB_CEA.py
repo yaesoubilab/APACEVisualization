@@ -3,7 +3,7 @@ import apace.ScenariosClasses as Cls
 import numpy as np
 
 markers = ['o', 's', '^', 'D']
-colors = ['r', 'b', 'g', '#FF9912']
+colors = ['k', 'r', 'b', 'g', '#FF9912']
 
 PROB_UPTAKE = 0.75      # 0.5, 0.75, 1
 PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
@@ -100,7 +100,7 @@ for i, ser in enumerate(series):
 
     if not withCloud:
         for j, x_value in enumerate(ser.xValues):
-            ax.plot(x_value, ser.yValues[j], markers[j], color=colors[j],
+            ax.plot(x_value, ser.yValues[j], markers[j], color=colors[j+1],
                     markersize=8, mew=1)
 
         # # error bars
@@ -126,9 +126,14 @@ for i, ser in enumerate(series):
                        s=50,
                        marker='o',  # markers
                        label=s.name, # name to show in the legend
-                       zorder=2
-                       #markersize=12,  # marker size
-                       #markeredgewidth=2
+                       zorder=2,
+                       linewidths=0,
+                       #edgecolors='k',
+                       )  # marker edge width
+            ax.scatter(s.dEffect.get_mean(), s.dCost.get_mean()/1000,
+                       marker='x',
+                       c='k',
+                       zorder=3
                        )  # marker edge width
             # add the cloud
             #if not s.ifDominated:
@@ -136,7 +141,7 @@ for i, ser in enumerate(series):
                 ax.scatter(s.dEffectObs, np.divide(s.dCostObs, 1000),
                            c=s.color,  # color of dots
                            alpha=0.1,  # transparency of dots
-                           s=25,  # size of dots
+                           s=20,  # size of dots
                            zorder=1
                            )
 
