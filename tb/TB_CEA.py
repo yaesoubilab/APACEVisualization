@@ -77,6 +77,15 @@ series[0].CBA.graph_incremental_NMBs(
     figure_size=(6, 5)
 )
 
+series[0].CBA.graph_acceptability_curves(
+    min_wtp=0,
+    max_wtp=5000,
+    title='Cost-Effectiveness Acceptability Curves',
+    x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
+    y_label='Probability',
+    y_range=[0, 1]
+)
+
 # print dCost, dEffect and cost-effectiveness ratio with respect to the base
 print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
                                           alpha=0.05,
