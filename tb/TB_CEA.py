@@ -64,7 +64,7 @@ Cls.populate_series(series,
 
 # CBA
 #del series[0].CBA.strategies[1:3]
-
+plt.rc('font', size=9)  # fontsize of texts
 series[0].CBA.graph_incremental_NMBs(
     min_wtp=0,
     max_wtp=1000,
@@ -80,10 +80,11 @@ series[0].CBA.graph_incremental_NMBs(
 series[0].CBA.graph_acceptability_curves(
     min_wtp=0,
     max_wtp=5000,
-    title='Cost-Effectiveness Acceptability Curves',
+    #title='Cost-Effectiveness Acceptability Curves',
     x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
     y_label='Probability',
-    y_range=[0, 1]
+    y_range=[0, 1],
+    figure_size=(5, 4.4)
 )
 
 # print dCost, dEffect and cost-effectiveness ratio with respect to the base
@@ -95,7 +96,8 @@ print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
 withCloud = True
 
 # plot
-fig, ax = plt.subplots(figsize=(6, 5))
+fig, ax = plt.subplots(figsize=(5, 4.4))
+#ax.set_title('Cost-Effectiveness Plane')
 for i, ser in enumerate(series):
 
     if not withCloud:
