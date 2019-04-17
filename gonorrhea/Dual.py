@@ -13,8 +13,8 @@ def get_rho(wtp, poliy_param):
 
 
 # ---- settings ----
-policyParams = [0.185,-0.1117,0.2229, 0]
-wtps = np.linspace(4, 7, 9) # [min, max, number of points]
+policyParams = [0.2732,-0.1792,0.246, 0]
+wtps = np.linspace(4, 8, 9) # [min, max, number of points]
 # ------------------
 
 data = []

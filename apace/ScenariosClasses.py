@@ -449,7 +449,7 @@ def populate_series(series_list,
             name='Base',
             cost_obs=scn.outcomes[COST_MEASURE],
             effect_obs=scn.outcomes[HEALTH_MEASURE],
-            color=colors_of_strategies[0]
+            color=None if colors_of_strategies is None else colors_of_strategies[0]
         )
 
         # add base

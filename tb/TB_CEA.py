@@ -82,7 +82,7 @@ series[0].CBA.graph_acceptability_curves(
     max_wtp=5000,
     #title='Cost-Effectiveness Acceptability Curves',
     x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
-    y_label='Probability',
+    y_label='Probability of Resulting in Highest Increase in NMB',
     y_range=[0, 1],
     figure_size=(5, 4.4)
 )
