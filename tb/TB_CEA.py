@@ -93,7 +93,7 @@ print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
                                           cost_digits=0, effect_digits=0, icer_digits=1,
                                           cost_multiplier=1, effect_multiplier=1))
 
-withCloud = True
+withCloud = False
 
 # plot
 fig, ax = plt.subplots(figsize=(5, 4.4))
@@ -169,8 +169,8 @@ if withCloud:
     ax.set_xlim(-5000, 20000)
     ax.set_ylim(-1000, 1500)
 else:
-    ax.set_xlim(-5000, 20000)  # (-500, 6500)
-    ax.set_ylim(-1000, 1500)  # (-150, 850)
+    ax.set_xlim(-500, 6500)  # (-500, 6500)
+    ax.set_ylim(-150, 850)  # (-150, 850)
 
 ax.axvline(x=0, linestyle='--', color='black', linewidth=.5)
 ax.axhline(y=0, linestyle='--', color='black', linewidth=.5)
@@ -179,4 +179,4 @@ plt.tight_layout()
 plt.savefig('figures/cea/'
             + 'CEA U{:.{prec}f}% '.format(PROB_UPTAKE * 100, prec=0)
             + 'D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
-            + '.png')
+            + '.png', dpi=300)
