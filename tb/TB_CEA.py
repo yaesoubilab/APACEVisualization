@@ -8,6 +8,9 @@ colors = ['k', 'r', 'b', 'g', '#FF9912']
 PROB_UPTAKE = 0.75      # 0.5, 0.75, 1
 PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
 
+scenario_name = 'U{:.{prec}f}% '.format(PROB_UPTAKE * 100, prec=0) \
+                + 'D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
+
 # conditions of variables to define scenarios to display on the cost-effectiveness plane
 # here we want scenarios with
 # 'Prob {Tc+ | Tc}' = PROB,
@@ -84,7 +87,8 @@ series[0].CBA.graph_acceptability_curves(
     x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
     y_label='Probability of Resulting in Highest Increase in NMB',
     y_range=[0, 1],
-    figure_size=(5, 4.4)
+    figure_size=(5, 4.4),
+    file_name='figures\cea\CEAC ' + scenario_name + '.png'
 )
 
 # print dCost, dEffect and cost-effectiveness ratio with respect to the base
@@ -179,8 +183,7 @@ ax.axhline(y=0, linestyle='--', color='black', linewidth=.5)
 
 plt.tight_layout()
 plt.savefig('figures/cea/'
-            + 'CEA U{:.{prec}f}% '.format(PROB_UPTAKE * 100, prec=0)
-            + 'D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
+            + 'CEA ' + scenario_name
             + '.png', dpi=300)
 
 # pairwise
@@ -197,10 +200,13 @@ series[0].CEA.plot_pairwise_ceas(
     font_size=7,
     effect_label='DALY Averted (Thousands)',
     cost_label='Additional Cost (Thousand Dollars)',
+    center_s=40,
+    cloud_s=10,
     transparency=0.1,
     effect_multiplier=1/1000,
     cost_multiplier=1/1000,
     x_range=[-10, 20],
     column_titles=titles[1:],
-    row_titles=titles
+    row_titles=titles,
+    file_name='figures\pairwise_cea.png'
 )
