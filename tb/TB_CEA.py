@@ -93,7 +93,9 @@ print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
                                           cost_digits=0, effect_digits=0, icer_digits=1,
                                           cost_multiplier=1, effect_multiplier=1))
 
-withCloud = False
+
+
+withCloud = True
 
 # plot
 fig, ax = plt.subplots(figsize=(5, 4.4))
@@ -180,3 +182,25 @@ plt.savefig('figures/cea/'
             + 'CEA U{:.{prec}f}% '.format(PROB_UPTAKE * 100, prec=0)
             + 'D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
             + '.png', dpi=300)
+
+# pairwise
+# column titles
+titles = ['Base',
+          'First-year follow-up',
+          'Annual follow-up',
+          'First-year follow-up\nwith limited IPT',
+          'Annual follow-up\nwith continuous IPT']
+
+# plot
+series[0].CEA.plot_pairwise_ceas(
+    figure_size=(7, 7),
+    font_size=7,
+    effect_label='DALY Averted (Thousands)',
+    cost_label='Additional Cost (Thousand Dollars)',
+    transparency=0.1,
+    effect_multiplier=1/1000,
+    cost_multiplier=1/1000,
+    x_range=[-10, 20],
+    column_titles=titles[1:],
+    row_titles=titles
+)
