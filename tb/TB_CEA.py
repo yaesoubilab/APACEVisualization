@@ -3,7 +3,7 @@ import apace.ScenariosClasses as Cls
 import numpy as np
 
 markers = ['o', 's', '^', 'D']
-colors = ['k', 'r', 'b', 'g', '#FF9912']
+colors = ['brown', 'red', 'blue', 'green', 'orange']
 
 PROB_UPTAKE = 0.75      # 0.5, 0.75, 1
 PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
@@ -206,7 +206,7 @@ series[0].CEA.plot_pairwise_ceas(
     effect_multiplier=1/1000,
     cost_multiplier=1/1000,
     x_range=[-10, 20],
-    column_titles=titles[1:],
+    column_titles=titles,
     row_titles=titles,
     file_name='figures\pairwise_cea.png'
 )
