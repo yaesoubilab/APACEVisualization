@@ -66,6 +66,6 @@ def get_mean_interval(stat, interval_type='c', deci=0, form=None):
         else:
             raise ValueError('Invalid interval type.')
     else:
-        return stat.get_formatted_estimate_interval(
+        return stat.get_formatted_mean_and_interval(
             interval_type=interval_type, alpha=0.05, deci=deci, form=form)
 

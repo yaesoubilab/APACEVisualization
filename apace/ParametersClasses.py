@@ -51,7 +51,7 @@ class Parameters:
         if form is None:
             return sum_stat.get_mean(), sum_stat.get_PI(alpha=0.05)
         else:
-            return sum_stat.get_formatted_estimate_interval(
+            return sum_stat.get_formatted_mean_and_interval(
                 interval_type='p', alpha=0.05, deci=deci, form=form)
 
     def plot_histogram(self, parameter_name, title, x_lable=None, y_lable=None, x_range=None):
@@ -222,7 +222,7 @@ class Parameters:
         if form is None:
             return sum_stat.get_mean(), sum_stat.get_PI(alpha=0.05)
         else:
-            return sum_stat.get_formatted_estimate_interval(
+            return sum_stat.get_formatted_mean_and_interval(
                 interval_type='p', alpha=0.05, deci=deci, form=form)
 
     def plot_ratio_hist(self, numerator_par_name, denominator_par_names,

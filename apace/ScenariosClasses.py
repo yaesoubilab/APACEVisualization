@@ -307,7 +307,8 @@ class SetOfScenarios:
                        interval_type='n',
                        effect_multiplier=1,
                        cost_multiplier=1,
-                       switch_cost_effect_on_figure=False):
+                       switch_cost_effect_on_figure=False,
+                       wtp_range=None):
 
         # cost-effectiveness analysis
         self.CEA = Econ.CEA(self.strategies,
@@ -316,6 +317,7 @@ class SetOfScenarios:
 
         # CBA
         self.CBA = Econ.CBA(self.strategies,
+                            wtp_range=wtp_range,
                             if_paired=True,
                             health_measure='d')
 
@@ -426,7 +428,8 @@ def populate_series(series_list,
                     interval_type='n',
                     effect_multiplier=1,
                     cost_multiplier=1,
-                    switch_cost_effect_on_figure=False):
+                    switch_cost_effect_on_figure=False,
+                    wtp_range=None):
     """
     :param series_list:
     :param save_cea_results: set it to True if the CE table should be generated
@@ -435,6 +438,7 @@ def populate_series(series_list,
     :param effect_multiplier:
     :param cost_multiplier:
     :param switch_cost_effect_on_figure: displays cost on the x-axis and effect on the y-axis
+    :param wtp_range: for net monetary benefit analysis
     """
 
     # populate series to display on the cost-effectiveness plane
@@ -509,7 +513,8 @@ def populate_series(series_list,
                            interval_type,
                            effect_multiplier=effect_multiplier,
                            cost_multiplier=cost_multiplier,
-                           switch_cost_effect_on_figure=switch_cost_effect_on_figure)
+                           switch_cost_effect_on_figure=switch_cost_effect_on_figure,
+                           wtp_range=wtp_range)
 
         ser.ifPopulated = True
 

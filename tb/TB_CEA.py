@@ -3,7 +3,7 @@ import apace.ScenariosClasses as Cls
 import numpy as np
 
 markers = ['o', 's', '^', 'D']
-colors = ['brown', 'red', 'blue', 'green', 'orange']
+colors = ['gray', 'red', 'blue', 'green', 'orange']
 
 PROB_UPTAKE = 0.75      # 0.5, 0.75, 1
 PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
@@ -63,26 +63,26 @@ Cls.populate_series(series,
                     colors_of_strategies=colors,
                     interval_type='p',
                     effect_multiplier=1,
-                    cost_multiplier=1 / 1e3)
+                    cost_multiplier=1 / 1e3,
+                    wtp_range=[0, 2000])
 
 # CBA
 #del series[0].CBA.strategies[1:3]
 plt.rc('font', size=9)  # fontsize of texts
 series[0].CBA.graph_incremental_NMBs(
     min_wtp=0,
-    max_wtp=1000,
+    max_wtp=5000,
     title='',
-    y_label='Net Monetary Benefit ($)',
+    y_label='Incremental Net Monetary Benefit ($)',
     x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
     interval_type='p',
     transparency=0.1,
     show_legend=True,
     figure_size=(6, 5)
 )
+print(series[0].CBA.get_highest_exp_NMB_wtp_range())
 
 series[0].CBA.graph_acceptability_curves(
-    min_wtp=0,
-    max_wtp=5000,
     #title='Cost-Effectiveness Acceptability Curves',
     x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
     y_label='Probability of Resulting in Highest Increase in NMB',
@@ -90,6 +90,8 @@ series[0].CBA.graph_acceptability_curves(
     figure_size=(5, 4.4),
     file_name='figures\cea\CEAC ' + scenario_name + '.png'
 )
+
+print(series[0].CBA.get_prob_highest_NMB_wtp_range())
 
 # print dCost, dEffect and cost-effectiveness ratio with respect to the base
 print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
