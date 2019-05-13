@@ -128,8 +128,8 @@ class ScenarioDataFrame:
                                        outcome_names,
                                        title=None, x_label=None,
                                        y_labels=None,
-                                       markers=('o','D'),
-                                       colors=('red','blue'),
+                                       markers=('o', 'D'),
+                                       colors=('red', 'blue'),
                                        legend=('morbidity', 'mortality'),
                                        distance_from_axis=0.5,
                                        filename=None,
@@ -229,6 +229,7 @@ class SetOfScenarios:
                  name,
                  scenario_df,
                  color,
+                 marker ='o',
                  scenario_names=None,
                  conditions=None,
                  if_find_frontier=True,
@@ -239,6 +240,7 @@ class SetOfScenarios:
         :param name: name of this set of strategies
         :param scenario_df: scenario data frame to pull the data from
         :param color: color of this series on the CE plane
+        :param marker: markers used for this series on the CE plane
         :param scenario_names: (list) names of scenarios to include in this set
         :param conditions: list of variable conditions
         :param if_find_frontier: # select True if CE frontier should be calculated
@@ -250,6 +252,7 @@ class SetOfScenarios:
         self.ifPopulated = False
         self.scenarioDF = scenario_df
         self.color = color
+        self.marker = marker
         self.ifFindFrontier = if_find_frontier
         self.scenarioNames = scenario_names
         self.varConditions = conditions
@@ -316,10 +319,11 @@ class SetOfScenarios:
                             health_measure='d')
 
         # CBA
-        self.CBA = Econ.CBA(self.strategies,
-                            wtp_range=wtp_range,
-                            if_paired=True,
-                            health_measure='d')
+        if wtp_range is not None:
+            self.CBA = Econ.CBA(self.strategies,
+                                wtp_range=wtp_range,
+                                if_paired=True,
+                                health_measure='d')
 
         # if to save the results of the CEA
         if save_cea_results:
@@ -534,7 +538,8 @@ def plot_sub_fig(ax, list_of_series,
         # if only points on frontier should be displayed
         if show_only_on_frontier:
             # scatter plot for points on the frontier
-            ax.scatter(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5, label=ser.name)
+            ax.scatter(ser.frontierXValues, ser.frontierYValues,
+                       color=ser.color, marker=ser.marker, alpha=0.5, label=ser.name)
             # line plot for frontier line
             ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
 
@@ -558,7 +563,8 @@ def plot_sub_fig(ax, list_of_series,
         else:  # show all points
 
             # scatter plot for all points
-            ax.scatter(ser.xValues, ser.yValues, color=ser.color, alpha=0.5, zorder=10, s=15, label=ser.name)
+            ax.scatter(ser.xValues, ser.yValues,
+                       color=ser.color, marker=ser.marker, alpha=0.5, zorder=10, s=15, label=ser.name)
             # ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5,
             # zorder=10, s=5, label=ser.name)
 
@@ -662,26 +668,26 @@ def multi_plot_series(list_of_plots,
                       x_range=None,
                       y_range=None,
                       show_error_bars=False,
-                      wtp_multiplier=1):
+                      wtp_multiplier=1,
+                      fig_size=(7.5, 3)):
     # set default properties
     plt.rc('font', size=8)  # fontsize of texts
     plt.rc('axes', titlesize=8)  # fontsize of the figure title
     labels = ['A)', 'B)', 'C)']
 
     n_cols = len(list_of_plots)
-    f, axarr = plt.subplots(1, n_cols, sharey=True, figsize=(7.5, 3))
+    f, axarr = plt.subplots(1, n_cols, sharey=True, figsize=fig_size)
+
+    # this is to add the common x and y label
+    f.add_subplot(111, frameon=False)
+    plt.tick_params(labelcolor='none', top='off', bottom='off', left='off', right='off')
+    plt.grid(False)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
 
     for i, fig in enumerate(list_of_plots):
 
         axarr[i].set_title(labels[i], loc='left', fontweight='bold')
-
-        # title and labels
-        if i == 0:
-            axarr[i].set(
-                ylabel=y_label)
-        if i == 1:
-            axarr[i].set(
-                xlabel=x_label)
 
         # plot
         plot_sub_fig(ax=axarr[i],
@@ -694,7 +700,11 @@ def multi_plot_series(list_of_plots,
                      wtp_multiplier=wtp_multiplier)
 
     # plt.tight_layout()
-    plt.subplots_adjust(left=0.1, bottom=0.15, right=0.97, top=0.9,
-                        wspace=0.1, hspace=0)
+    # for manuscript
+    # plt.subplots_adjust(left=0.1, bottom=0.15, right=0.97, top=0.9,
+    #                     wspace=0.1, hspace=0)
+    # for SMDM
+    plt.subplots_adjust(left=0.12, bottom=0.15, right=.95, top=0.85,
+                        wspace=0.2, hspace=0)
     plt.savefig('figures/' + file_name + '.png', dpm=300)
     # plt.show()

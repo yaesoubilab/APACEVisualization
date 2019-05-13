@@ -38,7 +38,8 @@ Vis.multi_plot_series(
         [Set.base, Set.policyAQuartEnhanced]
     ],
     list_of_titles=[
-        'Base vs. Quarterly Base', 'Base vs. Dual', 'Base vs.\nEnhanced Quarterly Dual'
+        'Threshold vs.\nThreshold-Quarterly', 'Threshold vs.\nThreshold+Trend',
+        'Threshold vs.\nEnhanced Threshold+Trend'
     ],
     x_range=Set.X_RANGE,
     y_range=Set.Y_RANGE,

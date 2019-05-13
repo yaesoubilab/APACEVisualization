@@ -50,6 +50,7 @@ def multi_plot_series(list_list_series,
                       switch_cost_effect_on_figure=False,
                       wtp_multiplier=1.0,
                       labels=('', ''),
+                      fig_size=(7.5, 3),
                       file_name='fig.png'):
     """
     :param list_list_series: (list) of list of series to display on the multiple CE plane
@@ -60,6 +61,7 @@ def multi_plot_series(list_list_series,
     :param switch_cost_effect_on_figure: displays cost on the x-axis and effect on the y-axis
     :param wtp_multiplier: wtp multiplier
     :param labels: (tuple) x_ and y-axis labels
+    :param fig_size: (tuple) figure size
     :param file_name: (string) the file name to save the plot as
     """
 
@@ -82,5 +84,6 @@ def multi_plot_series(list_list_series,
         x_range=x_range,
         y_range=y_range,
         show_error_bars=True,
-        wtp_multiplier=wtp_multiplier
+        wtp_multiplier=wtp_multiplier,
+        fig_size=fig_size
     )
