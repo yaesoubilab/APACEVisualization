@@ -94,6 +94,7 @@ series[0].CBA.graph_acceptability_curves(
 print(series[0].CBA.get_prob_highest_NMB_wtp_range())
 
 # print dCost, dEffect and cost-effectiveness ratio with respect to the base
+print('\nRelative cost to Base, Relative DALY to base, CER')
 print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
                                           alpha=0.05,
                                           cost_digits=0, effect_digits=0, icer_digits=1,
