@@ -85,7 +85,7 @@ print(series[0].CBA.get_highest_exp_NMB_wtp_range())
 series[0].CBA.graph_acceptability_curves(
     #title='Cost-Effectiveness Acceptability Curves',
     x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
-    y_label='Probability of Resulting in Highest Increase in NMB',
+    y_label='Probability of Resulting in the Highest NMB',
     y_range=[0, 1],
     figure_size=(5, 4.4),
     file_name='figures\cea\CEAC ' + scenario_name + '.png'
@@ -209,6 +209,7 @@ series[0].CEA.plot_pairwise_ceas(
     effect_multiplier=1/1000,
     cost_multiplier=1/1000,
     x_range=[-10, 20],
+    y_range=[-2000, 2000],
     column_titles=titles,
     row_titles=titles,
     file_name='figures\pairwise_cea.png'
