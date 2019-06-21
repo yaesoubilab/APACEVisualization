@@ -43,7 +43,7 @@ varConditions = [
 ]
 
 # data frame of scenarios
-dfScenarios = Cls.ScenarioDataFrame(csv_file_name='csvfiles\TBScenarios.csv')
+dfScenarios = Cls.ScenarioDataFrame(csv_file_name='csvfiles\TBScenarios50FOI.csv')
 
 # series to display on the cost-effectiveness plane
 series = [
@@ -102,7 +102,7 @@ print(series[0].CEA.get_dCost_dEffect_cer(interval_type='p',
 
 
 
-withCloud = True
+withCloud = False
 
 # plot
 fig, ax = plt.subplots(figsize=(5, 4.4))

@@ -57,6 +57,10 @@ print('TB incidence among experienced in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Experienced Adults | Per Pop.'].get_mean_PI(
         time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=1, format='%'))
 
+print('TB incidence among treatment-completed in 2018 (per 100,000 population):',
+      traj_data_frames[0].allTrajs['Active TB Incidence | Completed Adults | Per Pop.'].get_mean_PI(
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=1, format='%'))
+
 # ---------------------------------------------
 # Decline in TB incidence between 2018 and 2027
 # ---------------------------------------------

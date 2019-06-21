@@ -1,5 +1,5 @@
 import SimPy.InOutFunctions as IO
-import SimPy.FigureSupport as Fig
+import SimPy.Plots.FigSupport as Fig
 import SimPy.StatisticalClasses as Stat
 import SimPy.FormatFunctions as F
 import apace.helpers as helper
