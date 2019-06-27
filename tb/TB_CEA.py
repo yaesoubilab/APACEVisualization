@@ -43,7 +43,7 @@ varConditions = [
 ]
 
 # data frame of scenarios
-dfScenarios = Cls.ScenarioDataFrame(csv_file_name='csvfiles\TBScenarios50FOI.csv')
+dfScenarios = Cls.ScenarioDataFrame(csv_file_name='csvfiles\TBScenarios.csv')
 
 # series to display on the cost-effectiveness plane
 series = [
