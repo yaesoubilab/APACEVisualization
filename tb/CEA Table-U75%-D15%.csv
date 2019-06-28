@@ -1,6 +1,6 @@
 Strategy,Cost,Effect,Incremental Cost,Incremental Effect,ICER
-"First-year follow-up, with continuous IPT","15,697 (7,661, 27,280)","32,985 (19,568, 57,432)",-,-,-
-Base,"15,729 (7,644, 27,207)","34,839 (18,917, 62,768)",-,-,Dominated
-"Annual follow-up, with continuous IPT","15,738 (7,774, 27,435)","31,825 (18,815, 53,122)","41 (-635, 688)","1,159 (-1,925, 5,692)","35.4 (nan, nan)"
-First-year follow-up,"15,762 (7,800, 27,757)","33,997 (19,210, 60,547)",-,-,Dominated
-Annual follow-up,"15,803 (7,879, 27,588)","33,490 (19,061, 58,034)",-,-,Dominated
+"First-year follow-up, with continuous IPT","16,656 (9,437, 25,522)","35,339 (24,216, 52,819)",-,-,-
+"Annual follow-up, with continuous IPT","16,705 (9,629, 25,429)","33,740 (23,385, 49,517)","49 (-544, 689)","1,599 (-1,469, 5,224)","30.5 (nan, nan)"
+Base,"16,727 (9,740, 25,782)","37,596 (25,336, 58,014)",-,-,Dominated
+First-year follow-up,"16,738 (9,531, 25,622)","36,528 (25,259, 55,631)",-,-,Dominated
+Annual follow-up,"16,766 (9,522, 25,584)","35,865 (24,807, 53,518)",-,-,Dominated
