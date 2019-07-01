@@ -90,7 +90,7 @@ print('% incident TB cases due to reactivation occurring among those who had com
       scenario_df.get_mean_interval(
           scenario_name='Base',
           outcome_name='Average ratio: % reactivation |Incident To: I| Tc<1 or >1 |HIV-',
-          deci=0, form='%'))
+          interval_type='p', deci=0, form='%'))
 
 # ---------------------------------------------
 # TB incidence and death averted under each scenario
@@ -123,7 +123,7 @@ scenario_df.plot_relative_diff_by_scenario(
         'Annual follow-up with continuous IPT'],
     legend=('TB Cases Averted', 'TB Deaths Averted'),
     distance_from_axis=0.6,
-    filename='figures/cea/ComparativeEffect'
+    filename='figures/ComparativeEffect'
 )
 
 

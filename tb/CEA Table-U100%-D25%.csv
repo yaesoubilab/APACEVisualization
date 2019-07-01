@@ -1,6 +1,6 @@
-Name,E[Cost],E[Effect],E[dCost],E[dEffect],ICER
-"First-year follow-up, with continuous IPT,","16,983 (9,568, 27,065)","33,779 (21,130, 50,254)",-,-,-
-Base,"17,067 (9,833, 26,962)","36,603 (23,258, 56,710)",-,-,Dominated
-"First-year follow-up, no IPT,","17,202 (9,736, 27,576)","35,358 (22,521, 54,554)",-,-,Dominated
-"Annual follow-up, with continuous IPT,","17,239 (9,824, 27,664)","32,443 (20,942, 47,873)","257 (-362, 952)","1,335 (-1,656, 5,080)","192.1 (-4,412.6, 2,705.0)"
-"Annual follow-up, no IPT,","17,444 (10,234, 27,709)","34,705 (21,633, 52,021)",-,-,Dominated
+Strategy,Cost,Effect,Incremental Cost,Incremental Effect,ICER
+"First-year follow-up, with continuous IPT","16,750 (9,554, 25,185)","34,824 (23,186, 50,103)",-,-,-
+"Annual follow-up, with continuous IPT","16,820 (9,513, 25,550)","33,156 (22,272, 47,847)","70 (-609, 701)","1,668 (-1,401, 5,726)","41.7 (nan, nan)"
+First-year follow-up,"16,852 (9,494, 25,595)","36,294 (23,759, 53,658)",-,-,Dominated
+Base,"16,860 (9,509, 25,441)","37,628 (23,997, 57,232)",-,-,Dominated
+Annual follow-up,"16,908 (9,478, 25,601)","35,536 (24,024, 52,542)",-,-,Dominated
