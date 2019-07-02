@@ -13,10 +13,10 @@ list_plot_info = []     # list of plot infos
 list_plot_info.append(
     Vis.PlotTrajInfo(
         traj_name='Active TB Incidence | Per Pop.',
-        y_range=[0, 1750],
+        y_range=[0, 2000],
         y_label='Incident TB cases per 100 000 population',
         y_multiplier=100000,
-        #title="TB Incidence\n(Per 100,000 Pop.)",
+        title="TB Incidence\n(Per 100,000 Pop.)",
         figure_size=(4, 3.6),
         file_name='Impact-TBIncidence')
 )
