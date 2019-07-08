@@ -13,7 +13,7 @@ def populate_cea():
 
     scenario_name = 'U{:.{prec}f}% '.format(PROB_UPTAKE * 100, prec=0) \
                     + 'D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
-
+    print('Results for:', scenario_name)
     # conditions of variables to define scenarios to display on the cost-effectiveness plane
     # here we want scenarios with
     # 'Prob {Tc+ | Tc}' = PROB,
