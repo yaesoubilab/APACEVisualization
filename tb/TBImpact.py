@@ -16,7 +16,7 @@ list_plot_info.append(
         y_range=[0, 2000],
         y_label='Incident TB cases per 100 000 population',
         y_multiplier=100000,
-        title="TB Incidence\n(Per 100,000 Pop.)",
+        # title="TB Incidence\n(Per 100,000 Pop.)",
         figure_size=(4, 3.6),
         file_name='Impact-TBIncidence')
 )
@@ -63,7 +63,8 @@ eff = Vis.TrajImpact(
     fig_infos=list_plot_info,
     time_0=Set.TIME_0,
     warm_up=Set.PROJ-Set.TIME_0-2,
-    period_length=1
+    period_length=1,
+    scenario_colors=['gray', 'red', 'blue', 'green', 'orange']
 )
 
 eff.plot_all()

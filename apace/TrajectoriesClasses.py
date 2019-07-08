@@ -456,16 +456,19 @@ class TrajImpact:
                  fig_infos,
                  time_0=0,
                  warm_up=0,
-                 period_length=1
+                 period_length=1,
+                 scenario_colors=None
                  ):
         """
         :param scenarios_csv_files: (list of strings) list of csv files for each scenarios
         :param scenario_names: (list of strings) list of scenario names
         :param fig_infos: (list) list of figure info
+        :param scenario_colors: (list) of colors
         """
 
         self.figInfos = fig_infos   # list of figure information
         self.scenarioNames = scenario_names
+        self.scenarioColors = scenario_colors
         self.dictImpactMeasures = {}  # dictionary of impact measures
 
         # initialize dictionaries of impact measures
@@ -505,13 +508,17 @@ class TrajImpact:
                 ylabel=self.figInfos[panel_idx].yLabel)
 
             # plot trajectories
+            i = 0
             for scenario_name, value in dict_mean_trajs.items():
                 legends.append(scenario_name)
                 times = value[0]
                 means = value[1]
                 ax.plot(
                     self.figInfos[panel_idx].xMultiplier * times,
-                    self.figInfos[panel_idx].yMultiplier * means)
+                    self.figInfos[panel_idx].yMultiplier * means,
+                    color = self.scenarioColors[i]
+                )
+                i += 1
 
             ax.legend(legends, fontsize=7)
 
