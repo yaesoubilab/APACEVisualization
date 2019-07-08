@@ -83,6 +83,7 @@ def populate_cea():
         show_legend=True,
         figure_size=(6, 5)
     )
+    print('WTP range with the highest expected NMB:')
     print(series[0].CBA.get_highest_exp_NMB_wtp_range())
 
     series[0].CBA.graph_acceptability_curves(
@@ -93,7 +94,7 @@ def populate_cea():
         figure_size=(5, 4.4),
         file_name='figures\cea\CEAC ' + scenario_name + '.png'
     )
-
+    print('WTP range with the highest probability of being optimal:')
     print(series[0].CBA.get_prob_highest_NMB_wtp_range())
 
     # print dCost, dEffect and cost-effectiveness ratio with respect to the base
