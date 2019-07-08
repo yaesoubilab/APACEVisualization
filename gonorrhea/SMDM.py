@@ -20,7 +20,7 @@ labels = ('Change in Effective Life of First-Line Antibiotic Drugs (Years)',
 Vis.multi_plot_series(
     list_list_series=[
         [Set.base, Set.baseQuart],
-        [Set.base, Set.policyAQuartEnhanced]
+        [Set.base, Set.policyDualQuartEnhanced]
     ],
     list_of_titles=[
         'Threshold vs.\nThreshold-Quarterly',

@@ -34,11 +34,12 @@ else:
 Vis.multi_plot_series(
     list_list_series=[
         [Set.base, Set.baseQuart],
-        [Set.base, Set.policyA],
-        [Set.base, Set.policyAQuartEnhanced]
+        [Set.base, Set.policyDual],
+        [Set.base, Set.policyDualQuartEnhanced]
     ],
     list_of_titles=[
-        'Threshold vs.\nThreshold-Quarterly', 'Threshold vs.\nThreshold+Trend',
+        'Threshold vs.\nThreshold-Quarterly',
+        'Threshold vs.\nThreshold+Trend',
         'Threshold vs.\nEnhanced Threshold+Trend'
     ],
     x_range=Set.X_RANGE,
@@ -54,7 +55,7 @@ Vis.multi_plot_series(
 included = False
 if included:
     # base vs. quarterly base with enhanced testing
-    Vis.plot_series(list_series=[Set.base, Set.policyAQuartEnhanced],
+    Vis.plot_series(list_series=[Set.base, Set.policyDualQuartEnhanced],
                     x_range=Set.X_RANGE,
                     y_range=Set.Y_RANGE,
                     effect_multiplier=effect_mult,
@@ -86,7 +87,7 @@ if included:
                     title='Base vs. Quarterly Base')
 
     # base vs. A
-    Vis.plot_series(list_series=[Set.base, Set.policyA],
+    Vis.plot_series(list_series=[Set.base, Set.policyDual],
                     x_range=Set.X_RANGE,
                     y_range=Set.Y_RANGE,
                     effect_multiplier=effect_mult,
@@ -97,7 +98,7 @@ if included:
                     title='Base vs. A')
 
     # base vs. quarterly A
-    Vis.plot_series(list_series=[Set.base, Set.policyAQuart],
+    Vis.plot_series(list_series=[Set.base, Set.policyDualQuart],
                     x_range=Set.X_RANGE,
                     y_range=Set.Y_RANGE,
                     effect_multiplier=effect_mult,
