@@ -9,7 +9,7 @@ POP_RATE = 0.1e6/5e6
 
 if SHOW_EFFECTIVE_LIFE:
     Cls.HEALTH_MEASURE = 'DALY'
-    Cls.COST_MEASURE = 'Average ratio: Effective life of AB'
+    Cls.COST_MEASURE = 'Average ratio: Effective life of A and B'
     effect_mult = -1 / SIM_LENGTH * POP_RATE
     cost_mult = SIM_LENGTH
     wtp_mult = 1# -effect_mult / cost_mult
