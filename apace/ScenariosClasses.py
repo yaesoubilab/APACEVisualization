@@ -638,7 +638,7 @@ def single_plot_series(list_of_series, x_label, y_label, title,
                        show_error_bars=False,
                        wtp_multiplier=1):
 
-    fig = plt.figure(figsize=(4, 3.8))
+    fig = plt.figure(figsize=(3.4, 3.2))
     ax = fig.add_subplot(111)
 
     plot_sub_fig(ax=ax, list_of_series=list_of_series,
@@ -654,7 +654,7 @@ def single_plot_series(list_of_series, x_label, y_label, title,
     ax.set_ylabel(y_label)
 
     #plt.tight_layout()
-    fig.subplots_adjust(bottom=0.125, left=0.175)
+    fig.subplots_adjust(bottom=0.125, left=0.2)
 
     fig.savefig('figures/' + Support.proper_file_name(title) + '.png', dpm=300) # read more about 'bbox_inches = "tight"'
     fig.show()
