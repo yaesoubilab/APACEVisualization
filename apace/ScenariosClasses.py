@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from apace import helpers
+from apace import Support
 import csv
 from enum import Enum
 import SimPy.EconEval as Econ
@@ -56,7 +56,7 @@ class ScenarioDataFrame:
         csv_file = open(csv_file_name, "r")
         col_headers = next(csv.reader(csv_file, delimiter=','))
         n_cols = len(col_headers)
-        cols = helpers.read_csv_cols(csv_file_name, n_cols=n_cols, if_convert_float=True)
+        cols = Support.read_csv_cols(csv_file_name, n_cols=n_cols, if_convert_float=True)
 
         # parse columns
         col_idx = 0
@@ -96,7 +96,7 @@ class ScenarioDataFrame:
         """
 
         stat = Stat.SummaryStat('', self.scenarios[scenario_name].outcomes[outcome_name])
-        return helpers.get_mean_interval(stat, interval_type, deci, form)
+        return Support.get_mean_interval(stat, interval_type, deci, form)
 
     def get_relative_diff_mean_interval(self, scenario_name_base, scenario_names, outcome_name, deci=0, form=None):
         """
@@ -114,7 +114,7 @@ class ScenarioDataFrame:
                 y_ref=self.scenarios[scenario_name_base].outcomes[outcome_name],
                 order=1)
 
-            list_mean_PI[name] = helpers.get_mean_interval(
+            list_mean_PI[name] = Support.get_mean_interval(
                 stat=ratio_state, interval_type='p', deci=deci, form=form)
 
         if len(scenario_names) == 1:
@@ -638,7 +638,7 @@ def single_plot_series(list_of_series, x_label, y_label, title,
                        show_error_bars=False,
                        wtp_multiplier=1):
 
-    fig = plt.figure(figsize=(5, 4.6))
+    fig = plt.figure(figsize=(4, 3.8))
     ax = fig.add_subplot(111)
 
     plot_sub_fig(ax=ax, list_of_series=list_of_series,
@@ -656,7 +656,7 @@ def single_plot_series(list_of_series, x_label, y_label, title,
     #plt.tight_layout()
     fig.subplots_adjust(bottom=0.125, left=0.175)
 
-    fig.savefig('figures/' + title +'.png', dpm=300) # read more about 'bbox_inches = "tight"'
+    fig.savefig('figures/' + Support.proper_file_name(title) + '.png', dpm=300) # read more about 'bbox_inches = "tight"'
     fig.show()
 
 

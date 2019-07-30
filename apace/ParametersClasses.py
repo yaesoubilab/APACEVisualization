@@ -2,7 +2,7 @@ import SimPy.InOutFunctions as IO
 import SimPy.Plots.FigSupport as Fig
 import SimPy.StatisticalClasses as Stat
 import SimPy.FormatFunctions as F
-import apace.helpers as helper
+import apace.Support as helper
 import copy
 from enum import Enum
 

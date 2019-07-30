@@ -47,7 +47,7 @@ def proper_file_name(text):
     :param text: filename
     :return: filename where invalid characters are removed
     """
-    return text.replace('|', ',').replace(':', ',').replace('<', 'l').replace('>', 'g')
+    return text.replace('|', ',').replace(':', ',').replace('<', 'l').replace('>', 'g').replace('\n', '')
 
 
 def get_mean_interval(stat, interval_type='c', deci=0, form=None):

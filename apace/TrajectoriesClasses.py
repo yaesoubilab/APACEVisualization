@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from enum import Enum
-from apace import helpers
+from apace import Support
 import csv
 import matplotlib.ticker as ticker
 import SimPy.InOutFunctions as IO
@@ -159,7 +159,7 @@ class TrajsDataFrame:
         csv_file = open(csv_file_name, "r")
         traj_names = next(csv.reader(csv_file, delimiter=','))
         n_cols = len(traj_names)
-        cols = helpers.read_csv_cols(csv_file_name, n_cols=n_cols, if_convert_float=True)
+        cols = Support.read_csv_cols(csv_file_name, n_cols=n_cols, if_convert_float=True)
 
         # parse columns
         x_axes = {"Simulation Period": warmup_sim_period+1,
@@ -642,12 +642,12 @@ def output_figure(plt, file_name):
         plt.show()
     elif OUTPUT_TYPE == OutType.JPG:
         try:
-            plt.savefig('figures/' + helpers.proper_file_name(file_name) + ".png", dpi=300)
+            plt.savefig('figures/' + Support.proper_file_name(file_name) + ".png", dpi=300)
         except:
             print('Could not save', file_name)
     elif OUTPUT_TYPE == OutType.PDF:
         try:
-            plt.savefig('figures/' + helpers.proper_file_name(file_name) + ".pdf")
+            plt.savefig('figures/' + Support.proper_file_name(file_name) + ".pdf")
         except:
             print('Could not save', file_name)
 
