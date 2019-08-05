@@ -636,9 +636,10 @@ def single_plot_series(list_of_series, x_label, y_label, title,
                        x_range=None,
                        y_range=None,
                        show_error_bars=False,
-                       wtp_multiplier=1):
+                       wtp_multiplier=1,
+                       fig_size=None):
 
-    fig = plt.figure(figsize=(3.4, 3.2))
+    fig = plt.figure(figsize=fig_size)
     ax = fig.add_subplot(111)
 
     plot_sub_fig(ax=ax, list_of_series=list_of_series,

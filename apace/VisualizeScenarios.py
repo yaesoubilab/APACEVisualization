@@ -8,7 +8,8 @@ def plot_series(list_series,
                 switch_cost_effect_on_figure=False,
                 wtp_multiplier=1.0,
                 labels=('', ''),
-                title='fig.png'):
+                title='fig.png',
+                fig_size=None):
     """
     :param list_series: (list) of series to display on the CE plane
     :param x_range: x range
@@ -19,6 +20,7 @@ def plot_series(list_series,
     :param wtp_multiplier: wtp multiplier
     :param labels: (tuple) x_ and y-axis labels
     :param title: (string) title of the graph
+    :param fig_size: (tuple) figure size
     """
 
     # populate series
@@ -38,7 +40,8 @@ def plot_series(list_series,
                            x_range=x_range,
                            y_range=y_range,
                            show_error_bars=True,
-                           wtp_multiplier=wtp_multiplier
+                           wtp_multiplier=wtp_multiplier,
+                           fig_size=fig_size
                            )
 
 
