@@ -1,7 +1,7 @@
 import apace.ParametersClasses as Param
 
 # create a dictionary of parameters
-paramDict = Param.Parameters('csvfiles\SampledParams.csv')
+paramDict = Param.Parameters('csv_files\SampledParams.csv')
 
 # calculate parameter estimates and uncertainty intervals
 paramDict.calculate_means_and_intervals(0.05)
@@ -19,5 +19,5 @@ ids.extend(range(243, 246))
 ids.extend(range(250, 253))
 
 paramDict.plot_histograms(ids=ids,
-                          csv_file_name_prior='csvfiles\ParamPriorDists.csv',
+                          csv_file_name_prior='csv_files\ParamPriorDists.csv',
                           posterior_fig_loc='figures\posteriors')

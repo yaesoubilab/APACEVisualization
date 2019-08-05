@@ -47,11 +47,11 @@ list_plot_info.append(
 
 eff = Vis.TrajImpact(
     scenarios_csv_files=[
-        'csvfiles/TBTrajs0Base.csv',
-        'csvfiles/TBTrajs1Yr1NoIPT.csv',
-        'csvfiles/TBTrajs2AnnualNoIPT.csv',
-        'csvfiles/TBTrajs3Yr1WithIPT.csv',
-        'csvfiles/TBTrajs4AnnualWithIPT.csv'
+        'csv_files/TBTrajs0Base.csv',
+        'csv_files/TBTrajs1Yr1NoIPT.csv',
+        'csv_files/TBTrajs2AnnualNoIPT.csv',
+        'csv_files/TBTrajs3Yr1WithIPT.csv',
+        'csv_files/TBTrajs4AnnualWithIPT.csv'
     ],
     scenario_names=[
         'Baseline (no targeted intervention)',

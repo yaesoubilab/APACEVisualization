@@ -14,11 +14,11 @@ scenario_keys = ['75% PTFU | No >1 FU | Drop % | No IPT',
                  '75% PTFU | No >1 FU | Drop % | With IPT',
                  '75% PTFU | With >1 FU | Drop 15% | With IPT']
 
-csvfiles_trajs = ['csvfiles/TBTrajs0Base.csv',
-                  'csvfiles/TBTrajs1Yr1NoIPT.csv',
-                  'csvfiles/TBTrajs2AnnualNoIPT.csv',
-                  'csvfiles/TBTrajs3Yr1WithIPT.csv',
-                  'csvfiles/TBTrajs4AnnualWithIPT.csv'
+csvfiles_trajs = ['csv_files/TBTrajs0Base.csv',
+                  'csv_files/TBTrajs1Yr1NoIPT.csv',
+                  'csv_files/TBTrajs2AnnualNoIPT.csv',
+                  'csv_files/TBTrajs3Yr1WithIPT.csv',
+                  'csv_files/TBTrajs4AnnualWithIPT.csv'
                   ]
 
 # create trajectory data frames
@@ -36,10 +36,10 @@ for file_name in csvfiles_trajs:
     )
 
 # create a dictionary of parameters
-param_df = Param.Parameters('csvfiles\SampledParams.csv')
+param_df = Param.Parameters('csv_files\SampledParams.csv')
 
 # data frame for scenario analysis
-scenario_df = Sce.ScenarioDataFrame('csvfiles\TBScenarios.csv')
+scenario_df = Sce.ScenarioDataFrame('csv_files\TBScenarios.csv')
 
 # ---------------------------------------------
 # Epidemiological characteristics at base line

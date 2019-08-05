@@ -13,7 +13,7 @@ Vis.DEFAULT_FONT_SIZE = 5.5
 Vis.SUBPLOT_H_SPACE = 0.75
 
 # create a trajectory data frame
-df = Vis.TrajsDataFrame('csvfiles/TBTrajs0Base.csv',
+df = Vis.TrajsDataFrame('csv_files/TBTrajs0Base.csv',
                         time0=Set.TIME_0,
                         period_length=1,
                         warmup_sim_period=Set.WARMUP,

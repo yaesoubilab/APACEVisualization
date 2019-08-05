@@ -5,7 +5,7 @@ import SimPy.InOutFunctions as IO
 # of the continuous follow-up and IPT with respect to the base strategy
 
 # read outputs
-daly_cost = IO.read_csv_cols(file_name='csvfiles/PartialRankCorrelation/TBOutputs.csv',
+daly_cost = IO.read_csv_cols(file_name='csv_files/PartialRankCorrelation/TBOutputs.csv',
                              n_cols=2,
                              if_ignore_first_row=True,
                              delimiter=',',
@@ -13,7 +13,7 @@ daly_cost = IO.read_csv_cols(file_name='csvfiles/PartialRankCorrelation/TBOutput
 
 # read parameter samples
 parameter_values = IO.read_csv_cols_to_dictionary(
-    file_name='csvfiles/PartialRankCorrelation/TBParms.csv',
+    file_name='csv_files/PartialRankCorrelation/TBParms.csv',
     delimiter=',',
     if_convert_float=True)
 

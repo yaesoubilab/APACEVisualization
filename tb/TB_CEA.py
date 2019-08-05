@@ -46,7 +46,7 @@ def populate_cea():
     ]
 
     # data frame of scenarios
-    dfScenarios = Cls.ScenarioDataFrame(csv_file_name='csvfiles\TBScenarios.csv')
+    dfScenarios = Cls.ScenarioDataFrame(csv_file_name='csv_files\TBScenarios.csv')
 
     # series to display on the cost-effectiveness plane
     series = [

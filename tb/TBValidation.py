@@ -16,7 +16,7 @@ Vis.Y_LABEL_COORD_X = -0.15
 Vis.SUBPLOT_W_SPACE = 0.7
 
 # create a trajectory data frame
-df = Vis.TrajsDataFrame('csvfiles/TBTrajs0Base.csv',
+df = Vis.TrajsDataFrame('csv_files/TBTrajs0Base.csv',
                         time0=TIME_0,
                         period_length=1,
                         warmup_sim_period=WARMUP,
