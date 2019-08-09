@@ -1,5 +1,5 @@
 import SimPy.InOutFunctions as IO
-import SimPy.Plots.FigSupport as Fig
+import SimPy.Plots.Histogram as Fig
 import SimPy.StatisticalClasses as Stat
 import SimPy.FormatFunctions as F
 import apace.Support as helper
@@ -57,7 +57,7 @@ class Parameters:
     def plot_histogram(self, parameter_name, title, x_lable=None, y_lable=None, x_range=None):
         """ creates a histogram of one parameter """
 
-        Fig.graph_histogram(
+        Fig.plot_histogram(
             self.dictOfParams[parameter_name],
             title, x_lable, y_lable,
             x_range=x_range, figure_size=HISTOGRAM_FIG_SIZE,
@@ -128,7 +128,7 @@ class Parameters:
                 par_values = [v*multiplier for v in par_values]
 
                 # plot histogram
-                Fig.graph_histogram(
+                Fig.plot_histogram(
                     data=par_values,
                     title=title.replace('!', '\n'),
                     x_range=x_range,
@@ -140,8 +140,12 @@ class Parameters:
             # move to the next parameter
             par_id += 1
 
-    def calculate_means_and_intervals(self, significance_level, ids=None, csv_file_name_prior=None):
+    def calculate_means_and_intervals(self,
+                                      poster_file='ParameterEstimates.csv',
+                                      significance_level=0.05,
+                                      ids=None, csv_file_name_prior=None):
         """ calculate the mean and credible intervals of parameters specified by ids
+        :param poster_file: csv file where the posterior ranges should be stored
         :param significance_level:
         :param ids:
         :param csv_file_name_prior: (string) filename where parameter prior ranges are located
@@ -176,9 +180,16 @@ class Parameters:
             # record the calculated estimate and credible interval
             if if_record:
 
-                deci = priors[par_id][Column.DECI.value]
-                form = priors[par_id][Column.FORMAT.value]
-                multip = priors[par_id][Column.MULTIPLIER.value]
+                if priors is None:
+                    deci = 0,
+                    form = '',
+                    multip = 1
+                else:
+                    deci = priors[par_id][Column.DECI.value]
+                    deci = 0 if deci == '' else deci
+                    form = priors[par_id][Column.FORMAT.value]
+                    multip = priors[par_id][Column.MULTIPLIER.value]
+
                 if multip == '':
                     data = value
                 else:
@@ -198,7 +209,7 @@ class Parameters:
             par_id += 1
 
         # write parameter estimates and credible intervals
-        IO.write_csv(rows=results, file_name='ParameterEstimates.csv')
+        IO.write_csv(rows=results, file_name=poster_file)
 
     def __calculate_ratio_obss(self, numerator_par_name, denominator_par_names):
 
