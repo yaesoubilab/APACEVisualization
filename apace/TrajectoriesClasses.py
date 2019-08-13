@@ -604,7 +604,7 @@ class TrajImpact:
 def compare_trajectories(csv_file_1, csv_file_2, legends, figure_location):
 
     # clean the directory
-    IO.delete_files('.png', 'figures/' + figure_location)
+    IO.delete_files('.png', figure_location)
 
     df1 = TrajsDataFrame(csv_file_1)
     df2 = TrajsDataFrame(csv_file_2)
@@ -642,12 +642,12 @@ def output_figure(plt, file_name):
         plt.show()
     elif OUTPUT_TYPE == OutType.JPG:
         try:
-            plt.savefig('figures/' + Support.proper_file_name(file_name) + ".png", dpi=300)
+            plt.savefig(Support.proper_file_name(file_name) + ".png", dpi=300)
         except:
             print('Could not save', file_name)
     elif OUTPUT_TYPE == OutType.PDF:
         try:
-            plt.savefig('figures/' + Support.proper_file_name(file_name) + ".pdf")
+            plt.savefig(Support.proper_file_name(file_name) + ".pdf")
         except:
             print('Could not save', file_name)
 

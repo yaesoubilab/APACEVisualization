@@ -9,6 +9,7 @@ import SimPy.RegressionClasses as Reg
 
 
 ALPHA = 0.05    # confidence level
+POLY_DEGREES = 1
 COST_MEASURE = 'Total Cost'
 HEALTH_MEASURE = 'DALY'
 
@@ -353,7 +354,6 @@ class SetOfScenarios:
                     cost_interval = strategy.dCost.get_interval(interval_type=interval_type,
                                                                 alpha=ALPHA,
                                                                 multiplier=effect_multiplier)
-
                     if switch_cost_effect_on_figure:
                         self.frontierYIntervals.append(effect_interval)
                         self.frontierXIntervals.append(cost_interval)
@@ -367,10 +367,8 @@ class SetOfScenarios:
         # remove the base strategy
         for strategy in [s for s in self.CEA.strategies if s.idx > 0]:
             if switch_cost_effect_on_figure:
-                self.allDeltaEffects = np.append(self.allDeltaEffects,
-                                                 strategy.effectObs * effect_multiplier)
-                self.allDeltaCosts = np.append(self.allDeltaCosts,
-                                               strategy.costObs * cost_multiplier)
+                self.allDeltaEffects = np.append(self.allDeltaEffects, strategy.dEffectObs * effect_multiplier)
+                self.allDeltaCosts = np.append(self.allDeltaCosts, strategy.dCostObs * cost_multiplier)
                 self.xValues.append(strategy.dCost.get_mean() * cost_multiplier)
                 self.yValues.append(strategy.dEffect.get_mean() * effect_multiplier)
             else:
@@ -389,7 +387,8 @@ class SetOfScenarios:
                                                                 multiplier=effect_multiplier)
                 cost_interval = strategy.dCost.get_interval(interval_type=interval_type,
                                                             alpha=ALPHA,
-                                                            multiplier=effect_multiplier)
+                                                            multiplier=cost_multiplier)
+                print(strategy.name, cost_interval, effect_interval)
                 if switch_cost_effect_on_figure:
                     self.yIntervals.append(effect_interval)
                     self.xIntervals.append(cost_interval)
@@ -589,18 +588,17 @@ def plot_sub_fig(ax, list_of_series,
             # fit a quadratic function to the curve.
             y = np.array(ser.yValues)  # allDeltaCosts)
             x = np.array(ser.xValues)  # allDeltaEffects)
-            degree = 2
-            quad_reg = Reg.SingleVarRegression(x, y, degree=degree)
+            quad_reg = Reg.SingleVarRegression(x, y, degree=POLY_DEGREES)
 
             # print derivatives at
             print()
             print(title, ' | ', ser.name)
             print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[-1]))
-            print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=quad_reg.get_zero()[degree-1]))
+            print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=quad_reg.get_zero()[POLY_DEGREES-1]))
             print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
 
             # store root
-            incr_eff_life.append(quad_reg.get_zero()[degree-1])
+            incr_eff_life.append(quad_reg.get_zero()[POLY_DEGREES-1])
             if i > 0:
                 print('Increase in effective life of A and B:', round(incr_eff_life[i]-incr_eff_life[0], 2))
 
