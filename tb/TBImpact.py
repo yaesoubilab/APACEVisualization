@@ -4,7 +4,7 @@ from tb import TBSettings as Set
 # specify the output (show, save as .jpg, or save as .pdf)
 Vis.OUTPUT_TYPE = Vis.OutType.JPG
 Vis.X_LABEL = 'Year'
-Vis.X_RANGE = [Set.PROJ-2, Set.TIME_END+2]
+Vis.X_RANGE = [Set.PROJ-2, Set.TIME_END+1]
 Vis.X_TICKS = [Set.PROJ-1, 5]
 
 list_plot_info = []     # list of plot infos
@@ -17,6 +17,7 @@ list_plot_info.append(
         y_label='Incident TB cases per 100 000 population',
         y_multiplier=100000,
         # title="TB Incidence\n(Per 100,000 Pop.)",
+        x_range=Vis.X_RANGE,
         figure_size=(4, 3.6),
         file_name='Impact-TBIncidence')
 )
@@ -29,6 +30,7 @@ list_plot_info.append(
         y_label='TB Prevalence cases per 100 000 population',
         y_multiplier=100000,
         title="TB Prevalence\n(Per 100,000 Pop.)",
+        x_range=Vis.X_RANGE,
         figure_size=(4, 3.6),
         file_name='Impact-TBPrevalence')
 )
@@ -41,6 +43,7 @@ list_plot_info.append(
         y_label='TB Deaths per 100 000 population',
         y_multiplier=100000,
         title="TB Mortality\n(Per 100,000 Pop.)",
+        x_range=Vis.X_RANGE,
         figure_size=(4, 3.6),
         file_name='Impact-TBMortality')
 )
@@ -54,11 +57,11 @@ eff = Vis.TrajImpact(
         'csv_files/TBTrajs4AnnualWithIPT.csv'
     ],
     scenario_names=[
-        'Baseline (no targeted intervention)',
+        'Base case (no targeted intervention)',
         'First-year follow-up',
         'Annual follow-up',
-        'First-year follow-up with limited IPT',
-        'Annual follow-up with continuous IPT'
+        'First-year follow-up with limited 2°IPT',
+        'Annual follow-up with continuous 2°IPT'
     ],
     fig_infos=list_plot_info,
     time_0=Set.TIME_0,

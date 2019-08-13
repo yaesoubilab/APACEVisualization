@@ -119,10 +119,12 @@ scenario_df.plot_relative_diff_by_scenario(
     y_labels=[
         'First-year follow-up',
         'Annual follow-up',
-        'First-year follow-up with limited IPT',
-        'Annual follow-up with continuous IPT'],
+        'First-year follow-up \nwith limited 2°IPT',
+        'Annual follow-up \nwith continuous 2°IPT'],
     legend=('TB Cases Averted', 'TB Deaths Averted'),
-    distance_from_axis=0.6,
+    distance_from_horizontal_axes=0.6,
+    fig_size=(4.6, 3.2),
+    distance_labels_y_axis=100,
     filename='figures/ComparativeEffect'
 )
 

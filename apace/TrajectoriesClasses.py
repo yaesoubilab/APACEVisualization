@@ -516,7 +516,7 @@ class TrajImpact:
                 ax.plot(
                     self.figInfos[panel_idx].xMultiplier * times,
                     self.figInfos[panel_idx].yMultiplier * means,
-                    color = self.scenarioColors[i]
+                    color=self.scenarioColors[i]
                 )
                 i += 1
 
@@ -535,7 +535,7 @@ class TrajImpact:
             plt.tight_layout()
 
             # save this figure
-            output_figure(plt, 'impact_time_series/'+key)
+            output_figure(plt, 'figures/impact_time_series/'+key)
 
             # next figure
             panel_idx += 1
@@ -597,7 +597,7 @@ class TrajImpact:
         plt.subplots_adjust(wspace=0.4)
 
         # save this figure
-        output_figure(plt, 'impact_time_series/Impact')
+        output_figure(plt, 'figures/impact_time_series/Impact')
         #plt.show(block=True)
 
 

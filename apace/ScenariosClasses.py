@@ -132,7 +132,9 @@ class ScenarioDataFrame:
                                        markers=('o', 'D'),
                                        colors=('red', 'blue'),
                                        legend=('morbidity', 'mortality'),
-                                       distance_from_axis=0.5,
+                                       distance_from_horizontal_axes=0.5,
+                                       fig_size=(4.6, 3.2),
+                                       distance_labels_y_axis=100,
                                        filename=None,
                                        ):
 
@@ -145,8 +147,7 @@ class ScenarioDataFrame:
             bar_position = [0]
 
         plt.rc('font', size=8)  # fontsize of texts
-        fig, ax = plt.subplots(figsize=(5.4, 3.4))
-
+        fig, ax = plt.subplots(figsize=fig_size)
 
         # find y-values
         y_values = np.arange(len(scenario_names))
@@ -177,9 +178,9 @@ class ScenarioDataFrame:
         else:
             ax.set_yticklabels(y_labels, horizontalalignment='left')
 
-        ax.yaxis.set_tick_params(pad=150)
+        ax.yaxis.set_tick_params(pad=distance_labels_y_axis)
 
-        ax.set_ylim(-distance_from_axis, len(scenario_names)-1+distance_from_axis)
+        ax.set_ylim(-distance_from_horizontal_axes, len(scenario_names) - 1 + distance_from_horizontal_axes)
 
         ax.invert_yaxis()  # labels read top-to-bottom
         if x_label:
