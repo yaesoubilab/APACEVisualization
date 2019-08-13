@@ -41,7 +41,7 @@ def populate_cea():
                               if_included_in_label=True,
                               label_rules=[
                                   (0, ''),
-                                  (1, 'with continuous IPT')]
+                                  (1, 'with continuous 2°IPT')]
                               )
     ]
 
@@ -92,7 +92,7 @@ def populate_cea():
         y_label='Probability of Resulting in the Highest NMB',
         y_range=[0, 1],
         figure_size=(5, 4.4),
-        file_name='figures\cea\CEAC ' + scenario_name + '.png'
+        file_name='figures/cea/CEAC ' + scenario_name + '.png'
     )
     print('WTP range with the highest probability of being optimal:')
     print(series[0].CBA.get_prob_highest_NMB_wtp_range())
@@ -167,8 +167,8 @@ def populate_cea():
             # legend
             leg = ['First-year follow-up',
                    'Annual follow-up',
-                   'First-year follow-up with limited IPT',
-                   'Annual follow-up with continuous IPT',
+                   'First-year follow-up with limited 2°IPT',
+                   'Annual follow-up with continuous 2°IPT',
                    'Frontier']
             #ser.legend.append('Frontier')
             ax.legend(leg, loc=1) #ser.legend
@@ -196,8 +196,8 @@ def populate_cea():
     titles = ['Base',
               'First-year follow-up',
               'Annual follow-up',
-              'First-year follow-up\nwith limited IPT',
-              'Annual follow-up\nwith continuous IPT']
+              'First-year follow-up\nwith limited 2°IPT',
+              'Annual follow-up\nwith continuous 2°IPT']
 
     # plot
     series[0].CEA.plot_pairwise_ceas(
