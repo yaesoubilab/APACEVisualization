@@ -1,7 +1,7 @@
 from apace import VisOptimClasses as Vis
 import SimPy.InOutFunctions as IO
 
-# delete existing figures
+# delete existing figures_national
 IO.delete_files('.png', '../tests/VisualizeOptimization/optimization_figures/')
 
 

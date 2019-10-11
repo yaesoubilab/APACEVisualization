@@ -1,17 +1,19 @@
 import apace.ScenariosClasses as Cls
 
 
-def plot_series(list_series,
-                x_range, y_range,
-                effect_multiplier=1.0,
-                cost_multiplier=1.0,
-                switch_cost_effect_on_figure=False,
-                wtp_multiplier=1.0,
-                labels=('', ''),
-                title='fig.png',
-                fig_size=None):
+def plot_sets_of_scenarios(list_of_scenario_sets,
+                           x_range, y_range,
+                           effect_multiplier=1.0,
+                           cost_multiplier=1.0,
+                           switch_cost_effect_on_figure=False,
+                           wtp_multiplier=1.0,
+                           labels=('', ''),
+                           title='fig.png',
+                           fig_size=None,
+                           l_b_r_t=None,
+                           success_A_or_B_per_lifespan=1):
     """
-    :param list_series: (list) of series to display on the CE plane
+    :param list_of_scenario_sets: (list) of sets of scenarios to display on the CE plane
     :param x_range: x range
     :param y_range: y range
     :param effect_multiplier: the x-axis multiplier
@@ -24,25 +26,28 @@ def plot_series(list_series,
     """
 
     # populate series
-    Cls.populate_series(list_series,
-                        save_cea_results=False,
-                        interval_type='c',
-                        effect_multiplier=effect_multiplier,
-                        cost_multiplier=cost_multiplier,
-                        switch_cost_effect_on_figure=switch_cost_effect_on_figure)
+    Cls.SetOfScenarios.populate_sets_of_scenarios(
+        list_of_scenario_sets=list_of_scenario_sets,
+        save_cea_results=False,
+        interval_type='c',
+        effect_multiplier=effect_multiplier,
+        cost_multiplier=cost_multiplier,
+        switch_cost_effect_on_figure=switch_cost_effect_on_figure)
 
     # plot
-    Cls.single_plot_series(list_of_series=list_series,
-                           x_label=labels[0],
-                           y_label=labels[1],
-                           title=title,
-                           show_only_on_frontier=False,
-                           x_range=x_range,
-                           y_range=y_range,
-                           show_error_bars=True,
-                           wtp_multiplier=wtp_multiplier,
-                           fig_size=fig_size
-                           )
+    Cls.SetOfScenarios.plot_list_of_scenario_sets(
+        list_of_scenario_sets=list_of_scenario_sets,
+        x_label=labels[0],
+        y_label=labels[1],
+        title=title,
+        show_only_on_frontier=False,
+        x_range=x_range,
+        y_range=y_range,
+        show_error_bars=True,
+        wtp_multiplier=wtp_multiplier,
+        fig_size=fig_size,
+        l_b_r_t=l_b_r_t,
+        success_A_or_B_per_lifespan=success_A_or_B_per_lifespan)
 
 
 def multi_plot_series(list_list_series,
@@ -53,8 +58,10 @@ def multi_plot_series(list_list_series,
                       switch_cost_effect_on_figure=False,
                       wtp_multiplier=1.0,
                       labels=('', ''),
-                      fig_size=(7.5, 3),
-                      file_name='fig.png'):
+                      fig_size=None,
+                      l_b_r_t=None,
+                      file_name='fig.png',
+                      success_A_or_B_per_lifespan=1):
     """
     :param list_list_series: (list) of list of series to display on the multiple CE plane
     :param x_range: x range
@@ -70,14 +77,15 @@ def multi_plot_series(list_list_series,
 
     # populate series
     for list_series in list_list_series:
-        Cls.populate_series(list_series,
-                            save_cea_results=False,
-                            interval_type='c',
-                            effect_multiplier=effect_multiplier,
-                            cost_multiplier=cost_multiplier,
-                            switch_cost_effect_on_figure=switch_cost_effect_on_figure)
+        Cls.SetOfScenarios.populate_sets_of_scenarios(
+            list_of_scenario_sets=list_series,
+            save_cea_results=False,
+            interval_type='c',
+            effect_multiplier=effect_multiplier,
+            cost_multiplier=cost_multiplier,
+            switch_cost_effect_on_figure=switch_cost_effect_on_figure)
     # plot
-    Cls.multi_plot_series(
+    Cls.SetOfScenarios.multi_plot_scenario_sets(
         list_of_plots=list_list_series,
         list_of_titles=list_of_titles,
         x_label=labels[0],
@@ -88,5 +96,7 @@ def multi_plot_series(list_list_series,
         y_range=y_range,
         show_error_bars=True,
         wtp_multiplier=wtp_multiplier,
-        fig_size=fig_size
+        success_A_or_B_per_lifespan=success_A_or_B_per_lifespan,
+        fig_size=fig_size,
+        l_b_r_t=l_b_r_t
     )

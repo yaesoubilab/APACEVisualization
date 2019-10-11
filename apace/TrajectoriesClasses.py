@@ -11,7 +11,7 @@ import numpy as np
 
 
 class OutType(Enum):
-    """output types for plotted figures"""
+    """output types for plotted figures_national"""
     SHOW = 1    # show
     JPG = 2     # save the figure as a jpg file
     PDF = 3     # save the figure as a pdf file
@@ -31,7 +31,7 @@ TRAJ_COLOR_CODE = '#808A87'     # color of trajectories
 OBS_COLOR_CODE = '#006400'      # color of real observations
 FEASIBLE_REGION_COLOR_CODE = '#E6E6FA', #'#DCDCDC',    # color of the feasible reagion
 
-REMOVE_TOP_RIGHT_BORDERS = False        # set to True to remove top and right borders from figures
+REMOVE_TOP_RIGHT_BORDERS = False        # set to True to remove top and right borders from figures_national
 Y_LABEL_COORD_X = -0.25     # increase to move right
 Y_LABEL_COORD_Y = 0.5       # increase to move up
 SUBPLOT_W_SPACE = 0.5       # width reserved for space between subplots
@@ -224,20 +224,28 @@ class TrajsDataFrame:
             else:
                 col_idx += 1
 
-    def __plot_single_panel(self, ax, plot_info, calibration_info=None):
+    def __plot_single_panel(self, ax, plot_info, calibration_info=None, trajs_ids_to_display=None):
         """
         plots multiple trajectories of a simulated outcome in a single panel
         :param ax: Axes object
         :param plot_info: plot information
         :param calibration_info: calibration information
+        :param trajs_ids_to_display: list of trajectory ids to display
         """
 
         # title and labels
         ax.set(xlabel=plot_info.xLabel, ylabel=plot_info.yLabel)
         ax.set_title(plot_info.title, loc='left')
 
+        trajs_to_display = []
+        if trajs_ids_to_display is None:
+            trajs_to_display = self.allTrajs[plot_info.trajName].trajs
+        else:
+            for i in trajs_ids_to_display:
+                trajs_to_display.append(self.allTrajs[plot_info.trajName].trajs[i])
+
         # plot trajectories
-        for traj in self.allTrajs[plot_info.trajName].trajs:
+        for traj in trajs_to_display:
             if plot_info.ifSameColor:
                 ax.plot(plot_info.xMultiplier * traj.times,
                         plot_info.yMultiplier * traj.obss,
@@ -256,6 +264,7 @@ class TrajsDataFrame:
             x_range=plot_info.xRange,
             y_range=plot_info.yRange,
             x_ticks=plot_info.xTicks,
+            y_ticks=plot_info.yTicks,
             is_x_integer=plot_info.isXInteger
         )
 
@@ -313,7 +322,8 @@ class TrajsDataFrame:
             output_figure(plt, plot_info.fileName)
 
     def plot_multi_panel(self, n_rows, n_cols, file_name,
-                         list_plot_info, list_calib_info=None, show_subplot_labels=False,
+                         list_plot_info, n_trajs_to_display=None,
+                         list_calib_info=None, show_subplot_labels=False,
                          share_x=False, share_y=False, figure_size=None):
         """
         plots a figure with multiple panels
@@ -360,7 +370,7 @@ class TrajsDataFrame:
                 else:
                     plot_info = list_plot_info[i * n_cols + j]
                     calib_info = list_calib_info[i * n_cols + j] if list_calib_info else None
-                    self.__plot_single_panel(ax, plot_info, calib_info)
+                    self.__plot_single_panel(ax, plot_info, calib_info, n_trajs_to_display)
 
                 # remove unnecessary labels for shared axis
                 if share_x and i < n_rows - 1:
@@ -395,6 +405,7 @@ class PlotTrajInfo:
                  x_range=None,      # (list) range of x-axis
                  y_range=None,      # (list) range of y-axis
                  x_ticks=None,      # (list) start location and distance between x-ticks
+                 y_ticks=None,      # (list) start location and distance between y-ticks
                  is_x_integer=False,   # set to True if x-axis only takes integer values
                  if_same_color=True,    # set to True if the same color should be used for all trajectories
                  common_color_code=TRAJ_COLOR_CODE,  # the color code of trajectories
@@ -412,6 +423,7 @@ class PlotTrajInfo:
         self.xRange = x_range if x_range is not None else X_RANGE
         self.yRange = y_range
         self.xTicks = x_ticks if x_ticks is not None else X_TICKS
+        self.yTicks = y_ticks
         self.isXInteger = is_x_integer
         self.ifSameColor = if_same_color
         self.commonColorCode = common_color_code
@@ -528,6 +540,7 @@ class TrajImpact:
                 x_range=self.figInfos[panel_idx].xRange,
                 y_range=self.figInfos[panel_idx].yRange,
                 x_ticks=self.figInfos[panel_idx].xTicks,
+                y_ticks=self.figInfos[panel_idx].yTicks,
                 is_x_integer=self.figInfos[panel_idx].isXInteger,
                 y_label=self.figInfos[panel_idx].yLabel
             )
@@ -535,7 +548,7 @@ class TrajImpact:
             plt.tight_layout()
 
             # save this figure
-            output_figure(plt, 'figures/impact_time_series/'+key)
+            output_figure(plt, 'figures_national/impact_time_series/'+key)
 
             # next figure
             panel_idx += 1
@@ -597,7 +610,7 @@ class TrajImpact:
         plt.subplots_adjust(wspace=0.4)
 
         # save this figure
-        output_figure(plt, 'figures/impact_time_series/Impact')
+        output_figure(plt, 'figures_national/impact_time_series/Impact')
         #plt.show(block=True)
 
 
@@ -674,7 +687,7 @@ def convert_data_to_list_of_observed_outcomes(data):
     return obss
 
 
-def add_axes_info(ax, x_range, y_range, x_ticks, is_x_integer, y_label=None):
+def add_axes_info(ax, x_range, y_range, x_ticks, y_ticks, is_x_integer, y_label=None):
 
     # x-axis range
     if x_range:  # auto-scale if no range specified
@@ -701,3 +714,10 @@ def add_axes_info(ax, x_range, y_range, x_ticks, is_x_integer, y_label=None):
     else:
         ax.xaxis.set_major_locator(
         ticker.MaxNLocator(nbins='auto', integer=is_x_integer))  # # x-axis format, integer ticks
+
+    # y-ticks
+    if y_ticks:
+        y_ticks = np.arange(start=y_ticks[0], stop=ax.get_ylim()[1], step=y_ticks[1],
+                            dtype=np.int32)
+        ax.set_yticks(y_ticks, minor=False)
+        ax.set_yticklabels(y_ticks, fontdict=None, minor=False)

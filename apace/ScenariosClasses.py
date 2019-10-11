@@ -14,12 +14,6 @@ COST_MEASURE = 'Total Cost'
 HEALTH_MEASURE = 'DALY'
 
 
-class Interval(Enum):
-    NONE = 0,
-    CONFIDENCE = 1,
-    PREDICTION = 2,
-
-
 class Scenario:
     def __init__(self, name):
         """
@@ -46,6 +40,8 @@ class Scenario:
 
 
 class ScenarioDataFrame:
+    """ creates a dictionary of all scenarios with scenario names as keys """
+
     def __init__(self, csv_file_name):
         """
         :param csv_file_name: csv file where scenarios and realizations of ourcomes are located
@@ -83,7 +79,6 @@ class ScenarioDataFrame:
                     col_idx += 1
 
             else:
-
                 # store outcomes
                 for i in range(len(names_and_bounds) - 1):
                     scenario_name = names_and_bounds[i][0]
@@ -231,7 +226,7 @@ class SetOfScenarios:
                  name,
                  scenario_df,
                  color,
-                 marker ='o',
+                 marker='o',
                  scenario_names=None,
                  conditions=None,
                  if_find_frontier=True,
@@ -286,6 +281,8 @@ class SetOfScenarios:
         self.CEA = None
         self.CBA = None
         self.legend = []
+
+        self.fittedCurves = []
 
     def if_acceptable(self, scenario):
         """ :returns True if this scenario meets the conditions to be on this series """
@@ -389,13 +386,32 @@ class SetOfScenarios:
                 cost_interval = strategy.dCost.get_interval(interval_type=interval_type,
                                                             alpha=ALPHA,
                                                             multiplier=cost_multiplier)
-                print(strategy.name, cost_interval, effect_interval)
+                # print(strategy.name, cost_interval, effect_interval)
                 if switch_cost_effect_on_figure:
                     self.yIntervals.append(effect_interval)
                     self.xIntervals.append(cost_interval)
                 else:
                     self.xIntervals.append(effect_interval)
                     self.yIntervals.append(cost_interval)
+
+    def fit_curves(self):
+
+        for i in range(len(self.strategies[0].costObs)):
+            d_effect_obss = []
+            d_cost_obss = []
+            for s in self.strategies:
+                if s.idx > 0: # excluding base
+                    d_effect_obss.append(s.dEffectObs[i])
+                    d_cost_obss.append(s.dCostObs[i])
+
+            # fit a function to the curve.
+            y = np.array(d_cost_obss)
+            x = np.array(d_effect_obss)
+            if len(x) == 0 or len(y) == 0:
+                raise ValueError('Error in fitting a curve to ')
+
+            self.fittedCurves.append(Reg.SingleVarRegression(x, y, degree=POLY_DEGREES))
+
 
     def get_frontier_x_err(self):
 
@@ -425,286 +441,333 @@ class SetOfScenarios:
 
         return [lower_err, upper_err]
 
+    @staticmethod
+    def populate_sets_of_scenarios(list_of_scenario_sets,
+                                   save_cea_results=False,
+                                   colors_of_scenarios=None,
+                                   interval_type='n',
+                                   effect_multiplier=1,
+                                   cost_multiplier=1,
+                                   switch_cost_effect_on_figure=False,
+                                   wtp_range=None):
+        """
+        :param list_of_scenario_sets: (list) of sets of scenarios
+        :param save_cea_results: set it to True if the CE table should be generated
+        :param colors_of_scenarios: (dictionary) of colors for scenarios
+        :param interval_type: select from Econ.Interval (no interval, CI, or PI)
+        :param effect_multiplier:
+        :param cost_multiplier:
+        :param switch_cost_effect_on_figure: displays cost on the x-axis and effect on the y-axis
+        :param wtp_range: for net monetary benefit analysis
+        """
 
-def populate_series(series_list,
-                    save_cea_results=False,
-                    colors_of_strategies=None,
-                    interval_type='n',
-                    effect_multiplier=1,
-                    cost_multiplier=1,
-                    switch_cost_effect_on_figure=False,
-                    wtp_range=None):
-    """
-    :param series_list:
-    :param save_cea_results: set it to True if the CE table should be generated
-    :param colors_of_strategies: (dictionary) of colors for strategies on this series
-    :param interval_type: select from Econ.Interval (no interval, CI, or PI)
-    :param effect_multiplier:
-    :param cost_multiplier:
-    :param switch_cost_effect_on_figure: displays cost on the x-axis and effect on the y-axis
-    :param wtp_range: for net monetary benefit analysis
-    """
+        # populate series to display on the cost-effectiveness plane
+        for i, scenario_set in enumerate(list_of_scenario_sets):
 
-    # populate series to display on the cost-effectiveness plane
-    for i, ser in enumerate(series_list):
+            if scenario_set.ifPopulated:
+                continue
 
-        if ser.ifPopulated:
-            continue
+            # create the base strategy
+            scn = scenario_set.scenarioDF.scenarios['Base']
+            base_strategy = Econ.Strategy(
+                name='Base',
+                cost_obs=scn.outcomes[COST_MEASURE],
+                effect_obs=scn.outcomes[HEALTH_MEASURE],
+                color=None if colors_of_scenarios is None else colors_of_scenarios[0]
+            )
 
-        # create the base strategy
-        scn = ser.scenarioDF.scenarios['Base']
-        base_strategy = Econ.Strategy(
-            name='Base',
-            cost_obs=scn.outcomes[COST_MEASURE],
-            effect_obs=scn.outcomes[HEALTH_MEASURE],
-            color=None if colors_of_strategies is None else colors_of_strategies[0]
-        )
+            # add base
+            scenario_set.strategies = [base_strategy]
+            # add other scenarios
+            i = 0
+            for key, scenario in scenario_set.scenarioDF.scenarios.items():
+                # add only non-Base strategies that can be on this series
+                if scenario.name != 'Base' and scenario_set.if_acceptable(scenario):
 
-        # add base
-        ser.strategies = [base_strategy]
-        # add other scenarios
-        i = 0
-        for key, scenario in ser.scenarioDF.scenarios.items():
-            # add only non-Base strategies that can be on this series
-            if scenario.name != 'Base' and ser.if_acceptable(scenario):
+                    # find labels of each strategy
+                    label_list = []
+                    for varCon in scenario_set.varConditions:
+                        if varCon.ifIncludedInLabel:
 
-                # find labels of each strategy
-                label_list = []
-                for varCon in ser.varConditions:
-                    if varCon.ifIncludedInLabel:
-
-                        # value of this variable
-                        value = scenario.variables[varCon.varName]
-                        # if there is not label rules
-                        if varCon.labelRules is None:
-                            if varCon.labelFormat == '':
-                                label_list.append(str(value)+',')
+                            # value of this variable
+                            value = scenario.variables[varCon.varName]
+                            # if there is not label rules
+                            if varCon.labelRules is None:
+                                if varCon.labelFormat == '':
+                                    label_list.append(str(value)+',')
+                                else:
+                                    label_list.append(varCon.labelFormat.format(value) + ',')
                             else:
-                                label_list.append(varCon.labelFormat.format(value) + ',')
-                        else:
-                            label = varCon.get_label(value)
-                            if label == '':
-                                pass
-                            else:
-                                label_list.append(label + ', ')
+                                label = varCon.get_label(value)
+                                if label == '':
+                                    pass
+                                else:
+                                    label_list.append(label + ', ')
 
-                label = ''.join(str(x) for x in label_list)
+                    label = ''.join(str(x) for x in label_list)
 
-                if label[-1] == ' ' or label[-1] == ',':
-                    label = label[:-1]
-                if label[-1] == ' ' or label[-1] == ',':
-                    label = label[:-1]
+                    if label[-1] == ' ' or label[-1] == ',':
+                        label = label[:-1]
+                    if label[-1] == ' ' or label[-1] == ',':
+                        label = label[:-1]
 
-                # legends
-                ser.legend.append(label)
+                    # legends
+                    scenario_set.legend.append(label)
 
-                # color of this strategy
-                color = None
-                if colors_of_strategies is not None:
-                    color = colors_of_strategies[i+1]
+                    # color of this strategy
+                    color = None
+                    if colors_of_scenarios is not None:
+                        color = colors_of_scenarios[i + 1]
 
-                ser.strategies.append(
-                    Econ.Strategy(
-                        name=label,
-                        cost_obs=scenario.outcomes[COST_MEASURE],
-                        effect_obs=scenario.outcomes[HEALTH_MEASURE],
-                        color=color)
-                )
-                i += 1
-
-        # do CEA on this series
-        ser.build_CE_curve(save_cea_results,
-                           interval_type,
-                           effect_multiplier=effect_multiplier,
-                           cost_multiplier=cost_multiplier,
-                           switch_cost_effect_on_figure=switch_cost_effect_on_figure,
-                           wtp_range=wtp_range)
-
-        ser.ifPopulated = True
-
-
-def plot_sub_fig(ax, list_of_series,
-                 title,
-                 show_only_on_frontier=False,
-                 x_range=None,
-                 y_range=None,
-                 show_error_bars=False,
-                 wtp_multiplier=1):
-
-    incr_eff_life = []
-
-    for i, ser in enumerate(list_of_series):
-
-        # if only points on frontier should be displayed
-        if show_only_on_frontier:
-            # scatter plot for points on the frontier
-            ax.scatter(ser.frontierXValues, ser.frontierYValues,
-                       color=ser.color, marker=ser.marker, alpha=0.5, label=ser.name)
-            # line plot for frontier line
-            ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
-
-            # error bars
-            if show_error_bars:
-                ax.errorbar(ser.frontierXValues, ser.frontierYValues,
-                            xerr=ser.get_frontier_x_err(),
-                            yerr=ser.get_frontier_y_err(),
-                            fmt='none', color='k', linewidth=1, alpha=0.4)
-
-            # y-value labels
-            for j, txt in enumerate(ser.frontierLabels):
-                if txt is not 'Base':
-                    ax.annotate(
-                        txt,
-                        (ser.frontierXValues[j] + ser.labelsShiftX,
-                         ser.frontierYValues[j] + ser.labelsShiftY),
-                        color=ser.color
+                    scenario_set.strategies.append(
+                        Econ.Strategy(
+                            name=label,
+                            cost_obs=scenario.outcomes[COST_MEASURE],
+                            effect_obs=scenario.outcomes[HEALTH_MEASURE],
+                            color=color)
                     )
+                    i += 1
 
-        else:  # show all points
+            # do CEA on this series
+            scenario_set.build_CE_curve(save_cea_results,
+                                        interval_type,
+                                        effect_multiplier=effect_multiplier,
+                                        cost_multiplier=cost_multiplier,
+                                        switch_cost_effect_on_figure=switch_cost_effect_on_figure,
+                                        wtp_range=wtp_range)
 
-            # scatter plot for all points
-            ax.scatter(ser.xValues, ser.yValues,
-                       color=ser.color, marker=ser.marker, alpha=0.5, zorder=10, s=15, label=ser.name)
-            # ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5,
-            # zorder=10, s=5, label=ser.name)
+            scenario_set.ifPopulated = True
 
-            # error bars
-            if show_error_bars:
-                ax.errorbar(ser.xValues, ser.yValues,
-                            xerr=ser.get_x_err(),
-                            yerr=ser.get_y_err(),
-                            fmt='none', color='k', linewidth=1, alpha=0.25, zorder=5)
+    @staticmethod
+    def plot_sub_fig(ax, list_of_scenario_sets,
+                     title,
+                     show_only_on_frontier=False,
+                     x_range=None,
+                     y_range=None,
+                     show_error_bars=False,
+                     wtp_multiplier=1,
+                     success_A_or_B_per_lifespan=1):
 
-            # y-value labels
-            for j, txt in enumerate(ser.yLabels):
-                if txt is not 'Base':
-                    ax.annotate(
-                        txt,
-                        (ser.xValues[j] + ser.labelsShiftX*(x_range[1]-x_range[0]),
-                         ser.yValues[j] + ser.labelsShiftY*(y_range[1]-y_range[0])),
-                        fontsize=6.5,
-                        color=ser.color,
-                    )
+        incr_eff_life = []
 
-            # fit a quadratic function to the curve.
-            y = np.array(ser.yValues)  # allDeltaCosts)
-            x = np.array(ser.xValues)  # allDeltaEffects)
-            quad_reg = Reg.SingleVarRegression(x, y, degree=POLY_DEGREES)
+        for i, ser in enumerate(list_of_scenario_sets):
 
-            # print derivatives at
-            print()
-            print(title, ' | ', ser.name)
-            print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[-1]))
-            print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=quad_reg.get_zero()[POLY_DEGREES-1]))
-            print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
+            # if only points on frontier should be displayed
+            if show_only_on_frontier:
+                # scatter plot for points on the frontier
+                ax.scatter(ser.frontierXValues, ser.frontierYValues,
+                           color=ser.color, marker=ser.marker, alpha=0.5, label=ser.name)
+                # line plot for frontier line
+                ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
 
-            # store root
-            incr_eff_life.append(quad_reg.get_zero()[POLY_DEGREES-1])
-            if i > 0:
-                print('Increase in effective life of A and B:', round(incr_eff_life[i]-incr_eff_life[0], 2))
+                # error bars
+                if show_error_bars:
+                    ax.errorbar(ser.frontierXValues, ser.frontierYValues,
+                                xerr=ser.get_frontier_x_err(),
+                                yerr=ser.get_frontier_y_err(),
+                                fmt='none', color='k', linewidth=1, alpha=0.4)
 
-            xs = np.linspace(min(x), max(x), 50)
-            predicted = quad_reg.get_predicted_y(xs)
-            iv_l, iv_u = quad_reg.get_predicted_y_CI(xs)
+                # y-value labels
+                for j, txt in enumerate(ser.frontierLabels):
+                    if txt is not 'Base':
+                        ax.annotate(
+                            txt,
+                            (ser.frontierXValues[j] + ser.labelsShiftX,
+                             ser.frontierYValues[j] + ser.labelsShiftY),
+                            color=ser.color
+                        )
 
-            ax.plot(xs, predicted, '--', linewidth=1, color=ser.color)  # results.fittedvalues
+            else:  # show all points
 
-            # if show error region:
-            show_error_region = False
-            if show_error_region:
-                ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1)  # '#E0EEEE'
-                ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
-                ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
+                # scatter plot for all points
+                ax.scatter(ser.xValues, ser.yValues,
+                           color=ser.color, marker=ser.marker, alpha=0.5, zorder=10, s=15, label=ser.name)
+                # ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5,
+                # zorder=10, s=5, label=ser.name)
 
-    ax.set_title(title)
-    ax.legend(loc=2)
+                # error bars
+                if show_error_bars:
+                    ax.errorbar(ser.xValues, ser.yValues,
+                                xerr=ser.get_x_err(),
+                                yerr=ser.get_y_err(),
+                                fmt='none', color='k', linewidth=1, alpha=0.25, zorder=5)
 
-    # x and y ranges
-    if x_range is not None:
-        ax.set_xlim(x_range)
-    if y_range is not None:
-        ax.set_ylim(y_range)
+                if x_range is None:
+                    x_range = ax.get_xlim()
+                if y_range is None:
+                    y_range = ax.get_ylim()
 
-    # origin
-    ax.axvline(x=0, linestyle='-', color='black', linewidth=0.4)
-    ax.axhline(y=0, linestyle='-', color='black', linewidth=0.4)
+                # y-value labels
+                for j, txt in enumerate(ser.yLabels):
+                    if txt is not 'Base':
+                        ax.annotate(
+                            txt,
+                            (ser.xValues[j] + ser.labelsShiftX*(x_range[1]-x_range[0]),
+                             ser.yValues[j] + ser.labelsShiftY*(y_range[1]-y_range[0])),
+                            fontsize=6.5,
+                            color=ser.color,
+                        )
 
+                # fit a quadratic function to the curve.
+                y = np.array(ser.yValues)  # allDeltaCosts)
+                x = np.array(ser.xValues)  # allDeltaEffects)
+                if len(x) == 0 or len(y) == 0:
+                    raise ValueError('Error in fitting a curve to ' + title)
+                quad_reg = Reg.SingleVarRegression(x, y, degree=POLY_DEGREES)
 
-def single_plot_series(list_of_series, x_label, y_label, title,
-                       show_only_on_frontier=False,
-                       x_range=None,
-                       y_range=None,
-                       show_error_bars=False,
-                       wtp_multiplier=1,
-                       fig_size=None):
+                # print derivatives at
+                print()
+                print(title, ' | ', ser.name)
+                print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[-1]))
+                print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=quad_reg.get_zero()[POLY_DEGREES-1]))
+                print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
 
-    fig = plt.figure(figsize=fig_size)
-    ax = fig.add_subplot(111)
+                # store root
+                incr_eff_life.append(quad_reg.get_zero()[POLY_DEGREES-1])
+                if i > 0:
+                    print('Increase in effective life of A and B:', round(incr_eff_life[i]-incr_eff_life[0], 2))
+                    print('Additional cases per 100,000 pop successfully treated with A or B:',
+                          success_A_or_B_per_lifespan * (incr_eff_life[i] - incr_eff_life[0]))
 
-    plot_sub_fig(ax=ax, list_of_series=list_of_series,
-                 title=title,
-                 show_only_on_frontier=show_only_on_frontier,
-                 x_range=x_range,
-                 y_range=y_range,
-                 show_error_bars=show_error_bars,
-                 wtp_multiplier=wtp_multiplier)
+                xs = np.linspace(min(x), max(x), 50)
+                predicted = quad_reg.get_predicted_y(xs)
+                iv_l, iv_u = quad_reg.get_predicted_y_CI(xs)
 
-    # labels and legend
-    ax.set_xlabel(x_label)
-    ax.set_ylabel(y_label)
+                ax.plot(xs, predicted, '--', linewidth=1, color=ser.color)  # results.fittedvalues
 
-    #plt.tight_layout()
-    fig.subplots_adjust(bottom=0.125, left=0.2)
+                # if show error region:
+                show_error_region = False
+                if show_error_region:
+                    ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1)  # '#E0EEEE'
+                    ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
+                    ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
 
-    fig.savefig('figures/' + Support.proper_file_name(title) + '.png', dpm=300) # read more about 'bbox_inches = "tight"'
-    fig.show()
+        ax.set_title(title)
+        if len(list_of_scenario_sets) > 1:
+            ax.legend(loc=2)
 
+        # x and y ranges
+        if x_range is not None:
+            ax.set_xlim(x_range)
+        if y_range is not None:
+            ax.set_ylim(y_range)
 
-def multi_plot_series(list_of_plots,
-                      list_of_titles,
-                      x_label, y_label,
-                      file_name,
-                      show_only_on_frontier=False,
-                      x_range=None,
-                      y_range=None,
-                      show_error_bars=False,
-                      wtp_multiplier=1,
-                      fig_size=(7.5, 3)):
-    # set default properties
-    plt.rc('font', size=8)  # fontsize of texts
-    plt.rc('axes', titlesize=8)  # fontsize of the figure title
-    labels = ['A)', 'B)', 'C)']
+        # origin
+        ax.axvline(x=0, linestyle='-', color='black', linewidth=0.4)
+        ax.axhline(y=0, linestyle='-', color='black', linewidth=0.4)
 
-    n_cols = len(list_of_plots)
-    f, axarr = plt.subplots(1, n_cols, sharey=True, figsize=fig_size)
+    @staticmethod
+    def plot_list_of_scenario_sets(list_of_scenario_sets, x_label, y_label, title,
+                                   show_only_on_frontier=False,
+                                   x_range=None,
+                                   y_range=None,
+                                   show_error_bars=False,
+                                   wtp_multiplier=1,
+                                   fig_size=None,
+                                   l_b_r_t=None,
+                                   success_A_or_B_per_lifespan=1):
 
-    # this is to add the common x and y label
-    f.add_subplot(111, frameon=False)
-    plt.tick_params(labelcolor='none', top='off', bottom='off', left='off', right='off')
-    plt.grid(False)
-    plt.xlabel(x_label)
-    plt.ylabel(y_label)
+        fig = plt.figure(figsize=fig_size)
+        ax = fig.add_subplot(111)
 
-    for i, fig in enumerate(list_of_plots):
+        SetOfScenarios.plot_sub_fig(ax=ax, list_of_scenario_sets=list_of_scenario_sets,
+                                    title=title,
+                                    show_only_on_frontier=show_only_on_frontier,
+                                    x_range=x_range,
+                                    y_range=y_range,
+                                    show_error_bars=show_error_bars,
+                                    wtp_multiplier=wtp_multiplier,
+                                    success_A_or_B_per_lifespan=success_A_or_B_per_lifespan)
 
-        axarr[i].set_title(labels[i], loc='left', fontweight='bold')
+        # labels and legend
+        ax.set_xlabel(x_label)
+        ax.set_ylabel(y_label)
 
-        # plot
-        plot_sub_fig(ax=axarr[i],
-                     list_of_series=fig,
-                     title=list_of_titles[i],
-                     show_only_on_frontier=show_only_on_frontier,
-                     x_range=x_range,
-                     y_range=y_range,
-                     show_error_bars=show_error_bars,
-                     wtp_multiplier=wtp_multiplier)
+        #plt.tight_layout()
+        if l_b_r_t is not None:
+            fig.subplots_adjust(left=l_b_r_t[0],
+                            bottom=l_b_r_t[1],
+                            right=l_b_r_t[2],
+                            top=l_b_r_t[3],)
 
-    # plt.tight_layout()
-    # for manuscript
-    # plt.subplots_adjust(left=0.1, bottom=0.15, right=0.97, top=0.9,
-    #                     wspace=0.1, hspace=0)
-    # for SMDM
-    plt.subplots_adjust(left=0.12, bottom=0.15, right=.95, top=0.85,
-                        wspace=0.2, hspace=0)
-    plt.savefig('figures/' + file_name + '.png', dpm=300)
-    # plt.show()
+        fig.savefig('figures_national/' + Support.proper_file_name(title) + '.png', dpm=300) # read more about 'bbox_inches = "tight"'
+        fig.show()
+
+    @staticmethod
+    def multi_plot_scenario_sets(list_of_plots,
+                                 list_of_titles,
+                                 x_label, y_label,
+                                 file_name,
+                                 show_only_on_frontier=False,
+                                 x_range=None,
+                                 y_range=None,
+                                 show_error_bars=False,
+                                 wtp_multiplier=1,
+                                 success_A_or_B_per_lifespan=1,
+                                 fig_size=(7.5, 3),
+                                 l_b_r_t=None):
+
+        # set default properties
+        plt.rc('font', size=8)  # fontsize of texts
+        plt.rc('axes', titlesize=8)  # fontsize of the figure title
+        labels = ['A)', 'B)', 'C)']
+
+        n_cols = len(list_of_plots)
+        f, axarr = plt.subplots(1, n_cols, sharey=True, figsize=fig_size)
+
+        # this is to add the common x and y label
+        f.add_subplot(111, frameon=False)
+        plt.tick_params(labelcolor='none', length=0, top='off', bottom='off', left='off', right='off', pad=10)
+        # plt.grid(False)
+        plt.xlabel(x_label)
+        plt.ylabel(y_label)
+
+        for i, fig in enumerate(list_of_plots):
+
+            axarr[i].set_title(labels[i], loc='left', fontweight='bold')
+
+            # plot
+            SetOfScenarios.plot_sub_fig(ax=axarr[i],
+                                        list_of_scenario_sets=fig,
+                                        title=list_of_titles[i],
+                                        show_only_on_frontier=show_only_on_frontier,
+                                        x_range=x_range,
+                                        y_range=y_range,
+                                        show_error_bars=show_error_bars,
+                                        wtp_multiplier=wtp_multiplier,
+                                        success_A_or_B_per_lifespan=success_A_or_B_per_lifespan)
+
+        # plt.tight_layout()
+        # for manuscript
+        plt.subplots_adjust(left=l_b_r_t[0],
+                            bottom=l_b_r_t[1],
+                            right=l_b_r_t[2],
+                            top=l_b_r_t[3],
+                            wspace=0.1, hspace=0)
+        # for SMDM
+        # plt.subplots_adjust(left=0.12, bottom=0.15, right=.95, top=0.85,
+        #                     wspace=0.2, hspace=0)
+        plt.savefig(file_name + '.png', dpi=300)
+        plt.show()
+
+    @staticmethod
+    def estimate_diff_from_origin(list_of_scenario_sets, interval='p', outcome_to_project=''):
+
+        # fit curves
+        for set_of_scenario in list_of_scenario_sets:
+            set_of_scenario.fit_curves()
+
+        # find the differences from the origin
+        base_obss = []
+        new_obss = []
+        for i in range(len(list_of_scenario_sets[0].fittedCurves)):
+            base_obss.append(list_of_scenario_sets[0].fittedCurves[i].get_zero()[POLY_DEGREES - 1])
+            new_obss.append(list_of_scenario_sets[1].fittedCurves[i].get_zero()[POLY_DEGREES - 1])
+
+        print(base_obss)
+        print(sum(base_obss))
+        print(new_obss)
+        print(sum(new_obss))
+
+        stat = Stat.DifferenceStatPaired('Diff', x=new_obss, y_ref=base_obss)
+        print(stat.get_mean())

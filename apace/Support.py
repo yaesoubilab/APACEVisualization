@@ -47,6 +47,8 @@ def proper_file_name(text):
     :param text: filename
     :return: filename where invalid characters are removed
     """
+    if text is None or text == '':
+        text = 'Figure'
     return text.replace('|', ',').replace(':', ',').replace('<', 'l').replace('>', 'g').replace('\n', '')
 
 

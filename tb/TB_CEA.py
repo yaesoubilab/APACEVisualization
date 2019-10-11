@@ -61,13 +61,13 @@ def populate_cea():
     ]
 
     # populate series
-    Cls.populate_series(series,
-                        save_cea_results=True,
-                        colors_of_strategies=colors,
-                        interval_type='p',
-                        effect_multiplier=1,
-                        cost_multiplier=1 / 1e3,
-                        wtp_range=[0, 2000])
+    Cls.populate_sets_of_scenarios(series,
+                                   save_cea_results=True,
+                                   colors_of_scenarios=colors,
+                                   interval_type='p',
+                                   effect_multiplier=1,
+                                   cost_multiplier=1 / 1e3,
+                                   wtp_range=[0, 2000])
 
     # CBA
     #del series[0].CBA.strategies[1:3]
@@ -92,7 +92,7 @@ def populate_cea():
         y_label='Probability of Resulting in the Highest NMB',
         y_range=[0, 1],
         figure_size=(5, 4.4),
-        file_name='figures/cea/CEAC ' + scenario_name + '.png'
+        file_name='figures_national/cea/CEAC ' + scenario_name + '.png'
     )
     print('WTP range with the highest probability of being optimal:')
     print(series[0].CBA.get_prob_highest_NMB_wtp_range())
@@ -187,7 +187,7 @@ def populate_cea():
     ax.axhline(y=0, linestyle='--', color='black', linewidth=.5)
 
     plt.tight_layout()
-    plt.savefig('figures/cea/'
+    plt.savefig('figures_national/cea/'
                 + 'CEA ' + scenario_name
                 + '.png', dpi=300)
 
@@ -214,7 +214,7 @@ def populate_cea():
         y_range=[-2000, 2000],
         column_titles=titles,
         row_titles=titles,
-        file_name='figures\pairwise_cea.png'
+        file_name='figures_national\pairwise_cea.png'
     )
 
 

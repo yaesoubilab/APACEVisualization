@@ -61,14 +61,14 @@ class Parameters:
             self.dictOfParams[parameter_name],
             title, x_lable, y_lable,
             x_range=x_range, figure_size=HISTOGRAM_FIG_SIZE,
-            output_type='jpg', file_name='figures\Par-'+title
+            output_type='jpg', file_name='figures_national\Par-'+title
         )
 
-    def plot_histograms(self, ids=None, csv_file_name_prior=None, posterior_fig_loc='figures'):
+    def plot_histograms(self, ids=None, csv_file_name_prior=None, posterior_fig_loc='figures_national'):
         """ creates histograms of parameters specified by ids
         :param ids: (list) list of parameter ids
         :param csv_file_name_prior: (string) filename where parameter prior ranges are located
-        :param posterior_fig_loc: (string) location where posterior figures should be located
+        :param posterior_fig_loc: (string) location where posterior figures_national should be located
         """
 
         # clean the directory
@@ -237,14 +237,14 @@ class Parameters:
                 interval_type='p', alpha=0.05, deci=deci, form=form)
 
     def plot_ratio_hist(self, numerator_par_name, denominator_par_names,
-                        title, x_label=None, x_range=None, output_fig_loc='figures'):
+                        title, x_label=None, x_range=None, output_fig_loc='figures_national'):
 
         ratio_obss = self.__calculate_ratio_obss(numerator_par_name, denominator_par_names)
 
         file_name = output_fig_loc + '\Ratio-' + title
 
         # create the histogram of ratio
-        Fig.graph_histogram(
+        Fig.plot_histogram(
             data=ratio_obss,
             title=title,
             x_label=x_label,
