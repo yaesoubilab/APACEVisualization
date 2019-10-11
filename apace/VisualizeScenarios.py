@@ -10,8 +10,7 @@ def plot_sets_of_scenarios(list_of_scenario_sets,
                            labels=('', ''),
                            title='fig.png',
                            fig_size=None,
-                           l_b_r_t=None,
-                           success_A_or_B_per_lifespan=1):
+                           l_b_r_t=None):
     """
     :param list_of_scenario_sets: (list) of sets of scenarios to display on the CE plane
     :param x_range: x range
@@ -46,8 +45,7 @@ def plot_sets_of_scenarios(list_of_scenario_sets,
         show_error_bars=True,
         wtp_multiplier=wtp_multiplier,
         fig_size=fig_size,
-        l_b_r_t=l_b_r_t,
-        success_A_or_B_per_lifespan=success_A_or_B_per_lifespan)
+        l_b_r_t=l_b_r_t)
 
 
 def multi_plot_series(list_list_series,

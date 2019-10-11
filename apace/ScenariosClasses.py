@@ -9,7 +9,7 @@ import SimPy.RegressionClasses as Reg
 
 
 ALPHA = 0.05    # confidence level
-POLY_DEGREES = 1
+POLY_DEGREES = 2
 COST_MEASURE = 'Total Cost'
 HEALTH_MEASURE = 'DALY'
 
@@ -263,6 +263,8 @@ class SetOfScenarios:
         # (x, y) values
         self.xValues = []
         self.yValues = []
+        self.xValuesByScenario = []
+        self.yValuesByScenario = []
         # confidence or prediction intervals
         self.xIntervals = []
         self.yIntervals = []
@@ -282,7 +284,8 @@ class SetOfScenarios:
         self.CBA = None
         self.legend = []
 
-        self.fittedCurves = []
+        self.fittedCurves = []  # curves fitted to paired (cost, effect) points of strategies
+        self.fittedCurve = None  # one curve fitted to the (average cost, average effect) of strategies
 
     def if_acceptable(self, scenario):
         """ :returns True if this scenario meets the conditions to be on this series """
@@ -365,10 +368,15 @@ class SetOfScenarios:
         # remove the base strategy
         for strategy in [s for s in self.CEA.strategies if s.idx > 0]:
             if switch_cost_effect_on_figure:
-                self.allDeltaEffects = np.append(self.allDeltaEffects, strategy.dEffectObs * effect_multiplier)
-                self.allDeltaCosts = np.append(self.allDeltaCosts, strategy.dCostObs * cost_multiplier)
+                self.allDeltaEffects = np.append(self.allDeltaEffects,
+                                                 strategy.dEffectObs * effect_multiplier)
+                self.allDeltaCosts = np.append(self.allDeltaCosts,
+                                               strategy.dCostObs * cost_multiplier)
                 self.xValues.append(strategy.dCost.get_mean() * cost_multiplier)
                 self.yValues.append(strategy.dEffect.get_mean() * effect_multiplier)
+
+                self.xValuesByScenario.append(strategy.dCostObs * cost_multiplier)
+                self.yValuesByScenario.append(strategy.dEffectObs * effect_multiplier)
             else:
                 self.allDeltaEffects = np.append(self.allDeltaEffects,
                                                  strategy.effectObs * effect_multiplier)
@@ -376,6 +384,9 @@ class SetOfScenarios:
                                                strategy.costObs * cost_multiplier)
                 self.xValues.append(strategy.dEffect.get_mean() * effect_multiplier)
                 self.yValues.append(strategy.dCost.get_mean() * cost_multiplier)
+
+                self.xValuesByScenario.append(strategy.dEffectObs * effect_multiplier)
+                self.yValuesByScenario.append(strategy.dCostObs * cost_multiplier)
 
             self.yLabels.append(strategy.name)
 
@@ -394,24 +405,29 @@ class SetOfScenarios:
                     self.xIntervals.append(effect_interval)
                     self.yIntervals.append(cost_interval)
 
-    def fit_curves(self):
+    def fit_curve(self, degree):
+
+        x = np.array(self.xValues)
+        y = np.array(self.yValues)
+        self.fittedCurve = Reg.SingleVarRegression(x, y, degree=degree)
+
+    def fit_curves(self, degree):
 
         for i in range(len(self.strategies[0].costObs)):
-            d_effect_obss = []
-            d_cost_obss = []
-            for s in self.strategies:
-                if s.idx > 0: # excluding base
-                    d_effect_obss.append(s.dEffectObs[i])
-                    d_cost_obss.append(s.dCostObs[i])
+            x_s = []
+            y_s = []
+            for j in range(len(self.strategies)-1): # excluding base
+                x_s.append(self.xValuesByScenario[j][i])
+                y_s.append(self.yValuesByScenario[j][i])
 
             # fit a function to the curve.
-            y = np.array(d_cost_obss)
-            x = np.array(d_effect_obss)
+            x = np.array(x_s)
+            y = np.array(y_s)
+
             if len(x) == 0 or len(y) == 0:
                 raise ValueError('Error in fitting a curve to ')
 
-            self.fittedCurves.append(Reg.SingleVarRegression(x, y, degree=POLY_DEGREES))
-
+            self.fittedCurves.append(Reg.SingleVarRegression(x, y, degree=degree))
 
     def get_frontier_x_err(self):
 
@@ -545,8 +561,7 @@ class SetOfScenarios:
                      x_range=None,
                      y_range=None,
                      show_error_bars=False,
-                     wtp_multiplier=1,
-                     success_A_or_B_per_lifespan=1):
+                     wtp_multiplier=1):
 
         incr_eff_life = []
 
@@ -626,8 +641,6 @@ class SetOfScenarios:
                 incr_eff_life.append(quad_reg.get_zero()[POLY_DEGREES-1])
                 if i > 0:
                     print('Increase in effective life of A and B:', round(incr_eff_life[i]-incr_eff_life[0], 2))
-                    print('Additional cases per 100,000 pop successfully treated with A or B:',
-                          success_A_or_B_per_lifespan * (incr_eff_life[i] - incr_eff_life[0]))
 
                 xs = np.linspace(min(x), max(x), 50)
                 predicted = quad_reg.get_predicted_y(xs)
@@ -664,8 +677,7 @@ class SetOfScenarios:
                                    show_error_bars=False,
                                    wtp_multiplier=1,
                                    fig_size=None,
-                                   l_b_r_t=None,
-                                   success_A_or_B_per_lifespan=1):
+                                   l_b_r_t=None):
 
         fig = plt.figure(figsize=fig_size)
         ax = fig.add_subplot(111)
@@ -676,8 +688,7 @@ class SetOfScenarios:
                                     x_range=x_range,
                                     y_range=y_range,
                                     show_error_bars=show_error_bars,
-                                    wtp_multiplier=wtp_multiplier,
-                                    success_A_or_B_per_lifespan=success_A_or_B_per_lifespan)
+                                    wtp_multiplier=wtp_multiplier)
 
         # labels and legend
         ax.set_xlabel(x_label)
@@ -734,8 +745,7 @@ class SetOfScenarios:
                                         x_range=x_range,
                                         y_range=y_range,
                                         show_error_bars=show_error_bars,
-                                        wtp_multiplier=wtp_multiplier,
-                                        success_A_or_B_per_lifespan=success_A_or_B_per_lifespan)
+                                        wtp_multiplier=wtp_multiplier)
 
         # plt.tight_layout()
         # for manuscript
@@ -751,23 +761,36 @@ class SetOfScenarios:
         plt.show()
 
     @staticmethod
-    def estimate_diff_from_origin(list_of_scenario_sets, interval='p', outcome_to_project=''):
+    def get_expected_diff_from_origin(list_of_scenario_sets,
+                                  degree=2, interval='p',
+                                  outcome_to_project=''):
 
         # fit curves
         for set_of_scenario in list_of_scenario_sets:
-            set_of_scenario.fit_curves()
+            set_of_scenario.fit_curves(degree=degree)
+            set_of_scenario.fit_curve(degree=degree)
 
-        # find the differences from the origin
-        base_obss = []
-        new_obss = []
-        for i in range(len(list_of_scenario_sets[0].fittedCurves)):
-            base_obss.append(list_of_scenario_sets[0].fittedCurves[i].get_zero()[POLY_DEGREES - 1])
-            new_obss.append(list_of_scenario_sets[1].fittedCurves[i].get_zero()[POLY_DEGREES - 1])
+        # expected difference
+        crossing_x_axis = []
+        diffs = []
 
-        print(base_obss)
-        print(sum(base_obss))
-        print(new_obss)
-        print(sum(new_obss))
+        for i in range(len(list_of_scenario_sets)):
+            crossing_x_axis.append(list_of_scenario_sets[i].fittedCurve.get_zero()[degree-1])
+            diffs.append(crossing_x_axis[i]-crossing_x_axis[0])
 
-        stat = Stat.DifferenceStatPaired('Diff', x=new_obss, y_ref=base_obss)
-        print(stat.get_mean())
+        return diffs
+
+        # # difference by curve
+        # crossings = []
+        # for i in range(len(list_of_scenario_sets)):
+        #     row = []
+        #     for j in range(len(list_of_scenario_sets[i].fittedCurves)):
+        #         row.append(list_of_scenario_sets[i].fittedCurves[j].get_zero()[degree - 1])
+        #     print(row)
+        #     crossings.append(row)
+        #
+        # for i in range(1, len(crossings)):
+        #     stat = Stat.DifferenceStatPaired(name='Diff',
+        #                                      x=crossings[i],
+        #                                      y_ref=crossings[0])
+        #     print(stat.get_mean())
