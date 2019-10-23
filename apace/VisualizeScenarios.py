@@ -10,7 +10,8 @@ def plot_sets_of_scenarios(list_of_scenario_sets,
                            labels=('', ''),
                            title='fig.png',
                            fig_size=None,
-                           l_b_r_t=None):
+                           l_b_r_t=None,
+                           file_name=None):
     """
     :param list_of_scenario_sets: (list) of sets of scenarios to display on the CE plane
     :param x_range: x range
@@ -22,6 +23,7 @@ def plot_sets_of_scenarios(list_of_scenario_sets,
     :param labels: (tuple) x_ and y-axis labels
     :param title: (string) title of the graph
     :param fig_size: (tuple) figure size
+    :param file_name: (string) file name
     """
 
     # populate series
@@ -45,7 +47,8 @@ def plot_sets_of_scenarios(list_of_scenario_sets,
         show_error_bars=True,
         wtp_multiplier=wtp_multiplier,
         fig_size=fig_size,
-        l_b_r_t=l_b_r_t)
+        l_b_r_t=l_b_r_t,
+        file_name=file_name)
 
 
 def multi_plot_series(list_list_series,
@@ -58,8 +61,7 @@ def multi_plot_series(list_list_series,
                       labels=('', ''),
                       fig_size=None,
                       l_b_r_t=None,
-                      file_name='fig.png',
-                      success_A_or_B_per_lifespan=1):
+                      file_name='fig.png'):
     """
     :param list_list_series: (list) of list of series to display on the multiple CE plane
     :param x_range: x range
@@ -94,7 +96,6 @@ def multi_plot_series(list_list_series,
         y_range=y_range,
         show_error_bars=True,
         wtp_multiplier=wtp_multiplier,
-        success_A_or_B_per_lifespan=success_A_or_B_per_lifespan,
         fig_size=fig_size,
         l_b_r_t=l_b_r_t
     )

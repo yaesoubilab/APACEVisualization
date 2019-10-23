@@ -657,7 +657,7 @@ class SetOfScenarios:
 
         ax.set_title(title)
         if len(list_of_scenario_sets) > 1:
-            ax.legend(loc=2)
+            ax.legend(loc=2, fontsize='small')
 
         # x and y ranges
         if x_range is not None:
@@ -677,7 +677,8 @@ class SetOfScenarios:
                                    show_error_bars=False,
                                    wtp_multiplier=1,
                                    fig_size=None,
-                                   l_b_r_t=None):
+                                   l_b_r_t=None,
+                                   file_name=None):
 
         fig = plt.figure(figsize=fig_size)
         ax = fig.add_subplot(111)
@@ -701,8 +702,11 @@ class SetOfScenarios:
                             right=l_b_r_t[2],
                             top=l_b_r_t[3],)
 
-        fig.savefig('figures_national/' + Support.proper_file_name(title) + '.png', dpm=300) # read more about 'bbox_inches = "tight"'
-        fig.show()
+        if file_name is None:
+            fig.savefig(Support.proper_file_name(title) + '.png', dpm=300) # read more about 'bbox_inches = "tight"'
+        else:
+            fig.savefig(file_name + '.png', dpm=300)
+        #fig.show()
 
     @staticmethod
     def multi_plot_scenario_sets(list_of_plots,
@@ -714,7 +718,6 @@ class SetOfScenarios:
                                  y_range=None,
                                  show_error_bars=False,
                                  wtp_multiplier=1,
-                                 success_A_or_B_per_lifespan=1,
                                  fig_size=(7.5, 3),
                                  l_b_r_t=None):
 
@@ -762,12 +765,11 @@ class SetOfScenarios:
 
     @staticmethod
     def get_expected_diff_from_origin(list_of_scenario_sets,
-                                  degree=2, interval='p',
-                                  outcome_to_project=''):
+                                      degree=2):
 
         # fit curves
         for set_of_scenario in list_of_scenario_sets:
-            set_of_scenario.fit_curves(degree=degree)
+            #set_of_scenario.fit_curves(degree=degree)
             set_of_scenario.fit_curve(degree=degree)
 
         # expected difference
