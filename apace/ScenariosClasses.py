@@ -691,21 +691,21 @@ class SetOfScenarios:
                                     show_error_bars=show_error_bars,
                                     wtp_multiplier=wtp_multiplier)
 
-        # labels and legend
+        # labels
         ax.set_xlabel(x_label)
         ax.set_ylabel(y_label)
 
         #plt.tight_layout()
         if l_b_r_t is not None:
             fig.subplots_adjust(left=l_b_r_t[0],
-                            bottom=l_b_r_t[1],
-                            right=l_b_r_t[2],
-                            top=l_b_r_t[3],)
+                                bottom=l_b_r_t[1],
+                                right=l_b_r_t[2],
+                                top=l_b_r_t[3],)
 
         if file_name is None:
             fig.savefig(Support.proper_file_name(title) + '.png', dpm=300) # read more about 'bbox_inches = "tight"'
         else:
-            fig.savefig(file_name + '.png', dpm=300)
+            fig.savefig(file_name + '.png', dpi=300, bbox_inches='tight')
         #fig.show()
 
     @staticmethod

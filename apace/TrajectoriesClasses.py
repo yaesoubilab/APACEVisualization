@@ -152,7 +152,7 @@ class TrajsDataFrame:
         """
         :param csv_file_name: file name of the csv file
         """
-
+        self.NumOfSims = 0
         self.allTrajs ={}  # maps trajectory names to instances of TrajOneOutcomeMultipleReps
 
         # read csv file
@@ -223,6 +223,8 @@ class TrajsDataFrame:
 
             else:
                 col_idx += 1
+
+        self.NumOfSims = n_reps
 
     def __plot_single_panel(self, ax, plot_info, calibration_info=None, trajs_ids_to_display=None):
         """
