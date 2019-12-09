@@ -638,7 +638,8 @@ class SetOfScenarios:
                 print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
 
                 # store root
-                incr_eff_life.append(quad_reg.get_zero()[POLY_DEGREES-1])
+                selected_root = max(quad_reg.get_zero())
+                incr_eff_life.append(selected_root)
                 if i > 0:
                     print('Increase in effective life of A and B:', round(incr_eff_life[i]-incr_eff_life[0], 2))
 
@@ -777,7 +778,8 @@ class SetOfScenarios:
         diffs = []
 
         for i in range(len(list_of_scenario_sets)):
-            crossing_x_axis.append(list_of_scenario_sets[i].fittedCurve.get_zero()[degree-1])
+            selected_root = max(list_of_scenario_sets[i].fittedCurve.get_zero())
+            crossing_x_axis.append(selected_root)
             diffs.append(crossing_x_axis[i]-crossing_x_axis[0])
 
         return diffs

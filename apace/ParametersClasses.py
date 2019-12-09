@@ -114,13 +114,13 @@ class Parameters:
                 file_name = posterior_fig_loc + '\Par-' + str(par_id) + ' ' + helper.proper_file_name(key)
 
                 # find title
-                if priors[par_id][Column.TITLE.value] == '':
+                if priors[par_id][Column.TITLE.value] in ('', None):
                     title = priors[par_id][Column.NAME.value]
                 else:
                     title = priors[par_id][Column.TITLE.value]
 
                 # find multiplier
-                if priors[par_id][Column.MULTIPLIER.value] == '':
+                if priors[par_id][Column.MULTIPLIER.value] in ('', None):
                     multiplier = 1
                 else:
                     multiplier = float(priors[par_id][Column.MULTIPLIER.value])
@@ -186,11 +186,11 @@ class Parameters:
                     multip = 1
                 else:
                     deci = priors[par_id][Column.DECI.value]
-                    deci = 0 if deci == '' else deci
+                    deci = 0 if deci is None else deci
                     form = priors[par_id][Column.FORMAT.value]
                     multip = priors[par_id][Column.MULTIPLIER.value]
 
-                if multip == '':
+                if multip is None:
                     data = value
                 else:
                     multip = float(multip)
