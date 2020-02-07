@@ -13,7 +13,7 @@ daly_cost = IO.read_csv_cols(file_name='csv_files/PartialRankCorrelation/TBOutpu
 
 # read parameter samples
 parameter_values = IO.read_csv_cols_to_dictionary(
-    file_name='csv_files/PartialRankCorrelation/TBParms.csv',
+    file_name='csv_files/SampledParams.csv',
     delimiter=',',
     if_convert_float=True)
 
