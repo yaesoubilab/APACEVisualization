@@ -4,10 +4,10 @@ import apace.ParametersClasses as Param
 paramDict = Param.Parameters('csv_files\SampledParams.csv')
 
 # calculate parameter estimates and uncertainty intervals
-paramDict.calculate_means_and_intervals(0.05)
+paramDict.calculate_means_and_intervals(poster_file='Posteriors.csv')
 
 # parameters ID
-ids=[2, 3, 4, 9, 77, 78]
+ids=[2, 3, 4, 7, 8, 9, 77, 78]
 ids.extend(range(85, 92+1))
 ids.extend([129, 137, 145, 161])    # progression probability
 ids.extend([163, 164, 165])         # reactivation rate (HIV-)
@@ -20,4 +20,4 @@ ids.extend(range(250, 253))
 
 paramDict.plot_histograms(ids=ids,
                           csv_file_name_prior='csv_files\ParamPriorDists.csv',
-                          posterior_fig_loc='figures_national\posteriors')
+                          posterior_fig_loc='figures\posteriors')

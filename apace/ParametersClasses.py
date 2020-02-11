@@ -78,7 +78,7 @@ class Parameters:
         if csv_file_name_prior is not None:
             priors = IO.read_csv_rows(
                 file_name=csv_file_name_prior,
-                if_del_first_row=True,
+                if_ignore_first_row=True,
                 delimiter=',',
                 if_convert_float=True
             )
@@ -153,10 +153,11 @@ class Parameters:
         """
 
         # read prior distributions
+        priors = None
         if csv_file_name_prior is not None:
             priors = IO.read_csv_rows(
                 file_name=csv_file_name_prior,
-                if_del_first_row=True,
+                if_ignore_first_row=True,
                 delimiter=',',
                 if_convert_float=True
             )
@@ -181,12 +182,12 @@ class Parameters:
             if if_record:
 
                 if priors is None:
-                    deci = 0,
-                    form = '',
+                    decimal = 3
+                    form = ''
                     multip = 1
                 else:
-                    deci = priors[par_id][Column.DECI.value]
-                    deci = 0 if deci is None else deci
+                    decimal = priors[par_id][Column.DECI.value]
+                    decimal = 0 if decimal is None else decimal
                     form = priors[par_id][Column.FORMAT.value]
                     multip = priors[par_id][Column.MULTIPLIER.value]
 
@@ -198,8 +199,8 @@ class Parameters:
 
                 sum_stat = Stat.SummaryStat(name=key, data=data)
 
-                mean_text = F.format_number(number=sum_stat.get_mean(), deci=deci, format=form)
-                PI_text = F.format_interval(interval=sum_stat.get_PI(significance_level), deci=deci, format=form)
+                mean_text = F.format_number(number=sum_stat.get_mean(), deci=decimal, format=form)
+                PI_text = F.format_interval(interval=sum_stat.get_PI(significance_level), deci=decimal, format=form)
 
                 results.append(
                     [par_id, key, mean_text, PI_text]

@@ -73,26 +73,24 @@ def populate_cea():
     # CBA
     #del series[0].CBA.strategies[1:3]
     plt.rc('font', size=9)  # fontsize of texts
-    series[0].CBA.graph_incremental_NMBs(
-        min_wtp=0,
-        max_wtp=5000,
+    series[0].CBA.plot_incremental_nmbs(
         title='',
         y_label='Incremental Net Monetary Benefit ($)',
         x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
         interval_type='p',
-        transparency=0.1,
+        transparency_lines=0.1,
         show_legend=True,
         figure_size=(6, 5)
     )
     print('WTP range with the highest expected NMB:')
-    print(series[0].CBA.get_highest_exp_NMB_wtp_range())
+    # print(series[0].CBA.get_wtp_ranges_with_highest_exp_nmb())
 
-    series[0].CBA.graph_acceptability_curves(
+    series[0].CBA.plot_acceptability_curves(
         #title='Cost-Effectiveness Acceptability Curves',
         x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
         y_label='Probability of Resulting in the Highest NMB',
         y_range=[0, 1],
-        figure_size=(4, 3.6),
+        fig_size=(4, 3.6),
         legends=['Base',
                  'First-year follow-up',
                  'Annual follow-up',
@@ -101,7 +99,7 @@ def populate_cea():
         file_name='figures/cea/CEAC ' + scenario_name + '.png'
     )
     print('WTP range with the highest probability of being optimal:')
-    print(series[0].CBA.get_prob_highest_NMB_wtp_range())
+    # print(series[0].CBA.get_wtp_range_with_highest_prob_of_optimal())
 
     # print dCost, dEffect and cost-effectiveness ratio with respect to the base
     print('\nRelative cost to Base, Relative DALY to base, CER')
@@ -224,9 +222,11 @@ def populate_cea():
     )
 
 
-for p_uptake in [0.5, 0.75, 1]:
-    for p_drop in [0.1, 0.15, 0.25]:
-        PROB_UPTAKE = p_uptake
-        PROB_DROPOUT = p_drop
-        populate_cea()
+populate_cea()
+
+# for p_uptake in [0.5, 0.75, 1]:
+#     for p_drop in [0.1, 0.15, 0.25]:
+#         PROB_UPTAKE = p_uptake
+#         PROB_DROPOUT = p_drop
+#         populate_cea()
 

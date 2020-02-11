@@ -324,13 +324,14 @@ class TrajsDataFrame:
             output_figure(plt, plot_info.fileName)
 
     def plot_multi_panel(self, n_rows, n_cols, file_name,
-                         list_plot_info, n_trajs_to_display=None,
+                         list_plot_info, trajs_ids_to_display=None,
                          list_calib_info=None, show_subplot_labels=False,
                          share_x=False, share_y=False, figure_size=None):
         """
         plots a figure with multiple panels
         :param n_rows: number of rows
         :param n_cols: number of columns
+        :param trajs_ids_to_display: list of trajectory ids to display
         :param list_plot_info: list of plot information
         :param list_calib_info: list of calibration information
         :param show_subplot_labels: set True to label subplots as A), B), ...
@@ -372,7 +373,7 @@ class TrajsDataFrame:
                 else:
                     plot_info = list_plot_info[i * n_cols + j]
                     calib_info = list_calib_info[i * n_cols + j] if list_calib_info else None
-                    self.__plot_single_panel(ax, plot_info, calib_info, n_trajs_to_display)
+                    self.__plot_single_panel(ax, plot_info, calib_info, trajs_ids_to_display)
 
                 # remove unnecessary labels for shared axis
                 if share_x and i < n_rows - 1:

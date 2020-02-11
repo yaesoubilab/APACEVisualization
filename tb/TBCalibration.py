@@ -332,8 +332,9 @@ list_plot_calib_info.append(
 
 # plot multi_plot
 df.plot_multi_panel(4, 3,
-                    file_name='Calibration',
+                    file_name='figures\Calibration',
                     list_plot_info=list_plot_info,
                     list_calib_info=list_plot_calib_info,
                     figure_size=(6.4, 7),
-                    share_x=True)
+                    share_x=True,
+                    trajs_ids_to_display=range(500))

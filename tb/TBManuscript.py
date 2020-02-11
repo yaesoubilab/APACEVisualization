@@ -116,6 +116,7 @@ scenario_df.plot_relative_diff_by_scenario(
     outcome_names=['Total: Active TB Incidence', 'Total: TB Deaths'],
     #title='Percentage of incidence TB cases\nand deaths averted',
     x_label='Percentage Averted',
+    x_range=[-15, 45],
     y_labels=[
         'First-year follow-up',
         'Annual follow-up',

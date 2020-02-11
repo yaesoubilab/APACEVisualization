@@ -122,7 +122,7 @@ class ScenarioDataFrame:
                                        scenario_name_base,
                                        scenario_names,
                                        outcome_names,
-                                       title=None, x_label=None,
+                                       title=None, x_label=None, x_range=None,
                                        y_labels=None,
                                        markers=('o', 'D'),
                                        colors=('red', 'blue'),
@@ -182,6 +182,8 @@ class ScenarioDataFrame:
             ax.set_xlabel(x_label)
         if title:
             ax.set_title(title)
+        if x_range:
+            ax.set_xlim(x_range)
         ax.legend(legend, fontsize='small')
         plt.axvline(x=0, linestyle='--', color='black', linewidth=1)
         plt.tight_layout()
