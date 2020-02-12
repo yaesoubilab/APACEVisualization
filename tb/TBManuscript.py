@@ -126,7 +126,7 @@ scenario_df.plot_relative_diff_by_scenario(
     distance_from_horizontal_axes=0.6,
     fig_size=(4.6, 3.2),
     distance_labels_y_axis=100,
-    filename='figures/ComparativeEffect'
+    filename='results/ComparativeEffect'
 )
 
 

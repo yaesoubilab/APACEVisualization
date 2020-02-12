@@ -96,7 +96,7 @@ def populate_cea():
                  'Annual follow-up',
                  'First-year follow-up with limited 2°IPT',
                  'Annual follow-up with continuous 2°IPT'],
-        file_name='figures/cea/CEAC ' + scenario_name + '.png'
+        file_name='results/cea/CEAC ' + scenario_name + '.png'
     )
     print('WTP range with the highest probability of being optimal:')
     # print(series[0].CBA.get_wtp_range_with_highest_prob_of_optimal())
@@ -191,7 +191,7 @@ def populate_cea():
     ax.axhline(y=0, linestyle='--', color='black', linewidth=.5)
 
     plt.tight_layout()
-    plt.savefig('figures/cea/'
+    plt.savefig('results/cea/'
                 + 'CEA ' + scenario_name
                 + '.png', dpi=300)
 
@@ -218,7 +218,7 @@ def populate_cea():
         y_range=[-2000, 2000],
         column_titles=titles,
         row_titles=titles,
-        file_name='figures\pairwise_cea.png'
+        file_name='results\pairwise_cea.png'
     )
 
 

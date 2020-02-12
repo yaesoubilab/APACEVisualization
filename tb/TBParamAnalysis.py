@@ -20,4 +20,4 @@ ids.extend(range(250, 253))
 
 paramDict.plot_histograms(ids=ids,
                           csv_file_name_prior='csv_files\ParamPriorDists.csv',
-                          posterior_fig_loc='figures\posteriors')
+                          posterior_fig_loc='results\posteriors')
