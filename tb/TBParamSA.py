@@ -11,6 +11,12 @@ scenario_keys = ['Base',
 # data frame for scenario analysis
 scenario_df = Sce.ScenarioDataFrame('csv_files\TBScenarios.csv')
 
+# read parameter samples
+parameter_values = IO.read_csv_cols_to_dictionary(
+    file_name='csv_files/SampledParams.csv',
+    delimiter=',',
+    if_convert_float=True)
+
 # create a dictionary of DALYs and cost
 dict_DALY = {}
 dict_cost = {}
@@ -18,26 +24,22 @@ for key in scenario_keys:
     dict_DALY[key] = scenario_df.scenarios[key].outcomes['DALY']
     dict_cost[key] = scenario_df.scenarios[key].outcomes['Total Cost']
 
-# read parameter samples
-parameter_values = IO.read_csv_cols_to_dictionary(
-    file_name='csv_files/SampledParams.csv',
-    delimiter=',',
-    if_convert_float=True)
-
 # do DALY
-fit = SA.LinearFit(
+fit = SA.ParameterSA(
     dic_parameter_values=parameter_values,
     dic_output_values=dict_DALY
 )
 
-fit.export_to_csv(file_name='results/sensitivity_analysis/LinearFit-DALY.csv',
+fit.export_to_csv(file_name_linear_fit='results/sensitivity_analysis/LinearFit-DALY.csv',
+                  file_name_prcc='results/sensitivity_analysis/PRCC-DALY.csv',
                   max_p_value=0.1)
 
 # do cost
-fit = SA.LinearFit(
+fit = SA.ParameterSA(
     dic_parameter_values=parameter_values,
     dic_output_values=dict_cost
 )
 
-fit.export_to_csv(file_name='results/sensitivity_analysis/LinearFit-Cost.csv',
+fit.export_to_csv(file_name_linear_fit='results/sensitivity_analysis/LinearFit-Cost.csv',
+                  file_name_prcc='results/sensitivity_analysis/PRCC-Cost.csv',
                   max_p_value=0.1)
