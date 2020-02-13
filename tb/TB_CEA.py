@@ -9,10 +9,10 @@ PROB_UPTAKE = 0.75      # 0.5, 0.75, 1
 PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
 
 
-def populate_cea():
+def populate_cea(prob_uptake, prob_dropout):
 
-    scenario_name = 'U{:.{prec}f}% '.format(PROB_UPTAKE * 100, prec=0) \
-                    + 'D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
+    scenario_name = 'U{:.{prec}f}% '.format(prob_uptake * 100, prec=0) \
+                    + 'D{:.{prec}f}%'.format(prob_dropout * 100, prec=0)
     print('Results for:', scenario_name)
     # conditions of variables to define scenarios to display on the cost-effectiveness plane
     # here we want scenarios with
@@ -21,8 +21,8 @@ def populate_cea():
     # 'IPT' = any
     varConditions = [
         Cls.VariableCondition('Prob {Tc+ | Tc}',
-                              minimum=PROB_UPTAKE,
-                              maximum=PROB_UPTAKE,
+                              minimum=prob_uptake,
+                              maximum=prob_uptake,
                               if_included_in_label=False),
         Cls.VariableCondition('Follow-Up (Tc+>1)',
                               minimum=0,
@@ -33,7 +33,7 @@ def populate_cea():
                                   (1, 'Annual follow-up')]
                               ),
         Cls.VariableCondition('Prob {Drop-Out in Tc+>1}',
-                              values=(PROB_DROPOUT, 0),
+                              values=(prob_dropout, 0),
                               if_included_in_label=False),
         Cls.VariableCondition('IPT',
                               minimum=0,
@@ -50,8 +50,8 @@ def populate_cea():
 
     # series to display on the cost-effectiveness plane
     series = [
-        Cls.SetOfScenarios(name='U{:.{prec}f}%'.format(PROB_UPTAKE * 100, prec=0)
-                                +'-D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0),
+        Cls.SetOfScenarios(name='U{:.{prec}f}%'.format(prob_uptake * 100, prec=0)
+                                +'-D{:.{prec}f}%'.format(prob_dropout * 100, prec=0),
                            scenario_df=dfScenarios,
                            color='#4D4D4D',  # '#808A87',
                            conditions=varConditions,
@@ -81,8 +81,7 @@ def populate_cea():
         transparency_lines=0.1,
         show_legend=True,
         figure_size=(6, 5),
-        file_name='results/cea/NMB-' + 'U{:.{prec}f}%'.format(PROB_UPTAKE * 100, prec=0)
-                                + '-D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
+        file_name='results/cea/NMB-' + scenario_name + '.png'
     )
     print('WTP range with the highest expected NMB:')
     # print(series[0].CBA.get_wtp_ranges_with_highest_exp_nmb())
@@ -187,7 +186,7 @@ def populate_cea():
         ax.set_ylim(-1000, 1500)
     else:
         ax.set_xlim(-500, 6500)  # (-500, 6500)
-        ax.set_ylim(-150, 250)  # (-150, 850)
+        ax.set_ylim(-250, 200)  # (-150, 850)
 
     ax.axvline(x=0, linestyle='--', color='black', linewidth=.5)
     ax.axhline(y=0, linestyle='--', color='black', linewidth=.5)
@@ -220,15 +219,13 @@ def populate_cea():
         y_range=[-2000, 2000],
         column_titles=titles,
         row_titles=titles,
-        file_name='results\pairwise_cea.png'
+        file_name='results\cea\pairwise-' + scenario_name + '.png'
     )
 
 
-populate_cea()
+# populate_cea(prob_uptake=PROB_UPTAKE, prob_dropout=PROB_DROPOUT)
 
-# for p_uptake in [0.5, 0.75, 1]:
-#     for p_drop in [0.1, 0.15, 0.25]:
-#         PROB_UPTAKE = p_uptake
-#         PROB_DROPOUT = p_drop
-#         populate_cea()
+for p_uptake in [0.5, 0.75, 1]:
+    for p_drop in [0.1, 0.15, 0.25]:
+        populate_cea(prob_uptake=p_uptake,prob_dropout=p_drop)
 
