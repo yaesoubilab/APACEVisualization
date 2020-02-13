@@ -4,7 +4,7 @@ import apace.ParametersClasses as Param
 paramDict = Param.Parameters('csv_files\SampledParams.csv')
 
 # calculate parameter estimates and uncertainty intervals
-paramDict.calculate_means_and_intervals(poster_file='Posteriors.csv')
+paramDict.calculate_means_and_intervals(poster_file='results\Posteriors.csv')
 
 # parameters ID
 ids=[2, 3, 4]                       # TB infectivity

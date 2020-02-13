@@ -80,7 +80,9 @@ def populate_cea():
         interval_type='p',
         transparency_lines=0.1,
         show_legend=True,
-        figure_size=(6, 5)
+        figure_size=(6, 5),
+        file_name='results/cea/NMB-' + 'U{:.{prec}f}%'.format(PROB_UPTAKE * 100, prec=0)
+                                + '-D{:.{prec}f}%'.format(PROB_DROPOUT * 100, prec=0)
     )
     print('WTP range with the highest expected NMB:')
     # print(series[0].CBA.get_wtp_ranges_with_highest_exp_nmb())

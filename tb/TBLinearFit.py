@@ -30,7 +30,7 @@ fit = SA.LinearFit(
     dic_output_values=dict_DALY
 )
 
-fit.export_to_csv(file_name='results/LinearFit-DALY.csv',
+fit.export_to_csv(file_name='results/sensitivity_analysis/LinearFit-DALY.csv',
                   max_p_value=0.1)
 
 # do cost
@@ -39,5 +39,5 @@ fit = SA.LinearFit(
     dic_output_values=dict_cost
 )
 
-fit.export_to_csv(file_name='results/LinearFit-Cost.csv',
+fit.export_to_csv(file_name='results/sensitivity_analysis/LinearFit-Cost.csv',
                   max_p_value=0.1)
