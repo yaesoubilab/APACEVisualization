@@ -142,11 +142,12 @@ class Parameters:
 
     def calculate_means_and_intervals(self,
                                       poster_file='ParameterEstimates.csv',
-                                      significance_level=0.05,
+                                      significance_level=0.05, deci=3,
                                       ids=None, csv_file_name_prior=None):
         """ calculate the mean and credible intervals of parameters specified by ids
         :param poster_file: csv file where the posterior ranges should be stored
         :param significance_level:
+        :param deci:
         :param ids:
         :param csv_file_name_prior: (string) filename where parameter prior ranges are located
         :return:
@@ -182,7 +183,7 @@ class Parameters:
             if if_record:
 
                 if priors is None:
-                    decimal = 3
+                    decimal = deci
                     form = ''
                     multip = 1
                 else:

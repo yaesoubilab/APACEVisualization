@@ -658,7 +658,7 @@ def output_figure(plt, file_name):
         plt.show()
     elif OUTPUT_TYPE == OutType.JPG:
         try:
-            plt.savefig(Support.proper_file_name(file_name) + ".png", dpi=300)
+            plt.savefig(Support.proper_file_name(file_name) + ".png", dpi=600)
         except:
             print('Could not save', file_name)
     elif OUTPUT_TYPE == OutType.PDF:

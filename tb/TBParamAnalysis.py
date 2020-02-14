@@ -3,9 +3,6 @@ import apace.ParametersClasses as Param
 # create a dictionary of parameters
 paramDict = Param.Parameters('csv_files\SampledParams.csv')
 
-# calculate parameter estimates and uncertainty intervals
-paramDict.calculate_means_and_intervals(poster_file='results\Posteriors.csv')
-
 # parameters ID
 ids=[2, 3, 4]                       # TB infectivity
 ids.extend([7, 8, 9])               # HIV infectivity
@@ -20,6 +17,10 @@ ids.extend(range(247, 247+3))             # time until detection
 ids.extend(range(254, 254+3))
 ids.extend(range(261, 261+3))
 ids.extend(range(268, 268+3))
+
+# calculate parameter estimates and uncertainty intervals
+paramDict.calculate_means_and_intervals(poster_file='results\Posteriors.csv',
+                                        ids=ids, deci=4)
 
 paramDict.plot_histograms(ids=ids,
                           csv_file_name_prior='csv_files\ParamPriorDists.csv',

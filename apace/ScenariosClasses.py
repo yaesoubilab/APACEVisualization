@@ -763,7 +763,7 @@ class SetOfScenarios:
         # for SMDM
         # plt.subplots_adjust(left=0.12, bottom=0.15, right=.95, top=0.85,
         #                     wspace=0.2, hspace=0)
-        plt.savefig(file_name + '.png', dpi=300)
+        plt.savefig(file_name + '.png', dpi=600)
         plt.show()
 
     @staticmethod
