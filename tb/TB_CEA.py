@@ -68,19 +68,21 @@ def populate_cea(prob_uptake, prob_dropout):
         interval_type='p',
         effect_multiplier=1,
         cost_multiplier=1 / 1e3,
-        wtp_range=[0, 2000])
+        wtp_range=[0, 1000])
 
     # CBA
     #del series[0].CBA.strategies[1:3]
     plt.rc('font', size=9)  # fontsize of texts
     series[0].CBA.plot_incremental_nmbs(
         title='',
-        y_label='Incremental Net Monetary Benefit ($)',
+        y_label='Incremental Net Monetary Benefit (Million $)',
         x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
-        interval_type='p',
-        transparency_lines=0.1,
+        interval_type='n',
+        transparency_lines=0.5,
         show_legend=True,
-        figure_size=(6, 5),
+        y_range=(-1, 5),
+        y_axis_multiplier=1/1000000, y_axis_decimal=1,
+        figure_size=(4, 3.6),
         file_name='results/cea/NMB-' + scenario_name + '.png'
     )
     print('WTP range with the highest expected NMB:')
