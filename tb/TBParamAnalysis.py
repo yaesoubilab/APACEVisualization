@@ -18,6 +18,29 @@ ids.extend(range(254, 254+3))
 ids.extend(range(261, 261+3))
 ids.extend(range(268, 268+3))
 
+# initial conditions
+initial_id = 456
+ids.extend(range(initial_id, initial_id+3))
+ids.extend(range(initial_id+4, initial_id+4+2))
+ids.extend(range(initial_id+7, initial_id+7+2))
+ids.extend(range(initial_id+10, initial_id+10+2))
+ids.extend(range(initial_id+13, initial_id+13+2))
+
+initial_id = 472
+ids.extend([initial_id,
+            initial_id+2,
+            initial_id+4,
+            initial_id+5,
+            initial_id+7,
+            initial_id+9,
+            initial_id+11,
+            initial_id+12,
+            initial_id+14,
+            initial_id+16,
+            initial_id+18,
+            initial_id+19])
+
+
 # calculate parameter estimates and uncertainty intervals
 paramDict.calculate_means_and_intervals(poster_file='results\Posteriors.csv',
                                         ids=ids, deci=4)
