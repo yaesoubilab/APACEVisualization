@@ -9,6 +9,7 @@ ids.extend([7, 8, 9])               # HIV infectivity
 ids.extend([95])                    # progression to HIV | IC
 ids.extend([96])                    # ration of dead rate exp to naive
 ids.extend(range(103, 103+8))       # partial immunity
+ids.extend([113])                   # ratio of reactivation >1 to <1
 ids.extend([147, 155, 163, 179])    # progression probability
 ids.extend(range(181, 181+3))         # reactivation rate (HIV-)
 ids.extend(range(188, 188+3))         # reactivation rate (HIV+nIC)
