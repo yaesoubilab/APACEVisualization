@@ -88,7 +88,7 @@ def populate_cea(prob_uptake, prob_dropout):
         file_name='results/cea/NMB-' + analysis_name + '.png'
     )
     print('WTP range with the highest expected NMB:')
-    # print(series[0].CBA.get_wtp_ranges_with_highest_exp_nmb())
+    print(series[0].CBA.find_optimal_switching_wtp_values(deci=1))
 
     series[0].CBA.plot_acceptability_curves(
         #title='Cost-Effectiveness Acceptability Curves',
@@ -227,9 +227,9 @@ def populate_cea(prob_uptake, prob_dropout):
     )
 
 
-# populate_cea(prob_uptake=PROB_UPTAKE, prob_dropout=PROB_DROPOUT)
+populate_cea(prob_uptake=PROB_UPTAKE, prob_dropout=PROB_DROPOUT)
 
-for p_uptake in [0.5, 0.75, 1]:
-    for p_drop in [0.1, 0.15, 0.25]:
-        populate_cea(prob_uptake=p_uptake,prob_dropout=p_drop)
+# for p_uptake in [0.5, 0.75, 1]:
+#     for p_drop in [0.1, 0.15, 0.25]:
+#         populate_cea(prob_uptake=p_uptake,prob_dropout=p_drop)
 
