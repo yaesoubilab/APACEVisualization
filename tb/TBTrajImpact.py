@@ -1,6 +1,8 @@
 import apace.TrajectoriesClasses as Vis
 from tb import TBSettings as Set
 
+SHOW_INTERVALS = True
+
 # specify the output (show, save as .jpg, or save as .pdf)
 Vis.OUTPUT_TYPE = Vis.OutType.JPG
 Vis.X_LABEL = 'Year'
@@ -48,7 +50,7 @@ list_plot_info.append(
         file_name='Impact-TBMortality')
 )
 
-eff = Vis.TrajImpact(
+eff = Vis.ProjectedTrajectories(
     scenarios_csv_files=[
         'csv_files/TBTrajs0Base.csv',
         'csv_files/TBTrajs1Yr1NoIPT.csv',
@@ -67,8 +69,9 @@ eff = Vis.TrajImpact(
     time_0=Set.TIME_0,
     warm_up=Set.PROJ-Set.TIME_0-2,
     period_length=1,
-    scenario_colors=['gray', 'red', 'blue', 'green', 'orange']
+    scenario_colors=['gray', 'red', 'blue', 'green', 'orange'],
+    show_intervals=SHOW_INTERVALS, alpha=0.5
 )
 
-eff.plot_all()
-eff.plot_multi_panel()
+eff.plot_all(fig_folder='results/impact_time_series/')
+eff.plot_multi_panel(file_name='results/impact_time_series/all.png')

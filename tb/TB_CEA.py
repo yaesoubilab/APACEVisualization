@@ -11,9 +11,11 @@ PROB_DROPOUT = 0.15     # 0.1, 0.15, 0.25,
 
 def populate_cea(prob_uptake, prob_dropout):
 
-    scenario_name = 'U{:.{prec}f}% '.format(prob_uptake * 100, prec=0) \
+    # find the name of this analysis
+    analysis_name = 'U{:.{prec}f}% '.format(prob_uptake * 100, prec=0) \
                     + 'D{:.{prec}f}%'.format(prob_dropout * 100, prec=0)
-    print('Results for:', scenario_name)
+    print('Results for:', analysis_name)
+
     # conditions of variables to define scenarios to display on the cost-effectiveness plane
     # here we want scenarios with
     # 'Prob {Tc+ | Tc}' = PROB,
@@ -83,7 +85,7 @@ def populate_cea(prob_uptake, prob_dropout):
         y_range=(-1, 5),
         y_axis_multiplier=1/1000000, y_axis_decimal=1,
         figure_size=(4, 3.6),
-        file_name='results/cea/NMB-' + scenario_name + '.png'
+        file_name='results/cea/NMB-' + analysis_name + '.png'
     )
     print('WTP range with the highest expected NMB:')
     # print(series[0].CBA.get_wtp_ranges_with_highest_exp_nmb())
@@ -99,7 +101,7 @@ def populate_cea(prob_uptake, prob_dropout):
                  'Annual follow-up',
                  'First-year follow-up with limited 2°IPT',
                  'Annual follow-up with continuous 2°IPT'],
-        file_name='results/cea/CEAC ' + scenario_name + '.png'
+        file_name='results/cea/CEAC ' + analysis_name + '.png'
     )
     print('WTP range with the highest probability of being optimal:')
     # print(series[0].CBA.get_wtp_range_with_highest_prob_of_optimal())
@@ -195,7 +197,7 @@ def populate_cea(prob_uptake, prob_dropout):
 
     plt.tight_layout()
     plt.savefig('results/cea/'
-                + 'CEA ' + scenario_name
+                + 'CEA ' + analysis_name
                 + '.png', dpi=300)
 
     # pairwise
@@ -221,7 +223,7 @@ def populate_cea(prob_uptake, prob_dropout):
         y_range=[-2000, 2000],
         column_titles=titles,
         row_titles=titles,
-        file_name='results\cea\pairwise-' + scenario_name + '.png'
+        file_name='results\cea\pairwise-' + analysis_name + '.png'
     )
 
 

@@ -464,7 +464,7 @@ class PlotCalibrationInfo:
         self.feasibleRangeInfo = feasible_range_info
 
 
-class TrajImpact:
+class ProjectedTrajectories:
     def __init__(self,
                  scenarios_csv_files,
                  scenario_names,
@@ -472,23 +472,27 @@ class TrajImpact:
                  time_0=0,
                  warm_up=0,
                  period_length=1,
-                 scenario_colors=None
+                 scenario_colors=None,
+                 show_intervals=False, alpha=0.05
                  ):
         """
         :param scenarios_csv_files: (list of strings) list of csv files for each scenarios
         :param scenario_names: (list of strings) list of scenario names
         :param fig_infos: (list) list of figure info
         :param scenario_colors: (list) of colors
+        :param show_intervals: set true to show uncertainty intervals
         """
 
         self.figInfos = fig_infos   # list of figure information
         self.scenarioNames = scenario_names
         self.scenarioColors = scenario_colors
-        self.dictImpactMeasures = {}  # dictionary of impact measures
+        self.dictTrajMeans = {}         # dictionary of projected [times, means]
+        self.dictTrajIntervals = {}     # dictionary of intervals for projected means
 
         # initialize dictionaries of impact measures
         for info in fig_infos:
-            self.dictImpactMeasures[info.trajName] = {}
+            self.dictTrajMeans[info.trajName] = {}
+            self.dictTrajIntervals[info.trajName] = {}
 
         for i, csv_file in enumerate(scenarios_csv_files):
             df = TrajsDataFrame(csv_file,
@@ -500,8 +504,11 @@ class TrajImpact:
                                 warmup_epi_time=warm_up+1)
 
             for info in fig_infos:
-                self.dictImpactMeasures[info.trajName][scenario_names[i]] \
+                self.dictTrajMeans[info.trajName][scenario_names[i]] \
                     = df.allTrajs[info.trajName].get_trajs_mean()
+                if show_intervals:
+                    self.dictTrajIntervals[info.trajName][scenario_names[i]] \
+                        = df.allTrajs[info.trajName].get_trajs_percentile_interval(alpha=alpha)
 
     def plot_all(self, fig_folder='figures/'):
 
@@ -511,7 +518,7 @@ class TrajImpact:
         #plt.rc('axes', titleweight='semibold')  # fontweight of the figure title
 
         panel_idx = 0
-        for key, dict_mean_trajs in self.dictImpactMeasures.items():
+        for key, dict_mean_trajs in self.dictTrajMeans.items():
 
             legends = []
             fig, ax = plt.subplots(figsize=self.figInfos[panel_idx].figureSize)
@@ -533,6 +540,22 @@ class TrajImpact:
                     self.figInfos[panel_idx].yMultiplier * means,
                     color=self.scenarioColors[i]
                 )
+
+                # plot intervals
+                if len(self.dictTrajIntervals[key]) > 0:
+
+                    ls = []
+                    us = []
+                    series = self.dictTrajIntervals[key][scenario_name]
+                    for j in range(len(series)):
+                        ls.append(series[j][0] * self.figInfos[panel_idx].yMultiplier)
+                        us.append(series[j][1] * self.figInfos[panel_idx].yMultiplier)
+
+                    ax.fill_between(self.figInfos[panel_idx].xMultiplier * times,
+                                    ls, us,
+                                    color=self.scenarioColors[i],
+                                    alpha=0.2)
+
                 i += 1
 
             ax.legend(legends, fontsize=7)
@@ -559,11 +582,11 @@ class TrajImpact:
     def plot_multi_panel(self, file_name):
 
         # plot each panel
-        n_cols = len(self.dictImpactMeasures.items())
+        n_cols = len(self.dictTrajMeans.items())
         f, axarr = plt.subplots(1, n_cols)
 
         panel_idx = 0
-        for key, dict_mean_trajs in self.dictImpactMeasures.items():
+        for key, dict_mean_trajs in self.dictTrajMeans.items():
             # title and labels
             axarr[panel_idx].set(
                 title=self.figInfos[panel_idx].title,
@@ -669,7 +692,7 @@ def convert_data_to_list_of_observed_outcomes(data):
     return obss
 
 
-def add_axes_info(ax, x_range, y_range, x_ticks, y_ticks, is_x_integer, y_label=None):
+def add_axes_info(ax, x_range, y_range, x_ticks=None, y_ticks=None, is_x_integer=False, y_label=None):
 
     # x-axis range
     if x_range:  # auto-scale if no range specified
@@ -694,8 +717,8 @@ def add_axes_info(ax, x_range, y_range, x_ticks, y_ticks, is_x_integer, y_label=
         ax.set_xticks(x_ticks, minor=False)
         ax.set_xticklabels(x_ticks, fontdict=None, minor=False)
     else:
-        ax.xaxis.set_major_locator(
-        ticker.MaxNLocator(nbins='auto', integer=is_x_integer))  # # x-axis format, integer ticks
+        # x-axis format, integer ticks
+        ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins='auto', integer=is_x_integer))
 
     # y-ticks
     if y_ticks:
