@@ -42,16 +42,6 @@ def read_csv_cols(file_name, n_cols, if_ignore_first_row=True, delimiter=',', if
         return cols
 
 
-def proper_file_name(text):
-    """
-    :param text: filename
-    :return: filename where invalid characters are removed
-    """
-    if text is None or text == '':
-        text = 'Figure'
-    return text.replace('|', ',').replace(':', ',').replace('<', 'l').replace('>', 'g').replace('\n', '')
-
-
 def get_mean_interval(stat, interval_type='c', deci=0, form=None):
     """
     :param interval_type: 'c' for confidence interval, 'p' for percentile interval

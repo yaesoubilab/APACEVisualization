@@ -6,6 +6,7 @@ import matplotlib.ticker as ticker
 import SimPy.InOutFunctions as IO
 import SimPy.StatisticalClasses as Stat
 import SimPy.FormatFunctions as F
+from SimPy.Plots.FigSupport import *
 import string
 import numpy as np
 
@@ -394,7 +395,6 @@ class TrajsDataFrame:
         plt.tight_layout()
 
         output_figure(plt, file_name)
-        #plt.show(block=True)
 
 
 class PlotTrajInfo:
@@ -503,7 +503,7 @@ class TrajImpact:
                 self.dictImpactMeasures[info.trajName][scenario_names[i]] \
                     = df.allTrajs[info.trajName].get_trajs_mean()
 
-    def plot_all(self):
+    def plot_all(self, fig_folder='figures/'):
 
         # set default properties
         plt.rc('font', size=8)  # fontsize of texts
@@ -551,12 +551,12 @@ class TrajImpact:
             plt.tight_layout()
 
             # save this figure
-            output_figure(plt, 'figures_national/impact_time_series/'+key)
+            output_figure(plt, fig_folder+key)
 
             # next figure
             panel_idx += 1
 
-    def plot_multi_panel(self):
+    def plot_multi_panel(self, file_name):
 
         # plot each panel
         n_cols = len(self.dictImpactMeasures.items())
@@ -613,8 +613,7 @@ class TrajImpact:
         plt.subplots_adjust(wspace=0.4)
 
         # save this figure
-        output_figure(plt, 'figures_national/impact_time_series/Impact')
-        #plt.show(block=True)
+        output_figure(plt, filename=file_name)
 
 
 def compare_trajectories(csv_file_1, csv_file_2, legends, figure_location):
@@ -646,26 +645,6 @@ def compare_trajectories(csv_file_1, csv_file_2, legends, figure_location):
         output_figure(plt, file_name)
 
         i += 1
-
-
-def output_figure(plt, file_name):
-    """
-    :param plt: reference to the plot
-    :param file_name: figure title
-    """
-    # output
-    if OUTPUT_TYPE == OutType.SHOW:
-        plt.show()
-    elif OUTPUT_TYPE == OutType.JPG:
-        try:
-            plt.savefig(Support.proper_file_name(file_name) + ".png", dpi=600)
-        except:
-            print('Could not save', file_name)
-    elif OUTPUT_TYPE == OutType.PDF:
-        try:
-            plt.savefig(Support.proper_file_name(file_name) + ".pdf")
-        except:
-            print('Could not save', file_name)
 
 
 def convert_data_to_list_of_observed_outcomes(data):
