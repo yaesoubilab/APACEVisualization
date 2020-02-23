@@ -1,6 +1,5 @@
 import csv
 import numpy
-import SimPy.StatisticalClasses as Stat
 
 
 def read_csv_cols(file_name, n_cols, if_ignore_first_row=True, delimiter=',', if_convert_float=False):

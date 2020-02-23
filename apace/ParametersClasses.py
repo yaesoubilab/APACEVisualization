@@ -1,8 +1,8 @@
 import SimPy.InOutFunctions as IO
 import SimPy.Plots.Histogram as Fig
 import SimPy.StatisticalClasses as Stat
-import SimPy.FormatFunctions as F
-import apace.Support as helper
+import SimPy.FormatFunctions as Format
+import SimPy.Support.MiscFunctions as F
 import copy
 from enum import Enum
 
@@ -111,7 +111,7 @@ class Parameters:
                     x_range = None
 
                 # find the filename the histogram should be saved as
-                file_name = posterior_fig_loc + '\Par-' + str(par_id) + ' ' + helper.proper_file_name(key)
+                file_name = posterior_fig_loc + '\Par-' + str(par_id) + ' ' + F.proper_file_name(key)
 
                 # find title
                 if priors[par_id][Column.TITLE.value] in ('', None):
@@ -133,7 +133,6 @@ class Parameters:
                     title=title.replace('!', '\n'),
                     x_range=x_range,
                     figure_size=HISTOGRAM_FIG_SIZE,
-                    output_type='png',
                     file_name=file_name
                 )
 
@@ -199,9 +198,8 @@ class Parameters:
                     data = [multip*x for x in value]
 
                 sum_stat = Stat.SummaryStat(name=key, data=data)
-
-                mean_text = F.format_number(number=sum_stat.get_mean(), deci=decimal, format=form)
-                PI_text = F.format_interval(interval=sum_stat.get_PI(significance_level), deci=decimal, format=form)
+                mean_text = Format.format_number(number=sum_stat.get_mean(), deci=decimal, format=form)
+                PI_text = Format.format_interval(interval=sum_stat.get_PI(significance_level), deci=decimal, format=form)
 
                 results.append(
                     [par_id, key, mean_text, PI_text]
