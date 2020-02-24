@@ -556,13 +556,13 @@ class ProjectedTrajectories:
                         self.figInfos[panel_idx].xMultiplier * times,
                         us,
                         color=self.scenarioColors[i],
-                        linestyle='--', linewidth=.5, alpha=0.8
+                        linestyle='--', linewidth=.75, alpha=0.8
                     )
                     ax.plot(
                         self.figInfos[panel_idx].xMultiplier * times,
                         ls,
                         color=self.scenarioColors[i],
-                        linestyle='--', linewidth=.5, alpha=0.8
+                        linestyle='--', linewidth=.75, alpha=0.8
                     )
 
                     # ax.fill_between(self.figInfos[panel_idx].xMultiplier * times,
