@@ -266,9 +266,9 @@ def analyze_econ_eval(prob_uptake, prob_dropout):
     )
 
 
-# analyze_econ_eval(prob_uptake=PROB_UPTAKE, prob_dropout=PROB_DROPOUT)
+analyze_econ_eval(prob_uptake=PROB_UPTAKE, prob_dropout=PROB_DROPOUT)
 
-for p_uptake in [0.5, 0.75, 1]:
-    for p_drop in [0.1, 0.15, 0.25]:
-        analyze_econ_eval(prob_uptake=p_uptake,prob_dropout=p_drop)
+# for p_uptake in [0.5, 0.75, 1]:
+#     for p_drop in [0.1, 0.15, 0.25]:
+#         analyze_econ_eval(prob_uptake=p_uptake,prob_dropout=p_drop)
 
