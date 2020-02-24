@@ -15,7 +15,7 @@ list_plot_info = []     # list of plot infos
 list_plot_info.append(
     Vis.PlotTrajInfo(
         traj_name='Active TB Incidence | Per Pop.',
-        y_range=[0, 2000],
+        y_range=[0, 2500], # 2000
         y_label='Incident TB cases per 100 000 population',
         y_multiplier=100000,
         # title="TB Incidence\n(Per 100,000 Pop.)",
@@ -70,7 +70,7 @@ eff = Vis.ProjectedTrajectories(
     warm_up=Set.PROJ-Set.TIME_0-2,
     period_length=1,
     scenario_colors=['gray', 'red', 'blue', 'green', 'orange'],
-    show_intervals=SHOW_INTERVALS, alpha=0.5
+    show_intervals=SHOW_INTERVALS, alpha=0.1
 )
 
 eff.plot_all(fig_folder='results/impact_time_series/')

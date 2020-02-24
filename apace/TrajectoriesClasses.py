@@ -538,7 +538,8 @@ class ProjectedTrajectories:
                 ax.plot(
                     self.figInfos[panel_idx].xMultiplier * times,
                     self.figInfos[panel_idx].yMultiplier * means,
-                    color=self.scenarioColors[i]
+                    color=self.scenarioColors[i],
+                    label=legends[i]
                 )
 
                 # plot intervals
@@ -551,27 +552,27 @@ class ProjectedTrajectories:
                         ls.append(series[j][0] * self.figInfos[panel_idx].yMultiplier)
                         us.append(series[j][1] * self.figInfos[panel_idx].yMultiplier)
 
-                    # ax.plot(
-                    #     self.figInfos[panel_idx].xMultiplier * times,
-                    #     us,
-                    #     color=self.scenarioColors[i],
-                    #     linestyle='--', linewidth=1
-                    # )
-                    # ax.plot(
-                    #     self.figInfos[panel_idx].xMultiplier * times,
-                    #     ls,
-                    #     color=self.scenarioColors[i],
-                    #     linestyle='--', linewidth=1
-                    # )
+                    ax.plot(
+                        self.figInfos[panel_idx].xMultiplier * times,
+                        us,
+                        color=self.scenarioColors[i],
+                        linestyle='--', linewidth=.5, alpha=0.8
+                    )
+                    ax.plot(
+                        self.figInfos[panel_idx].xMultiplier * times,
+                        ls,
+                        color=self.scenarioColors[i],
+                        linestyle='--', linewidth=.5, alpha=0.8
+                    )
 
-                    ax.fill_between(self.figInfos[panel_idx].xMultiplier * times,
-                                    ls, us,
-                                    color=self.scenarioColors[i],
-                                    alpha=0.2)
+                    # ax.fill_between(self.figInfos[panel_idx].xMultiplier * times,
+                    #                 ls, us,
+                    #                 color=self.scenarioColors[i],
+                    #                 alpha=0.2)
 
                 i += 1
 
-            ax.legend(legends, fontsize=7)
+            ax.legend(fontsize=7) #legends
 
             # add axes information
             add_axes_info(
