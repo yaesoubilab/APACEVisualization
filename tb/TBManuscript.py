@@ -47,15 +47,15 @@ scenario_df = Sce.ScenarioDataFrame('csv_files\TBScenarios.csv')
 print('')
 print('TB incidence in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Per Pop.'].get_mean_PI(
-        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=1, format='%'))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=3, format='%'))
 
 print('TB incidence among naive in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Naive Adults | Per Pop.'].get_mean_PI(
-        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=1, format='%'))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=3, format='%'))
 
 print('TB incidence among experienced in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Experienced Adults | Per Pop.'].get_mean_PI(
-        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=1, format='%'))
+        time_index=2018-Set.TIME_0-Set.WARMUP, alpha=Set.ALPHA, multiplier=1, deci=3, format='%'))
 
 print('TB incidence among treatment-completed in 2018 (per 100,000 population):',
       traj_data_frames[0].allTrajs['Active TB Incidence | Completed Adults | Per Pop.'].get_mean_PI(
