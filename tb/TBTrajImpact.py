@@ -1,7 +1,7 @@
 import apace.TrajectoriesClasses as Vis
 from tb import TBSettings as Set
 
-SHOW_INTERVALS = True
+SHOW_INTERVALS = False
 
 # specify the output (show, save as .jpg, or save as .pdf)
 Vis.OUTPUT_TYPE = Vis.OutType.JPG
