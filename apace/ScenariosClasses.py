@@ -524,10 +524,11 @@ class SetOfScenarios:
 
                     label = ''.join(str(x) for x in label_list)
 
-                    if label[-1] == ' ' or label[-1] == ',':
-                        label = label[:-1]
-                    if label[-1] == ' ' or label[-1] == ',':
-                        label = label[:-1]
+                    if len(label) > 0:
+                        if label[-1] == ' ' or label[-1] == ',':
+                            label = label[:-1]
+                        if label[-1] == ' ' or label[-1] == ',':
+                            label = label[:-1]
 
                     # legends
                     scenario_set.legend.append(label)

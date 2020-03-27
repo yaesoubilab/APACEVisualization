@@ -2,7 +2,7 @@ import apace.ScenariosClasses as Cls
 
 
 def plot_sets_of_scenarios(list_of_scenario_sets,
-                           x_range, y_range,
+                           x_range=None, y_range=None,
                            effect_multiplier=1.0,
                            cost_multiplier=1.0,
                            switch_cost_effect_on_figure=False,
