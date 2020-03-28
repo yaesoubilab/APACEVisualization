@@ -3,7 +3,7 @@ import apace.VisualizeScenarios as Vis
 import covid19.Support as Sup
 
 
-scenario_df = Cls.ScenarioDataFrame(csv_file_name='csv_files/Policies.csv')
+scenario_df = Cls.ScenarioDataFrame(csv_file_name='csv_files/PolicyEval.csv')
 
 policy_definitions = Sup.PolicyDefinitions()
 
