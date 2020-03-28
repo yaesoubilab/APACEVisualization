@@ -4,7 +4,7 @@ import SimPy.InOutFunctions as io
 import os
 
 # ---- settings ----
-policyParams = [4.3078, -0.00005, 2.7513, -0.00005]
+policyParams = [5.3708,-0.0001,1.3069,-0.0001]
 wtps = np.linspace(5000, 25000, 9)  # [min, max, number of points]
 MAX_R_EFF = 4
 # ------------------
