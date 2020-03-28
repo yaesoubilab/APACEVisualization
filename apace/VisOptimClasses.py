@@ -39,7 +39,7 @@ def plot_optimization_itrs(csv_directory,
     :param moving_ave_window: (int) moving average window
     """
 
-    # read the optimization iterations into columns
+    # read the optimization_figs iterations into columns
     cols = IO.read_csv_cols(csv_directory + csv_filename,
                             n_cols=2*n_vars+4, # variables (n_var), derivatives (n_var), iteration, f, step_Df, step_GH
                             if_ignore_first_row=True,
@@ -137,8 +137,10 @@ def add_var_or_dvar(what_to_add, axarr, cols, n_vars, y_axis_labels, moving_ave_
         axarr[ax_indx+i].set(ylabel=y_axis_labels[i+1])
         # y-axis range
         #if var_ranges is not None:
-        if what_to_add == 'var':
+        if var_ranges is not None and what_to_add == 'var':
             y_range = var_ranges[i]
+        else:
+            y_range = None
         axarr[ax_indx+i].set(ylim=y_range)
 
     # label the x-axis of the last figure

@@ -3,7 +3,7 @@ import apace.VisualizeScenarios as Vis
 import covid19.Support as Sup
 
 
-scenario_df = Cls.ScenarioDataFrame(csv_file_name='../covid19/Policies.csv')
+scenario_df = Cls.ScenarioDataFrame(csv_file_name='csv_files/Policies.csv')
 
 policy_definitions = Sup.PolicyDefinitions()
 
@@ -38,5 +38,5 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, adaptive],
                            title='',
                            fig_size=(3.6, 3.3),
                            l_b_r_t=(0.22, 0.13, 0.9, 0.9),
-                           file_name='CE.png')
+                           file_name='figures/CE.png')
 
