@@ -2,6 +2,7 @@ import SimPy.FittingProbDist_MM as Fit
 import scipy.stats as scs
 import SimPy.FormatFunctions as F
 
+# [mean, stDev, min, max]
 R0 = [2.5, 0.5, 1.5, 3.5]
 TimeToInf = [5, 1, 3, 7]
 TimeInf = [4, 1, 2, 8]
@@ -17,7 +18,7 @@ def print_intervals(name, mean_std_min_max):
     # print(beta_par)
     l = scs.beta.ppf(q=0.025,
                      a=beta_par['a'], b=beta_par['b'], loc=beta_par['loc'], scale=beta_par['scale'])
-    u = scs.beta.ppf(q=0.095,
+    u = scs.beta.ppf(q=0.975,
                      a=beta_par['a'], b=beta_par['b'], loc=beta_par['loc'], scale=beta_par['scale'])
 
     print(name, F.format_interval([l, u], deci=3))
