@@ -47,15 +47,15 @@ axes[0].fill_between(wtps, ts_off, facecolor='b', alpha=0.2)
 axes[0].fill_between(wtps, [MAX_R_EFF]*len(ts_off), ts_off, facecolor='r', alpha=0.2)
 axes[0].set_ylim(0, 4)
 axes[0].set_xlim([wtps[0], wtps[-1]])
-axes[0].set_ylabel('Estimated Effective\nProduction Number')
+axes[0].set_ylabel('Estimated Effective\nReproduction Number')
 axes[0].set_xlabel('WTP for one QALY')
 vals = axes[0].get_xticks()
 axes[0].set_xticklabels(['{:,}'.format(int(x)) for x in vals])
 axes[0].text(-0.2, 1.11, 'A)', transform=axes[0].transAxes,
              size=12, weight='bold')
-axes[0].text(0.05, 0.05, 'Lift Social Distancing', transform=axes[0].transAxes,
+axes[0].text(0.05, 0.05, 'Continue with no\nSocial Distancing', transform=axes[0].transAxes,
              size=9, weight='bold')
-axes[0].text(0.95, 0.95, 'Continue with \nSocial Distancing', transform=axes[0].transAxes,
+axes[0].text(0.95, 0.95, 'Trigger Social Distancing', transform=axes[0].transAxes,
              size=9, weight='bold', ha='right', va='top')
 
 axes[1].plot(wtps, ts_on, label='', color='b', linestyle='-')
