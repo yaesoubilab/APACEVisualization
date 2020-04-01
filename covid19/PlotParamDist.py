@@ -3,9 +3,9 @@ import scipy.stats as scs
 import SimPy.FormatFunctions as F
 
 # [mean, stDev, min, max]
-R0 = [2.5, 0.5, 1.5, 3.5]
-TimeToInf = [5, 1, 3, 7]
-TimeInf = [4, 1, 2, 8]
+R0 = [2.5, 0.7, 1.5, 4]
+TimeToInf = [5, 0.5, 3, 7]
+TimeInf = [4, 1.7, 2, 8]
 
 
 def print_intervals(name, mean_std_min_max):
