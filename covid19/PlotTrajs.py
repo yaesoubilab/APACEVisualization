@@ -19,6 +19,6 @@ df.plot(
         y_label='Weekly Number of Cases',
         title='',
         figure_size=(4, 3.2),
-        file_name='WeeklyCases'
+        file_name='figures/WeeklyCases'
     )
 )
