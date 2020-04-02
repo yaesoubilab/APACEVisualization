@@ -4,8 +4,11 @@ import SimPy.InOutFunctions as io
 import os
 
 # ---- settings ----
-policyParams = [5.3708,-0.0001,1.3069,-0.0001]
-wtps = np.linspace(5000, 25000, 9)  # [min, max, number of points]
+policyParams = [10,-2e-5, 5, -2e-5]
+wtps = np.linspace(50000, 250000, 16)  # [min, max, number of points]
+
+WTP_MIN_DELTA = [50000, 100000]
+R_EFF_MIN_DELTA = [0, 1]
 MAX_R_EFF = 4
 # ------------------
 
@@ -20,6 +23,25 @@ def get_t_off(wtp, poliy_param):
 
 def get_t_on(wtp, poliy_param):
     return poliy_param[2]*np.exp(poliy_param[3]*wtp)
+
+
+def add_plot_to_axis(ax, ys, title,):
+    ax.plot(wtps, ys, label='', color='k', linestyle='-')
+    ax.set_title(title)
+    ax.fill_between(wtps, ys, facecolor='b', alpha=0.2)
+    ax.fill_between(wtps, [MAX_R_EFF] * len(ys), ys, facecolor='r', alpha=0.2)
+    ax.set_ylim(0, 4)
+    ax.set_xlim([wtps[0], wtps[-1]])
+    ax.set_ylabel('Estimated Effective\nProduction Number')
+    ax.set_xlabel('WTP for one QALY')
+    vals = ax.get_xticks()
+    ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
+    ax.text(-0.2, 1.11, 'A)', transform=axes[0].transAxes,
+                 size=12, weight='bold')
+    ax.text(0.05, 0.05, 'Lift Social Distancing', transform=axes[0].transAxes,
+                 size=9, weight='bold')
+    ax.text(0.95, 0.95, 'Continue with \nSocial Distancing', transform=axes[0].transAxes,
+                 size=9, weight='bold', ha='right', va='top')
 
 
 ts_off_on = []
@@ -40,23 +62,11 @@ io.write_csv(rows=ts_off_on,
 
 fig, axes = plt.subplots(1, 2, figsize=(7, 3.5))
 
+# policy when off
+add_plot_to_axis(ax=axes[0],
+                 ys=ts_off,
+                 title="If Social Distancing\nis Not in Use")
 
-axes[0].plot(wtps, ts_off, label='', color='k', linestyle='-')
-axes[0].set_title("If Social Distancing\nis Not in Use")
-axes[0].fill_between(wtps, ts_off, facecolor='b', alpha=0.2)
-axes[0].fill_between(wtps, [MAX_R_EFF]*len(ts_off), ts_off, facecolor='r', alpha=0.2)
-axes[0].set_ylim(0, 4)
-axes[0].set_xlim([wtps[0], wtps[-1]])
-axes[0].set_ylabel('Estimated Effective\nProduction Number')
-axes[0].set_xlabel('WTP for one QALY')
-vals = axes[0].get_xticks()
-axes[0].set_xticklabels(['{:,}'.format(int(x)) for x in vals])
-axes[0].text(-0.2, 1.11, 'A)', transform=axes[0].transAxes,
-             size=12, weight='bold')
-axes[0].text(0.05, 0.05, 'Lift Social Distancing', transform=axes[0].transAxes,
-             size=9, weight='bold')
-axes[0].text(0.95, 0.95, 'Continue with \nSocial Distancing', transform=axes[0].transAxes,
-             size=9, weight='bold', ha='right', va='top')
 
 axes[1].plot(wtps, ts_on, label='', color='b', linestyle='-')
 axes[1].set_title("If Social Distancing\nis in Use")
@@ -65,6 +75,7 @@ axes[1].fill_between(wtps, [MAX_R_EFF]*len(ts_on), ts_on, facecolor='r', alpha=0
 axes[1].set_ylim(0, 4)
 axes[1].set_xlim([wtps[0], wtps[-1]])
 axes[1].set_xlabel('WTP for one QALY')
+vals = axes[1].get_xticks()
 axes[1].set_xticklabels(['{:,}'.format(int(x)) for x in vals])
 axes[1].text(-0.2, 1.11, 'B)', transform=axes[1].transAxes,
              size=12, weight='bold')
