@@ -194,7 +194,7 @@ class TrajsDataFrame:
 
                 # ignore x = 0 for period x-axes
                 offset = 0
-                if traj_names[x_i].split()[1] == "Period":
+                if traj_names[x_i].split()[1] == "Simulation Period":
                     offset = 1
 
                 # generate trajectories with specific x-axis

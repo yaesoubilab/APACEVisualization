@@ -28,15 +28,15 @@ adaptive = Cls.SetOfScenarios(name='Adaptive',
 
 Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, adaptive],
                            x_range=[0, 150],
-                           y_range=[0, 200],
+                           y_range=[0, 160],
                            effect_multiplier=1/1000,
                            cost_multiplier=1/10e6,
                            switch_cost_effect_on_figure=False,
                            wtp_multiplier=10e6/1000,
-                           labels=['Additional QALYs (Thousand)',
+                           labels=['QALYs Gained (Thousand)',
                                    'Additional Cost (Million Dollars)'],
                            title='',
-                           fig_size=(3.6, 3.3),
+                           fig_size=(3.6, 3.2),
                            l_b_r_t=(0.22, 0.13, 0.9, 0.9),
                            file_name='figures/CE.png')
 
