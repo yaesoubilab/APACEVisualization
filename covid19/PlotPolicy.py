@@ -4,10 +4,10 @@ import SimPy.InOutFunctions as io
 import os
 
 # ---- settings ----
-policyParams = [10,-2e-5, 5, -2e-5]
-wtps = np.linspace(50000, 250000, 16)  # [min, max, number of points]
+policyParams = [5,-1e-05,0.3] # [4,-0.5e-5, 1, -0.5e-5]
+WTPS = np.linspace(50000, 250000, 13)  # [min, max, number of points]
 
-WTP_MIN_DELTA = [50000, 100000]
+WTP_DELTA = 100000
 R_EFF_MIN_DELTA = [0, 1]
 MAX_R_EFF = 4
 # ------------------
@@ -22,32 +22,39 @@ def get_t_off(wtp, poliy_param):
 
 
 def get_t_on(wtp, poliy_param):
-    return poliy_param[2]*np.exp(poliy_param[3]*wtp)
+    return get_t_off(wtp, poliy_param) * poliy_param[2] # *np.exp(poliy_param[3]*wtp)
 
 
-def add_plot_to_axis(ax, ys, title,):
-    ax.plot(wtps, ys, label='', color='k', linestyle='-')
+def add_plot_to_axis(ax, ys, title, panel_label):
+    ax.plot(WTPS, ys, label='', color='k', linestyle='-')
     ax.set_title(title)
-    ax.fill_between(wtps, ys, facecolor='b', alpha=0.2)
-    ax.fill_between(wtps, [MAX_R_EFF] * len(ys), ys, facecolor='r', alpha=0.2)
+    ax.fill_between(WTPS, ys, facecolor='b', alpha=0.2)
+    ax.fill_between(WTPS, [MAX_R_EFF] * len(ys), ys, facecolor='r', alpha=0.2)
     ax.set_ylim(0, 4)
-    ax.set_xlim([wtps[0], wtps[-1]])
-    ax.set_ylabel('Estimated Effective\nProduction Number')
-    ax.set_xlabel('WTP for one QALY')
+    ax.set_xlim([WTPS[0], WTPS[-1]])
+    ax.set_xlabel('Willingness-to-pay for one QALY')
+
+    # x axis ticks and labels
+    x_ticks = []
+    x = WTPS[0]
+    while x <= WTPS[-1]:
+        x_ticks.append(x)
+        x += WTP_DELTA
+    ax.set_xticks(x_ticks)
     vals = ax.get_xticks()
     ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
-    ax.text(-0.2, 1.11, 'A)', transform=axes[0].transAxes,
+    ax.text(-0.2, 1.11, panel_label, transform=ax.transAxes,
                  size=12, weight='bold')
-    ax.text(0.05, 0.05, 'Lift Social Distancing', transform=axes[0].transAxes,
+    ax.text(0.05, 0.05, 'Relax\nSocial Distancing', transform=ax.transAxes,
                  size=9, weight='bold')
-    ax.text(0.95, 0.95, 'Continue with \nSocial Distancing', transform=axes[0].transAxes,
+    ax.text(0.95, 0.95, 'Tighten Social Distancing', transform=ax.transAxes,
                  size=9, weight='bold', ha='right', va='top')
 
 
 ts_off_on = []
 ts_off = []
 ts_on = []
-for wtp in wtps:
+for wtp in WTPS:
     t_off = get_t_off(wtp, policyParams)
     t_on = get_t_on(wtp, policyParams)
 
@@ -65,33 +72,15 @@ fig, axes = plt.subplots(1, 2, figsize=(7, 3.5))
 # policy when off
 add_plot_to_axis(ax=axes[0],
                  ys=ts_off,
-                 title="If Social Distancing\nis Not in Use")
+                 title="If Social Distancing\nis Relaxed",
+                 panel_label='A)')
+axes[0].set_ylabel('Estimated Effective\nProduction Number')
 
+add_plot_to_axis(ax=axes[1],
+                 ys=ts_on,
+                 title="If Social Distancing\nis Tightened",
+                 panel_label='B)')
 
-axes[1].plot(wtps, ts_on, label='', color='b', linestyle='-')
-axes[1].set_title("If Social Distancing\nis in Use")
-axes[1].fill_between(wtps, ts_on, facecolor='b', alpha=0.2)
-axes[1].fill_between(wtps, [MAX_R_EFF]*len(ts_on), ts_on, facecolor='r', alpha=0.2)
-axes[1].set_ylim(0, 4)
-axes[1].set_xlim([wtps[0], wtps[-1]])
-axes[1].set_xlabel('WTP for one QALY')
-vals = axes[1].get_xticks()
-axes[1].set_xticklabels(['{:,}'.format(int(x)) for x in vals])
-axes[1].text(-0.2, 1.11, 'B)', transform=axes[1].transAxes,
-             size=12, weight='bold')
-axes[1].text(0.05, 0.05, 'Lift Social Distancing', transform=axes[1].transAxes,
-             size=9, weight='bold')
-axes[1].text(0.95, 0.95, 'Continue with \nSocial Distancing', transform=axes[1].transAxes,
-             size=9, weight='bold', ha='right', va='top')
-#
-# #plt.xlim(1.5,  2.5)
-# ax.set_ylim(bottom=0, top=0.15)
-# ax.set_xlabel('Years of effective lifespan'
-#               '\nwilling to give up to save 1 case of gonorrhea '
-#               '\nper 100,000 MSM population 'r'($\omega$)') # r'$\omega$')
-# vals = ax.get_yticks()
-# ax.set_yticklabels(['{:,.0%}'.format(x) for x in vals])
-# ax.legend()
 fig.tight_layout()
 fig.savefig('covid19/figures/Policy.png', dpi=300, bbox_inches='tight')
 fig.show()
