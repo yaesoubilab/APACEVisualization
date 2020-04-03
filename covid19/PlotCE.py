@@ -27,8 +27,8 @@ adaptive = Cls.SetOfScenarios(name='Adaptive',
                               labels_shift_y=-4 / 80)
 
 Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, adaptive],
-                           x_range=[0, 150],
-                           y_range=[0, 160],
+                           x_range=[0, 20],
+                           y_range=[0, 500],
                            effect_multiplier=1/1000,
                            cost_multiplier=1/10e6,
                            switch_cost_effect_on_figure=False,

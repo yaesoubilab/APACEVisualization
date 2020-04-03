@@ -4,7 +4,7 @@ import SimPy.InOutFunctions as io
 import os
 
 # ---- settings ----
-policyParams = [5,-1e-05,0.3] # [4,-0.5e-5, 1, -0.5e-5]
+policyParams = [5,-4.3077E-06,0.3] # [4,-0.5e-5, 1, -0.5e-5]
 WTPS = np.linspace(50000, 250000, 13)  # [min, max, number of points]
 
 WTP_DELTA = 100000
