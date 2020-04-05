@@ -4,7 +4,7 @@ import SimPy.InOutFunctions as io
 import os
 
 # ---- settings ----
-policyParams = [5,-4.3077E-06,0.3] # [4,-0.5e-5, 1, -0.5e-5]
+policyParams = [5,-2,0.3] # [4,-0.5e-5, 1, -0.5e-54.3077E-06]
 WTPS = np.linspace(50000, 250000, 13)  # [min, max, number of points]
 
 WTP_DELTA = 100000
@@ -16,13 +16,13 @@ MAX_R_EFF = 4
 os.chdir('..')
 
 
-def get_t_off(wtp, poliy_param):
+def get_t_off(wtp, poliy_param, scale):
 
-    return poliy_param[0]*np.exp(poliy_param[1]*wtp)
+    return poliy_param[0]*np.exp(poliy_param[1]*wtp/scale)
 
 
-def get_t_on(wtp, poliy_param):
-    return get_t_off(wtp, poliy_param) * poliy_param[2] # *np.exp(poliy_param[3]*wtp)
+def get_t_on(wtp, poliy_param, scale):
+    return get_t_off(wtp, poliy_param, scale) * poliy_param[2] # *np.exp(poliy_param[3]*wtp)
 
 
 def add_plot_to_axis(ax, ys, title, panel_label):
@@ -54,9 +54,10 @@ def add_plot_to_axis(ax, ys, title, panel_label):
 ts_off_on = []
 ts_off = []
 ts_on = []
+scale = (WTPS[0]+WTPS[-1])/2
 for wtp in WTPS:
-    t_off = get_t_off(wtp, policyParams)
-    t_on = get_t_on(wtp, policyParams)
+    t_off = get_t_off(wtp, policyParams, scale)
+    t_on = get_t_on(wtp, policyParams, scale)
 
     ts_off.append(t_off)
     ts_on.append(t_on)
