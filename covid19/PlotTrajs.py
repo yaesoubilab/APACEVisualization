@@ -13,10 +13,11 @@ df = Vis.TrajsDataFrame('csv_files/Trajs.csv',
 df.plot(
     plot_info=Vis.PlotTrajInfo(
         traj_name='Obs: To I',
-        y_range=[0, 50000],
+        y_range=[0, 40],
+        y_multiplier=0.001,
         x_label='Week',
         x_range=[0, 52],
-        y_label='Weekly Number of Cases',
+        y_label='Weekly Number of Cases\n(Thousands)',
         title='',
         figure_size=(4, 3.2),
         file_name='figures/WeeklyCases'

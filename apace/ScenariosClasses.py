@@ -707,9 +707,9 @@ class SetOfScenarios:
                                 top=l_b_r_t[3],)
 
         if file_name is None:
-            fig.savefig(Support.proper_file_name(title) + '.png', dpm=300) # read more about 'bbox_inches = "tight"'
+            fig.savefig(Support.proper_file_name(title), dpm=300) # read more about 'bbox_inches = "tight"'
         else:
-            fig.savefig(file_name + '.png', dpi=300, bbox_inches='tight')
+            fig.savefig(file_name, dpi=300, bbox_inches='tight')
         #fig.show()
 
     @staticmethod
