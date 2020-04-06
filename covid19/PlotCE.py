@@ -8,19 +8,20 @@ scenario_df = Cls.ScenarioDataFrame(csv_file_name='csv_files/PolicyEval.csv')
 policy_definitions = Sup.PolicyDefinitions()
 
 # series to display on the cost-effectiveness plane
-fixed_interval = Cls.SetOfScenarios(name='Preset Duration',
+fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
                                     scenario_df=scenario_df,
                                     color='blue',
                                     marker='o',
                                     conditions=policy_definitions.VarFixedInterval,
                                     if_find_frontier=False,
-                                    labels_shift_x=-0.05,
+                                    labels_shift_x=-0.06,
                                     labels_shift_y=2 / 80)
 
 adaptive = Cls.SetOfScenarios(name='Adaptive',
                               scenario_df=scenario_df,
                               color='red',
                               marker='D',
+                              x_y_labels=['O', 'A', 'B', 'C'],
                               conditions=policy_definitions.VarAdaptive,
                               if_find_frontier=False,
                               labels_shift_x=0.1 / 8,

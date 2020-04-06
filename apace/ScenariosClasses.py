@@ -229,6 +229,7 @@ class SetOfScenarios:
                  scenario_df,
                  color,
                  marker='o',
+                 x_y_labels=[],
                  scenario_names=None,
                  conditions=None,
                  if_find_frontier=True,
@@ -240,6 +241,7 @@ class SetOfScenarios:
         :param scenario_df: scenario data frame to pull the data from
         :param color: color of this series on the CE plane
         :param marker: markers used for this series on the CE plane
+        :param x_y_labels: labels of points on the CE plane
         :param scenario_names: (list) names of scenarios to include in this set
         :param conditions: list of variable conditions
         :param if_find_frontier: # select True if CE frontier should be calculated
@@ -271,7 +273,8 @@ class SetOfScenarios:
         self.xIntervals = []
         self.yIntervals = []
         # y labels
-        self.yLabels = []
+        self.xyLabelsProvided = True if len(x_y_labels) > 0 else False
+        self.xyLabels = x_y_labels
 
         # frontier values
         self.frontierXValues = []
@@ -390,7 +393,8 @@ class SetOfScenarios:
                 self.xValuesByScenario.append(strategy.dEffectObs * effect_multiplier)
                 self.yValuesByScenario.append(strategy.dCostObs * cost_multiplier)
 
-            self.yLabels.append(strategy.name)
+            if not self.xyLabelsProvided:
+                self.xyLabels.append(strategy.name)
 
             if interval_type != 'n':
                 effect_interval = strategy.dEffect.get_interval(interval_type=interval_type,
@@ -538,9 +542,13 @@ class SetOfScenarios:
                     if colors_of_scenarios is not None:
                         color = colors_of_scenarios[i + 1]
 
+                    strategy_name = label
+                    if scenario_set.xyLabelsProvided:
+                        strategy_name = scenario_set.xyLabels[i]
+
                     scenario_set.strategies.append(
                         Econ.Strategy(
-                            name=label,
+                            name=strategy_name,
                             cost_obs=scenario.outcomes[COST_MEASURE],
                             effect_obs=scenario.outcomes[HEALTH_MEASURE],
                             color=color)
@@ -616,7 +624,7 @@ class SetOfScenarios:
                     y_range = ax.get_ylim()
 
                 # y-value labels
-                for j, txt in enumerate(ser.yLabels):
+                for j, txt in enumerate(ser.xyLabels):
                     if txt is not 'Base':
                         ax.annotate(
                             txt,
