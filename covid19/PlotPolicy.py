@@ -4,7 +4,7 @@ import SimPy.InOutFunctions as io
 import os
 
 # ---- settings ----
-policyParams = [5.0096096195,-1.0157278249,0.0033164372] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
+policyParams = [5,-1,0.25] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
 WTPS = np.linspace(50000, 150000, 25)  # [min, max, number of points]
 
 WTP_DELTA = 50000
@@ -25,9 +25,9 @@ def get_t_on(wtp, poliy_param, scale):
     return get_t_off(wtp, poliy_param, scale) * poliy_param[2] # *np.exp(poliy_param[3]*wtp)
 
 
-def add_plot_to_axis(ax, ys, title, panel_label):
+def add_plot_to_axis(ax, ys, title, text_turn_off, text_turn_on, panel_label):
     ax.plot(WTPS, ys, label='', color='k', linestyle='-')
-    ax.set_title(title)
+    ax.set_title(title, size=10)
     ax.fill_between(WTPS, ys, facecolor='b', alpha=0.2)
     ax.fill_between(WTPS, [MAX_R_EFF] * len(ys), ys, facecolor='r', alpha=0.2)
     ax.set_ylim(0, 4)
@@ -45,9 +45,9 @@ def add_plot_to_axis(ax, ys, title, panel_label):
     ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
     ax.text(-0.2, 1.11, panel_label, transform=ax.transAxes,
                  size=12, weight='bold')
-    ax.text(0.05, 0.05, 'Relax\nSocial Distancing', transform=ax.transAxes,
+    ax.text(0.05, 0.05, text_turn_off, transform=ax.transAxes,
                  size=9, weight='bold')
-    ax.text(0.95, 0.95, 'Tighten Social Distancing', transform=ax.transAxes,
+    ax.text(0.95, 0.95, text_turn_on, transform=ax.transAxes,
                  size=9, weight='bold', ha='right', va='top')
 
 
@@ -73,13 +73,18 @@ fig, axes = plt.subplots(1, 2, figsize=(7, 3.5))
 # policy when off
 add_plot_to_axis(ax=axes[0],
                  ys=ts_off,
-                 title="If Social Distancing\nis Relaxed",
+                 title="Decision criteria when\nsocial distancing is in Relaxed state",
+                 text_turn_off='Maintain \nrelaxed social distancing',
+                 text_turn_on='Switch to tightened\nsocial distancing',
                  panel_label='A)')
-axes[0].set_ylabel('Estimated Effective\nProduction Number')
+axes[0].set_ylabel('Estimated effective\nproduction number ' + r'$(R_t)$')
 
+# policy when on
 add_plot_to_axis(ax=axes[1],
                  ys=ts_on,
-                 title="If Social Distancing\nis Tightened",
+                 title="Decision criteria when\nsocial distancing is in Tightened state",
+                 text_turn_off="Switch to\nrelaxed social distancing",
+                 text_turn_on = "Maintain tightened\nsocial distancing",
                  panel_label='B)')
 
 fig.tight_layout()
