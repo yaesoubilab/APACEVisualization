@@ -4,7 +4,7 @@ import SimPy.InOutFunctions as io
 import os
 
 # ---- settings ----
-policyParams = [5.0096096195,-1.0157278249,0.0033164372] # [5,-1,0.25] # [4,-0.5e-5, 1, -0.5e-54.3077E-06]
+policyParams = [5.0096096195,-1.0157278249,0.0033164372] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
 WTPS = np.linspace(50000, 150000, 25)  # [min, max, number of points]
 
 WTP_DELTA = 50000
@@ -51,7 +51,7 @@ def add_plot_to_axis(ax, ys, title, panel_label):
                  size=9, weight='bold', ha='right', va='top')
 
 
-ts_off_on = []
+wtp_toff_ton = []
 ts_off = []
 ts_on = []
 scale = (WTPS[0]+WTPS[-1])/2
@@ -61,9 +61,9 @@ for wtp in WTPS:
 
     ts_off.append(t_off)
     ts_on.append(t_on)
-    ts_off_on.append([t_off, t_on])
+    wtp_toff_ton.append([wtp, t_off, t_on])
 
-io.write_csv(rows=ts_off_on,
+io.write_csv(rows=wtp_toff_ton,
              file_name='Policies.csv',
              directory='covid19/csv_files')
 
