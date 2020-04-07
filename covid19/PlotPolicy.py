@@ -32,7 +32,7 @@ def add_plot_to_axis(ax, ys, title, text_turn_off, text_turn_on, panel_label):
     ax.fill_between(WTPS, [MAX_R_EFF] * len(ys), ys, facecolor='r', alpha=0.2)
     ax.set_ylim(0, 4)
     ax.set_xlim([WTPS[0], WTPS[-1]])
-    ax.set_xlabel('Willingness-to-pay for one QALY')
+    ax.set_xlabel('Willingness-to-pay ($ per QALY)')
 
     # x axis ticks and labels
     x_ticks = []
@@ -45,9 +45,9 @@ def add_plot_to_axis(ax, ys, title, text_turn_off, text_turn_on, panel_label):
     ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
     ax.text(-0.2, 1.11, panel_label, transform=ax.transAxes,
                  size=12, weight='bold')
-    ax.text(0.05, 0.05, text_turn_off, transform=ax.transAxes,
+    ax.text(0.03, 0.03, text_turn_off, transform=ax.transAxes,
                  size=9, weight='bold')
-    ax.text(0.95, 0.95, text_turn_on, transform=ax.transAxes,
+    ax.text(0.97, 0.97, text_turn_on, transform=ax.transAxes,
                  size=9, weight='bold', ha='right', va='top')
 
 
@@ -68,7 +68,7 @@ io.write_csv(rows=wtp_toff_ton,
              directory='covid19/csv_files')
 
 
-fig, axes = plt.subplots(1, 2, figsize=(7, 3.5))
+fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.5))
 
 # policy when off
 add_plot_to_axis(ax=axes[0],
