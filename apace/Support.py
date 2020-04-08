@@ -53,7 +53,7 @@ def get_mean_interval(stat, interval_type='c', deci=0, form=None):
         if interval_type == 'p':
             return stat.get_mean(), stat.get_PI(0.05)
         elif interval_type == 'c':
-            return stat.get_mean(), stat.get_CI(0.05)
+            return stat.get_mean(), stat.get_t_CI(0.05)
         else:
             raise ValueError('Invalid interval type.')
     else:
