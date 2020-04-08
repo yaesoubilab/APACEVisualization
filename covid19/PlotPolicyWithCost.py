@@ -22,19 +22,19 @@ resUtil = P.ResourceUtilization(csv_file_name='covid19/csv_files/PolicyEval.csv'
 fig, axes = plt.subplots(2, 2, figsize=(7.2, 7))
 
 # policy when off
-policy.add_policy_figure_when_relaxed(ax=axes[0], max_r=MAX_R_EFF, delta_wtp=WTP_DELTA)
+policy.add_policy_figure_when_relaxed(ax=axes[0][0], max_r=MAX_R_EFF, delta_wtp=WTP_DELTA)
 
 # policy when on
-policy.add_policy_figure_when_tightened(ax=axes[1], max_r=MAX_R_EFF, delta_wtp=WTP_DELTA)
+policy.add_policy_figure_when_tightened(ax=axes[0][1], max_r=MAX_R_EFF, delta_wtp=WTP_DELTA)
 
 # affordability curve
-resUtil.add_plot_to_axis(ax=axes[2], ys=[y*1e-6 for y in resUtil.costs],
+resUtil.add_plot_to_axis(ax=axes[1][0], ys=[y*1e-6 for y in resUtil.costs],
                          title='Affordability curve',
                          y_label='Overall cost expected to incurred\n(million dollars)',
                          panel_label='C)',
                          max_y=2500, delta_wtp=50000)
 # utilization
-resUtil.add_plot_to_axis(ax=axes[3], ys=resUtil.util,
+resUtil.add_plot_to_axis(ax=axes[1][1], ys=resUtil.util,
                          title='',
                          y_label='Expected number of weeks with\ntightened social distancing',
                          panel_label='D)',
