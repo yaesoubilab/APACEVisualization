@@ -1,10 +1,11 @@
 import SimPy.InOutFunctions as io
+import SimPy.RegressionClasses as Reg
 import numpy as np
 import apace.ScenariosClasses as Cls
 
 
 class RBasedPolicy:
-    def __init__(self, policy_params, wtps):
+    def __init__(self, policy_params, scale, wtps):
 
         self.policyParams = policy_params
         self.wtps = wtps
@@ -12,7 +13,6 @@ class RBasedPolicy:
         self.tsOn = []
         self.wtpToffTon = []
 
-        scale = (wtps[0] + wtps[-1]) / 2
         for wtp in wtps:
             t_off = self.get_t_off(wtp, scale)
             t_on = self.get_t_on(wtp, scale)
@@ -59,7 +59,7 @@ class RBasedPolicy:
         ax.set_title(title, size=10)
         ax.fill_between(self.wtps, ys, facecolor='b', alpha=0.2)
         ax.fill_between(self.wtps, [max_r] * len(ys), ys, facecolor='r', alpha=0.2)
-        ax.set_ylim(0, 4)
+        ax.set_ylim(0, max_r)
         ax.set_xlim([self.wtps[0], self.wtps[-1]])
         ax.set_xlabel('Willingness-to-pay ($ per QALY)')
 
@@ -96,7 +96,8 @@ class ResourceUtilization:
 
             if scenario_name[0:3] == 'D:2':
                 # store wtp value
-                self.selectWTPs.append(float(scenario_name[-5:]))
+                i = scenario_name.find('WTP')
+                self.selectWTPs.append(float(scenario_name[i+5:]))
 
                 # total cost
                 cost_mean, cost_CI = scenario_df.get_mean_interval(
@@ -110,9 +111,22 @@ class ResourceUtilization:
                     outcome_name='Utilization (unit of time): Social Distancing')
                 self.util.append(utilization_mean)
 
-    def add_plot_to_axis(self, ax, ys, title, y_label, panel_label, max_y, delta_wtp):
+        self.costRegression = Reg.SingleVarRegression(self.selectWTPs, self.costs, degree=2)
+        self.utilRegression = Reg.SingleVarRegression(self.selectWTPs, self.util, degree=2)
 
-        ax.plot(self.selectWTPs, ys, label='', color='b', linestyle='-')
+    def add_affordability_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
+        ys = self.costRegression.get_predicted_y(x_pred=self.wtps)
+        self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=[y * 1e-6 for y in ys],
+                              title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
+
+    def add_utilization_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
+        ys = self.utilRegression.get_predicted_y(x_pred=self.wtps)
+        self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
+                              title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
+
+    def add_plot_to_axis(self, ax, wtps, ys, title, y_label, panel_label, max_y, delta_wtp):
+
+        ax.plot(wtps, ys, label='', color='k', linestyle='-')
         ax.set_title(title, size=10)
         ax.set_ylabel(y_label)
         ax.set_ylim(0, max_y)

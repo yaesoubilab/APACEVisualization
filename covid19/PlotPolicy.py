@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import covid19.PolicyClases as P
+import covid19.PolicyClasses as P
 import os
 
 # ---- settings ----
-POLICY_PARAMS = [5.0096096195,-1.0157278249,0.0033164372] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
-WTPS = np.linspace(50000, 150000, 25)  # [min, max, number of points]
+POLICY_PARAMS = [6.2694015986,-1.5803693824,0.0912901475] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
+SCALE = (1e5 + 3e5)/2
+WTPS = np.linspace(50000, 150000, 20)  # [min, max, number of points]
 
 WTP_DELTA = 50000
 R_EFF_MIN_DELTA = [0, 1]
@@ -15,7 +16,7 @@ MAX_R_EFF = 4
 # change the current working directory
 os.chdir('..')
 
-policy = P.RBasedPolicy(policy_params=POLICY_PARAMS, wtps=WTPS)
+policy = P.RBasedPolicy(policy_params=POLICY_PARAMS, scale=SCALE, wtps=WTPS)
 policy.write_to_csv(file_name='Policies.csv',
                     directory='covid19/csv_files')
 
