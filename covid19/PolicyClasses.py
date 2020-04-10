@@ -140,6 +140,8 @@ class ResourceUtilization:
         ax2.plot(self.wtps, ys, label='QALYs loss', color='r', linestyle='--')
         ax2.set_ylabel('QALYs lost (Thousands)\n')
         ax2.spines['right'].set_color('r')
+        ax2.tick_params(axis='y', colors='r')
+        # ax2.yaxis.label.set_color('r')
         ax2.set_ylim(0, 21)
 
     def add_utilization_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp, show_data):
