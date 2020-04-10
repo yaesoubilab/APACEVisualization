@@ -51,7 +51,7 @@ class RBasedPolicy:
                               text_turn_off="Switch to\nrelaxed social distancing",
                               text_turn_on="Maintain tightened\nsocial distancing",
                               panel_label='B)',
-                              max_r=2.5,
+                              max_r=max_r,
                               delta_wtp=delta_wtp)
 
     def add_plot_to_axis(self, ax, ys, title, text_turn_off, text_turn_on, panel_label, max_r, delta_wtp):

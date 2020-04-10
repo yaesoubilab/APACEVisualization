@@ -11,8 +11,8 @@ SHOW_DATA = False
 
 WTP_DELTA = 15000
 R_DELTA = 0.5
-MAX_R_OFF = 4
-MAX_R_ON = 2
+MAX_R_OFF = 4.0
+MAX_R_ON = 2.01
 
 # ---------------
 # change the current working directory
