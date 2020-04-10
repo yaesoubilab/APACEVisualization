@@ -84,7 +84,7 @@ class ResourceUtilization:
 
     def __init__(self, csv_file_name, wtps):
 
-        degree = 1
+        degree = 3
         scenario_df = Cls.ScenarioDataFrame(csv_file_name=csv_file_name)
 
         self.wtps = wtps
@@ -120,9 +120,12 @@ class ResourceUtilization:
 
         self.costRegression = Reg.SingleVarRegression(
             self.selectWTPs, [c*1e-6 for c in self.costs], degree=degree)
+        print(self.costRegression.get_coeffs())
+        print(np.polyfit(x=self.selectWTPs, y=[c * 1e-6 for c in self.costs],
+                         deg=degree))
+
         self.dalyRegression = Reg.SingleVarRegression(
             self.selectWTPs, [e * 1e-3 for e in self.effects], degree=degree)
-        #print(self.costRegression.get_coeffs())
         self.utilRegression = Reg.SingleVarRegression(
             self.selectWTPs, self.utilization, degree=degree)
 
