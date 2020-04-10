@@ -84,7 +84,7 @@ class ResourceUtilization:
 
     def __init__(self, csv_file_name, wtps):
 
-        Cls.POLY_DEGREES = 2
+        degree = 1
         scenario_df = Cls.ScenarioDataFrame(csv_file_name=csv_file_name)
 
         self.wtps = wtps
@@ -111,12 +111,14 @@ class ResourceUtilization:
                     outcome_name='Utilization (unit of time): Social Distancing')
                 self.util.append(utilization_mean)
 
-        self.costRegression = Reg.SingleVarRegression(self.selectWTPs, self.costs, degree=2)
-        self.utilRegression = Reg.SingleVarRegression(self.selectWTPs, self.util, degree=2)
+        self.costRegression = Reg.SingleVarRegression(self.selectWTPs, [c*1e-6 for c in self.costs], degree=degree)
+        print(self.costRegression.get_coeffs())
+        self.utilRegression = Reg.SingleVarRegression(self.selectWTPs, self.util, degree=degree)
 
     def add_affordability_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
+        #ax.scatter(self.selectWTPs, [c*1e-6 for c in self.costs])
         ys = self.costRegression.get_predicted_y(x_pred=self.wtps)
-        self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=[y * 1e-6 for y in ys],
+        self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
                               title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
 
     def add_utilization_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):

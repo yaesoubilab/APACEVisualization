@@ -229,7 +229,7 @@ class SetOfScenarios:
                  scenario_df,
                  color,
                  marker='o',
-                 x_y_labels=[],
+                 x_y_labels=None,
                  scenario_names=None,
                  conditions=None,
                  if_find_frontier=True,
@@ -273,7 +273,7 @@ class SetOfScenarios:
         self.xIntervals = []
         self.yIntervals = []
         # y labels
-        self.xyLabelsProvided = True if len(x_y_labels) > 0 else False
+        self.xyLabelsProvided = True if x_y_labels is not None and len(x_y_labels) > 0 else False
         self.xyLabels = x_y_labels
 
         # frontier values
@@ -371,6 +371,8 @@ class SetOfScenarios:
 
         # find the (x, y) values of strategies to display on CE plane
         # remove the base strategy
+        if not self.xyLabelsProvided:
+            self.xyLabels=[]
         for strategy in [s for s in self.CEA.strategies if s.idx > 0]:
             if switch_cost_effect_on_figure:
                 self.allDeltaEffects = np.append(self.allDeltaEffects,
@@ -624,7 +626,8 @@ class SetOfScenarios:
                     y_range = ax.get_ylim()
 
                 # y-value labels
-                for j, txt in enumerate(ser.xyLabels):
+                for j in range(len(ser.xValues)):
+                    txt = ser.xyLabels[j]
                     if txt is not 'Base':
                         ax.annotate(
                             txt,
