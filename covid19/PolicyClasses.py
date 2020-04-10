@@ -118,32 +118,30 @@ class ResourceUtilization:
                     outcome_name='Utilization (unit of time): Social Distancing')
                 self.utilization.append(utilization_mean)
 
-        self.costRegression = Reg.SingleVarRegression(
+        self.costRegression = Reg.PolyRegression(
             self.selectWTPs, [c*1e-6 for c in self.costs], degree=degree)
-        print(self.costRegression.get_coeffs())
-        print(np.polyfit(x=self.selectWTPs, y=[c * 1e-6 for c in self.costs],
-                         deg=degree))
 
-        self.dalyRegression = Reg.SingleVarRegression(
+        self.dalyRegression = Reg.PolyRegression(
             self.selectWTPs, [e * 1e-3 for e in self.effects], degree=degree)
-        self.utilRegression = Reg.SingleVarRegression(
+
+        self.utilRegression = Reg.PolyRegression(
             self.selectWTPs, self.utilization, degree=degree)
 
     def add_affordability_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
         #ax.scatter(self.selectWTPs, [c*1e-6 for c in self.costs])
-        ys = self.costRegression.get_predicted_y(x_pred=self.wtps)
+        ys = self.costRegression.get_predicted_y(x=self.wtps)
         self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
                               title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
 
         ax2 = ax.twinx()
-        ys = self.dalyRegression.get_predicted_y(x_pred=self.wtps)
+        ys = self.dalyRegression.get_predicted_y(x=self.wtps)
         ax2.plot(self.wtps, ys, label='QALYs loss', color='r', linestyle='--')
         ax2.set_ylabel('QALYs lost (Thousands)\n')
         ax2.spines['right'].set_color('r')
         ax2.set_ylim(0, 21)
 
     def add_utilization_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
-        ys = self.utilRegression.get_predicted_y(x_pred=self.wtps)
+        ys = self.utilRegression.get_predicted_y(x=self.wtps)
         self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
                               title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
 
