@@ -90,7 +90,8 @@ class ResourceUtilization:
         self.wtps = wtps
         self.selectWTPs = []
         self.costs = []
-        self.util = []
+        self.effects = []
+        self.utilization = []
 
         for scenario_name in scenario_df.scenarios:
 
@@ -105,21 +106,38 @@ class ResourceUtilization:
                     outcome_name='Total Cost')
                 self.costs.append(cost_mean)
 
+                # QALY
+                effect_mean, effect_CI = scenario_df.get_mean_interval(
+                    scenario_name=scenario_name,
+                    outcome_name='DALY')
+                self.effects.append(effect_mean)
+
                 # utilization of
                 utilization_mean, utilization_CI = scenario_df.get_mean_interval(
                     scenario_name=scenario_name,
                     outcome_name='Utilization (unit of time): Social Distancing')
-                self.util.append(utilization_mean)
+                self.utilization.append(utilization_mean)
 
-        self.costRegression = Reg.SingleVarRegression(self.selectWTPs, [c*1e-6 for c in self.costs], degree=degree)
-        print(self.costRegression.get_coeffs())
-        self.utilRegression = Reg.SingleVarRegression(self.selectWTPs, self.util, degree=degree)
+        self.costRegression = Reg.SingleVarRegression(
+            self.selectWTPs, [c*1e-6 for c in self.costs], degree=degree)
+        self.dalyRegression = Reg.SingleVarRegression(
+            self.selectWTPs, [e * 1e-3 for e in self.effects], degree=degree)
+        #print(self.costRegression.get_coeffs())
+        self.utilRegression = Reg.SingleVarRegression(
+            self.selectWTPs, self.utilization, degree=degree)
 
     def add_affordability_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
         #ax.scatter(self.selectWTPs, [c*1e-6 for c in self.costs])
         ys = self.costRegression.get_predicted_y(x_pred=self.wtps)
         self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
                               title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
+
+        ax2 = ax.twinx()
+        ys = self.dalyRegression.get_predicted_y(x_pred=self.wtps)
+        ax2.plot(self.wtps, ys, label='QALYs loss', color='r', linestyle='--')
+        ax2.set_ylabel('QALYs lost (Thousands)\n')
+        ax2.spines['right'].set_color('r')
+        ax2.set_ylim(0, 21)
 
     def add_utilization_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
         ys = self.utilRegression.get_predicted_y(x_pred=self.wtps)
