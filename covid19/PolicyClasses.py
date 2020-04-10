@@ -82,9 +82,8 @@ class RBasedPolicy:
 
 class ResourceUtilization:
 
-    def __init__(self, csv_file_name, wtps):
+    def __init__(self, csv_file_name, wtps, poly_degree=2):
 
-        degree = 3
         scenario_df = Cls.ScenarioDataFrame(csv_file_name=csv_file_name)
 
         self.wtps = wtps
@@ -119,28 +118,34 @@ class ResourceUtilization:
                 self.utilization.append(utilization_mean)
 
         self.costRegression = Reg.PolyRegression(
-            self.selectWTPs, [c*1e-6 for c in self.costs], degree=degree)
+            self.selectWTPs, [c*1e-6 for c in self.costs], degree=poly_degree)
 
         self.dalyRegression = Reg.PolyRegression(
-            self.selectWTPs, [e * 1e-3 for e in self.effects], degree=degree)
+            self.selectWTPs, [e * 1e-3 for e in self.effects], degree=poly_degree)
 
         self.utilRegression = Reg.PolyRegression(
-            self.selectWTPs, self.utilization, degree=degree)
+            self.selectWTPs, self.utilization, degree=poly_degree)
 
-    def add_affordability_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
-        #ax.scatter(self.selectWTPs, [c*1e-6 for c in self.costs])
+    def add_affordability_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp, show_data):
+        if show_data:
+            ax.scatter(self.selectWTPs, [c*1e-6 for c in self.costs])
         ys = self.costRegression.get_predicted_y(x=self.wtps)
         self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
                               title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
 
         ax2 = ax.twinx()
+        if show_data:
+            ax2.scatter(self.selectWTPs, [e * 1e-3 for e in self.effects])
         ys = self.dalyRegression.get_predicted_y(x=self.wtps)
         ax2.plot(self.wtps, ys, label='QALYs loss', color='r', linestyle='--')
         ax2.set_ylabel('QALYs lost (Thousands)\n')
         ax2.spines['right'].set_color('r')
-        ax2.set_ylim(0, 21)
+        ax2.set_ylim(0, 31)
 
-    def add_utilization_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp):
+    def add_utilization_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp, show_data):
+
+        if show_data:
+            ax.scatter(self.selectWTPs, self.utilization)
         ys = self.utilRegression.get_predicted_y(x=self.wtps)
         self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
                               title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
