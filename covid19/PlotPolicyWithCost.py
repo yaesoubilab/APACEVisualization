@@ -12,7 +12,7 @@ SHOW_DATA = False
 WTP_DELTA = 50000
 R_DELTA = 0.5
 MAX_R_OFF = 4.0
-MAX_R_ON = 2.01
+MAX_R_ON = 4.0
 
 # ---------------
 # change the current working directory
@@ -45,7 +45,7 @@ resUtil.add_utilization_to_axis(ax=axes[1][1],
                                 title='Utilization of social distancing',
                                 y_label='Expected number of weeks with\ntightened social distancing',
                                 panel_label='D)',
-                                max_y=21,
+                                max_y=20.1,
                                 max_y_n_switches=2.01,
                                 delta_wtp=WTP_DELTA,
                                 show_data=SHOW_DATA)
