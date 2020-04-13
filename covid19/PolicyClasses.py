@@ -80,7 +80,7 @@ class RBasedPolicy:
                      size=9, weight='bold', ha='right', va='top')
 
 
-class ResourceUtilization:
+class OutcomesAndUtilization:
 
     def __init__(self, csv_file_name, wtps, poly_degree=2):
 
@@ -91,6 +91,7 @@ class ResourceUtilization:
         self.costs = []
         self.effects = []
         self.utilization = []
+        self.nSwitches = []
 
         for scenario_name in scenario_df.scenarios:
 
@@ -111,11 +112,17 @@ class ResourceUtilization:
                     outcome_name='DALY')
                 self.effects.append(effect_mean)
 
-                # utilization of
+                # utilization of social distancing
                 utilization_mean, utilization_CI = scenario_df.get_mean_interval(
                     scenario_name=scenario_name,
                     outcome_name='Utilization (unit of time): Social Distancing')
                 self.utilization.append(utilization_mean)
+
+                # Number of Switches
+                n_switches_mean, n_switches_CI = scenario_df.get_mean_interval(
+                    scenario_name=scenario_name,
+                    outcome_name='Number of Switches')
+                self.nSwitches.append(n_switches_mean)
 
         self.costRegression = Reg.PolyRegression(
             self.selectWTPs, [c*1e-6 for c in self.costs], degree=poly_degree)
@@ -125,6 +132,10 @@ class ResourceUtilization:
 
         self.utilRegression = Reg.PolyRegression(
             self.selectWTPs, self.utilization, degree=poly_degree)
+
+        self.nSwitchesRegression = Reg.PolyRegression(
+            self.selectWTPs, self.nSwitches, degree=poly_degree
+        )
 
     def add_affordability_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp, show_data):
         if show_data:

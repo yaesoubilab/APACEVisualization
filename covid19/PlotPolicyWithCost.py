@@ -20,7 +20,7 @@ os.chdir('..')
 policy = P.RBasedPolicy(policy_params=POLICY_PARAMS, scale=SCALE, wtps=WTPS)
 policy.write_to_csv(file_name='Policies.csv',
                     directory='covid19/csv_files')
-resUtil = P.ResourceUtilization(csv_file_name='covid19/csv_files/PolicyEval.csv', wtps=WTPS, poly_degree=4)
+resUtil = P.OutcomesAndUtilization(csv_file_name='covid19/csv_files/PolicyEval.csv', wtps=WTPS, poly_degree=4)
 
 fig, axes = plt.subplots(2, 2, figsize=(7.2, 7))
 
