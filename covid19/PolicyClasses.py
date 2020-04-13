@@ -137,12 +137,13 @@ class OutcomesAndUtilization:
             self.selectWTPs, self.nSwitches, degree=poly_degree
         )
 
-    def add_affordability_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp, show_data):
+    def add_affordability_to_axis(self, ax, title, y_label, panel_label,
+                                  max_y_cost, max_y_qaly, delta_wtp, show_data):
         if show_data:
             ax.scatter(self.selectWTPs, [c*1e-6 for c in self.costs])
         ys = self.costRegression.get_predicted_y(x=self.wtps)
         self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
-                              title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
+                              title=title, y_label=y_label, panel_label=panel_label, max_y=max_y_cost, delta_wtp=delta_wtp)
 
         ax2 = ax.twinx()
         if show_data:
@@ -153,7 +154,7 @@ class OutcomesAndUtilization:
         ax2.spines['right'].set_color('r')
         ax2.tick_params(axis='y', colors='r')
         # ax2.yaxis.label.set_color('r')
-        ax2.set_ylim(0, 21)
+        ax2.set_ylim(0, max_y_qaly)
 
     def add_utilization_to_axis(self, ax, title, y_label, panel_label, max_y, delta_wtp, show_data):
 

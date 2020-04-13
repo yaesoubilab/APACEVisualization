@@ -4,12 +4,12 @@ import numpy as np
 import os
 
 # ---- settings ----
-POLICY_PARAMS = [6.3930426829,-1.6172418759,0.1438386327] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
+POLICY_PARAMS = [7.72959,-1.80252,0.24708] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
 SCALE = (1e5 + 3e5)/2
-WTPS = np.linspace(115000, 150000, 20)  # [min, max, number of points]
+WTPS = np.linspace(100000, 200000, 20)  # [min, max, number of points]
 SHOW_DATA = False
 
-WTP_DELTA = 15000
+WTP_DELTA = 50000
 R_DELTA = 0.5
 MAX_R_OFF = 4.0
 MAX_R_ON = 2.01
@@ -20,7 +20,8 @@ os.chdir('..')
 policy = P.RBasedPolicy(policy_params=POLICY_PARAMS, scale=SCALE, wtps=WTPS)
 policy.write_to_csv(file_name='Policies.csv',
                     directory='covid19/csv_files')
-resUtil = P.OutcomesAndUtilization(csv_file_name='covid19/csv_files/PolicyEval.csv', wtps=WTPS, poly_degree=4)
+resUtil = P.OutcomesAndUtilization(csv_file_name='covid19/csv_files/PolicyEval.csv',
+                                   wtps=WTPS, poly_degree=3)
 
 fig, axes = plt.subplots(2, 2, figsize=(7.2, 7))
 
@@ -35,14 +36,16 @@ resUtil.add_affordability_to_axis(ax=axes[1][0],
                                   title='Affordability curve',
                                   y_label='Overall cost expected to incurred\n(million dollars)',
                                   panel_label='C)',
-                                  max_y=2500, delta_wtp=WTP_DELTA,
+                                  max_y_cost=2000,
+                                  max_y_qaly=20.1,
+                                  delta_wtp=WTP_DELTA,
                                   show_data=SHOW_DATA)
 # utilization
 resUtil.add_utilization_to_axis(ax=axes[1][1],
                                 title='Utilization of social distancing',
                                 y_label='Expected number of weeks with\ntightened social distancing',
                                 panel_label='D)',
-                                max_y=25, delta_wtp=WTP_DELTA,
+                                max_y=21, delta_wtp=WTP_DELTA,
                                 show_data=SHOW_DATA)
 
 fig.tight_layout()

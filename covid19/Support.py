@@ -24,7 +24,7 @@ class PolicyDefinitions:
         self.VarAdaptive = [
             Cls.VariableCondition('Decision Rule (0: fixed, 1: %I, 2: Rt)', 2, 2,
                                   if_included_in_label=False),
-            Cls.VariableCondition('R_t Switch threshold if social distancing is off', 2.15, 5,
+            Cls.VariableCondition('R_t Switch threshold if social distancing is off', 1, 5,
                                   if_included_in_label=False, label_format='{:.1f}'),
             Cls.VariableCondition('R_t Switch threshold if social distancing is on', 0, 5,
                                   if_included_in_label=False, label_format='{:.1f}'),
