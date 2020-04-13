@@ -6,7 +6,7 @@ import os
 # ---- settings ----
 POLICY_PARAMS = [7.72959,-1.80252,0.24708] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
 SCALE = (1e5 + 3e5)/2
-WTPS = np.linspace(100000, 200000, 20)  # [min, max, number of points]
+WTPS = np.linspace(100000, 200000, 19)  # [min, max, number of points]
 SHOW_DATA = False
 
 WTP_DELTA = 50000
