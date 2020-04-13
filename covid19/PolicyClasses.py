@@ -137,6 +137,8 @@ class OutcomesAndUtilization:
             self.selectWTPs, self.nSwitches, degree=poly_degree
         )
 
+        print(self.nSwitches)
+
     def add_affordability_to_axis(self, ax, title, y_label, panel_label,
                                   max_y_cost, max_y_qaly, delta_wtp, show_data):
         if show_data:
