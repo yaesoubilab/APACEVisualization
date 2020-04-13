@@ -23,7 +23,7 @@ policy.write_to_csv(file_name='Policies.csv',
 resUtil = P.OutcomesAndUtilization(csv_file_name='covid19/csv_files/PolicyEval.csv',
                                    wtps=WTPS, poly_degree=3)
 
-fig, axes = plt.subplots(2, 2, figsize=(7.2, 7))
+fig, axes = plt.subplots(2, 2, figsize=(7.5, 7))
 
 # policy when off
 policy.add_policy_figure_when_relaxed(ax=axes[0][0], max_r=MAX_R_OFF, delta_wtp=WTP_DELTA)
@@ -45,7 +45,9 @@ resUtil.add_utilization_to_axis(ax=axes[1][1],
                                 title='Utilization of social distancing',
                                 y_label='Expected number of weeks with\ntightened social distancing',
                                 panel_label='D)',
-                                max_y=21, delta_wtp=WTP_DELTA,
+                                max_y=21,
+                                max_y_n_switches=2.01,
+                                delta_wtp=WTP_DELTA,
                                 show_data=SHOW_DATA)
 
 fig.tight_layout()
