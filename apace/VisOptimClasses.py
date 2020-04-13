@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 
-def plot_all_opt_itrs(csv_directory, n_vars, save_plots_directory,
+def plot_all_opt_itrs(csv_directory, n_vars, save_plots_directory, show_titles=True,
                       f_range=None, var_ranges=None, y_axis_labels=None, window=2):
 
     for name in os.listdir(csv_directory):
@@ -14,6 +14,7 @@ def plot_all_opt_itrs(csv_directory, n_vars, save_plots_directory,
             n_vars=n_vars,
             directory_save_plot=save_plots_directory,
             f_range=f_range,
+            show_title=show_titles,
             var_ranges=var_ranges,
             y_axis_labels=y_axis_labels,
             moving_ave_window=window
@@ -25,6 +26,7 @@ def plot_optimization_itrs(csv_directory,
                            n_vars,
                            directory_save_plot,
                            y_axis_labels,
+                           show_title=True,
                            f_range=None,
                            var_ranges=None,
                            moving_ave_window=2):
@@ -34,6 +36,7 @@ def plot_optimization_itrs(csv_directory,
     :param n_vars: number of variables
     :param directory_save_plot: directory where the plot should be saved
     :param y_axis_labels: (list) of y-axis labels
+    :param show_title: (boolean) set to False to not show the figure title
     :param f_range: range of f
     :param var_ranges: (list) of ranges for variables
     :param moving_ave_window: (int) moving average window
@@ -48,7 +51,8 @@ def plot_optimization_itrs(csv_directory,
 
     # create plot for f and variables
     f_and_var_plot, axarr = plt.subplots(n_vars+1, 1, sharex=True, figsize=(6, 6))
-    axarr[0].set(title=csv_filename)
+    if show_title:
+        axarr[0].set(title=csv_filename)
 
     # objective function
     add_f(axarr=axarr,
