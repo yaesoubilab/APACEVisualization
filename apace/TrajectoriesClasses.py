@@ -227,7 +227,7 @@ class TrajsDataFrame:
 
         self.NumOfSims = n_reps
 
-    def __plot_single_panel(self, ax, plot_info, calibration_info=None, trajs_ids_to_display=None):
+    def add_to_ax(self, ax, plot_info, calibration_info=None, trajs_ids_to_display=None):
         """
         plots multiple trajectories of a simulated outcome in a single panel
         :param ax: Axes object
@@ -315,7 +315,7 @@ class TrajsDataFrame:
         """
 
         fig, ax = plt.subplots(figsize=plot_info.figureSize) # figure size
-        self.__plot_single_panel(ax, plot_info, obs_info, feas_range_info)
+        self.add_to_ax(ax, plot_info, obs_info, feas_range_info)
 
         plt.tight_layout() # auto adjusts subplots to fit into figure area
 
@@ -374,7 +374,7 @@ class TrajsDataFrame:
                 else:
                     plot_info = list_plot_info[i * n_cols + j]
                     calib_info = list_calib_info[i * n_cols + j] if list_calib_info else None
-                    self.__plot_single_panel(ax, plot_info, calib_info, trajs_ids_to_display)
+                    self.add_to_ax(ax, plot_info, calib_info, trajs_ids_to_display)
 
                 # remove unnecessary labels for shared axis
                 if share_x and i < n_rows - 1:
