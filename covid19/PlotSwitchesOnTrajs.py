@@ -17,6 +17,9 @@ def get_dfs(csv_file_names):
             warmup_epi_time=1))
     return dfs
 
+titles =['Social distancing never employed',
+         'Adaptive policy corresponding to the willingness-to-pay of $100,000',
+         'Adaptive policy corresponding to the willingness-to-pay of $200,000',]
 
 dfs = get_dfs(csv_file_names=['No.csv', 'WTP100.csv', 'WTP200.csv'])
 
@@ -33,7 +36,7 @@ for i, df in enumerate(dfs):
             x_label='Week',
             x_range=[0, 52],
             y_label='Weekly Number of Cases\n(Thousands)',
-            title='',
+            title=titles[i],
             common_color_code='blue',
             transparency=1),
         trajs_ids_to_display=[0]
