@@ -1,7 +1,7 @@
 import SimPy.InOutFunctions as IO
 import numpy as np
 
-CAPACITY = 0.89/10000*2*20
+CAPACITY = 0.89/10000*2*2
 N = 10
 
 
