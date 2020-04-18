@@ -4,8 +4,8 @@ import covid19.PolicyClasses as P
 import os
 
 # ---- settings ----
-POLICY_PARAMS = [3.33928,-1.00796,0.11805] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
-WTPS = np.linspace(0.24e5, 0.26e5, 9)  # [min, max, number of points]
+POLICY_PARAMS = [1.69216,-1.24034,0.15503] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
+WTPS = np.linspace(0.25e5, 0.75e5, 9)  # [min, max, number of points]
 SCALE = (WTPS[0] + WTPS[-1])/2
 
 
