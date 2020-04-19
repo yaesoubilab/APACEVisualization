@@ -25,9 +25,9 @@ class PolicyDefinitions:
             Cls.VariableCondition('Decision Rule (0: fixed, 1: %I, 2: Rt)', 1, 1,
                                   if_included_in_label=False),
             Cls.VariableCondition('R_t Switch threshold if social distancing is off', 0, 5,  # 1, 5
-                                  if_included_in_label=False, label_format='{:.1f}'),
+                                  if_included_in_label=False, label_format='{:.5f}'),
             Cls.VariableCondition('R_t Switch threshold if social distancing is on', 0, 5,  # 0, 5
-                                  if_included_in_label=False, label_format='{:.1f}'),
+                                  if_included_in_label=False, label_format='{:.5f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
             # Cls.VariableCondition('Switch threshold if social distancing is off',

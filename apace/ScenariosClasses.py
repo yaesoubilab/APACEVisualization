@@ -398,7 +398,7 @@ class SetOfScenarios:
                 self.yValuesByScenario.append(strategy.dCostObs * cost_multiplier)
 
             if not self.xyLabelsProvided:
-                self.xyLabels.append(strategy.name)
+                self.xyLabels.append(strategy.label)
 
             if interval_type != 'n':
                 effect_interval = strategy.dEffect.get_interval(interval_type=interval_type,
@@ -497,6 +497,7 @@ class SetOfScenarios:
             scn = scenario_set.scenarioDF.scenarios['Base']
             base_strategy = Econ.Strategy(
                 name='Base',
+                label='Base',
                 cost_obs=scn.outcomes[COST_MEASURE],
                 effect_obs=scn.outcomes[HEALTH_MEASURE],
                 color=None if colors_of_scenarios is None else colors_of_scenarios[0]
@@ -546,13 +547,13 @@ class SetOfScenarios:
                     if colors_of_scenarios is not None:
                         color = colors_of_scenarios[i + 1]
 
-                    strategy_name = label
                     if scenario_set.xyLabelsProvided:
-                        strategy_name = scenario_set.xyLabels[i]
+                        label = scenario_set.xyLabels[i]
 
                     scenario_set.strategies.append(
                         Econ.Strategy(
-                            name=strategy_name,
+                            name=scenario.name,
+                            label=label,
                             cost_obs=scenario.outcomes[COST_MEASURE],
                             effect_obs=scenario.outcomes[HEALTH_MEASURE],
                             color=color)
@@ -614,6 +615,8 @@ class SetOfScenarios:
                            color=ser.color, marker=ser.marker, alpha=0.5, zorder=10, s=15, label=ser.name)
                 # ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5,
                 # zorder=10, s=5, label=ser.name)
+                # line plot for frontier line
+                ax.plot(ser.frontierXValues, ser.frontierYValues, color=ser.color, alpha=0.5)
 
                 # error bars
                 if show_error_bars:
