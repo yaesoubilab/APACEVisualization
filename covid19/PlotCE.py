@@ -39,7 +39,7 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, adaptive],
                            labels=['QALYs Gained (Thousand)',
                                    'Additional Cost (Million Dollars)'],
                            title='',
-                           fig_size=(6, 5.4), # (3.6, 3.2),
+                           fig_size=(6, 5.2), # (3.6, 3.2),
                            l_b_r_t=(0.22, 0.13, 0.9, 0.9),
                            file_name='figures/CE.png')
 
