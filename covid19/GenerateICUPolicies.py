@@ -26,5 +26,5 @@ def generate_scenarios(t1_min, t1_max, n_of_samples):
 
 # print(generate_scenarios(CAPACITY, N))
 
-IO.write_csv(rows=generate_scenarios(0, CAPACITY, 1, N),
+IO.write_csv(rows=generate_scenarios(0, CAPACITY, N),
              file_name='../covid19/csv_files/ICUPolicies.csv')
