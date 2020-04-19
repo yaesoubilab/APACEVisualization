@@ -1,8 +1,8 @@
 import SimPy.InOutFunctions as IO
 import numpy as np
 
-CAPACITY = 0.89/10000*2*2
-N = 10
+CAPACITY = 0.89/10000*2*30
+N = 20
 
 
 def generate_scenarios(t1_min, t1_max, n_of_samples):
