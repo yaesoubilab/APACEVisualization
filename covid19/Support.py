@@ -10,7 +10,7 @@ class PolicyDefinitions:
         self.VarFixedInterval = [
             Cls.VariableCondition('Decision Rule (0: fixed, 1: %I, 2: Rt)', 0, 0,
                                   if_included_in_label=False),
-            Cls.VariableCondition('Duration of Social Distancing', 0, 200,
+            Cls.VariableCondition('Duration of Social Distancing', 0, 72, # 200
                                   if_included_in_label=True, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
