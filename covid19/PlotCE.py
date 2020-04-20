@@ -2,7 +2,7 @@ import apace.ScenariosClasses as Cls
 import apace.VisualizeScenarios as Vis
 import covid19.Support as Sup
 
-Cls.POLY_DEGREES = 2
+Cls.POLY_DEGREES = 4
 scenario_df = Cls.ScenarioDataFrame(csv_file_name='csv_files/PolicyEval.csv')
 
 policy_definitions = Sup.PolicyDefinitions()
@@ -31,7 +31,7 @@ adaptive = Cls.SetOfScenarios(name='Adaptive (ICU)',
 
 Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, adaptive],
                            x_range=[0, 70],
-                           y_range=[0, 700],
+                           y_range=[0, 1500],
                            effect_multiplier=1/1000,
                            cost_multiplier=1/10e6,
                            switch_cost_effect_on_figure=False,
