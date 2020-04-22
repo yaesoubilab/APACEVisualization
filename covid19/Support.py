@@ -1,4 +1,5 @@
 import apace.ScenariosClasses as Cls
+import numpy as np
 
 
 class PolicyDefinitions:
@@ -53,3 +54,16 @@ class PolicyDefinitions:
             #                       DS_TESTS, DS_TESTS,
             #                       if_included_in_label=False)
         ]
+
+
+def generate_policies(t1_range, t2_range, n_of_samples):
+
+    t1_samples = np.linspace(t1_range[0], t1_range[1], n_of_samples)
+    t2_samples = np.linspace(t2_range[0], t2_range[1], n_of_samples)
+
+    policies = []
+    for t1 in t1_samples:
+        for t2 in t2_samples:
+            policies.append([t1, t2])
+
+    return policies
