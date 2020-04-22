@@ -2,9 +2,9 @@ import SimPy.InOutFunctions as IO
 import numpy as np
 
 R_On = [1, 3]
-R_Off = [0.3, 1]
+R_Off = [0.2, 0.5]
 
-N = 5
+N = 10
 
 
 def generate_scenarios(t1_range, t2_range, n_of_samples):
