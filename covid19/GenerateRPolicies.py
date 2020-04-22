@@ -2,7 +2,7 @@ import SimPy.InOutFunctions as IO
 import numpy as np
 
 R_On = [1, 3]
-R_Off = [0.2, 0.5]
+R_Off = [0.2, 1.5]
 
 N = 10
 
