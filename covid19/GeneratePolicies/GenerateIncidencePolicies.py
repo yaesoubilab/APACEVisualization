@@ -2,8 +2,8 @@ import SimPy.InOutFunctions as IO
 from covid19 import Support as Support
 
 
-Incidence = [50, 14000]
-DeltaIncidence = [10, 3000]
+Incidence = [1500, 14000]
+DeltaIncidence = [50, 3000]
 
 N = 10
 
