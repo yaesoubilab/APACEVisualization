@@ -4,7 +4,26 @@ import numpy as np
 import apace.ScenariosClasses as Cls
 
 
-class RBasedPolicy:
+class PolicyRtI:
+    def __init__(self, policy_params, wtps):
+
+        self.policyParams = policy_params
+        self.wtps = wtps
+        self.RtsOff = []
+        self.RtOn = []
+        self.IsOff = []
+        self.IsOn = []
+        self.wtpAndThresholds = []
+
+        scale = (wtps[0] + wtps[-1])/2
+        for wtp in wtps:
+
+
+    def get_r_thresholds(self, ):
+
+
+
+class PolicyRt:
     def __init__(self, policy_params, scale, wtps):
 
         self.policyParams = policy_params
