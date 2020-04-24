@@ -9,4 +9,4 @@ N = 10
 
 
 IO.write_csv(rows=Support.generate_policies(R_On, R_Off, N),
-             file_name='../csv_files/ReffPolicies.csv')
+             file_name='../csv_files/RtPolicies.csv')
