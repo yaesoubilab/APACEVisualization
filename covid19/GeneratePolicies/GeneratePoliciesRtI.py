@@ -2,9 +2,9 @@ import SimPy.InOutFunctions as IO
 from covid19 import Support as Support
 
 
-R_On = [1, 3]
-R_Off = [0.2, 1.5]
-I = [0.01, 0.1]
+R_On = [1, 2]
+R_Off = [0.2, 1]
+I = [0.01, 0.05]
 N = 3
 
 RPolicies = Support.generate_policies(R_On, R_Off, N)
@@ -18,4 +18,4 @@ for R in RPolicies:
         RIPolicies.append(RI)
 
 IO.write_csv(rows=RIPolicies,
-             file_name='../csv_files/RtIPolicies.csv')
+             file_name='../csv_files/PoliciesRtI.csv')
