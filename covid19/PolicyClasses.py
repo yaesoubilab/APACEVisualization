@@ -17,9 +17,34 @@ class PolicyRtI:
 
         scale = (wtps[0] + wtps[-1])/2
         for wtp in wtps:
+            r_thresholds = self.get_r_thresholds(wtp=wtp,scale=scale)
+            i_thresholds = self.get_i_thresholds(wtp=wtp,scale=scale)
 
+            self.RtsOff.append(r_thresholds[0])
+            self.RtOn.append(r_thresholds[1])
+            self.IsOff.append(i_thresholds[0])
+            self.IsOn.append(i_thresholds[1])
 
-    def get_r_thresholds(self, ):
+            row = [wtp]
+            row.extend(r_thresholds)
+            row.extend(i_thresholds)
+            self.wtpAndThresholds.append(row)
+
+    def get_r_thresholds(self, wtp, scale):
+
+        to_close = self.policyParams[0] * np.exp(self.policyParams[1] * wtp / scale)
+        to_open = to_close * self.policyParams[2]
+        return [to_close, to_open]
+
+    def get_i_thresholds(self, wtp, scale):
+        to_close = self.policyParams[3] * np.exp(self.policyParams[4] * wtp / scale)
+        to_open = to_close * self.policyParams[5]
+        return [to_close, to_open]
+
+    def write_to_csv(self, file_name, directory):
+        io.write_csv(rows=self.wtpAndThresholds,
+                     file_name=file_name,
+                     directory=directory)
 
 
 
