@@ -3,8 +3,8 @@ from covid19 import Support as Support
 
 
 R_On = [1, 2]
-R_Off = [0.2, 1]
-I = [0.01, 0.04 ]
+R_Off = [0.2, 0.5]
+I = [0.00001, 0.00005]
 N = 3
 
 RPolicies = Support.generate_policies(R_On, R_Off, N)
