@@ -328,7 +328,8 @@ class TrajsDataFrame:
     def plot_multi_panel(self, n_rows, n_cols, file_name,
                          list_plot_info, trajs_ids_to_display=None,
                          list_calib_info=None, show_subplot_labels=False,
-                         share_x=False, share_y=False, figure_size=None):
+                         share_x=False, share_y=False, figure_size=None,
+                         l_b_r_t=(0.1, 0.1, 0.95, 0.9)):
         """
         plots a figure with multiple panels
         :param n_rows: number of rows
@@ -388,7 +389,8 @@ class TrajsDataFrame:
         # plt.tight_layout() # auto adjusts subplots to fit into figure area
         # plt.tight_layout() is an experimental feature and doesn't always work
         # manually adjust the margins of and spacing between subplots instead
-        plt.subplots_adjust(left=0.1, bottom=0.1, right=0.95, top=0.9,
+
+        plt.subplots_adjust(left=l_b_r_t[0], bottom=l_b_r_t[1], right=l_b_r_t[2], top=l_b_r_t[3],
                             wspace=SUBPLOT_W_SPACE, hspace=SUBPLOT_H_SPACE)
         manager = plt.get_current_fig_manager()
         manager.resize(*manager.window.maxsize()) # maximize window
