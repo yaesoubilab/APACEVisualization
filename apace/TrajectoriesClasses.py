@@ -199,7 +199,7 @@ class TrajsDataFrame:
 
                 # generate trajectories with specific x-axis
                 while col_idx < n_cols and traj_names[col_idx] not in x_axes and traj_names[col_idx] != "Replication":
-                    if traj_names[col_idx] != "Action Code":
+                    if traj_names[col_idx] != "Code of Next Action":
                         traj = TrajOneOutcomeMultipleReps()
                         for repIdx in range(n_reps):
                             rep = TrajOneOutcomeOneRep()
@@ -306,16 +306,17 @@ class TrajsDataFrame:
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
 
-    def plot(self, plot_info, obs_info=None, feas_range_info=None):
+    def plot(self, plot_info, calibration_info=None):
         """
         plots a figure with a single panel
         :param plot_info: plot information
-        :param obs_info: information for observed outcomes
-        :param feas_range_info: feasible range information
+        :param calibration_info: calibration information
         """
 
         fig, ax = plt.subplots(figsize=plot_info.figureSize) # figure size
-        self.add_to_ax(ax, plot_info, obs_info, feas_range_info)
+        self.add_to_ax(ax,
+                       plot_info=plot_info,
+                       calibration_info=calibration_info)
 
         plt.tight_layout() # auto adjusts subplots to fit into figure area
 
