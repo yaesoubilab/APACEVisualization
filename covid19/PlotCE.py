@@ -15,23 +15,23 @@ fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
                                     conditions=policy_definitions.VarFixedInterval,
                                     if_find_frontier=False,
                                     if_show_fitted_curve=True,
-                                    labels_shift_x=-0.06,
+                                    labels_shift_x=-0.01,
                                     labels_shift_y=2 / 80)
 
-adaptive = Cls.SetOfScenarios(name='Adaptive (ICU)',
+periodic = Cls.SetOfScenarios(name='Periodic',
                               scenario_df=scenario_df,
                               color='red',
                               marker='D',
                               #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
-                              conditions=policy_definitions.VarAdaptiveICU,
-                              if_find_frontier=True,
+                              conditions=policy_definitions.VarPeriodicI,
+                              if_find_frontier=False,
                               if_show_fitted_curve=False,
                               labels_shift_x=0.1 / 8,
                               labels_shift_y=-4 / 80)
 
-Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, adaptive],
-                           x_range=[0, 75],
-                           y_range=[0, 20000],
+Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic],
+                           x_range=[0, 10],
+                           y_range=[0, 1000],
                            effect_multiplier=1/1000,
                            cost_multiplier=1/10e6,
                            switch_cost_effect_on_figure=False,
@@ -43,10 +43,14 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, adaptive],
                            l_b_r_t=(0.22, 0.13, 0.9, 0.9),
                            file_name='figures/CE.png')
 
-names = [s.name for s in adaptive.CEA.get_strategies_on_frontier()]
+names = [s.name for s in periodic.CEA.get_strategies_on_frontier()]
 
 for name in names:
     mean_interval = scenario_df.get_mean_interval(
         scenario_name=name,
         outcome_name='Number of Switches')
+    print(name, mean_interval)
+    mean_interval = scenario_df.get_mean_interval(
+        scenario_name=name,
+        outcome_name='Average ratio: % Death While Waiting for ICU')
     print(name, mean_interval)

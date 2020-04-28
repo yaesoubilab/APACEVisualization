@@ -9,7 +9,7 @@ class PolicyDefinitions:
         # conditions of variables to define scenarios to display
         # on each series of cost-effectiveness plane
         self.VarFixedInterval = [
-            Cls.VariableCondition('Decision Rule (0: fixed, 1: %I, 2: Rt)', 0, 0,
+            Cls.VariableCondition('Decision Rule', 0, 0,
                                   if_included_in_label=False),
             Cls.VariableCondition('Duration of Social Distancing', 0, 72, # 200
                                   if_included_in_label=True, label_format='{:.0f}'),
@@ -22,12 +22,12 @@ class PolicyDefinitions:
             #                       DS_TESTS, DS_TESTS,
             #                       if_included_in_label=False)
         ]
-        self.VarAdaptiveICU = [
-            Cls.VariableCondition('Decision Rule (0: fixed, 1: %I, 2: Rt)', 1, 1,
+        self.VarPeriodicI = [
+            Cls.VariableCondition('Decision Rule', 1, 1,
                                   if_included_in_label=False),
-            Cls.VariableCondition('R_t Switch threshold if social distancing is off', 0, 5,  # 1, 5
+            Cls.VariableCondition('% I Switch threshold if social distancing is off', 0, 1,  # 1, 5
                                   if_included_in_label=False, label_format='{:.5f}'),
-            Cls.VariableCondition('R_t Switch threshold if social distancing is on', 0, 5,  # 0, 5
+            Cls.VariableCondition('% I Switch threshold if social distancing is on', 0, 1,  # 0, 5
                                   if_included_in_label=False, label_format='{:.5f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
@@ -39,7 +39,7 @@ class PolicyDefinitions:
             #                       if_included_in_label=False)
         ]
         self.VarAdaptiveR = [
-            Cls.VariableCondition('Decision Rule (0: fixed, 1: %I, 2: Rt)', 2, 2,
+            Cls.VariableCondition('Decision Rule', 2, 2,
                                   if_included_in_label=False),
             Cls.VariableCondition('R_t Switch threshold if social distancing is off', 1, 5,
                                   if_included_in_label=False, label_format='{:.1f}'),
