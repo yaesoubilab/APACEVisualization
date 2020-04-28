@@ -6,6 +6,8 @@ import SimPy.FormatFunctions as F
 R0 = [2.5, 0.7, 1.5, 4]
 TimeToInf = [5, 0.5, 3, 7]
 TimeInf = [4, 1.5, 2, 8]
+ProbHosp = [0.326, 0.018, 0, 1]
+ProbDeath = [0.330, 0.032, 0, 1]
 
 
 def print_intervals(name, mean_std_min_max):
@@ -27,3 +29,5 @@ def print_intervals(name, mean_std_min_max):
 print_intervals('R0:', R0)
 print_intervals('Time to infectious:', TimeToInf)
 print_intervals('Time infectious:', TimeInf)
+print_intervals('Probability of hospitalization:', ProbHosp)
+print_intervals('Probability of death if needing ICU:', ProbDeath)
