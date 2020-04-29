@@ -193,12 +193,11 @@ class ScenarioDataFrame:
         plt.savefig(filename+'.png', dpi=300)
 
 
-class VariableCondition:
-    def __init__(self, var_name, minimum=0, maximum=1, values=None,
+class _Condition:
+    def __init__(self, minimum=0, maximum=1, values=None,
                  if_included_in_label=False, label_format='', label_rules=None):
         """
-        :param var_name: variable name as appears in the scenario csv file
-        :param minimum: minimum acceptable value for this variable
+         :param minimum: minimum acceptable value for this variable
         :param maximum: maximum acceptable value for this variable
         :param values: (tuple) of acceptable values
         :param if_included_in_label: if the value of this variable should be included in labels to display on CE plane
@@ -206,7 +205,6 @@ class VariableCondition:
         :param label_rules: (list of tuples): to convert variable's value to labels
         for example: [(0, 'A'), (1, 'B')] replaces variable value 0 with A and 1 with B when creating labels
         """
-        self.varName = var_name
         self.min = minimum
         self.max = maximum
         self.values = values
@@ -214,11 +212,37 @@ class VariableCondition:
         self.labelFormat = label_format
         self.labelRules = label_rules
 
+
+class ConditionOnVariable(_Condition):
+    def __init__(self, var_name, minimum=0, maximum=1, values=None,
+                 if_included_in_label=False, label_format='', label_rules=None):
+        """
+        :param var_name: variable name as appears in the scenario csv file
+        """
+        _Condition.__init__(self, minimum=minimum, maximum=maximum, values=values,
+                            if_included_in_label=if_included_in_label,
+                            label_format=label_format,
+                            label_rules=label_rules)
+        self.varName = var_name
+
     def get_label(self, value):
         """ :returns the label associated to this value of the parameter """
         for rule in self.labelRules:
             if rule[0] == value:
                 return rule[1]
+
+
+class ConditionOnOutcome(_Condition):
+    def __init__(self, outcome_name, minimum=0, maximum=1, values=None,
+                 if_included_in_label=False, label_format='', label_rules=None):
+        """
+        :param outcome_name: name of the outcome in the scenario csv file
+        """
+        _Condition.__init__(self, minimum=minimum, maximum=maximum, values=values,
+                            if_included_in_label=if_included_in_label,
+                            label_format=label_format,
+                            label_rules=label_rules)
+        self.outcomeName = outcome_name
 
 
 class SetOfScenarios:

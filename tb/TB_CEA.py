@@ -140,29 +140,29 @@ def analyze_econ_eval(prob_uptake, prob_dropout):
     # 'Follow-Up (Tc+>1)' = any, and
     # 'IPT' = any
     varConditions = [
-        Cls.VariableCondition('Prob {Tc+ | Tc}',
-                              minimum=prob_uptake,
-                              maximum=prob_uptake,
-                              if_included_in_label=False),
-        Cls.VariableCondition('Follow-Up (Tc+>1)',
-                              minimum=0,
-                              maximum=1,
-                              if_included_in_label=True,
-                              label_rules=[
+        Cls.ConditionOnVariable('Prob {Tc+ | Tc}',
+                                minimum=prob_uptake,
+                                maximum=prob_uptake,
+                                if_included_in_label=False),
+        Cls.ConditionOnVariable('Follow-Up (Tc+>1)',
+                                minimum=0,
+                                maximum=1,
+                                if_included_in_label=True,
+                                label_rules=[
                                   (0, 'First-year follow-up'),
                                   (1, 'Annual follow-up')]
-                              ),
-        Cls.VariableCondition('Prob {Drop-Out in Tc+>1}',
-                              values=(prob_dropout, 0),
-                              if_included_in_label=False),
-        Cls.VariableCondition('IPT',
-                              minimum=0,
-                              maximum=1,
-                              if_included_in_label=True,
-                              label_rules=[
+                                ),
+        Cls.ConditionOnVariable('Prob {Drop-Out in Tc+>1}',
+                                values=(prob_dropout, 0),
+                                if_included_in_label=False),
+        Cls.ConditionOnVariable('IPT',
+                                minimum=0,
+                                maximum=1,
+                                if_included_in_label=True,
+                                label_rules=[
                                   (0, ''),
                                   (1, 'with 2°IPT')]
-                              )
+                                )
     ]
 
     # data frame of scenarios
