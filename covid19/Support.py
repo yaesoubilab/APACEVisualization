@@ -8,7 +8,7 @@ class PolicyDefinitions:
 
         # conditions of variables to define scenarios to display
         # on each series of cost-effectiveness plane
-        self.VarFixedInterval = [
+        self.FixedIntervalVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 0, 0,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('Duration of Social Distancing', 0, 72,  # 200
@@ -22,7 +22,7 @@ class PolicyDefinitions:
             #                       DS_TESTS, DS_TESTS,
             #                       if_included_in_label=False)
         ]
-        self.VarPeriodicI = [
+        self.PeriodicInfVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 1, 1,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 1,  # 1, 5
@@ -38,13 +38,15 @@ class PolicyDefinitions:
             #                       DS_TESTS, DS_TESTS,
             #                       if_included_in_label=False)
         ]
-        self.OutcomeConditionPeriodicI = Cls.ConditionOnOutcome(
-            outcome_name='Average ratio: % Death While Waiting for ICU',
-            minimum=0,
-            maximum=0.1,
-            if_included_in_label=False)
+        self.PeriodicInfOutcomeConditions = [
+            Cls.ConditionOnOutcome(
+                outcome_name='Average ratio: % Death While Waiting for ICU',
+                minimum=0,
+                maximum=0.07,
+                if_included_in_label=False)
+        ]
 
-        self.VarAdaptiveR = [
+        self.AdaptiveRVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 2, 2,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('R_t Switch threshold if social distancing is off', 1, 5,

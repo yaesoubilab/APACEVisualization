@@ -174,7 +174,7 @@ def analyze_econ_eval(prob_uptake, prob_dropout):
                                 +'-D{:.{prec}f}%'.format(prob_dropout * 100, prec=0),
                            scenario_df=dfScenarios,
                            color='#4D4D4D',  # '#808A87',
-                           conditions=varConditions,
+                           conditions_on_variables=varConditions,
                            if_find_frontier=True,
                            labels_shift_x=-0.04,
                            labels_shift_y=0.01)

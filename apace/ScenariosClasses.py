@@ -255,7 +255,8 @@ class SetOfScenarios:
                  marker='o',
                  x_y_labels=None,
                  scenario_names=None,
-                 conditions=None,
+                 conditions_on_variables=[],
+                 conditions_on_outcomes=[],
                  if_find_frontier=True,
                  if_show_fitted_curve=True,
                  labels_shift_x=0,
@@ -268,7 +269,8 @@ class SetOfScenarios:
         :param marker: markers used for this series on the CE plane
         :param x_y_labels: labels of points on the CE plane
         :param scenario_names: (list) names of scenarios to include in this set
-        :param conditions: list of variable conditions
+        :param conditions_on_variables: list of conditions defined on variables
+        :param conditions_on_outcomes: list of conditions defined on outcomes
         :param if_find_frontier: # select True if CE frontier should be calculated
         :param labels_shift_x:
         :param labels_shift_y:
@@ -281,7 +283,8 @@ class SetOfScenarios:
         self.marker = marker
         self.ifFindFrontier = if_find_frontier
         self.scenarioNames = scenario_names
-        self.varConditions = conditions
+        self.varConditions = conditions_on_variables
+        self.outcomeConditions = conditions_on_outcomes
         self.labelsShiftX = labels_shift_x
         self.labelsShiftY = labels_shift_y
 
@@ -326,7 +329,6 @@ class SetOfScenarios:
             if scenario.name in self.scenarioNames:
                 return True
         else:
-
             for condition in self.varConditions:
                 if condition.values is None:
                     if scenario.variables[condition.varName] < condition.min \
@@ -334,6 +336,16 @@ class SetOfScenarios:
                         return False
                 else:
                     if not(scenario.variables[condition.varName] in condition.values):
+                        return False
+
+            for condition in self.outcomeConditions:
+                if condition.values is None:
+                    # mean of this outcome
+                    mean = Stat.SummaryStat(
+                        name=condition.outcomeName,
+                        data=scenario.outcomes[condition.outcomeName]).get_mean()
+
+                    if mean < condition.min or mean > condition.max:
                         return False
 
         return True

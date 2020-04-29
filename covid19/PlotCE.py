@@ -12,7 +12,7 @@ fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
                                     scenario_df=scenario_df,
                                     color='blue',
                                     marker='o',
-                                    conditions=policy_definitions.VarFixedInterval,
+                                    conditions_on_variables=policy_definitions.FixedIntervalVarConditions,
                                     if_find_frontier=False,
                                     if_show_fitted_curve=True,
                                     labels_shift_x=-0.01,
@@ -23,7 +23,8 @@ periodic = Cls.SetOfScenarios(name='Periodic',
                               color='red',
                               marker='D',
                               #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
-                              conditions=policy_definitions.VarPeriodicI,
+                              conditions_on_variables=policy_definitions.PeriodicInfVarConditions,
+                              conditions_on_outcomes=policy_definitions.PeriodicInfOutcomeConditions,
                               if_find_frontier=False,
                               if_show_fitted_curve=False,
                               labels_shift_x=0.1 / 8,
@@ -43,7 +44,8 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic],
                            l_b_r_t=(0.22, 0.13, 0.9, 0.9),
                            file_name='figures/CE.png')
 
-names = [s.name for s in periodic.CEA.get_strategies_on_frontier()]
+#names = [s.name for s in periodic.CEA.get_strategies_on_frontier()]
+names = [s.name for s in periodic.CEA.strategies]
 
 for name in names:
     mean_interval = scenario_df.get_mean_interval(
