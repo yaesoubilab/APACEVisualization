@@ -4,8 +4,8 @@ import covid19.PolicyClasses as P
 import os
 
 # ---- settings ----
-POLICY_PARAMS = [2, -0.5, 0.2, 0.001, -0.5, 0.5]#
-# good option: [2, -0.5, 0.2, 0.1, -0.5, 0.5] for WTPS = np.linspace(0.25e5, 1.25e5, 9)
+POLICY_PARAMS = [3.5, -0.5, 0.25, 500, -0.5, 0.5]#
+# good option: [3.5, -0.5, 0.25, 500, -0.5, 0.5] for WTPS = np.linspace(1e5, 3e5, 9)
 WTPS = np.linspace(1e5, 3e5, 9)  # [min, max, number of points]
 
 # change the current working directory
