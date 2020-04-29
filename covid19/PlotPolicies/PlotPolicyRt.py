@@ -4,15 +4,15 @@ import covid19.PolicyClasses as P
 import os
 
 # ---- settings ----
-POLICY_PARAMS = [1.69216,-1.24034,0.15503] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
-WTPS = np.linspace(0.25e5, 0.75e5, 9)  # [min, max, number of points]
+POLICY_PARAMS = [3.5096096195, -0.80157278249, 0.23164372] # [5,-1,0.25] # [5.0096096195,-1.0157278249,0.0033164372]
+WTPS = np.linspace(0.5e5, 1.5e5, 9)  # [min, max, number of points]
 SCALE = (WTPS[0] + WTPS[-1])/2
 
 
 WTP_DELTA = (WTPS[-1] - WTPS[0])/2
 R_EFF_MIN_DELTA = [0, 1]
-MAX_R_OFF = 4
-MAX_R_ON = 2
+MAX_R_OFF = 4.01
+MAX_R_ON = 2.01
 
 # ------------------
 

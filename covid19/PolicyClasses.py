@@ -86,7 +86,7 @@ class PolicyRt:
                               panel_label='A)',
                               max_r=max_r,
                               delta_wtp=delta_wtp)
-        ax.set_ylabel('Estimated effective\nproduction number ' + r'$(R_t)$')
+        ax.set_ylabel('Estimated effective\nreproductive number ' + r'$(R_t)$')
 
     def add_policy_figure_when_tightened(self, ax, max_r, delta_wtp):
         self.add_plot_to_axis(ax=ax,
