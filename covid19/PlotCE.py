@@ -15,8 +15,8 @@ fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
                                     conditions_on_variables=policy_definitions.FixedIntervalVarConditions,
                                     if_find_frontier=False,
                                     if_show_fitted_curve=True,
-                                    labels_shift_x=-0.01,
-                                    labels_shift_y=2 / 80)
+                                    labels_shift_x=-0.02,
+                                    labels_shift_y=0.02)
 
 periodic = Cls.SetOfScenarios(name='Periodic',
                               scenario_df=scenario_df,
