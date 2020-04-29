@@ -8,5 +8,5 @@ DeltaIncidence = [50, 3000]
 N = 10
 
 
-IO.write_csv(rows=Support.generate_policies(Incidence, DeltaIncidence, N),
+IO.write_csv(rows=Support.generate_square_policies(Incidence, DeltaIncidence, N),
              file_name='../csv_files/IncidencePolicies.csv')

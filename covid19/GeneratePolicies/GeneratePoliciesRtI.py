@@ -7,8 +7,8 @@ R_Off = [0.2, 0.5]
 I = [0.00001, 0.00005]
 N = 3
 
-RPolicies = Support.generate_policies(R_On, R_Off, N)
-IPolicies = Support.generate_policies(I, I, N)
+RPolicies = Support.generate_square_policies(R_On, R_Off, N)
+IPolicies = Support.generate_square_policies(I, I, N)
 
 RIPolicies = []
 for R in RPolicies:

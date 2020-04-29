@@ -559,9 +559,28 @@ class SetOfScenarios:
                                 if varCon.labelFormat == '':
                                     label_list.append(str(value)+',')
                                 else:
-                                    label_list.append(varCon.labelFormat.format(value) + ',')
+                                    label_list.append(varCon.labelFormat.format(value) + ', ')
                             else:
                                 label = varCon.get_label(value)
+                                if label == '':
+                                    pass
+                                else:
+                                    label_list.append(label + ', ')
+
+                    for outcomeCon in scenario_set.outcomeConditions:
+                        if outcomeCon.ifIncludedInLabel:
+
+                            # value of this variable
+                            value = Stat.SummaryStat(name=outcomeCon.outcomeName,
+                                                     data=scenario.outcomes[outcomeCon.outcomeName]).get_mean()
+                            # if there is not label rules
+                            if outcomeCon.labelRules is None:
+                                if outcomeCon.labelFormat == '':
+                                    label_list.append(str(value)+',')
+                                else:
+                                    label_list.append(outcomeCon.labelFormat.format(value) + ', ')
+                            else:
+                                label = outcomeCon.get_label(value)
                                 if label == '':
                                     pass
                                 else:
@@ -641,7 +660,7 @@ class SetOfScenarios:
                             txt,
                             (ser.frontierXValues[j] + ser.labelsShiftX,
                              ser.frontierYValues[j] + ser.labelsShiftY),
-                            color=ser.color
+                            color=ser.color,
                         )
 
             else:  # show all points
@@ -674,7 +693,7 @@ class SetOfScenarios:
                             txt,
                             (ser.xValues[j] + ser.labelsShiftX*(x_range[1]-x_range[0]),
                              ser.yValues[j] + ser.labelsShiftY*(y_range[1]-y_range[0])),
-                            fontsize=6.5,
+                            fontsize=6,
                             color=ser.color,
                         )
 

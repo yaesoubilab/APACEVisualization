@@ -25,10 +25,10 @@ class PolicyDefinitions:
         self.PeriodicInfVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 1, 1,
                                     if_included_in_label=False),
-            Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 1,  # 1, 5
-                                    if_included_in_label=False, label_format='{:.5f}'),
-            Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 1,  # 0, 5
-                                    if_included_in_label=False, label_format='{:.5f}'),
+            Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 1000,  # 1, 5
+                                    if_included_in_label=True, label_format='{:.0f}'),
+            Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 1000,  # 0, 5
+                                    if_included_in_label=True, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
             # Cls.VariableCondition('Switch threshold if social distancing is off',
@@ -42,8 +42,15 @@ class PolicyDefinitions:
             Cls.ConditionOnOutcome(
                 outcome_name='Average ratio: % Death While Waiting for ICU',
                 minimum=0,
-                maximum=0.07,
-                if_included_in_label=False)
+                maximum=0.1,
+                if_included_in_label=False,
+                label_format='{:.1f}'),
+            Cls.ConditionOnOutcome(
+                outcome_name='Number of Switches',
+                minimum=0,
+                maximum=100,
+                if_included_in_label=False,
+                label_format='{:.0f}')
         ]
 
         self.AdaptiveRVarConditions = [
@@ -64,7 +71,7 @@ class PolicyDefinitions:
         ]
 
 
-def generate_policies(t1_range, t2_range, n_of_samples):
+def generate_square_policies(t1_range, t2_range, n_of_samples):
 
     t1_samples = np.linspace(t1_range[0], t1_range[1], n_of_samples)
     t2_samples = np.linspace(t2_range[0], t2_range[1], n_of_samples)
@@ -75,3 +82,23 @@ def generate_policies(t1_range, t2_range, n_of_samples):
             policies.append([t1, t2])
 
     return policies
+
+
+def generate_triangular_scenarios(t1_min, t1_max, n_of_samples):
+
+    t1_samples = np.linspace(t1_min, t1_max, n_of_samples)
+
+    scenarios = []
+    for t1 in t1_samples:
+
+        t1_index = 0
+        while True:
+            t2 = t1_samples[t1_index]
+            scenarios.append([t1, t2])
+
+            t1_index += 1
+            if t1_index >= len(t1_samples) \
+                    or t1_samples[t1_index] > t1:
+                break
+
+    return scenarios

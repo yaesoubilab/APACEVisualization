@@ -27,8 +27,8 @@ periodic = Cls.SetOfScenarios(name='Periodic',
                               conditions_on_outcomes=policy_definitions.PeriodicInfOutcomeConditions,
                               if_find_frontier=False,
                               if_show_fitted_curve=False,
-                              labels_shift_x=0.1 / 8,
-                              labels_shift_y=-4 / 80)
+                              labels_shift_x=0.02,
+                              labels_shift_y=0)
 
 Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic],
                            x_range=[0, 10],
@@ -48,11 +48,12 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic],
 names = [s.name for s in periodic.CEA.strategies]
 
 for name in names:
+    print(name)
     mean_interval = scenario_df.get_mean_interval(
         scenario_name=name,
         outcome_name='Number of Switches')
-    print(name, mean_interval)
+    print('# of switches:', mean_interval)
     mean_interval = scenario_df.get_mean_interval(
         scenario_name=name,
         outcome_name='Average ratio: % Death While Waiting for ICU')
-    print(name, mean_interval)
+    print('% death while waiting for ICU', mean_interval)
