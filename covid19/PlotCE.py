@@ -3,14 +3,16 @@ import apace.VisualizeScenarios as Vis
 import covid19.Support as Sup
 
 Cls.POLY_DEGREES = 2
-scenarioDfFixed = Cls.ScenarioDataFrame(csv_file_name='csv_files/PolicyEvals/PolicyEvalFixed.csv')
-scenarioDfPeriodic = Cls.ScenarioDataFrame(csv_file_name='csv_files/PolicyEvals/PolicyEvalPeriodic.csv')
+scenarioDfFixedPeriodic = Cls.ScenarioDataFrame(
+    csv_file_name='csv_files/PolicyEvals/PolicyEvalsFixedPeriodic.csv')
+scenarioDfAdaptiveI = Cls.ScenarioDataFrame(
+    csv_file_name='csv_files/PolicyEvals/PolicyEvalAdaptiveI.csv')
 
 policy_definitions = Sup.PolicyDefinitions()
 
 # series to display on the cost-effectiveness plane
 fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
-                                    scenario_df=scenarioDfFixed,
+                                    scenario_df=scenarioDfFixedPeriodic,
                                     color='blue',
                                     marker='o',
                                     conditions_on_variables=policy_definitions.FixedIntervalVarConditions,
@@ -20,7 +22,7 @@ fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
                                     labels_shift_y=0.02)
 
 periodic = Cls.SetOfScenarios(name='Periodic',
-                              scenario_df=scenarioDfPeriodic,
+                              scenario_df=scenarioDfFixedPeriodic,
                               color='red',
                               marker='D',
                               #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
@@ -31,8 +33,21 @@ periodic = Cls.SetOfScenarios(name='Periodic',
                               labels_shift_x=0.02,
                               labels_shift_y=0)
 
-Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic],
-                           x_range=[0, 10],
+adaptiveI = Cls.SetOfScenarios(name='Adaptive',
+                               scenario_df=scenarioDfAdaptiveI,
+                               color='green',
+                               marker='s',
+                               #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
+                               conditions_on_variables=policy_definitions.AdaptiveIVarConditions,
+                               # conditions_on_outcomes=policy_definitions.PeriodicInfOutcomeConditions,
+                               if_find_frontier=False,
+                               if_show_fitted_curve=True,
+                               labels_shift_x=0.02,
+                               labels_shift_y=0)
+
+
+Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, adaptiveI],
+                           x_range=[0, 8],
                            y_range=[0, 1000],
                            effect_multiplier=1/1000,
                            cost_multiplier=1/10e6,
@@ -46,15 +61,23 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic],
                            file_name='figures/CE.png')
 
 #names = [s.name for s in periodic.CEA.get_strategies_on_frontier()]
-names = [s.name for s in periodic.CEA.strategies]
 
-for name in names:
-    print(name)
-    mean_interval = scenario_df.get_mean_interval(
-        scenario_name=name,
-        outcome_name='Number of Switches')
-    print('# of switches:', mean_interval)
-    mean_interval = scenario_df.get_mean_interval(
-        scenario_name=name,
-        outcome_name='Average ratio: % Death While Waiting for ICU')
-    print('% death while waiting for ICU', mean_interval)
+
+def print_switch_icu_info(scenarios, scenario_df):
+
+    names = [s.name for s in scenarios.CEA.strategies]
+    for name in names:
+        print(name)
+        mean_interval = scenario_df.get_mean_interval(
+            scenario_name=name,
+            outcome_name='Number of Switches')
+        print('  # of switches:', mean_interval)
+        mean_interval = scenario_df.get_mean_interval(
+            scenario_name=name,
+            outcome_name='Average ratio: % Death While Waiting for ICU')
+        print('  % death while waiting for ICU', mean_interval)
+
+
+print_switch_icu_info(periodic, scenarioDfFixedPeriodic)
+print('')
+print_switch_icu_info(adaptiveI, scenarioDfAdaptiveI)

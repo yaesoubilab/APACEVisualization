@@ -703,33 +703,33 @@ class SetOfScenarios:
                     x = np.array(ser.xValues)  # allDeltaEffects)
                     if len(x) == 0 or len(y) == 0:
                         raise ValueError('Error in fitting a curve to ' + ser.name)
-                    quad_reg = Reg.SingleVarRegression(x, y, degree=POLY_DEGREES)
+                    poly_reg = Reg.PolyRegression(x, y, degree=POLY_DEGREES)
 
                     # print derivatives at
                     print()
                     print(title, ' | ', ser.name)
-                    print('WTP at min dCost', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[-1]))
-                    print('WTP at dCost = 0:', wtp_multiplier * quad_reg.get_derivative(x=quad_reg.get_zero()[POLY_DEGREES-1]))
-                    print('WTP at max dCost:', wtp_multiplier * quad_reg.get_derivative(x=ser.xValues[0]))
+                    print('WTP at min dCost', wtp_multiplier * poly_reg.get_derivative(x=ser.xValues[-1]))
+                    root = max(poly_reg.get_roots())
+                    print('WTP at dCost = 0:', wtp_multiplier * poly_reg.get_derivative(x=root))
+                    print('WTP at max dCost:', wtp_multiplier * poly_reg.get_derivative(x=ser.xValues[0]))
 
                     # store root
-                    selected_root = max(quad_reg.get_zero())
-                    incr_eff_life.append(selected_root)
-                    if i > 0:
+                    incr_eff_life.append(root)
+                    if i > 0 and not np.iscomplex(root):
                         print('Increase in effective life of A and B:', round(incr_eff_life[i]-incr_eff_life[0], 2))
 
                     xs = np.linspace(min(x), max(x), 50)
-                    predicted = quad_reg.get_predicted_y(xs)
-                    iv_l, iv_u = quad_reg.get_predicted_y_CI(xs)
+                    predicted = poly_reg.get_predicted_y(xs)
+                    # iv_l, iv_u = poly_reg.get_predicted_y_CI(xs)
 
                     ax.plot(xs, predicted, '--', linewidth=1, color=ser.color)  # results.fittedvalues
 
-                    # if show error region:
-                    show_error_region = False
-                    if show_error_region:
-                        ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1)  # '#E0EEEE'
-                        ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
-                        ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
+                    # # if show error region:
+                    # show_error_region = False
+                    # if show_error_region:
+                    #     ax.plot(xs, iv_u, '-', color=ser.color, linewidth=0.5, alpha=0.1)  # '#E0EEEE'
+                    #     ax.plot(xs, iv_l, '-', color=ser.color, linewidth=0.5, alpha=0.1)
+                    #     ax.fill_between(xs, iv_l, iv_u, linewidth=1, color=ser.color, alpha=0.05)
 
         ax.set_title(title)
         if len(list_of_scenario_sets) > 1:

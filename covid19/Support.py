@@ -53,6 +53,25 @@ class PolicyDefinitions:
                 label_format='{:.0f}')
         ]
 
+        self.AdaptiveIVarConditions = [
+            Cls.ConditionOnVariable('Decision Rule', 1, 1,
+                                    if_included_in_label=False),
+            Cls.ConditionOnVariable('WTP', 1000, 1e10,  # 0, 5
+                                    if_included_in_label=False, label_format='{:.0f}'),
+            Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 1e5,  # 1, 5
+                                    if_included_in_label=False, label_format='{:.0f}'),
+            Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 1e5,  # 0, 5
+                                    if_included_in_label=False, label_format='{:.0f}'),
+            # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
+            #                       if_included_in_label=False),
+            # Cls.VariableCondition('Switch threshold if social distancing is off',
+            #                       DS_TESTS, DS_TESTS,
+            #                       if_included_in_label=False),
+            # Cls.VariableCondition('Switch threshold if social distancing is on',
+            #                       DS_TESTS, DS_TESTS,
+            #                       if_included_in_label=False)
+        ]
+
         self.AdaptiveRVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 2, 2,
                                     if_included_in_label=False),
