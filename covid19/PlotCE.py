@@ -1,6 +1,8 @@
 import apace.ScenariosClasses as Cls
 import apace.VisualizeScenarios as Vis
 import covid19.Support as Sup
+import SimPy.FormatFunctions as F
+
 
 Cls.POLY_DEGREES = 2
 scenarioDfFixedPeriodic = Cls.ScenarioDataFrame(
@@ -66,18 +68,30 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, adap
 def print_switch_icu_info(scenarios, scenario_df):
 
     names = [s.name for s in scenarios.CEA.strategies]
+    print('Utilization')
     for name in names:
-        print(name)
+        mean_interval = scenario_df.get_mean_interval(
+            scenario_name=name,
+            outcome_name='Utilization (unit of time): Social Distancing')
+        print('  ', name, ':', F.format_number(mean_interval[0], deci=1))
+
+    print('# of switches')
+    for name in names:
         mean_interval = scenario_df.get_mean_interval(
             scenario_name=name,
             outcome_name='Number of Switches')
-        print('  # of switches:', mean_interval)
+        print('  ', name, ':', F.format_number(mean_interval[0], deci=1))
+
+    print('% death while waiting for ICU')
+    for name in names:
         mean_interval = scenario_df.get_mean_interval(
             scenario_name=name,
             outcome_name='Average ratio: % Death While Waiting for ICU')
-        print('  % death while waiting for ICU', mean_interval)
+        print('  ', name, ':', F.format_number(mean_interval[0], deci=1, format='%'))
 
 
+print()
+print('------- PERIODIC I ---------------')
 print_switch_icu_info(periodic, scenarioDfFixedPeriodic)
-print('')
+print('------- ADAPTIVE I ---------------')
 print_switch_icu_info(adaptiveI, scenarioDfAdaptiveI)
