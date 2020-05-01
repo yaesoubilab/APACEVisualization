@@ -42,7 +42,7 @@ class PolicyDefinitions:
             Cls.ConditionOnOutcome(
                 outcome_name='Average ratio: % Death While Waiting for ICU',
                 minimum=0,
-                maximum=0.1,
+                maximum=1,
                 if_included_in_label=False,
                 label_format='{:.1f}'),
             Cls.ConditionOnOutcome(
