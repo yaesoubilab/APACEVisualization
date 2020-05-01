@@ -91,7 +91,7 @@ def print_switch_icu_info(scenarios, scenario_df):
 
 
 print()
-print('------- PERIODIC I ---------------')
+print('\n------- PERIODIC I ---------------')
 print_switch_icu_info(periodic, scenarioDfFixedPeriodic)
-print('------- ADAPTIVE I ---------------')
+print('\n------- ADAPTIVE I ---------------')
 print_switch_icu_info(adaptiveI, scenarioDfAdaptiveI)
