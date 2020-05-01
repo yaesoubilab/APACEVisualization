@@ -3,12 +3,13 @@ import apace.VisualizeScenarios as Vis
 import covid19.Support as Sup
 import SimPy.FormatFunctions as F
 
+SUFX = '4WeekMin'
 
 Cls.POLY_DEGREES = 2
 scenarioDfFixedPeriodic = Cls.ScenarioDataFrame(
-    csv_file_name='csv_files/PolicyEvals/PolicyEvalsFixedPeriodic.csv')
+    csv_file_name='csv_files/PolicyEvals/PolicyEvalsFixedPeriodic{}.csv'.format(SUFX))
 scenarioDfAdaptiveI = Cls.ScenarioDataFrame(
-    csv_file_name='csv_files/PolicyEvals/PolicyEvalAdaptiveI.csv')
+    csv_file_name='csv_files/PolicyEvals/PolicyEvalAdaptiveI{}.csv'.format(SUFX))
 
 policy_definitions = Sup.PolicyDefinitions()
 
@@ -60,7 +61,7 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, adap
                            title='',
                            fig_size=(6, 5.2), # (3.6, 3.2),
                            l_b_r_t=(0.22, 0.13, 0.9, 0.9),
-                           file_name='figures/CE.png')
+                           file_name='figures/CE{}.png'.format(SUFX))
 
 #names = [s.name for s in periodic.CEA.get_strategies_on_frontier()]
 
