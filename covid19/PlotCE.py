@@ -3,13 +3,14 @@ import apace.VisualizeScenarios as Vis
 import covid19.Support as Sup
 
 Cls.POLY_DEGREES = 2
-scenario_df = Cls.ScenarioDataFrame(csv_file_name='csv_files/PolicyEval.csv')
+scenarioDfFixed = Cls.ScenarioDataFrame(csv_file_name='csv_files/PolicyEvals/PolicyEvalFixed.csv')
+scenarioDfPeriodic = Cls.ScenarioDataFrame(csv_file_name='csv_files/PolicyEvals/PolicyEvalPeriodic.csv')
 
 policy_definitions = Sup.PolicyDefinitions()
 
 # series to display on the cost-effectiveness plane
 fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
-                                    scenario_df=scenario_df,
+                                    scenario_df=scenarioDfFixed,
                                     color='blue',
                                     marker='o',
                                     conditions_on_variables=policy_definitions.FixedIntervalVarConditions,
@@ -19,7 +20,7 @@ fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
                                     labels_shift_y=0.02)
 
 periodic = Cls.SetOfScenarios(name='Periodic',
-                              scenario_df=scenario_df,
+                              scenario_df=scenarioDfPeriodic,
                               color='red',
                               marker='D',
                               #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],

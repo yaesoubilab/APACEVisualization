@@ -4,6 +4,38 @@ import numpy as np
 import apace.ScenariosClasses as Cls
 
 
+class PolicyI:
+    def __init__(self, policy_params, wtps):
+
+        self.policyParams = policy_params
+        self.wtps = wtps
+        self.IsToOn = []
+        self.IsToOff = []
+        self.wtpAndThresholds = []
+
+        scale = (wtps[0] + wtps[-1]) / 2
+        for wtp in wtps:
+
+            on = self.get_threshold_to_on(wtp=wtp, scale=scale)
+            off = self.get_threshold_to_off(wtp=wtp, scale=scale)
+            self.IsToOn.append(on)
+            self.IsToOff.append(off)
+
+            row = [wtp, on, off]
+            self.wtpAndThresholds.append(row)
+
+    def get_threshold_to_on(self, wtp, scale):
+        return self.policyParams[0] * np.exp(self.policyParams[1] * wtp / scale)
+
+    def get_threshold_to_off(self, wtp, scale):
+        return self.policyParams[2] * self.get_threshold_to_on(wtp, scale)
+
+    def write_to_csv(self, file_name, directory):
+        io.write_csv(rows=self.wtpAndThresholds,
+                     file_name=file_name,
+                     directory=directory)
+
+
 class PolicyRtI:
     def __init__(self, policy_params, wtps):
 
@@ -45,7 +77,6 @@ class PolicyRtI:
         io.write_csv(rows=self.wtpAndThresholds,
                      file_name=file_name,
                      directory=directory)
-
 
 
 class PolicyRt:

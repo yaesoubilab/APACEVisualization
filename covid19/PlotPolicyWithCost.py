@@ -20,7 +20,7 @@ os.chdir('..')
 policy = P.PolicyRt(policy_params=POLICY_PARAMS, scale=SCALE, wtps=WTPS)
 policy.write_to_csv(file_name='Policies.csv',
                     directory='covid19/csv_files')
-resUtil = P.OutcomesAndUtilization(csv_file_name='covid19/csv_files/PolicyEval.csv',
+resUtil = P.OutcomesAndUtilization(csv_file_name='covid19/csv_files/PolicyEvalFixed.csv',
                                    wtps=WTPS, poly_degree=3)
 
 fig, axes = plt.subplots(2, 2, figsize=(7.5, 7))
