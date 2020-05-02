@@ -3,7 +3,9 @@ import apace.VisualizeScenarios as Vis
 import covid19.Support as Sup
 import SimPy.FormatFunctions as F
 
-SUFX = '4WeekMin'
+SUFX = ''
+# SUFX = '4WeekMin'
+
 
 Cls.POLY_DEGREES = 2
 scenarioDfFixedPeriodic = Cls.ScenarioDataFrame(
