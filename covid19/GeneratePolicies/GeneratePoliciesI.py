@@ -2,8 +2,8 @@ import SimPy.InOutFunctions as IO
 from covid19 import Support as Support
 
 
-I_on = [300, 400]
-I_off = [75, 125]
+I_on = [100, 200]   # 150, 75
+I_off = [50, 100]
 N = 3
 
 
