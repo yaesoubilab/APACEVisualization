@@ -51,9 +51,9 @@ adaptiveI = Cls.SetOfScenarios(name='Adaptive',
                                labels_shift_y=0)
 
 
-Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, adaptiveI],
-                           x_range=[0, 8],
-                           y_range=[0, 1000],
+Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic],
+                           x_range=[0, 10],
+                           y_range=[0, 2000],
                            effect_multiplier=1/1000,
                            cost_multiplier=1/10e6,
                            switch_cost_effect_on_figure=False,
@@ -85,11 +85,11 @@ def print_switch_icu_info(scenarios, scenario_df):
             outcome_name='Number of Switches')
         print('  ', name, ':', F.format_number(mean_interval[0], deci=1))
 
-    print('% death while waiting for ICU')
+    print('% served in ICU')
     for name in names:
         mean_interval = scenario_df.get_mean_interval(
             scenario_name=name,
-            outcome_name='Average ratio: % Death While Waiting for ICU')
+            outcome_name='Average ratio: % served in ICU')
         print('  ', name, ':', F.format_number(mean_interval[0], deci=1, format='%'))
 
 
@@ -97,4 +97,4 @@ print()
 print('\n------- PERIODIC I ---------------')
 print_switch_icu_info(periodic, scenarioDfFixedPeriodic)
 print('\n------- ADAPTIVE I ---------------')
-print_switch_icu_info(adaptiveI, scenarioDfAdaptiveI)
+# print_switch_icu_info(adaptiveI, scenarioDfAdaptiveI)
