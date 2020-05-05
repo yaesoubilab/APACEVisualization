@@ -40,8 +40,8 @@ class PolicyDefinitions:
         ]
         self.PeriodicInfOutcomeConditions = [
             Cls.ConditionOnOutcome(
-                outcome_name='Average ratio: % Death While Waiting for ICU',
-                minimum=0,
+                outcome_name='Average ratio: % served in ICU',
+                minimum=0.8,
                 maximum=1,
                 if_included_in_label=False,
                 label_format='{:.1f}'),

@@ -17,7 +17,7 @@ plotInfoIncidence = Vis.PlotTrajInfo(
         y_range=[0, 40],
         y_multiplier=0.001,
         x_label='Week',
-        #x_range=[0, 52],
+        x_range=[0, 520],
         y_label='\nWeekly incidence (Thousands)',
         title='',
         figure_size=(4, 3.2),
@@ -25,10 +25,10 @@ plotInfoIncidence = Vis.PlotTrajInfo(
 
 plotInforICU = Vis.PlotTrajInfo(
         traj_name='Waiting for or in ICU',
-        y_range=[0, 161],
+        y_range=[0, 250],
         #y_multiplier=0.001,
         x_label='Week',
-        #x_range=[0, 52],
+        x_range=[0, 520],
         x_multiplier=52,
         y_label='\nIndividuals requiring critical care\n(Per 100,000 population)',
         title='',
@@ -50,7 +50,7 @@ df.plot_multi_panel(
     list_calib_info=[None, calibInfoICU],
     figure_size=(4.5, 2.25), l_b_r_t=(0.3, 0.1, 0.9, 0.9),
     show_subplot_labels=True,
-    trajs_ids_to_display=range(50))
+    trajs_ids_to_display=range(100))
 
 # df.plot(plot_info=plotInfoIncidence)
 #
