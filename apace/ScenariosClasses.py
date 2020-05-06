@@ -715,7 +715,7 @@ class SetOfScenarios:
 
                     # store root
                     incr_eff_life.append(root)
-                    if i > 0 and not np.iscomplex(root):
+                    if 0 < i < len(incr_eff_life) and not np.iscomplex(root):
                         print('Increase in effective life of A and B:', round(incr_eff_life[i]-incr_eff_life[0], 2))
 
                     xs = np.linspace(min(x), max(x), 50)

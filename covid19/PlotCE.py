@@ -48,12 +48,12 @@ adaptiveI = Cls.SetOfScenarios(name='Adaptive',
                                if_find_frontier=False,
                                if_show_fitted_curve=True,
                                labels_shift_x=0.02,
-                               labels_shift_y=0)
+                               labels_shift_y=-0.02)
 
 
-Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic],
+Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, adaptiveI],
                            x_range=[0, 10],
-                           y_range=[0, 2000],
+                           y_range=[0, 2500],
                            effect_multiplier=1/1000,
                            cost_multiplier=1/10e6,
                            switch_cost_effect_on_figure=False,

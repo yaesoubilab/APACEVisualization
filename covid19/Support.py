@@ -29,6 +29,8 @@ class PolicyDefinitions:
                                     if_included_in_label=True, label_format='{:.0f}'),
             Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 1000,  # 0, 5
                                     if_included_in_label=True, label_format='{:.0f}'),
+            Cls.ConditionOnVariable('WTP', 0, 0,  # 0, 5
+                                    if_included_in_label=False, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
             # Cls.VariableCondition('Switch threshold if social distancing is off',
@@ -58,10 +60,10 @@ class PolicyDefinitions:
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('WTP', 1000, 1e10,  # 0, 5
                                     if_included_in_label=False, label_format='{:.0f}'),
-            Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 1e5,  # 1, 5
-                                    if_included_in_label=False, label_format='{:.0f}'),
+            Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 50, 1e5,  # 1, 5
+                                    if_included_in_label=True, label_format='{:.0f}'),
             Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 1e5,  # 0, 5
-                                    if_included_in_label=False, label_format='{:.0f}'),
+                                    if_included_in_label=True, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
             # Cls.VariableCondition('Switch threshold if social distancing is off',
