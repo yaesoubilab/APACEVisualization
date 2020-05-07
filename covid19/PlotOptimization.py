@@ -6,7 +6,7 @@ IO.delete_files('.png', 'figures/optimization_figs/')
 
 Vis.plot_all_opt_itrs(
     csv_directory='csv_files/optimization_csvs/',
-    n_vars=2,
+    n_vars=4,
     save_plots_directory='figures/optimization_figs/',
     show_titles=False,
     #f_range=[-1e6, 1e6],
