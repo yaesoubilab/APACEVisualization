@@ -139,8 +139,8 @@ class PolicyFtRangeOfWTP:
             x_ticks.append(x)
             x += delta_wtp
         ax.set_xticks(x_ticks)
-        vals = ax.get_xticks()
-        ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
+        # vals = ax.get_xticks()
+        # ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
         ax.text(-0.2, 1.11, panel_label, transform=ax.transAxes,
                      size=12, weight='bold')
         ax.text(0.03, 0.03, text_turn_off, transform=ax.transAxes,

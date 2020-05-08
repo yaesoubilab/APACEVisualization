@@ -4,14 +4,14 @@ import covid19.PolicyClasses as P
 import os
 
 # ---- settings ----
-POLICY_PARAMS = [20.67232,-22.20308,1.87043,-4.79214]# not bad: [20000, -10, 30000, -10]
+POLICY_PARAMS = [2, -2, 2, -2]# not bad: [20000, -10, 30000, -10]
 # good option: [3.5, -0.5, 0.25, 500, -0.5, 0.5] for WTPS = np.linspace(1e5, 3e5, 9)
-WTPS = np.linspace(0.5, 1.25, 10)  # [min, max, number of points]
+WTPS = np.linspace(0.25, 1.25, 10)  # [min, max, number of points]
 
 
 F_Min_DELTA = [0, 1]
 MAX_F_OFF = 4.01
-MAX_F_ON = 2.01
+MAX_F_ON = 4.01
 WTP_DELTA = (WTPS[-1] - WTPS[0])/2
 
 # change the current working directory
