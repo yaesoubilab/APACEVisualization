@@ -5,6 +5,76 @@ import apace.ScenariosClasses as Cls
 
 
 class PolicyFt:
+    def __init__(self, csv_file_name):
+
+        self.cols = io.read_csv_cols(
+            file_name=csv_file_name, n_cols=3, if_ignore_first_row=True, if_convert_float=True)
+
+        self.WTPs = self.cols[0]
+        self.OnTs = self.cols[1]
+        self.OffTs = self.cols[2]
+
+    def add_thresholds_to_axis(self, ax_to_on, ax_to_off):
+        ax_to_on.scatter(self.WTPs, self.OnTs) #marker='+', s=50, color='k', alpha=0.25)
+        ax_to_off.scatter(self.WTPs, self.OffTs)
+
+    def add_policy_figure_when_relaxed(self, ax, max_f, wtp_range, wtp_delta):
+        self.add_plot_to_axis(ax=ax,
+                              ys=self.OnTs,
+                              title="Decision criteria when\nphysical distancing is in Relaxed state",
+                              text_turn_off='Maintain \nrelaxed physical distancing',
+                              text_turn_on='Switch to tightened\nphysical distancing',
+                              panel_label='A)',
+                              max_f=max_f,
+                              wtp_range=wtp_range,
+                              wtp_delta=wtp_delta,
+                              show_data=True)
+        ax.set_ylabel('Estimated effective\nreproductive number ' + r'$(R_t)$')
+
+    def add_policy_figure_when_tightened(self, ax, max_f, wtp_range, wtp_delta):
+        self.add_plot_to_axis(ax=ax,
+                              ys=self.OffTs,
+                              title="Decision criteria when\nphysical distancing is in Tightened state",
+                              text_turn_off="Switch to\nrelaxed physical distancing",
+                              text_turn_on="Maintain tightened\nphysical distancing",
+                              panel_label='B)',
+                              max_f=max_f,
+                              wtp_range=wtp_range,
+                              wtp_delta=wtp_delta,
+                              show_data=True)
+
+    def add_plot_to_axis(self, ax, ys, title, text_turn_off, text_turn_on, panel_label,
+                         max_f, wtp_range, wtp_delta, show_data):
+
+        if show_data:
+            ax.scatter(self.WTPs, ys, marker='+', s=50, color='k', alpha=0.25)
+        ax.set_title(title, size=10)
+
+        # ax.fill_between(self.wtps, ys, facecolor='b', alpha=0.2)
+        # ax.fill_between(self.wtps, [max_r] * len(ys), ys, facecolor='r', alpha=0.2)
+        ax.set_ylim(0, max_f)
+        ax.set_xlim(wtp_range)
+        ax.set_xlabel('WTP')
+
+        # x axis ticks and labels
+        x_ticks = []
+        x = wtp_range[0]
+        while x <= wtp_range[1]:
+            x_ticks.append(x)
+            x += wtp_delta
+        ax.set_xticks(x_ticks)
+        # vals = ax.get_xticks()
+        # ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
+
+        ax.text(-0.2, 1.11, panel_label, transform=ax.transAxes,
+                     size=12, weight='bold')
+        ax.text(0.03, 0.03, text_turn_off, transform=ax.transAxes,
+                     size=9, weight='bold')
+        ax.text(0.97, 0.97, text_turn_on, transform=ax.transAxes,
+                     size=9, weight='bold', ha='right', va='top')
+
+
+class PolicyFtRangeOfWTP:
     def __init__(self, policy_params, wtps):
 
         self.policyParams = policy_params
