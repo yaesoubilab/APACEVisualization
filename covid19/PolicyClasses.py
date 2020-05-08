@@ -14,9 +14,6 @@ class PolicyFt:
         self.OnTs = self.cols[1]
         self.OffTs = self.cols[2]
 
-    def add_thresholds_to_axis(self, ax_to_on, ax_to_off):
-        ax_to_on.scatter(self.WTPs, self.OnTs) #marker='+', s=50, color='k', alpha=0.25)
-        ax_to_off.scatter(self.WTPs, self.OffTs)
 
     def add_policy_figure_when_relaxed(self, ax, max_f, wtp_range, wtp_delta):
         self.add_plot_to_axis(ax=ax,
