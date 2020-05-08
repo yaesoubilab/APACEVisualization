@@ -1,19 +1,31 @@
 import matplotlib.pyplot as plt
 import covid19.PolicyClasses as P
+import covid19.CostAndHealthOutcomesClasses as Res
 import os
 
+IF_WITH_OUTCOMES = False
 
 # change the current working directory
 os.chdir('../..')
 
 policy = P.PolicyFt(csv_file_name='covid19/csv_files/OptimizedPolicyFt.csv')
 
+if not IF_WITH_OUTCOMES:
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.5))
 
-fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.5))
+    # policy when off
+    policy.add_policy_figure_when_relaxed(ax=axes[0], max_f=1, wtp_range=[0.5, 1.5], wtp_delta=0.5)
+    policy.add_policy_figure_when_tightened(ax=axes[1], max_f=1, wtp_range=[0.5, 1.5], wtp_delta=0.5)
 
-# policy when off
-policy.add_policy_figure_when_relaxed(ax=axes[0], max_f=1, wtp_range=[0.5, 1.5], wtp_delta=0.5)
-policy.add_policy_figure_when_tightened(ax=axes[1], max_f=1, wtp_range=[0.5, 1.5], wtp_delta=0.5)
+else:
+    fig, axes = plt.subplots(2, 2, figsize=(7.2, 7))
+    # policy when off
+    policy.add_policy_figure_when_relaxed(ax=axes[0][0], max_f=1, wtp_range=[0.5, 1.5], wtp_delta=0.5)
+    policy.add_policy_figure_when_tightened(ax=axes[0][1], max_f=1, wtp_range=[0.5, 1.5], wtp_delta=0.5)
+
+    # cost and health outcomes
+    resUtil = Res.FtOutcomesAndUtilization(csv_file_name='covid19/csv_files/PolicyEvalFixed.csv',
+                                           wtps=WTPS, poly_degree=3)
 
 fig.tight_layout()
 fig.savefig('covid19/figures/Policy.png', dpi=300, bbox_inches='tight')

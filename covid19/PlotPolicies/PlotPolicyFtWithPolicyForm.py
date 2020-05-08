@@ -4,7 +4,7 @@ import covid19.PolicyClasses as P
 import os
 
 # ---- settings ----
-POLICY_PARAMS = [2, -2, 2, -2]# not bad: [20000, -10, 30000, -10]
+POLICY_PARAMS = [0.16945,-3.11665,0.57042,-3.26263]# not bad: [2, -2, 2, -2]
 # good option: [3.5, -0.5, 0.25, 500, -0.5, 0.5] for WTPS = np.linspace(1e5, 3e5, 9)
 WTPS = np.linspace(0.25, 1.25, 10)  # [min, max, number of points]
 

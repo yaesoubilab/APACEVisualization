@@ -13,11 +13,17 @@ class PolicyFt:
         self.WTPs = self.cols[0]
         self.OnTs = self.cols[1]
         self.OffTs = self.cols[2]
-
+        self.RegToOn = Reg.ExpRegression(x=self.WTPs,
+                                         y=self.OnTs,
+                                         if_zero_at_limit=True)
+        self.RegToOff = Reg.ExpRegression(x=self.WTPs,
+                                          y=self.OffTs,
+                                          if_zero_at_limit=True)
 
     def add_policy_figure_when_relaxed(self, ax, max_f, wtp_range, wtp_delta):
         self.add_plot_to_axis(ax=ax,
                               ys=self.OnTs,
+                              reg=self.RegToOn,
                               title="Decision criteria when\nphysical distancing is in Relaxed state",
                               text_turn_off='Maintain \nrelaxed physical distancing',
                               text_turn_on='Switch to tightened\nphysical distancing',
@@ -31,6 +37,7 @@ class PolicyFt:
     def add_policy_figure_when_tightened(self, ax, max_f, wtp_range, wtp_delta):
         self.add_plot_to_axis(ax=ax,
                               ys=self.OffTs,
+                              reg=self.RegToOff,
                               title="Decision criteria when\nphysical distancing is in Tightened state",
                               text_turn_off="Switch to\nrelaxed physical distancing",
                               text_turn_on="Maintain tightened\nphysical distancing",
@@ -40,15 +47,21 @@ class PolicyFt:
                               wtp_delta=wtp_delta,
                               show_data=True)
 
-    def add_plot_to_axis(self, ax, ys, title, text_turn_off, text_turn_on, panel_label,
+    def add_plot_to_axis(self, ax, ys, reg, title, text_turn_off, text_turn_on, panel_label,
                          max_f, wtp_range, wtp_delta, show_data):
 
         if show_data:
             ax.scatter(self.WTPs, ys, marker='+', s=50, color='k', alpha=0.25)
+
+        if reg:
+            wtps = np.linspace(wtp_range[0], wtp_range[1], 50)
+            reg_ys = reg.get_predicted_y(wtps)
+            ax.plot(wtps, reg_ys, label='', color='k', linestyle='-')
+            ax.fill_between(wtps, reg_ys, facecolor='b', alpha=0.2)
+            ax.fill_between(wtps, [max_f] * len(reg_ys), reg_ys, facecolor='r', alpha=0.2)
+
         ax.set_title(title, size=10)
 
-        # ax.fill_between(self.wtps, ys, facecolor='b', alpha=0.2)
-        # ax.fill_between(self.wtps, [max_r] * len(ys), ys, facecolor='r', alpha=0.2)
         ax.set_ylim(0, max_f)
         ax.set_xlim(wtp_range)
         ax.set_xlabel('WTP')
@@ -300,121 +313,4 @@ class PolicyRt:
                      size=9, weight='bold', ha='right', va='top')
 
 
-class OutcomesAndUtilization:
 
-    def __init__(self, csv_file_name, wtps, poly_degree=2):
-
-        scenario_df = Cls.ScenarioDataFrame(csv_file_name=csv_file_name)
-
-        self.wtps = wtps
-        self.selectWTPs = []
-        self.costs = []
-        self.effects = []
-        self.utilization = []
-        self.nSwitches = []
-
-        for scenario_name in scenario_df.scenarios:
-
-            if scenario_name[0:3] == 'D:2':
-                # store wtp value
-                i = scenario_name.find('WTP')
-                self.selectWTPs.append(float(scenario_name[i+5:]))
-
-                # total cost
-                cost_mean, cost_CI = scenario_df.get_mean_interval(
-                    scenario_name=scenario_name,
-                    outcome_name='Total Cost')
-                self.costs.append(cost_mean)
-
-                # QALY
-                effect_mean, effect_CI = scenario_df.get_mean_interval(
-                    scenario_name=scenario_name,
-                    outcome_name='DALY')
-                self.effects.append(effect_mean)
-
-                # utilization of social distancing
-                utilization_mean, utilization_CI = scenario_df.get_mean_interval(
-                    scenario_name=scenario_name,
-                    outcome_name='Utilization (unit of time): Social Distancing')
-                self.utilization.append(utilization_mean)
-
-                # Number of Switches
-                n_switches_mean, n_switches_CI = scenario_df.get_mean_interval(
-                    scenario_name=scenario_name,
-                    outcome_name='Number of Switches')
-                self.nSwitches.append(n_switches_mean)
-
-        self.costRegression = Reg.PolyRegression(
-            self.selectWTPs, [c*1e-6 for c in self.costs], degree=poly_degree)
-
-        self.dalyRegression = Reg.PolyRegression(
-            self.selectWTPs, [e * 1e-3 for e in self.effects], degree=poly_degree)
-
-        self.utilRegression = Reg.PolyRegression(
-            self.selectWTPs, self.utilization, degree=poly_degree)
-
-        self.nSwitchesRegression = Reg.PolyRegression(
-            self.selectWTPs, self.nSwitches, degree=1
-        )
-
-    def add_affordability_to_axis(self, ax, title, y_label, panel_label,
-                                  max_y_cost, max_y_qaly, delta_wtp, show_data):
-        if show_data:
-            ax.scatter(self.selectWTPs, [c*1e-6 for c in self.costs],
-                       marker='+', s=50, color='k', alpha=0.25)
-        ys = self.costRegression.get_predicted_y(x=self.wtps)
-        self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
-                              title=title, y_label=y_label, panel_label=panel_label, max_y=max_y_cost, delta_wtp=delta_wtp)
-
-        ax2 = ax.twinx()
-        if show_data:
-            ax2.scatter(self.selectWTPs, [e * 1e-3 for e in self.effects], color='r', alpha=0.25)
-        ys = self.dalyRegression.get_predicted_y(x=self.wtps)
-        ax2.plot(self.wtps, ys, label='QALYs loss', color='r', linestyle='--')
-        ax2.set_ylabel('Expected QALYs lost (Thousands)\n', color='r')
-        ax2.spines['right'].set_color('r')
-        ax2.tick_params(axis='y', colors='r')
-        # ax2.yaxis.label.set_color('r')
-        ax2.set_ylim(0, max_y_qaly)
-
-    def add_utilization_to_axis(self, ax, title, y_label, panel_label,
-                                max_y, max_y_n_switches, delta_wtp, show_data):
-
-        if show_data:
-            ax.scatter(self.selectWTPs, self.utilization,
-                       marker='+', s=50, color='k', alpha=0.25)
-        ys = self.utilRegression.get_predicted_y(x=self.wtps)
-        self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
-                              title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
-
-        ax2 = ax.twinx()
-        if show_data:
-            ax2.scatter(self.selectWTPs, [n for n in self.nSwitches], color='r', alpha=0.25)
-        ys = self.nSwitchesRegression.get_predicted_y(x=self.wtps)
-        ax2.plot(self.wtps, ys, label='Expected number of switches', color='r', linestyle='--')
-        ax2.set_ylabel('Expected number of switches', color='r')
-        ax2.spines['right'].set_color('r')
-        ax2.tick_params(axis='y', colors='r')
-        # ax2.yaxis.label.set_color('r')
-        ax2.set_ylim(0, max_y_n_switches)
-
-    def add_plot_to_axis(self, ax, wtps, ys, title, y_label, panel_label, max_y, delta_wtp):
-
-        ax.plot(wtps, ys, label='', color='k', linestyle='-')
-        ax.set_title(title, size=10)
-        ax.set_ylabel(y_label)
-        ax.set_ylim(0, max_y)
-        ax.set_xlim([self.wtps[0], self.wtps[-1]])
-        ax.set_xlabel('Willingness-to-pay ($ per QALY)')
-
-        # x axis ticks and labels
-        x_ticks = []
-        x = self.wtps[0]
-        while x <= self.wtps[-1]:
-            x_ticks.append(x)
-            x += delta_wtp
-        ax.set_xticks(x_ticks)
-        vals = ax.get_xticks()
-        ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
-        ax.text(-0.2, 1.11, panel_label, transform=ax.transAxes,
-                size=12, weight='bold')
