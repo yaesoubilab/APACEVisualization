@@ -8,7 +8,7 @@ IF_WITH_OUTCOMES = False
 # change the current working directory
 os.chdir('../..')
 
-policy = P.PolicyFt(csv_file_name='covid19/csv_files/OptimizedPolicyFt.csv')
+policy = P.PolicyFt(csv_file_name='covid19/csv_files/OptimizedThresholdsFt.csv')
 
 if not IF_WITH_OUTCOMES:
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.5))
