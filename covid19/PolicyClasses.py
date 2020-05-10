@@ -9,7 +9,7 @@ WTP_LABEL = 'Willingness to keep physical distancing' + \
 
 
 class PolicyFt:
-    def __init__(self, csv_file_name):
+    def __init__(self, csv_file_name, wtp_range):
 
         self.cols = io.read_csv_cols(
             file_name=csv_file_name, n_cols=3, if_ignore_first_row=True, if_convert_float=True)
@@ -19,10 +19,20 @@ class PolicyFt:
         self.OffTs = self.cols[2]
         self.RegToOn = Reg.ExpRegression(x=self.wtps,
                                          y=self.OnTs,
-                                         if_zero_at_limit=True)
+                                         if_c0_zero=True)
         self.RegToOff = Reg.ExpRegression(x=self.wtps,
                                           y=self.OffTs,
-                                          if_zero_at_limit=True)
+                                          if_c0_zero=True)
+
+        wtps = np.linspace(wtp_range[0], wtp_range[1], 9)
+        to_on_ts = self.RegToOn.get_predicted_y(wtps)
+        to_off_ts = self.RegToOff.get_predicted_y(wtps)
+        rows = []
+        for i in range(len(wtps)):
+            row = [wtps[i], to_on_ts[i], to_off_ts[i]]
+            rows.append(row)
+        io.write_csv(rows=rows, file_name='covid19/csv_files/ProjOptimalThresholdsFt.csv')
+
 
     def add_policy_figure_when_relaxed(self, ax, max_f, wtp_range, wtp_delta,
                                        show_data=False, show_x_label=True):

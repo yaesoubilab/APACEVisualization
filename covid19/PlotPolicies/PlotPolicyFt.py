@@ -4,14 +4,14 @@ import covid19.CEOutcomesClasses as Res
 import os
 
 IF_WITH_OUTCOMES = True
-WTP_RANGE = [0, 1.5]
+WTP_RANGE = [0.1, 2.1]
 WTP_DELTA = 0.5
-SHOW_DATA = True
+SHOW_DATA = False
 
 # change the current working directory
 os.chdir('../..')
 
-policy = P.PolicyFt(csv_file_name='covid19/csv_files/OptimizedThresholdsFt.csv')
+policy = P.PolicyFt(csv_file_name='covid19/csv_files/OptimizedThresholdsFt.csv', wtp_range=WTP_RANGE)
 
 if not IF_WITH_OUTCOMES:
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.5))
@@ -34,11 +34,11 @@ else:
 
     # cost and health outcomes
     resUtil = Res.FtCEOutcomes(csv_file_name='covid19/csv_files/PolicyEvals/PolicyEvalAdaptiveFt.csv',
-                               poly_degree=3)
+                               poly_degree=2)
 
     resUtil.add_affordability_to_axis(ax=axes[1][0], max_y_cost=400, max_y_n_switches=100,
                                       wtp_range=WTP_RANGE, wtp_delta=WTP_DELTA, show_data=SHOW_DATA)
-    resUtil.add_effect_to_axis(ax=axes[1][1], max_y=2000,
+    resUtil.add_effect_to_axis(ax=axes[1][1], max_y=1000,
                                wtp_range=WTP_RANGE, wtp_delta=WTP_DELTA, show_data=SHOW_DATA)
 
 fig.tight_layout()

@@ -17,7 +17,7 @@ MAX_R_ON = 4.0
 
 # ---------------
 # change the current working directory
-os.chdir('..')
+os.chdir('../..')
 policy = P.PolicyRt(policy_params=POLICY_PARAMS, scale=SCALE, wtps=WTPS)
 policy.write_to_csv(file_name='Policies.csv',
                     directory='covid19/csv_files')

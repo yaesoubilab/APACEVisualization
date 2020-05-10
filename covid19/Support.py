@@ -11,7 +11,7 @@ class PolicyDefinitions:
         self.FixedIntervalVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 0, 0,
                                     if_included_in_label=False),
-            Cls.ConditionOnVariable('Duration of Social Distancing', 0, 208,  # 200
+            Cls.ConditionOnVariable('Duration of Social Distancing', 0, 300,  # 200
                                     if_included_in_label=True, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
@@ -22,13 +22,13 @@ class PolicyDefinitions:
             #                       DS_TESTS, DS_TESTS,
             #                       if_included_in_label=False)
         ]
-        self.PeriodicInfVarConditions = [
-            Cls.ConditionOnVariable('Decision Rule', 1, 1,
+        self.ICUInfVarConditions = [
+            Cls.ConditionOnVariable('Decision Rule', 2, 2,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 1000,  # 1, 5
-                                    if_included_in_label=True, label_format='{:.0f}'),
+                                    if_included_in_label=False, label_format='{:.0f}'),
             Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 1000,  # 0, 5
-                                    if_included_in_label=True, label_format='{:.0f}'),
+                                    if_included_in_label=False, label_format='{:.0f}'),
             Cls.ConditionOnVariable('WTP', 0, 0,  # 0, 5
                                     if_included_in_label=False, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
@@ -40,10 +40,10 @@ class PolicyDefinitions:
             #                       DS_TESTS, DS_TESTS,
             #                       if_included_in_label=False)
         ]
-        self.PeriodicInfOutcomeConditions = [
+        self.ICUInfOutcomeConditions = [
             Cls.ConditionOnOutcome(
                 outcome_name='Average ratio: % served in ICU',
-                minimum=0.8,
+                minimum=0.9,
                 maximum=1,
                 if_included_in_label=False,
                 label_format='{:.1f}'),
@@ -55,14 +55,10 @@ class PolicyDefinitions:
                 label_format='{:.0f}')
         ]
 
-        self.AdaptiveIVarConditions = [
+        self.PeriodicVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 1, 1,
                                     if_included_in_label=False),
-            Cls.ConditionOnVariable('WTP', 1000, 1e10,  # 0, 5
-                                    if_included_in_label=False, label_format='{:.0f}'),
-            Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 50, 1e5,  # 1, 5
-                                    if_included_in_label=True, label_format='{:.0f}'),
-            Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 1e5,  # 0, 5
+            Cls.ConditionOnVariable('Periodicity (weeks)', 2, 8,  # 1, 5
                                     if_included_in_label=True, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
@@ -73,7 +69,20 @@ class PolicyDefinitions:
             #                       DS_TESTS, DS_TESTS,
             #                       if_included_in_label=False)
         ]
-
+        self.AdaptiveFtVarConditions = [
+            Cls.ConditionOnVariable('Decision Rule', 3, 3,
+                                    if_included_in_label=False),
+            Cls.ConditionOnVariable('WTP', 0, 1.1,  # 1, 5
+                                    if_included_in_label=True, label_format='{:.2f}'),
+            # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
+            #                       if_included_in_label=False),
+            # Cls.VariableCondition('Switch threshold if social distancing is off',
+            #                       DS_TESTS, DS_TESTS,
+            #                       if_included_in_label=False),
+            # Cls.VariableCondition('Switch threshold if social distancing is on',
+            #                       DS_TESTS, DS_TESTS,
+            #                       if_included_in_label=False)
+        ]
         self.AdaptiveRVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 2, 2,
                                     if_included_in_label=False),

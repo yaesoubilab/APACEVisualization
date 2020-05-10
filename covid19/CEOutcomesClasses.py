@@ -66,19 +66,21 @@ class FtCEOutcomes:
                               title='Affordability curve',
                               y_label='Expected number of weeks with\ntightened social distancing',
                               panel_label='C)',
-                              max_y=max_y_cost, delta_wtp=wtp_delta)
+                              max_y=max_y_cost,
+                              wtp_range=wtp_range, wtp_delta=wtp_delta)
 
-        ax2 = ax.twinx()
-        if show_data:
-            ax2.scatter(self.wtps, self.nSwitches, color='r', alpha=0.25)
+        if False:
+            ax2 = ax.twinx()
+            if show_data:
+                ax2.scatter(self.wtps, self.nSwitches, color='r', alpha=0.25)
 
-        ys = self.nSwitchesRegression.get_predicted_y(x=wtps)
-        ax2.plot(wtps, ys, label='Expected number of switches', color='r', linestyle='--')
-        ax2.set_ylabel('Expected number of switches', color='r')
-        ax2.spines['right'].set_color('r')
-        ax2.tick_params(axis='y', colors='r')
-        # ax2.yaxis.label.set_color('r')
-        ax2.set_ylim(0, max_y_n_switches)
+            ys = self.nSwitchesRegression.get_predicted_y(x=wtps)
+            ax2.plot(wtps, ys, label='Expected number of switches', color='r', linestyle='--')
+            ax2.set_ylabel('Expected number of switches', color='r')
+            ax2.spines['right'].set_color('r')
+            ax2.tick_params(axis='y', colors='r')
+            # ax2.yaxis.label.set_color('r')
+            ax2.set_ylim(0, max_y_n_switches)
 
     def add_effect_to_axis(self, ax, max_y,
                            wtp_range, wtp_delta, show_data=False):
@@ -89,29 +91,30 @@ class FtCEOutcomes:
         wtps = np.linspace(wtp_range[0], wtp_range[1], 50)
         ys = self.effectRegression.get_predicted_y(wtps)
         self.add_plot_to_axis(ax=ax, wtps=wtps, ys=ys,
-                              title='Projected impact on deaths',
+                              title='Projected impact on deaths\ndue to COVID-19',
                               y_label='Expected number of deaths',
                               panel_label='D)',
-                              max_y=max_y, delta_wtp=wtp_delta)
+                              max_y=max_y,
+                              wtp_range=wtp_range, wtp_delta=wtp_delta)
 
-    def add_plot_to_axis(self, ax, wtps, ys, title, y_label, panel_label, max_y, delta_wtp):
+    def add_plot_to_axis(self, ax, wtps, ys, title, y_label, panel_label, max_y, wtp_range, wtp_delta):
 
         ax.plot(wtps, ys, label='', color='k', linestyle='-')
         ax.set_title(title, size=10)
         ax.set_ylabel(y_label)
         ax.set_ylim(0, max_y)
-        ax.set_xlim([self.wtps[0], self.wtps[-1]])
+        ax.set_xlim(wtp_range)
         ax.set_xlabel(WTP_LABEL)
 
         # x axis ticks and labels
         x_ticks = []
-        x = self.wtps[0]
-        while x <= self.wtps[-1]:
+        x = wtp_range[0]
+        while x <= wtp_range[1]:
             x_ticks.append(x)
-            x += delta_wtp
+            x += wtp_delta
         ax.set_xticks(x_ticks)
-        vals = ax.get_xticks()
-        ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
+        # vals = ax.get_xticks()
+        # ax.set_xticklabels(['{:,}'.format(int(x)) for x in vals])
         ax.text(-0.2, 1.11, panel_label, transform=ax.transAxes,
                 size=12, weight='bold')
 
