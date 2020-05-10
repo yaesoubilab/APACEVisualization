@@ -62,7 +62,7 @@ adaptiveFt = Cls.SetOfScenarios(name='Adaptive based on '+r'$F_t$',
                                 labels_shift_y=-0.02)
 
 
-Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, icuBased, periodic, adaptiveFt],
+Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, icuBased, adaptiveFt],
                            x_range=[0, 1500],
                            y_range=[0, 400],
                            effect_multiplier=1,
