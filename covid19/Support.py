@@ -73,7 +73,7 @@ class PolicyDefinitions:
             Cls.ConditionOnVariable('Decision Rule', 3, 3,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('WTP', 0, 1.1,  # 1, 5
-                                    if_included_in_label=True, label_format='{:.2f}'),
+                                    if_included_in_label=False, label_format='{:.2f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
             # Cls.VariableCondition('Switch threshold if social distancing is off',

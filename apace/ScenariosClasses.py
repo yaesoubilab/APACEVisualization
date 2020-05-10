@@ -721,7 +721,7 @@ class SetOfScenarios:
                             print('Increase in effective life of A and B:',
                                   round(incr_eff_life[i] - incr_eff_life[0], 2))
 
-                    elif ser.regType == 'power':
+                    elif ser.regType == 'exponential':
                         reg = Reg.ExpRegression(x, y, if_c0_zero=True)
 
                     xs = np.linspace(min(x), max(x), 50)

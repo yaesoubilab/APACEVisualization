@@ -57,7 +57,7 @@ adaptiveFt = Cls.SetOfScenarios(name='Adaptive based on '+r'$F_t$',
                                 conditions_on_variables=policy_definitions.AdaptiveFtVarConditions,
                                 if_find_frontier=False,
                                 if_show_fitted_curve=True,
-                                #reg_type='power',
+                                reg_type='exponential',
                                 labels_shift_x=0.02,
                                 labels_shift_y=-0.02)
 
