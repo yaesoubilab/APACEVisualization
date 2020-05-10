@@ -7,23 +7,25 @@ WTP_LABEL = 'Willingness to keep physical distancing' + \
             '\nin place to avert one death' + \
             '\nper 100,000 population ' + r'$(\omega)$'
 
+
 class PolicyFt:
     def __init__(self, csv_file_name):
 
         self.cols = io.read_csv_cols(
             file_name=csv_file_name, n_cols=3, if_ignore_first_row=True, if_convert_float=True)
 
-        self.WTPs = self.cols[0]
+        self.wtps = self.cols[0]
         self.OnTs = self.cols[1]
         self.OffTs = self.cols[2]
-        self.RegToOn = Reg.ExpRegression(x=self.WTPs,
+        self.RegToOn = Reg.ExpRegression(x=self.wtps,
                                          y=self.OnTs,
                                          if_zero_at_limit=True)
-        self.RegToOff = Reg.ExpRegression(x=self.WTPs,
+        self.RegToOff = Reg.ExpRegression(x=self.wtps,
                                           y=self.OffTs,
                                           if_zero_at_limit=True)
 
-    def add_policy_figure_when_relaxed(self, ax, max_f, wtp_range, wtp_delta):
+    def add_policy_figure_when_relaxed(self, ax, max_f, wtp_range, wtp_delta,
+                                       show_data=False, show_x_label=True):
         self.add_plot_to_axis(ax=ax,
                               ys=self.OnTs,
                               reg=self.RegToOn,
@@ -34,10 +36,12 @@ class PolicyFt:
                               max_f=max_f,
                               wtp_range=wtp_range,
                               wtp_delta=wtp_delta,
-                              show_data=True)
+                              show_x_label=show_x_label,
+                              show_data=show_data)
         ax.set_ylabel('Estimated\nforce of infection ' + r'$(F_t)$')
 
-    def add_policy_figure_when_tightened(self, ax, max_f, wtp_range, wtp_delta):
+    def add_policy_figure_when_tightened(self, ax, max_f, wtp_range, wtp_delta,
+                                         show_data=False, show_x_label=True):
         self.add_plot_to_axis(ax=ax,
                               ys=self.OffTs,
                               reg=self.RegToOff,
@@ -48,13 +52,14 @@ class PolicyFt:
                               max_f=max_f,
                               wtp_range=wtp_range,
                               wtp_delta=wtp_delta,
-                              show_data=True)
+                              show_x_label=show_x_label,
+                              show_data=show_data)
 
     def add_plot_to_axis(self, ax, ys, reg, title, text_turn_off, text_turn_on, panel_label,
-                         max_f, wtp_range, wtp_delta, show_data):
+                         max_f, wtp_range, wtp_delta, show_data, show_x_label=True):
 
         if show_data:
-            ax.scatter(self.WTPs, ys, marker='+', s=50, color='k', alpha=0.25)
+            ax.scatter(self.wtps, ys, marker='+', s=50, color='k', alpha=0.25)
 
         if reg:
             wtps = np.linspace(wtp_range[0], wtp_range[1], 50)
@@ -67,7 +72,8 @@ class PolicyFt:
 
         ax.set_ylim(0, max_f)
         ax.set_xlim(wtp_range)
-        ax.set_xlabel(WTP_LABEL)
+        if show_x_label:
+            ax.set_xlabel(WTP_LABEL)
 
         # x axis ticks and labels
         x_ticks = []

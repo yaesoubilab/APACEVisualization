@@ -1,5 +1,6 @@
 import apace.ScenariosClasses as Cls
 import SimPy.RegressionClasses as Reg
+import numpy as np
 
 WTP_LABEL = 'Willingness to keep physical distancing' + \
             '\nin place to avert one death' + \
@@ -52,52 +53,46 @@ class FtCEOutcomes:
             self.wtps, self.nSwitches, degree=poly_degree
         )
 
-    def add_affordability_to_axis(self, ax, title, y_label, panel_label,
-                                  max_y_cost, max_y_n_switches, delta_wtp, show_data):
+    def add_affordability_to_axis(self, ax, max_y_cost, max_y_n_switches,
+                                  wtp_range, wtp_delta, show_data=False):
 
         if show_data:
             ax.scatter(self.wtps, self.costs,
                        marker='+', s=50, color='k', alpha=0.25)
 
-        ys = self.costRegression.get_predicted_y(x=self.wtps)
-        self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
-                              title=title, y_label=y_label,
-                              panel_label=panel_label, max_y=max_y_cost, delta_wtp=delta_wtp)
+        wtps = np.linspace(wtp_range[0], wtp_range[1], 50)
+        ys = self.costRegression.get_predicted_y(x=wtps)
+        self.add_plot_to_axis(ax=ax, wtps=wtps, ys=ys,
+                              title='Affordability curve',
+                              y_label='Expected number of weeks with\ntightened social distancing',
+                              panel_label='C)',
+                              max_y=max_y_cost, delta_wtp=wtp_delta)
 
         ax2 = ax.twinx()
         if show_data:
             ax2.scatter(self.wtps, self.nSwitches, color='r', alpha=0.25)
 
-        ys = self.nSwitchesRegression.get_predicted_y(x=self.wtps)
-        ax2.plot(self.wtps, ys, label='Expected number of switches', color='r', linestyle='--')
+        ys = self.nSwitchesRegression.get_predicted_y(x=wtps)
+        ax2.plot(wtps, ys, label='Expected number of switches', color='r', linestyle='--')
         ax2.set_ylabel('Expected number of switches', color='r')
         ax2.spines['right'].set_color('r')
         ax2.tick_params(axis='y', colors='r')
         # ax2.yaxis.label.set_color('r')
         ax2.set_ylim(0, max_y_n_switches)
 
-        ax2 = ax.twinx()
-        if show_data:
-            ax2.scatter(self.wtps, self.effects, color='r', alpha=0.25)
-
-        ys = self.effectRegression.get_predicted_y(x=self.wtps)
-
-        ax2.plot(self.wtps, ys, label='QALYs loss', color='r', linestyle='--')
-        ax2.set_ylabel('Expected QALYs lost (Thousands)\n', color='r')
-        ax2.spines['right'].set_color('r')
-        ax2.tick_params(axis='y', colors='r')
-        # ax2.yaxis.label.set_color('r')
-        ax2.set_ylim(0, max_y_qaly)
-
-    def add_effect_to_axis(self, ax, title, y_label, panel_label,
-                                max_y, delta_wtp, show_data):
+    def add_effect_to_axis(self, ax, max_y,
+                           wtp_range, wtp_delta, show_data=False):
 
         if show_data:
             ax.scatter(self.wtps, self.effects,
                        marker='+', s=50, color='k', alpha=0.25)
-        ys = self.effectRegression.get_predicted_y(x=self.wtps)
-        self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
-                              title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
+        wtps = np.linspace(wtp_range[0], wtp_range[1], 50)
+        ys = self.effectRegression.get_predicted_y(wtps)
+        self.add_plot_to_axis(ax=ax, wtps=wtps, ys=ys,
+                              title='Projected impact on deaths',
+                              y_label='Expected number of deaths',
+                              panel_label='D)',
+                              max_y=max_y, delta_wtp=wtp_delta)
 
     def add_plot_to_axis(self, ax, wtps, ys, title, y_label, panel_label, max_y, delta_wtp):
 
