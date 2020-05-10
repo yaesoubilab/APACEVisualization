@@ -1,8 +1,12 @@
 import apace.ScenariosClasses as Cls
 import SimPy.RegressionClasses as Reg
 
+WTP_LABEL = 'Willingness to keep physical distancing' + \
+            '\nin place to avert one death' + \
+            '\nper 100,000 population ' + r'$(\omega)$'
 
-class FtCostAndHealthOutcomes:
+
+class FtCEOutcomes:
 
     def __init__(self, csv_file_name, poly_degree=2):
 
@@ -49,14 +53,28 @@ class FtCostAndHealthOutcomes:
         )
 
     def add_affordability_to_axis(self, ax, title, y_label, panel_label,
-                                  max_y_cost, max_y_qaly, delta_wtp, show_data):
+                                  max_y_cost, max_y_n_switches, delta_wtp, show_data):
+
         if show_data:
             ax.scatter(self.wtps, self.costs,
                        marker='+', s=50, color='k', alpha=0.25)
 
         ys = self.costRegression.get_predicted_y(x=self.wtps)
         self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
-                              title=title, y_label=y_label, panel_label=panel_label, max_y=max_y_cost, delta_wtp=delta_wtp)
+                              title=title, y_label=y_label,
+                              panel_label=panel_label, max_y=max_y_cost, delta_wtp=delta_wtp)
+
+        ax2 = ax.twinx()
+        if show_data:
+            ax2.scatter(self.wtps, self.nSwitches, color='r', alpha=0.25)
+
+        ys = self.nSwitchesRegression.get_predicted_y(x=self.wtps)
+        ax2.plot(self.wtps, ys, label='Expected number of switches', color='r', linestyle='--')
+        ax2.set_ylabel('Expected number of switches', color='r')
+        ax2.spines['right'].set_color('r')
+        ax2.tick_params(axis='y', colors='r')
+        # ax2.yaxis.label.set_color('r')
+        ax2.set_ylim(0, max_y_n_switches)
 
         ax2 = ax.twinx()
         if show_data:
@@ -71,26 +89,15 @@ class FtCostAndHealthOutcomes:
         # ax2.yaxis.label.set_color('r')
         ax2.set_ylim(0, max_y_qaly)
 
-    def add_utilization_to_axis(self, ax, title, y_label, panel_label,
-                                max_y, max_y_n_switches, delta_wtp, show_data):
+    def add_effect_to_axis(self, ax, title, y_label, panel_label,
+                                max_y, delta_wtp, show_data):
 
         if show_data:
-            ax.scatter(self.selectWTPs, self.utilization,
+            ax.scatter(self.wtps, self.effects,
                        marker='+', s=50, color='k', alpha=0.25)
-        ys = self.utilRegression.get_predicted_y(x=self.wtps)
+        ys = self.effectRegression.get_predicted_y(x=self.wtps)
         self.add_plot_to_axis(ax=ax, wtps=self.wtps, ys=ys,
                               title=title, y_label=y_label, panel_label=panel_label, max_y=max_y, delta_wtp=delta_wtp)
-
-        ax2 = ax.twinx()
-        if show_data:
-            ax2.scatter(self.selectWTPs, [n for n in self.nSwitches], color='r', alpha=0.25)
-        ys = self.nSwitchesRegression.get_predicted_y(x=self.wtps)
-        ax2.plot(self.wtps, ys, label='Expected number of switches', color='r', linestyle='--')
-        ax2.set_ylabel('Expected number of switches', color='r')
-        ax2.spines['right'].set_color('r')
-        ax2.tick_params(axis='y', colors='r')
-        # ax2.yaxis.label.set_color('r')
-        ax2.set_ylim(0, max_y_n_switches)
 
     def add_plot_to_axis(self, ax, wtps, ys, title, y_label, panel_label, max_y, delta_wtp):
 
@@ -99,7 +106,7 @@ class FtCostAndHealthOutcomes:
         ax.set_ylabel(y_label)
         ax.set_ylim(0, max_y)
         ax.set_xlim([self.wtps[0], self.wtps[-1]])
-        ax.set_xlabel('Willingness-to-pay ($ per QALY)')
+        ax.set_xlabel(WTP_LABEL)
 
         # x axis ticks and labels
         x_ticks = []

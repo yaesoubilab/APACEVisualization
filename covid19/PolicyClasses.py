@@ -3,6 +3,9 @@ import SimPy.RegressionClasses as Reg
 import numpy as np
 import apace.ScenariosClasses as Cls
 
+WTP_LABEL = 'Willingness to keep physical distancing' + \
+            '\nin place to avert one death' + \
+            '\nper 100,000 population ' + r'$(\omega)$'
 
 class PolicyFt:
     def __init__(self, csv_file_name):
@@ -32,7 +35,7 @@ class PolicyFt:
                               wtp_range=wtp_range,
                               wtp_delta=wtp_delta,
                               show_data=True)
-        ax.set_ylabel('Estimated effective\nreproductive number ' + r'$(R_t)$')
+        ax.set_ylabel('Estimated\nforce of infection ' + r'$(F_t)$')
 
     def add_policy_figure_when_tightened(self, ax, max_f, wtp_range, wtp_delta):
         self.add_plot_to_axis(ax=ax,
@@ -64,7 +67,7 @@ class PolicyFt:
 
         ax.set_ylim(0, max_f)
         ax.set_xlim(wtp_range)
-        ax.set_xlabel('WTP')
+        ax.set_xlabel(WTP_LABEL)
 
         # x axis ticks and labels
         x_ticks = []
