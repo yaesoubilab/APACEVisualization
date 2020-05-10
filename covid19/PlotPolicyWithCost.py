@@ -1,5 +1,5 @@
 import covid19.PolicyClasses as P
-import covid19.CostAndHealthOutcomesClasses as Res
+import covid19.CEOutcomesClasses as Res
 import matplotlib.pyplot as plt
 import numpy as np
 import os
