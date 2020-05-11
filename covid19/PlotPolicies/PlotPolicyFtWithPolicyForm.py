@@ -17,7 +17,7 @@ WTP_DELTA = (WTPS[-1] - WTPS[0])/2
 # change the current working directory
 os.chdir('../..')
 
-policy = P.PolicyFtRangeOfWTP(policy_params=POLICY_PARAMS, wtps=WTPS)
+policy = P.PolicyExponential(policy_params=POLICY_PARAMS, wtps=WTPS)
 policy.write_to_csv(file_name='ThresholdsFt.csv',
                     directory='covid19/csv_files')
 

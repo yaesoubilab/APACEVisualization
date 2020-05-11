@@ -103,7 +103,7 @@ class PolicyFt:
                      size=9, weight='bold', ha='right', va='top')
 
 
-class PolicyFtRangeOfWTP:
+class PolicyExponential:
     def __init__(self, policy_params, wtps):
 
         self.policyParams = policy_params
@@ -156,6 +156,7 @@ class PolicyFtRangeOfWTP:
                               delta_wtp=delta_wtp)
 
     def add_plot_to_axis(self, ax, ys, title, text_turn_off, text_turn_on, panel_label, max_r, delta_wtp):
+
         ax.plot(self.wtps, ys, label='', color='k', linestyle='-')
         ax.set_title(title, size=10)
         ax.fill_between(self.wtps, ys, facecolor='b', alpha=0.2)
@@ -181,7 +182,7 @@ class PolicyFtRangeOfWTP:
                      size=9, weight='bold', ha='right', va='top')
 
 
-class PolicyI:
+class PolicyIOld:
     def __init__(self, policy_params, wtps):
 
         self.policyParams = policy_params
