@@ -41,14 +41,13 @@ icuBased = Cls.SetOfScenarios(name='Adaptive to maximize ICU service rate',
                               scenario_df=scenarioDfFixedPeriodic,
                               color='red',
                               marker='D',
-                              #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
                               conditions_on_variables=policy_definitions.ICUInfVarConditions,
                               conditions_on_outcomes=policy_definitions.ICUInfOutcomeConditions,
                               if_find_frontier=False,
                               if_show_fitted_curve=True,
                               reg_type='exponential',
-                              labels_shift_x=-0.1,
-                              labels_shift_y=0.02)
+                              labels_shift_x=-0.04,
+                              labels_shift_y=0.01)
 
 adaptiveIt = Cls.SetOfScenarios(name='Adaptive to minimize loss in NMB',
                                 scenario_df=scenarioDfAdaptiveIt,

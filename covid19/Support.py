@@ -43,7 +43,7 @@ class PolicyDefinitions:
         self.ICUInfOutcomeConditions = [
             Cls.ConditionOnOutcome(
                 outcome_name='Average ratio: % served in ICU',
-                minimum=0.7,
+                minimum=0.4,
                 maximum=1,
                 if_included_in_label=True,
                 label_format='{:.0%}'),
