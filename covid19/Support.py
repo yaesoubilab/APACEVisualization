@@ -69,10 +69,10 @@ class PolicyDefinitions:
             #                       DS_TESTS, DS_TESTS,
             #                       if_included_in_label=False)
         ]
-        self.AdaptiveFtVarConditions = [
-            Cls.ConditionOnVariable('Decision Rule', 3, 3,
+        self.AdaptiveItVarConditions = [
+            Cls.ConditionOnVariable('Decision Rule', 2, 2,
                                     if_included_in_label=False),
-            Cls.ConditionOnVariable('WTP', 0, 1.1,  # 1, 5
+            Cls.ConditionOnVariable('WTP', 0.0001, 2,  # 1, 5
                                     if_included_in_label=False, label_format='{:.2f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),

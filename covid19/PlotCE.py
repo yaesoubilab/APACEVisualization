@@ -10,8 +10,8 @@ SUFX = ''
 Cls.POLY_DEGREES = 2
 scenarioDfFixedPeriodic = Cls.ScenarioDataFrame(
     csv_file_name='csv_files/PolicyEvals/PolicyEvalsFixedPeriodic{}.csv'.format(SUFX))
-scenarioDfAdaptiveFt = Cls.ScenarioDataFrame(
-    csv_file_name='csv_files/PolicyEvals/PolicyEvalAdaptiveFt{}.csv'.format(SUFX))
+scenarioDfAdaptiveIt = Cls.ScenarioDataFrame(
+    csv_file_name='csv_files/PolicyEvals/PolicyEvalAdaptiveIt{}.csv'.format(SUFX))
 
 policy_definitions = Sup.PolicyDefinitions()
 
@@ -26,6 +26,17 @@ fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
                                     labels_shift_x=0.01,
                                     labels_shift_y=0.01)
 
+periodic = Cls.SetOfScenarios(name='Periodic',
+                              scenario_df=scenarioDfFixedPeriodic,
+                              color='purple',
+                              marker='s',
+                              #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
+                              conditions_on_variables=policy_definitions.PeriodicVarConditions,
+                              if_find_frontier=False,
+                              if_show_fitted_curve=True,
+                              labels_shift_x=0.02,
+                              labels_shift_y=-0.02)
+
 icuBased = Cls.SetOfScenarios(name='Adaptive based on ICU capacity',
                               scenario_df=scenarioDfFixedPeriodic,
                               color='red',
@@ -38,23 +49,12 @@ icuBased = Cls.SetOfScenarios(name='Adaptive based on ICU capacity',
                               labels_shift_x=-0.1,
                               labels_shift_y=0.02)
 
-periodic = Cls.SetOfScenarios(name='Periodic',
-                              scenario_df=scenarioDfFixedPeriodic,
-                              color='purple',
-                              marker='s',
-                              #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
-                              conditions_on_variables=policy_definitions.PeriodicVarConditions,
-                              if_find_frontier=False,
-                              if_show_fitted_curve=True,
-                              labels_shift_x=0.02,
-                              labels_shift_y=-0.02)
-
-adaptiveFt = Cls.SetOfScenarios(name='Adaptive based on '+r'$F_t$',
-                                scenario_df=scenarioDfAdaptiveFt,
+adaptiveIt = Cls.SetOfScenarios(name='Adaptive based on NMB',
+                                scenario_df=scenarioDfAdaptiveIt,
                                 color='green',
                                 marker='s',
                                 #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
-                                conditions_on_variables=policy_definitions.AdaptiveFtVarConditions,
+                                conditions_on_variables=policy_definitions.AdaptiveItVarConditions,
                                 if_find_frontier=False,
                                 if_show_fitted_curve=True,
                                 reg_type='exponential',
@@ -62,7 +62,7 @@ adaptiveFt = Cls.SetOfScenarios(name='Adaptive based on '+r'$F_t$',
                                 labels_shift_y=-0.02)
 
 
-Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, icuBased, adaptiveFt],
+Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, icuBased, adaptiveIt],
                            x_range=[0, 1500],
                            y_range=[0, 400],
                            effect_multiplier=1,

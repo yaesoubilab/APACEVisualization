@@ -4,7 +4,7 @@ import covid19.CEOutcomesClasses as Res
 import os
 
 IF_WITH_OUTCOMES = True
-WTP_RANGE = [0.15, 1.25]
+WTP_RANGE = [0.1, 1.3]
 WTP_DELTA = 0.5
 SHOW_DATA = True
 MAX_I = 750
@@ -42,7 +42,7 @@ else:
                                             show_x_label=False)
 
     # cost and health outcomes
-    resUtil = Res.CEOutcomes(csv_file_name='covid19/csv_files/PolicyEvals/PolicyEvalAdaptiveI.csv',
+    resUtil = Res.CEOutcomes(csv_file_name='covid19/csv_files/PolicyEvals/PolicyEvalAdaptiveIt.csv',
                              poly_degree=3)
 
     resUtil.add_affordability_to_axis(ax=axes[1][0], max_y_cost=400, max_y_n_switches=100,
