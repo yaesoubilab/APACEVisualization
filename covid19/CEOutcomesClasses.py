@@ -7,7 +7,7 @@ WTP_LABEL = 'Willingness to keep physical distancing' + \
             '\nper 100,000 population ' + r'$(\omega)$'
 
 
-class FtCEOutcomes:
+class CEOutcomes:
 
     def __init__(self, csv_file_name, poly_degree=2):
 
@@ -20,7 +20,7 @@ class FtCEOutcomes:
 
         for scenario_name in scenario_df.scenarios:
 
-            if scenario_name[0:3] == 'D:3':
+            if scenario_name[0:3] == 'D:2':
                 # store wtp value
                 i = scenario_name.find('WTP')
                 self.wtps.append(float(scenario_name[i+5:]))
@@ -45,9 +45,13 @@ class FtCEOutcomes:
 
         self.costRegression = Reg.PolyRegression(
             self.wtps, self.costs, degree=poly_degree)
+        self.costRegression = Reg.ExpRegression(
+            self.wtps, self.costs)
 
         self.effectRegression = Reg.PolyRegression(
             self.wtps, self.effects, degree=poly_degree)
+        self.effectRegression = Reg.ExpRegression(
+            self.wtps, self.effects, p0=[500, -1, 1])
 
         self.nSwitchesRegression = Reg.PolyRegression(
             self.wtps, self.nSwitches, degree=poly_degree
