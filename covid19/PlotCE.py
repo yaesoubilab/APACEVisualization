@@ -34,8 +34,8 @@ periodic = Cls.SetOfScenarios(name='Periodic',
                               conditions_on_variables=policy_definitions.PeriodicVarConditions,
                               if_find_frontier=False,
                               if_show_fitted_curve=True,
-                              labels_shift_x=0.02,
-                              labels_shift_y=-0.02)
+                              labels_shift_x=-0.04,
+                              labels_shift_y=0.01)
 
 icuBased = Cls.SetOfScenarios(name='Adaptive to maximize ICU service rate',
                               scenario_df=scenarioDfFixedPeriodic,
@@ -45,7 +45,8 @@ icuBased = Cls.SetOfScenarios(name='Adaptive to maximize ICU service rate',
                               conditions_on_variables=policy_definitions.ICUInfVarConditions,
                               conditions_on_outcomes=policy_definitions.ICUInfOutcomeConditions,
                               if_find_frontier=False,
-                              if_show_fitted_curve=False,
+                              if_show_fitted_curve=True,
+                              reg_type='exponential',
                               labels_shift_x=-0.1,
                               labels_shift_y=0.02)
 

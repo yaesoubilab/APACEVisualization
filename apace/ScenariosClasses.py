@@ -723,6 +723,8 @@ class SetOfScenarios:
 
                     elif ser.regType == 'exponential':
                         reg = Reg.ExpRegression(x, y, if_c0_zero=True, p0=(0.5, 0.005))
+                    elif ser.regType == 'power':
+                        reg = Reg.PowerRegression(x, y, if_c0_zero=True, p0=(1, 0.001))
 
                     xs = np.linspace(min(x), max(x), 50)
                     predicted = reg.get_predicted_y(xs)
