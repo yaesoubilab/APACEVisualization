@@ -37,7 +37,7 @@ periodic = Cls.SetOfScenarios(name='Periodic',
                               labels_shift_x=0.02,
                               labels_shift_y=-0.02)
 
-icuBased = Cls.SetOfScenarios(name='Adaptive based on ICU capacity',
+icuBased = Cls.SetOfScenarios(name='Adaptive to maximize ICU service rate',
                               scenario_df=scenarioDfFixedPeriodic,
                               color='red',
                               marker='D',
@@ -49,7 +49,7 @@ icuBased = Cls.SetOfScenarios(name='Adaptive based on ICU capacity',
                               labels_shift_x=-0.1,
                               labels_shift_y=0.02)
 
-adaptiveIt = Cls.SetOfScenarios(name='Adaptive based on NMB',
+adaptiveIt = Cls.SetOfScenarios(name='Adaptive to minimize loss in NMB',
                                 scenario_df=scenarioDfAdaptiveIt,
                                 color='green',
                                 marker='s',
@@ -64,7 +64,7 @@ adaptiveIt = Cls.SetOfScenarios(name='Adaptive based on NMB',
 
 Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, icuBased, adaptiveIt],
                            x_range=[0, 1500],
-                           y_range=[0, 400],
+                           y_range=[0, 450],
                            effect_multiplier=1,
                            cost_multiplier=1,
                            switch_cost_effect_on_figure=False,
