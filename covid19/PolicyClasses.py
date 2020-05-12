@@ -6,10 +6,12 @@ import apace.ScenariosClasses as Cls
 WTP_LABEL = 'Willingness to keep physical distancing' + \
             '\nin place to avert one death' + \
             '\nper 100,000 population ' + r'$(\omega)$'
+WTP_LABEL = 'Trade-off threshold ' + r'$(\omega)$'
 
 
-class PolicyFt:
-    def __init__(self, csv_file_name, wtp_range):
+class PolicySingleFeature:
+    def __init__(self, csv_file_name, wtp_range,
+                 csv_file_name_proj_thresholds='ProjectedOptimalThreshold.csv'):
 
         self.cols = io.read_csv_cols(
             file_name=csv_file_name, n_cols=3, if_ignore_first_row=True, if_convert_float=True)
@@ -31,10 +33,9 @@ class PolicyFt:
         for i in range(len(wtps)):
             row = [wtps[i], to_on_ts[i], to_off_ts[i]]
             rows.append(row)
-        io.write_csv(rows=rows, file_name='covid19/csv_files/ProjOptimalThresholdsFt.csv')
+        io.write_csv(rows=rows, file_name=csv_file_name_proj_thresholds)
 
-
-    def add_policy_figure_when_relaxed(self, ax, max_f, wtp_range, wtp_delta,
+    def add_policy_figure_when_relaxed(self, ax, y_label, max_feature_value, wtp_range, wtp_delta,
                                        show_data=False, show_x_label=True):
         self.add_plot_to_axis(ax=ax,
                               ys=self.OnTs,
@@ -43,14 +44,14 @@ class PolicyFt:
                               text_turn_off='Maintain \nrelaxed physical distancing',
                               text_turn_on='Switch to tightened\nphysical distancing',
                               panel_label='A)',
-                              max_f=max_f,
+                              max_feature_value=max_feature_value,
                               wtp_range=wtp_range,
                               wtp_delta=wtp_delta,
                               show_x_label=show_x_label,
                               show_data=show_data)
-        ax.set_ylabel('Estimated\nforce of infection ' + r'$(F_t)$')
+        ax.set_ylabel(y_label)
 
-    def add_policy_figure_when_tightened(self, ax, max_f, wtp_range, wtp_delta,
+    def add_policy_figure_when_tightened(self, ax, max_feature_value, wtp_range, wtp_delta,
                                          show_data=False, show_x_label=True):
         self.add_plot_to_axis(ax=ax,
                               ys=self.OffTs,
@@ -59,14 +60,14 @@ class PolicyFt:
                               text_turn_off="Switch to\nrelaxed physical distancing",
                               text_turn_on="Maintain tightened\nphysical distancing",
                               panel_label='B)',
-                              max_f=max_f,
+                              max_feature_value=max_feature_value,
                               wtp_range=wtp_range,
                               wtp_delta=wtp_delta,
                               show_x_label=show_x_label,
                               show_data=show_data)
 
     def add_plot_to_axis(self, ax, ys, reg, title, text_turn_off, text_turn_on, panel_label,
-                         max_f, wtp_range, wtp_delta, show_data, show_x_label=True):
+                         max_feature_value, wtp_range, wtp_delta, show_data, show_x_label=True):
 
         if show_data:
             ax.scatter(self.wtps, ys, marker='+', s=50, color='k', alpha=0.25)
@@ -76,11 +77,11 @@ class PolicyFt:
             reg_ys = reg.get_predicted_y(wtps)
             ax.plot(wtps, reg_ys, label='', color='k', linestyle='-')
             ax.fill_between(wtps, reg_ys, facecolor='b', alpha=0.2)
-            ax.fill_between(wtps, [max_f] * len(reg_ys), reg_ys, facecolor='r', alpha=0.2)
+            ax.fill_between(wtps, [max_feature_value] * len(reg_ys), reg_ys, facecolor='r', alpha=0.2)
 
         ax.set_title(title, size=10)
 
-        ax.set_ylim(0, max_f)
+        ax.set_ylim(0, max_feature_value)
         ax.set_xlim(wtp_range)
         if show_x_label:
             ax.set_xlabel(WTP_LABEL)
