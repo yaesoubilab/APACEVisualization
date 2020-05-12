@@ -2,9 +2,7 @@ import apace.ScenariosClasses as Cls
 import SimPy.RegressionClasses as Reg
 import numpy as np
 
-WTP_LABEL = 'Willingness to keep physical distancing' + \
-            '\nin place to avert one death' + \
-            '\nper 100,000 population ' + r'$(\omega)$'
+WTP_LABEL = 'Trade-off threshold ' + r'$(\omega)$'
 
 
 class CEOutcomes:
@@ -51,7 +49,7 @@ class CEOutcomes:
         self.effectRegression = Reg.PolyRegression(
             self.wtps, self.effects, degree=poly_degree)
         self.effectRegression = Reg.ExpRegression(
-            self.wtps, self.effects, p0=[500, -1, 1])
+            self.wtps, self.effects)#, p0=[500, -1, -0.001])
 
         self.nSwitchesRegression = Reg.PolyRegression(
             self.wtps, self.nSwitches, degree=poly_degree
