@@ -25,9 +25,9 @@ class PolicyDefinitions:
         self.ICUInfVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 2, 2,
                                     if_included_in_label=False),
-            Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 1000,  # 1, 5
+            Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 20000,  # 1, 5
                                     if_included_in_label=False, label_format='{:.0f}'),
-            Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 1000,  # 0, 5
+            Cls.ConditionOnVariable('% I Switch threshold if social distancing is on', 0, 20000,  # 0, 5
                                     if_included_in_label=False, label_format='{:.0f}'),
             Cls.ConditionOnVariable('WTP', 0, 0,  # 0, 5
                                     if_included_in_label=False, label_format='{:.0f}'),
