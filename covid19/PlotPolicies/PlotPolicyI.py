@@ -6,7 +6,7 @@ import os
 IF_WITH_OUTCOMES = True
 WTP_RANGE = [0.1, 1.3]
 WTP_DELTA = 0.5
-SHOW_DATA = True
+SHOW_DATA = False
 MAX_I = 750
 
 # change the current working directory
@@ -45,7 +45,7 @@ else:
     resUtil = Res.CEOutcomes(csv_file_name='covid19/csv_files/PolicyEvals/PolicyEvalAdaptiveIt.csv',
                              poly_degree=3)
 
-    resUtil.add_affordability_to_axis(ax=axes[1][0], max_y_cost=400, max_y_n_switches=100,
+    resUtil.add_affordability_to_axis(ax=axes[1][0], max_y_cost=500, max_y_n_switches=100,
                                       wtp_range=WTP_RANGE, wtp_delta=WTP_DELTA, show_data=SHOW_DATA)
     resUtil.add_effect_to_axis(ax=axes[1][1], max_y=1000,
                                wtp_range=WTP_RANGE, wtp_delta=WTP_DELTA, show_data=SHOW_DATA)

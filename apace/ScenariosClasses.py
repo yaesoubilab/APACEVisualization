@@ -722,7 +722,7 @@ class SetOfScenarios:
                                   round(incr_eff_life[i] - incr_eff_life[0], 2))
 
                     elif ser.regType == 'exponential':
-                        reg = Reg.ExpRegression(x, y, if_c0_zero=True)
+                        reg = Reg.ExpRegression(x, y, if_c0_zero=True, p0=(0.5, 0.005))
 
                     xs = np.linspace(min(x), max(x), 50)
                     predicted = reg.get_predicted_y(xs)
