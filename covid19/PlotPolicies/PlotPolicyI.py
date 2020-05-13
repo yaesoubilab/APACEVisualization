@@ -6,7 +6,7 @@ import os
 IF_WITH_OUTCOMES = True
 WTP_RANGE = [0.1, 1.3]
 WTP_DELTA = 0.5
-SHOW_DATA = False
+SHOW_DATA = True
 MAX_I = 750
 
 # change the current working directory
