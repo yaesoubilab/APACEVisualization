@@ -16,7 +16,7 @@ scenarioDfAdaptiveIt = Cls.ScenarioDataFrame(
 policy_definitions = Sup.PolicyDefinitions()
 
 # series to display on the cost-effectiveness plane
-fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
+fixed_interval = Cls.SetOfScenarios(name='Static: Continuous',
                                     scenario_df=scenarioDfFixedPeriodic,
                                     color='blue',
                                     marker='o',
@@ -26,7 +26,7 @@ fixed_interval = Cls.SetOfScenarios(name='Predetermined Duration',
                                     labels_shift_x=0.01,
                                     labels_shift_y=0.01)
 
-periodic = Cls.SetOfScenarios(name='Periodic',
+periodic = Cls.SetOfScenarios(name='Static: Periodic',
                               scenario_df=scenarioDfFixedPeriodic,
                               color='purple',
                               marker='s',
@@ -38,7 +38,7 @@ periodic = Cls.SetOfScenarios(name='Periodic',
                               labels_shift_x=-0.04,
                               labels_shift_y=0.01)
 
-icuBased = Cls.SetOfScenarios(name='Adaptive to meet ICU service rate',
+icuBased = Cls.SetOfScenarios(name='Adaptive: ICU Capacity',
                               scenario_df=scenarioDfFixedPeriodic,
                               color='red',
                               marker='D',
@@ -50,7 +50,7 @@ icuBased = Cls.SetOfScenarios(name='Adaptive to meet ICU service rate',
                               labels_shift_x=-0.05,
                               labels_shift_y=0.02)
 
-adaptiveIt = Cls.SetOfScenarios(name='Adaptive to minimize loss in NMB',
+adaptiveIt = Cls.SetOfScenarios(name='Adaptive: Minimize Loss of NMB',
                                 scenario_df=scenarioDfAdaptiveIt,
                                 color='green',
                                 marker='s',
