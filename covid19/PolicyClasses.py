@@ -26,7 +26,7 @@ class PolicySingleFeature:
                                           y=self.OffTs,
                                           if_c0_zero=True)
 
-        wtps = np.linspace(wtp_range[0], wtp_range[1], 9)
+        wtps = np.linspace(wtp_range[0], wtp_range[1], 13)
         to_on_ts = self.RegToOn.get_predicted_y(wtps)
         to_off_ts = self.RegToOff.get_predicted_y(wtps)
         rows = []

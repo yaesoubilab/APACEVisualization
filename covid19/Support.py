@@ -72,8 +72,8 @@ class PolicyDefinitions:
         self.AdaptiveItVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 2, 2,
                                     if_included_in_label=False),
-            Cls.ConditionOnVariable('WTP', 0.01, 2,  # 1, 5
-                                    #values=,
+            Cls.ConditionOnVariable('WTP', #0.01, 2,  # 1, 5
+                                    values=[0.025, 0.05, 0.1, 0.2, 0.4, 0.7, 0.8, 1],
                                     if_included_in_label=True, label_format='{:.2f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
