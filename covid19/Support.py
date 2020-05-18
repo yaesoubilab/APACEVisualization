@@ -11,7 +11,7 @@ class PolicyDefinitions:
         self.FixedIntervalVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 0, 0,
                                     if_included_in_label=False),
-            Cls.ConditionOnVariable('Duration of Social Distancing', 0, 300,  # 200
+            Cls.ConditionOnVariable('Duration of Social Distancing', 0, 110,  # 200
                                     if_included_in_label=True, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
@@ -58,7 +58,8 @@ class PolicyDefinitions:
         self.PeriodicVarConditions = [
             Cls.ConditionOnVariable('Decision Rule', 1, 1,
                                     if_included_in_label=False),
-            Cls.ConditionOnVariable('Periodicity (weeks)', 2, 8,  # 1, 5
+            Cls.ConditionOnVariable('Periodicity (weeks)', #2, 8,  # 1, 5
+                                    values=[2, 4, 8],
                                     if_included_in_label=True, label_format='{:.0f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
@@ -70,10 +71,10 @@ class PolicyDefinitions:
             #                       if_included_in_label=False)
         ]
         self.AdaptiveItVarConditions = [
-            Cls.ConditionOnVariable('Decision Rule', 2, 2,
+            Cls.ConditionOnVariable('Decision Rule', 3, 3,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('WTP', #0.01, 2,  # 1, 5
-                                    values=[0.025, 0.05, 0.1, 0.2, 0.4, 0.7, 0.8, 1],
+                                    values=[0.01, 0.02, 0.03, 0.04, 0.05, 0.07,  0.09, 0.13, 0.14, 0.15],
                                     if_included_in_label=True, label_format='{:.2f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),

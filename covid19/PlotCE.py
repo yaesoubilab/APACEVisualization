@@ -7,7 +7,7 @@ SUFX = ''
 # SUFX = '4WeekMin'
 
 
-Cls.POLY_DEGREES = 4
+Cls.POLY_DEGREES = 2
 scenarioDfFixedPeriodic = Cls.ScenarioDataFrame(
     csv_file_name='csv_files/PolicyEvals/PolicyEvalsFixedPeriodic{}.csv'.format(SUFX))
 scenarioDfAdaptiveIt = Cls.ScenarioDataFrame(
@@ -36,7 +36,7 @@ periodic = Cls.SetOfScenarios(name='Static: Periodic',
                               reg_type='exponential',
                               if_show_fitted_curve=True,
                               labels_shift_x=-0.04,
-                              labels_shift_y=0.01)
+                              labels_shift_y=0.005)
 
 icuBased = Cls.SetOfScenarios(name='Adaptive: ICU Capacity',
                               scenario_df=scenarioDfFixedPeriodic,
@@ -47,8 +47,8 @@ icuBased = Cls.SetOfScenarios(name='Adaptive: ICU Capacity',
                               if_find_frontier=False,
                               if_show_fitted_curve=True,
                               #reg_type='exponential',
-                              labels_shift_x=-0.05,
-                              labels_shift_y=0.02)
+                              labels_shift_x=-0.07,
+                              labels_shift_y=0.005)
 
 adaptiveIt = Cls.SetOfScenarios(name='Adaptive: Minimize Loss of NMB',
                                 scenario_df=scenarioDfAdaptiveIt,
@@ -65,8 +65,8 @@ adaptiveIt = Cls.SetOfScenarios(name='Adaptive: Minimize Loss of NMB',
 
 Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, icuBased, adaptiveIt],
                            x_range=[0, 1500],
-                           y_range=[0, 450],
-                           effect_multiplier=1,
+                           y_range=[0, 125],
+                           effect_multiplier=0.1,
                            cost_multiplier=1,
                            switch_cost_effect_on_figure=False,
                            wtp_multiplier=1,
