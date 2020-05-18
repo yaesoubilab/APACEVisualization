@@ -18,7 +18,7 @@ class CEOutcomes:
 
         for scenario_name in scenario_df.scenarios:
 
-            if scenario_name[0:3] == 'D:2':
+            if scenario_name[0:3] == 'D:3':
                 # store wtp value
                 i = scenario_name.find('WTP')
                 self.wtps.append(float(scenario_name[i+5:]))
@@ -33,7 +33,7 @@ class CEOutcomes:
                 effect_mean, effect_CI = scenario_df.get_mean_interval(
                     scenario_name=scenario_name,
                     outcome_name='DALY')
-                self.effects.append(effect_mean)
+                self.effects.append(effect_mean/10)
 
                 # Number of Switches
                 n_switches_mean, n_switches_CI = scenario_df.get_mean_interval(
@@ -49,7 +49,7 @@ class CEOutcomes:
         self.effectRegression = Reg.PolyRegression(
             self.wtps, self.effects, degree=poly_degree)
         self.effectRegression = Reg.ExpRegression(
-            self.wtps, self.effects)#, p0=[500, -1, -0.001])
+            self.wtps, self.effects, if_c0_zero=True)# p0=[0, 1, -1])
 
         self.nSwitchesRegression = Reg.PolyRegression(
             self.wtps, self.nSwitches, degree=poly_degree
