@@ -94,7 +94,7 @@ class CEOutcomes:
         ys = self.effectRegression.get_predicted_y(wtps)
         self.add_plot_to_axis(ax=ax, wtps=wtps, ys=ys,
                               title='Projected impact on deaths\ndue to COVID-19',
-                              y_label='Expected number of deaths',
+                              y_label='Expected number of deaths\n(per 100,000 population)',
                               panel_label='D)',
                               max_y=max_y,
                               wtp_range=wtp_range, wtp_delta=wtp_delta)

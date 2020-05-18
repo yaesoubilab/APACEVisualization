@@ -48,7 +48,7 @@ df.plot_multi_panel(
     file_name='figures/Validation.png',
     list_plot_info=[plotInfoIncidence, plotInforICU],
     list_calib_info=[None, calibInfoICU],
-    figure_size=(4.5, 2.25), l_b_r_t=(0.3, 0.1, 0.9, 0.9),
+    figure_size=(4.5, 2.25), l_b_r_t=(0.4, 0.3, 0.9, 0.9),
     show_subplot_labels=True,
     trajs_ids_to_display=range(100))
 

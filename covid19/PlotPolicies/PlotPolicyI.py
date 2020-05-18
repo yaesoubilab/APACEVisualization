@@ -6,7 +6,7 @@ import os
 IF_WITH_OUTCOMES = True
 WTP_RANGE = [0.01, 0.1601]
 WTP_DELTA = 0.05
-SHOW_DATA = True
+SHOW_DATA = False
 MAX_VALUE = 75
 # Y_LABEL = 'Estimated\nprevalence of infection '\
 #           + r'$(I_t)$'+'\nper 100,000 population'
@@ -31,7 +31,7 @@ if not IF_WITH_OUTCOMES:
                                             wtp_range=WTP_RANGE, wtp_delta=WTP_DELTA, show_data=SHOW_DATA)
 
 else:
-    fig, axes = plt.subplots(2, 2, figsize=(7.2, 7))
+    fig, axes = plt.subplots(2, 2, figsize=(7.4, 7))
     # policy when off
     policy.add_policy_figure_when_relaxed(ax=axes[0][0],
                                           y_label=Y_LABEL,

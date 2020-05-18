@@ -73,7 +73,7 @@ Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, icuB
                            labels=['Death due to COVID-19 averted\n(per 100,000 population)',
                                    'Expected number of weeks with\ntightened social distancing'],
                            title='',
-                           fig_size=(5, 4.2),  # (3.6, 3.2),
+                           fig_size=(5.2, 4.2),  # (3.6, 3.2),
                            l_b_r_t=(0.22, 0.13, 0.9, 0.9),
                            file_name='figures/CE{}.png'.format(SUFX))
 
