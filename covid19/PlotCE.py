@@ -63,7 +63,7 @@ adaptiveIt = Cls.SetOfScenarios(name='Adaptive: Minimize Loss of NMB',
                                 labels_shift_y=-0.02)
 
 
-Vis.plot_sets_of_scenarios(list_of_scenario_sets=[fixed_interval, periodic, icuBased, adaptiveIt],
+Vis.plot_sets_of_scenarios(list_of_scenario_sets=[periodic, icuBased, adaptiveIt],
                            x_range=[0, 1500],
                            y_range=[0, 125],
                            effect_multiplier=0.1,
