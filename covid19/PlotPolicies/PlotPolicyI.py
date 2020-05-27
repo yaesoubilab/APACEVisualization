@@ -6,7 +6,7 @@ import os
 IF_WITH_OUTCOMES = True
 WTP_RANGE = [0.01, 0.1101]
 WTP_DELTA = 0.05
-SHOW_DATA = True
+SHOW_DATA = False
 MAX_VALUE = 125
 # Y_LABEL = 'Estimated\nprevalence of infection '\
 #           + r'$(I_t)$'+'\nper 100,000 population'
