@@ -58,7 +58,7 @@ adaptiveIt = Cls.SetOfScenarios(name='Adaptive: Minimize Loss of NMB',
                                 conditions_on_variables=policy_definitions.AdaptiveItVarConditions,
                                 if_find_frontier=False,
                                 if_show_fitted_curve=True,
-                                reg_type='exponential',
+                                reg_type='power',
                                 labels_shift_x=0.02,
                                 labels_shift_y=-0.02)
 

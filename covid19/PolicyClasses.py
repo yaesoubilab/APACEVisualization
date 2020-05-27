@@ -22,9 +22,11 @@ class PolicySingleFeature:
         self.RegToOn = Reg.ExpRegression(x=self.wtps,
                                          y=self.OnTs,
                                          if_c0_zero=True)
+        print(self.RegToOn.get_coeffs())
         self.RegToOff = Reg.ExpRegression(x=self.wtps,
                                           y=self.OffTs,
                                           if_c0_zero=True)
+        print(self.RegToOff.get_coeffs())
 
         wtps = np.linspace(wtp_range[0], wtp_range[1], 13)
         to_on_ts = self.RegToOn.get_predicted_y(wtps)
