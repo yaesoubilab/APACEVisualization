@@ -591,7 +591,7 @@ class ProjectedTrajectories:
             plt.tight_layout()
 
             # save this figure
-            output_figure(plt, fig_folder+key)
+            output_figure(plt, fig_folder+key+'.pdf')
 
             # next figure
             panel_idx += 1

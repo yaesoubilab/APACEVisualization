@@ -96,7 +96,7 @@ def plot_ce_figure(series, analysis_name):
     plt.tight_layout()
     plt.savefig('results/cea/'
                 + 'CEA ' + analysis_name
-                + '.png', dpi=300)
+                + '.pdf', dpi=300)
 
 
 def plot_nmb_and_ceac(cba, fig_size, file_name):
@@ -203,7 +203,7 @@ def analyze_econ_eval(prob_uptake, prob_dropout):
         y_range=(-1, 5),
         y_axis_multiplier=1/1000000, y_axis_decimal=1,
         figure_size=(4, 3.6),
-        file_name='results/cea/NMB-' + analysis_name + '.png'
+        file_name='results/cea/NMB-' + analysis_name + '.pdf'
     )
     print('WTP range with the highest expected NMB:')
     print(series[0].CBA.find_optimal_switching_wtp_values(deci=1))
@@ -219,7 +219,7 @@ def analyze_econ_eval(prob_uptake, prob_dropout):
                  'Annual follow-up',
                  'First-year follow-up with limited 2°IPT',
                  'Annual follow-up with continuous 2°IPT'],
-        file_name='results/cea/CEAC ' + analysis_name + '.png'
+        file_name='results/cea/CEAC ' + analysis_name + '.pdf'
     )
     print('WTP range with the highest probability of being optimal:')
     # print(series[0].CBA.get_wtp_range_with_highest_prob_of_optimal())
@@ -234,7 +234,7 @@ def analyze_econ_eval(prob_uptake, prob_dropout):
     # plot both incremental NMB and CEAC
     plot_nmb_and_ceac(cba=series[0].CBA,
                       fig_size=(8, 3.5),
-                      file_name='results\cea\INMB_CEAC-' + analysis_name + '.png')
+                      file_name='results\cea\INMB_CEAC-' + analysis_name + '.pdf')
 
     # plot cost-effectiveness figure
     plot_ce_figure(series=series, analysis_name=analysis_name)
@@ -262,7 +262,7 @@ def analyze_econ_eval(prob_uptake, prob_dropout):
         y_range=[-2000, 2000],
         column_titles=titles,
         row_titles=titles,
-        file_name='results\cea\pairwise-' + analysis_name + '.png'
+        file_name='results\cea\pairwise-' + analysis_name + '.pdf'
     )
 
 

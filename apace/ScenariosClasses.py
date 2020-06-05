@@ -190,7 +190,7 @@ class ScenarioDataFrame:
         if filename is None:
             filename = 'RelativeDifference.png'
 
-        plt.savefig(filename+'.png', dpi=300)
+        plt.savefig(filename, dpi=300)
 
 
 class _Condition:
