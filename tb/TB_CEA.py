@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import apace.ScenariosClasses as Cls
 import numpy as np
+plt.rcParams['svg.fonttype'] = 'none'
 
 markers = ['o', 's', '^', 'D']
 colors = ['gray', 'red', 'blue', 'green', 'orange']
