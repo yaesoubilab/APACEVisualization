@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from apace import Support
 import csv
-from enum import Enum
 import SimPy.EconEval as Econ
 import SimPy.StatisticalClasses as Stat
 import SimPy.RegressionClasses as Reg
+plt.rcParams['svg.fonttype'] = 'none'
 
 
 ALPHA = 0.05    # confidence level
