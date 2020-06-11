@@ -115,8 +115,7 @@ def plot_nmb_and_ceac(cba, fig_size, file_name):
                  size=12, weight='bold')
 
     cba.add_acceptability_curves_to_ax(
-        ax=axes[1],
-        y_range=(0, 1)
+        ax=axes[1]
     )
 
     axes[1].text(-0.2, 1.07, 'B)', transform=axes[1].transAxes,
@@ -213,7 +212,7 @@ def analyze_econ_eval(prob_uptake, prob_dropout):
         #title='Cost-Effectiveness Acceptability Curves',
         x_label='Cost-Effectiveness Threshold ($ per DALY Averted)',
         y_label='Probability of Resulting in the Highest NMB',
-        y_range=[0, 1],
+        y_range=None,
         fig_size=(4, 3.6),
         legends=['Base',
                  'First-year follow-up',
