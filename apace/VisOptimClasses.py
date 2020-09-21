@@ -50,7 +50,7 @@ def plot_optimization_itrs(csv_directory,
                             if_convert_float=True)
 
     # create plot for f and variables
-    f_and_var_plot, axarr = plt.subplots(n_vars+1, 1, sharex=True, figsize=(6, 6))
+    f_and_var_plot, axarr = plt.subplots(n_vars+1, 1, sharex=True, figsize=(6, 5))
     if show_title:
         axarr[0].set(title=csv_filename)
 
