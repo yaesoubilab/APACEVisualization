@@ -1,4 +1,4 @@
-import SimPy.FittingProbDist_MM as Fit
+import SimPy.RandomVariateGenerators as Fit
 import scipy.stats as scs
 import SimPy.FormatFunctions as F
 
@@ -6,12 +6,15 @@ import SimPy.FormatFunctions as F
 R0 = [2.5, 0.7, 1.5, 4]
 TimeToInf = [5, 0.5, 3, 7]
 TimeInf = [4, 1.5, 2, 8]
-ProbHosp = [0.326, 0.018, 0, 1]
+DurHosp	= [12, 1, 7, 17]
+DurICU = [10, 1, 5, 15]
+ProbHosp = [0.65, 0.05, 0, 1]
+ProbICU = [0.326, 0.018, 0, 1]
 ProbDeath = [0.330, 0.032, 0, 1]
 
 
 def print_intervals(name, mean_std_min_max):
-    beta_par = Fit.get_beta_params(
+    beta_par = Fit.Beta.fit_mm(
         mean=mean_std_min_max[0],
         st_dev=mean_std_min_max[1],
         minimum=mean_std_min_max[2],
@@ -29,5 +32,8 @@ def print_intervals(name, mean_std_min_max):
 print_intervals('R0:', R0)
 print_intervals('Time to infectious:', TimeToInf)
 print_intervals('Time infectious:', TimeInf)
+print_intervals('Duration of hospitalization:', DurHosp)
+print_intervals('Duration of ICU:', DurICU)
 print_intervals('Probability of hospitalization:', ProbHosp)
+print_intervals('Probability of ICU:', ProbICU)
 print_intervals('Probability of death if needing ICU:', ProbDeath)
