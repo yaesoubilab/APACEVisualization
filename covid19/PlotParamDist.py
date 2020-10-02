@@ -11,6 +11,7 @@ DurICU = [10, 1, 5, 15]
 ProbHosp = [0.65, 0.05, 0, 1]
 ProbICU = [0.326, 0.018, 0, 1]
 ProbDeath = [0.330, 0.032, 0, 1]
+RatioMortality = [3, 0.25, 1, 5]
 
 
 def print_intervals(name, mean_std_min_max):
@@ -37,3 +38,4 @@ print_intervals('Duration of ICU:', DurICU)
 print_intervals('Probability of hospitalization:', ProbHosp)
 print_intervals('Probability of ICU:', ProbICU)
 print_intervals('Probability of death if needing ICU:', ProbDeath)
+print_intervals('Ratio mortality while waiting for ICU', RatioMortality)
