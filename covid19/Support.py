@@ -74,7 +74,7 @@ class PolicyDefinitions:
             Cls.ConditionOnVariable('Decision Rule', 3, 3,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('WTP', #0.01, 2,  # 1, 5
-                                    values=[0.01, 0.02, 0.025, 0.028, 0.03, 0.04, 0.05, 0.06, 0.07],
+                                    values=[0.01, 0.02, 0.028, 0.029, 0.03, 0.04, 0.05, 0.06, 0.07],
                                     if_included_in_label=True, label_format='{:.3f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
