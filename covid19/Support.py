@@ -23,7 +23,7 @@ class PolicyDefinitions:
             #                       if_included_in_label=False)
         ]
         self.ICUInfVarConditions = [
-            Cls.ConditionOnVariable('Decision Rule', 2, 2,
+            Cls.ConditionOnVariable('Decision Rule', 3, 3,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('% I Switch threshold if social distancing is off', 0, 20000,  # 1, 5
                                     if_included_in_label=False, label_format='{:.0f}'),
@@ -43,8 +43,8 @@ class PolicyDefinitions:
         self.ICUInfOutcomeConditions = [
             Cls.ConditionOnOutcome(
                 outcome_name='Average ratio: % served in ICU',
-                minimum=0.4,
-                maximum=1,
+                minimum=0.3,
+                maximum=0.999,
                 if_included_in_label=True,
                 label_format='{:.0%}'),
             Cls.ConditionOnOutcome(
@@ -74,8 +74,8 @@ class PolicyDefinitions:
             Cls.ConditionOnVariable('Decision Rule', 3, 3,
                                     if_included_in_label=False),
             Cls.ConditionOnVariable('WTP', #0.01, 2,  # 1, 5
-                                    values=[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.1, 0.12, 0.13, 0.14],
-                                    if_included_in_label=True, label_format='{:.2f}'),
+                                    values=[0.01, 0.02, 0.025, 0.028, 0.03, 0.04, 0.05, 0.06, 0.07],
+                                    if_included_in_label=True, label_format='{:.3f}'),
             # Cls.VariableCondition(' Time of lifting social distancing', 1, 1,
             #                       if_included_in_label=False),
             # Cls.VariableCondition('Switch threshold if social distancing is off',

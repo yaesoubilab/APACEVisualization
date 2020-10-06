@@ -27,7 +27,7 @@ fixed_interval = Cls.SetOfScenarios(name='Static: Continuous',
                                     labels_shift_y=0.01)
 
 periodic = Cls.SetOfScenarios(name='Static: Periodic',
-                              scenario_df=scenarioDfFixedPeriodic,
+                              scenario_df=scenarioDfAdaptiveIt,
                               color='purple',
                               marker='s',
                               #x_y_labels=['O', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'R', 'T'],
@@ -39,14 +39,14 @@ periodic = Cls.SetOfScenarios(name='Static: Periodic',
                               labels_shift_y=0.005)
 
 icuBased = Cls.SetOfScenarios(name='Adaptive: ICU Capacity',
-                              scenario_df=scenarioDfFixedPeriodic,
+                              scenario_df=scenarioDfAdaptiveIt,
                               color='red',
                               marker='D',
                               conditions_on_variables=policy_definitions.ICUInfVarConditions,
                               conditions_on_outcomes=policy_definitions.ICUInfOutcomeConditions,
                               if_find_frontier=False,
                               if_show_fitted_curve=True,
-                              #reg_type='exponential',
+                              reg_type='power',
                               labels_shift_x=-0.07,
                               labels_shift_y=0.005)
 
@@ -58,14 +58,14 @@ adaptiveIt = Cls.SetOfScenarios(name='Adaptive: Minimize Loss of NMB',
                                 conditions_on_variables=policy_definitions.AdaptiveItVarConditions,
                                 if_find_frontier=False,
                                 if_show_fitted_curve=True,
-                                reg_type='power',
+                                #reg_type='power',
                                 labels_shift_x=0.02,
                                 labels_shift_y=-0.02)
 
 
 Vis.plot_sets_of_scenarios(list_of_scenario_sets=[periodic, icuBased, adaptiveIt],
-                           x_range=[0, 1500],
-                           y_range=[0, 125],
+                           x_range=[0, 3300],
+                           y_range=[0, 100],
                            effect_multiplier=0.1,
                            cost_multiplier=1,
                            switch_cost_effect_on_figure=False,
@@ -107,6 +107,6 @@ def print_switch_icu_info(scenarios, scenario_df):
 
 print()
 print('\n------- PERIODIC I ---------------')
-print_switch_icu_info(icuBased, scenarioDfFixedPeriodic)
+print_switch_icu_info(icuBased, scenarioDfAdaptiveIt)
 print('\n------- ADAPTIVE I ---------------')
 # print_switch_icu_info(adaptiveI, scenarioDfAdaptiveI)
