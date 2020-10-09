@@ -669,7 +669,7 @@ class SetOfScenarios:
 
                 # scatter plot for all points
                 ax.scatter(ser.xValues, ser.yValues,
-                           color=ser.color, marker=ser.marker, alpha=0.5, zorder=10, s=15, label=ser.name)
+                           color=ser.color, marker=ser.marker, alpha=0.25, zorder=10, s=15, label=ser.name)
                 # ax.scatter(ser.allDeltaEffects, ser.allDeltaCosts, color=ser.color, alpha=.5,
                 # zorder=10, s=5, label=ser.name)
                 # line plot for frontier line
@@ -680,7 +680,7 @@ class SetOfScenarios:
                     ax.errorbar(ser.xValues, ser.yValues,
                                 xerr=ser.get_x_err(),
                                 yerr=ser.get_y_err(),
-                                fmt='none', color='k', linewidth=1, alpha=0.25, zorder=5)
+                                fmt='none', color='k', linewidth=0.75, alpha=0.75, zorder=5)
 
                 if x_range is None:
                     x_range = ax.get_xlim()
