@@ -139,6 +139,83 @@ class Parameters:
             # move to the next parameter
             par_id += 1
 
+    def plot_pairwise(self, ids=None, csv_file_name_prior=None, fig_filename='pairwise_correlation.png'):
+        """ creates pairwise corrolation between parameters specified by ids
+        :param ids: (list) list of parameter ids
+        :param csv_file_name_prior: (string) filename where parameter prior ranges are located
+        :param fig_filename: (string) filename to save the figure as
+        """a
+
+        # clean the directory
+        IO.delete_files('.png', posterior_fig_loc)
+
+        # read prior distributions
+        if csv_file_name_prior is not None:
+            priors = IO.read_csv_rows(
+                file_name=csv_file_name_prior,
+                if_ignore_first_row=True,
+                delimiter=',',
+                if_convert_float=True
+            )
+
+        # for all parameters, read sampled parameter values and create the histogram
+        par_id = 0
+        for key, par_values in self.dictOfParams.items():
+
+            # skip these columns
+            if key in ['Simulation Replication', 'Random Seed']:
+                continue
+
+            # check if the histogram should be created for this parameter
+            if_show = False
+            if ids is None:
+                if_show = True
+            elif par_id in ids:
+                if_show = True
+
+            # create the histogram
+            if if_show:
+                # find prior range
+                x_range = None
+                if priors is not None:
+                    try:
+                        x_range = [float(priors[par_id][Column.LB.value]), float(priors[par_id][Column.UB.value])]
+                    except:
+                        print('Could not convert string to float to find the prior distribution of parameter:', par_id)
+                else:
+                    x_range = None
+
+                # find the filename the histogram should be saved as
+                file_name = posterior_fig_loc + '\Par-' + str(par_id) + ' ' + F.proper_file_name(key)
+
+                # find title
+                if priors[par_id][Column.TITLE.value] in ('', None):
+                    title = priors[par_id][Column.NAME.value]
+                else:
+                    title = priors[par_id][Column.TITLE.value]
+
+                # find multiplier
+                if priors[par_id][Column.MULTIPLIER.value] in ('', None):
+                    multiplier = 1
+                else:
+                    multiplier = float(priors[par_id][Column.MULTIPLIER.value])
+                x_range = [x*multiplier for x in x_range]
+                par_values = [v*multiplier for v in par_values]
+
+                # plot histogram
+                Fig.plot_histogram(
+                    data=par_values,
+                    title=title.replace('!', '\n'),
+                    x_range=x_range,
+                    figure_size=HISTOGRAM_FIG_SIZE,
+                    file_name=file_name
+                )
+
+            # move to the next parameter
+            par_id += 1
+
+
+
     def calculate_means_and_intervals(self,
                                       poster_file='ParameterEstimates.csv',
                                       significance_level=0.05, deci=3,
