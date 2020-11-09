@@ -260,8 +260,6 @@ class Parameters:
         f.savefig(fig_filename, bbox_inches='tight', dpi=300)
 
 
-
-
     def calculate_means_and_intervals(self,
                                       poster_file='ParameterEstimates.csv',
                                       significance_level=0.05, deci=3,
