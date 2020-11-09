@@ -5,6 +5,9 @@ import SimPy.FormatFunctions as Format
 import SimPy.Support.MiscFunctions as F
 import copy
 from enum import Enum
+import matplotlib.pyplot as plt
+import numpy as np
+from numpy.polynomial.polynomial import polyfit
 
 
 HISTOGRAM_FIG_SIZE = (4.2, 3.2)
@@ -24,11 +27,14 @@ class Column(Enum):
 
 class ParamInfo:
     # class to store information about a parameter (id, name, estimate and confidence/uncertainty interval)
-    def __init__(self, idn, name, estimate, interval):
-        self.row = idn
+    def __init__(self, idx, name, label=None, values=None, range=None):
+        self.idx = idx
         self.name = name
-        self.estimate = estimate
-        self.interval = interval
+        self.label = label
+        self.values = np.array(values)
+        self.range = range
+        self.estimate = None
+        self.interval = None
 
 
 class Parameters:
@@ -139,17 +145,17 @@ class Parameters:
             # move to the next parameter
             par_id += 1
 
-    def plot_pairwise(self, ids=None, csv_file_name_prior=None, fig_filename='pairwise_correlation.png'):
+    def plot_pairwise(self, ids=None, csv_file_name_prior=None, fig_filename='pairwise_correlation.png',
+                      figure_size=(10,10)):
         """ creates pairwise corrolation between parameters specified by ids
         :param ids: (list) list of parameter ids
         :param csv_file_name_prior: (string) filename where parameter prior ranges are located
         :param fig_filename: (string) filename to save the figure as
-        """a
-
-        # clean the directory
-        IO.delete_files('.png', posterior_fig_loc)
+        :param figure_size: (tuple) figure size
+        """
 
         # read prior distributions
+        priors = None
         if csv_file_name_prior is not None:
             priors = IO.read_csv_rows(
                 file_name=csv_file_name_prior,
@@ -158,7 +164,9 @@ class Parameters:
                 if_convert_float=True
             )
 
-        # for all parameters, read sampled parameter values and create the histogram
+        # find the names of parameters to include in the analysis
+        info_of_params_to_include = []
+
         par_id = 0
         for key, par_values in self.dictOfParams.items():
 
@@ -185,14 +193,11 @@ class Parameters:
                 else:
                     x_range = None
 
-                # find the filename the histogram should be saved as
-                file_name = posterior_fig_loc + '\Par-' + str(par_id) + ' ' + F.proper_file_name(key)
-
                 # find title
                 if priors[par_id][Column.TITLE.value] in ('', None):
-                    title = priors[par_id][Column.NAME.value]
+                    label = priors[par_id][Column.NAME.value]
                 else:
-                    title = priors[par_id][Column.TITLE.value]
+                    label = priors[par_id][Column.TITLE.value]
 
                 # find multiplier
                 if priors[par_id][Column.MULTIPLIER.value] in ('', None):
@@ -202,17 +207,58 @@ class Parameters:
                 x_range = [x*multiplier for x in x_range]
                 par_values = [v*multiplier for v in par_values]
 
-                # plot histogram
-                Fig.plot_histogram(
-                    data=par_values,
-                    title=title.replace('!', '\n'),
-                    x_range=x_range,
-                    figure_size=HISTOGRAM_FIG_SIZE,
-                    file_name=file_name
+                # append the info for this parameter
+                info_of_params_to_include.append(
+                    ParamInfo(idx=par_id, name=key, label=label,values=par_values, range=x_range)
                 )
 
             # move to the next parameter
             par_id += 1
+
+        # plot pairwise
+        # set default properties of the figure
+        plt.rc('font', size=6)  # fontsize of texts
+        plt.rc('axes', titlesize=6)  # fontsize of the figure title
+        plt.rc('axes', titleweight='semibold')  # fontweight of the figure title
+
+        # plot each panel
+        n = len(info_of_params_to_include)
+        f, axarr = plt.subplots(nrows=n, ncols=n, figsize=figure_size)
+
+        for i in range(n):
+            for j in range(n):
+
+                # get the current axis
+                ax = axarr[i, j]
+
+                if j == 0:
+                    ax.set_ylabel(info_of_params_to_include[i].label)
+                if i == n-1:
+                    ax.set_xlabel(info_of_params_to_include[j].label)
+
+                if i == j:
+                    # plot histogram
+                    Fig.add_histogram_to_ax(
+                        ax=ax,
+                        data=info_of_params_to_include[i].values,
+                        x_range=info_of_params_to_include[i].range
+                    )
+                    ax.set_yticklabels([])
+                    ax.set_yticks([])
+
+                else:
+                    ax.scatter(info_of_params_to_include[j].values,
+                               info_of_params_to_include[i].values,
+                               alpha=0.5, s=2)
+                    # correlation line
+                    b, m = polyfit(info_of_params_to_include[j].values,
+                                   info_of_params_to_include[i].values, 1)
+                    ax.plot(info_of_params_to_include[j].values,
+                            b + m * info_of_params_to_include[j].values, '-', c='black')
+
+        f.tight_layout()
+        f.savefig(fig_filename, bbox_inches='tight', dpi=300)
+
 
 
 
