@@ -8,6 +8,7 @@ from enum import Enum
 import matplotlib.pyplot as plt
 import numpy as np
 from numpy.polynomial.polynomial import polyfit
+from scipy.stats import pearsonr
 
 
 HISTOGRAM_FIG_SIZE = (4.2, 3.2)
@@ -209,7 +210,7 @@ class Parameters:
 
                 # append the info for this parameter
                 info_of_params_to_include.append(
-                    ParamInfo(idx=par_id, name=key, label=label,values=par_values, range=x_range)
+                    ParamInfo(idx=par_id, name=key, label=label.replace('!', '\n'),values=par_values, range=x_range)
                 )
 
             # move to the next parameter
@@ -250,11 +251,17 @@ class Parameters:
                     ax.scatter(info_of_params_to_include[j].values,
                                info_of_params_to_include[i].values,
                                alpha=0.5, s=2)
+                    ax.set_xlim(info_of_params_to_include[j].range)
+                    ax.set_ylim(info_of_params_to_include[i].range)
                     # correlation line
                     b, m = polyfit(info_of_params_to_include[j].values,
                                    info_of_params_to_include[i].values, 1)
                     ax.plot(info_of_params_to_include[j].values,
                             b + m * info_of_params_to_include[j].values, '-', c='black')
+                    corr, p = pearsonr(info_of_params_to_include[j].values,
+                                       info_of_params_to_include[i].values)
+                    ax.text(0.95, 0.95, '{0:.2f}'.format(corr), transform=ax.transAxes, fontsize=6,
+                            va='top', ha='right')
 
         f.tight_layout()
         f.savefig(fig_filename, bbox_inches='tight', dpi=300)
