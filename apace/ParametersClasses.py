@@ -263,6 +263,7 @@ class Parameters:
                     ax.text(0.95, 0.95, '{0:.2f}'.format(corr), transform=ax.transAxes, fontsize=6,
                             va='top', ha='right')
 
+        f.align_ylabels(axarr[:, 0])
         f.tight_layout()
         f.savefig(fig_filename, bbox_inches='tight', dpi=300)
 
