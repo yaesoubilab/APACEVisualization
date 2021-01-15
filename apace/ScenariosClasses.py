@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from apace import Support
 import csv
 import SimPy.EconEval as Econ
-import SimPy.StatisticalClasses as Stat
-import SimPy.RegressionClasses as Reg
+import SimPy.Statistics as Stat
+import SimPy.Regression as Reg
 plt.rcParams['svg.fonttype'] = 'none'
 
 
@@ -657,7 +657,7 @@ class SetOfScenarios:
 
                 # y-value labels
                 for j, txt in enumerate(ser.frontierLabels):
-                    if txt is not 'Base':
+                    if txt != 'Base':
                         ax.annotate(
                             txt,
                             (ser.frontierXValues[j] + ser.labelsShiftX,
@@ -690,7 +690,7 @@ class SetOfScenarios:
                 # y-value labels
                 for j in range(len(ser.xValues)):
                     txt = ser.xyLabels[j]
-                    if txt is not 'Base':
+                    if txt != 'Base':
                         ax.annotate(
                             txt,
                             (ser.xValues[j] + ser.labelsShiftX*(x_range[1]-x_range[0]),

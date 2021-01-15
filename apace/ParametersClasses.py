@@ -1,6 +1,6 @@
 import SimPy.InOutFunctions as IO
 import SimPy.Plots.Histogram as Fig
-import SimPy.StatisticalClasses as Stat
+import SimPy.Statistics as Stat
 import SimPy.FormatFunctions as Format
 import SimPy.Support.MiscFunctions as F
 import copy
