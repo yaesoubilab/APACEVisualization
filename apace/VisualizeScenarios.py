@@ -29,7 +29,7 @@ def plot_sets_of_scenarios(list_of_scenario_sets,
     # populate series
     Cls.SetOfScenarios.populate_sets_of_scenarios(
         list_of_scenario_sets=list_of_scenario_sets,
-        save_cea_results=True,
+        save_cea_results=False,
         interval_type='c',
         effect_multiplier=effect_multiplier,
         cost_multiplier=cost_multiplier,

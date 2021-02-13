@@ -618,8 +618,8 @@ class SetOfScenarios:
                     i += 1
 
             # do CEA on this series
-            scenario_set.build_CE_curve(save_cea_results,
-                                        interval_type,
+            scenario_set.build_CE_curve(save_cea_results=save_cea_results,
+                                        interval_type=interval_type,
                                         effect_multiplier=effect_multiplier,
                                         cost_multiplier=cost_multiplier,
                                         switch_cost_effect_on_figure=switch_cost_effect_on_figure,
@@ -844,7 +844,7 @@ class SetOfScenarios:
         # for SMDM
         # plt.subplots_adjust(left=0.12, bottom=0.15, right=.95, top=0.85,
         #                     wspace=0.2, hspace=0)
-        plt.savefig(file_name + '.png', dpi=600)
+        plt.savefig(file_name, dpi=600)
         plt.show()
 
     @staticmethod
