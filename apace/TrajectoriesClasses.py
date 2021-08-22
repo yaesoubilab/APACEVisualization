@@ -4,7 +4,7 @@ from apace import Support
 import csv
 import matplotlib.ticker as ticker
 import SimPy.InOutFunctions as IO
-import SimPy.StatisticalClasses as Stat
+import SimPy.Statistics as Stat
 from SimPy.Plots.FigSupport import *
 import string
 import numpy as np
