@@ -457,7 +457,7 @@ class SetOfScenarios:
 
         x = np.array(self.xValues)
         y = np.array(self.yValues)
-        self.fittedCurve = Reg.SingleVarRegression(x, y, degree=degree)
+        self.fittedCurve = Reg.PolyRegression(x, y, degree=POLY_DEGREES) #) Reg.SingleVarRegression(x, y, degree=degree)
 
     def fit_curves(self, degree):
 
@@ -861,7 +861,7 @@ class SetOfScenarios:
         diffs = []
 
         for i in range(len(list_of_scenario_sets)):
-            selected_root = max(list_of_scenario_sets[i].fittedCurve.get_zero())
+            selected_root = max(list_of_scenario_sets[i].fittedCurve.get_roots())
             crossing_x_axis.append(selected_root)
             diffs.append(crossing_x_axis[i]-crossing_x_axis[0])
 
