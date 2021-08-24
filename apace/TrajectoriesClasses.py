@@ -27,6 +27,7 @@ X_LABEL = 'Year'
 X_RANGE = None
 X_TICKS = None
 
+TRAJ_LINE_WIDTH = 0.5            # line width of a trajectory
 TRAJ_TRANSPARENCY = 0.3         # transparency of trajectories
 TRAJ_COLOR_CODE = '#808A87'     # color of trajectories
 OBS_COLOR_CODE = '#006400'      # color of real observations
@@ -253,7 +254,7 @@ class TrajsDataFrame:
                 ax.plot(plot_info.xMultiplier * traj.times,
                         plot_info.yMultiplier * traj.obss,
                         plot_info.commonColorCode,
-                        linewidth=1,
+                        linewidth=TRAJ_LINE_WIDTH,
                         alpha=plot_info.transparency,
                         zorder=1)
             else:
