@@ -41,7 +41,7 @@ def read_csv_cols(file_name, n_cols, if_ignore_first_row=True, delimiter=',', if
         return cols
 
 
-def get_mean_interval(stat, interval_type='c', deci=0, form=None):
+def get_mean_interval(stat, interval_type='c', deci=0, form=None, multiplier=1):
     """
     :param interval_type: 'c' for confidence interval, 'p' for percentile interval
     :param deci: digits to round the numbers to
@@ -51,12 +51,14 @@ def get_mean_interval(stat, interval_type='c', deci=0, form=None):
 
     if form is None:
         if interval_type == 'p':
-            return stat.get_mean(), stat.get_PI(0.05)
+            interval = stat.get_PI(0.05)
+            return stat.get_mean()*multiplier, [v * multiplier for v in interval]
         elif interval_type == 'c':
-            return stat.get_mean(), stat.get_t_CI(0.05)
+            interval = stat.get_t_CI(0.05)
+            return stat.get_mean()*multiplier, [v * multiplier for v in interval]
         else:
             raise ValueError('Invalid interval type.')
     else:
         return stat.get_formatted_mean_and_interval(
-            interval_type=interval_type, alpha=0.05, deci=deci, form=form)
+            interval_type=interval_type, alpha=0.05, deci=deci, form=form, multiplier=multiplier)
 
