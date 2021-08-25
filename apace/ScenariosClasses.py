@@ -95,7 +95,7 @@ class ScenarioDataFrame:
         return Support.get_mean_interval(stat, interval_type, deci, form)
 
     def get_diff_mean_interval(self, scenario_name_base, scenario_names, outcome_name,
-                               deci=0, form=None, multiplier=1):
+                               deci=0, form=None, multiplier=1, interval_type='p'):
 
         if type(scenario_names) is not list:
             scenario_names = [scenario_names]
@@ -108,7 +108,8 @@ class ScenarioDataFrame:
                 y_ref=self.scenarios[scenario_name_base].outcomes[outcome_name])
 
             list_mean_PI[name] = Support.get_mean_interval(
-                stat=stat, interval_type='p', deci=deci, form=form, multiplier=multiplier)
+                stat=stat, interval_type=interval_type, deci=deci,
+                form=form, multiplier=multiplier)
 
         if len(scenario_names) == 1:
             return list_mean_PI[scenario_names[0]]
